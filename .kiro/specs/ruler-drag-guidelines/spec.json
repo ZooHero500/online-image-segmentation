@@ -1,0 +1,22 @@
+{
+  "feature_name": "ruler-drag-guidelines",
+  "created_at": "2026-03-05T00:00:00Z",
+  "updated_at": "2026-03-05T15:00:00Z",
+  "language": "zh",
+  "phase": "implementation",
+  "approvals": {
+    "requirements": {
+      "generated": true,
+      "approved": true
+    },
+    "design": {
+      "generated": true,
+      "approved": true
+    },
+    "tasks": {
+      "generated": true,
+      "approved": true
+    }
+  },
+  "ready_for_implementation": true
+}
