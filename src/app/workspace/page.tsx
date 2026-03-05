@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react"
 import { DynamicSplitEditor } from "@/components/DynamicSplitEditor"
 import { HistorySidebar } from "@/components/HistorySidebar"
+import { useHistory } from "@/hooks/use-history"
 import type { SplitLine } from "@/types"
 
 interface EditorState {
@@ -15,6 +16,7 @@ interface EditorState {
 export default function WorkspacePage() {
   const [editorKey, setEditorKey] = useState(0)
   const [initialState, setInitialState] = useState<EditorState | undefined>()
+  const { saveCurrentWork } = useHistory()
 
   const handleLoadRecord = useCallback((record: EditorState) => {
     setInitialState(record)
@@ -26,6 +28,19 @@ export default function WorkspacePage() {
     setEditorKey((k) => k + 1)
   }, [])
 
+  const handleSaveHistory = useCallback(
+    async (data: {
+      originalFileName: string
+      originalMimeType: string
+      lines: SplitLine[]
+      imageBlob: Blob
+      thumbnailDataUrl: string
+    }) => {
+      await saveCurrentWork(data)
+    },
+    [saveCurrentWork]
+  )
+
   return (
     <div className="flex h-screen">
       <HistorySidebar
@@ -36,6 +51,7 @@ export default function WorkspacePage() {
         <DynamicSplitEditor
           key={editorKey}
           initialState={initialState}
+          onSaveHistory={handleSaveHistory}
           showShortcutHints
         />
       </main>

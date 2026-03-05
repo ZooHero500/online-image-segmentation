@@ -3,9 +3,9 @@
 import { useEffect, useRef, useCallback } from "react"
 import type { SplitLine } from "@/types"
 
-const RULER_BG = "#1e1e1e"
-const RULER_TEXT = "#999"
-const RULER_TICK = "#666"
+const RULER_BG = "#e8e8e8"
+const RULER_TEXT = "#666"
+const RULER_TICK = "#999"
 const RULER_MARKER = "#ef4444"
 
 interface RulerProps {
@@ -147,7 +147,7 @@ export function Ruler({
     }
 
     // Border
-    ctx.strokeStyle = "#333"
+    ctx.strokeStyle = "#ccc"
     ctx.lineWidth = 1
     ctx.beginPath()
     if (isHorizontal) {
@@ -193,8 +193,8 @@ export function CornerBlock({ thickness = 20 }: { thickness?: number }) {
         width: thickness,
         height: thickness,
         backgroundColor: RULER_BG,
-        borderRight: "1px solid #333",
-        borderBottom: "1px solid #333",
+        borderRight: "1px solid #ccc",
+        borderBottom: "1px solid #ccc",
         flexShrink: 0,
       }}
     />

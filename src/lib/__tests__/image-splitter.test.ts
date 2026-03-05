@@ -120,4 +120,55 @@ describe("splitImage", () => {
     expect(results[1]).toMatchObject({ row: 1, col: 2, width: 100 })
     expect(results[2]).toMatchObject({ row: 1, col: 3, width: 100 })
   })
+
+  it("should fallback to image/png for empty mimeType", async () => {
+    const image = createMockImage(100, 100)
+    const results = await splitImage(image, [], "")
+    expect(results[0].blob.type).toBe("image/png")
+  })
+
+  it("should fallback to image/png for unsupported mimeType", async () => {
+    const image = createMockImage(100, 100)
+    const results = await splitImage(image, [], "image/bmp")
+    expect(results[0].blob.type).toBe("image/png")
+  })
+
+  it("should reject when toBlob returns null", async () => {
+    const { ctx } = createMockCanvas()
+    const nullBlobCanvas = {
+      width: 0,
+      height: 0,
+      getContext: vi.fn(() => ctx),
+      toBlob: vi.fn((cb: BlobCallback) => {
+        cb(null)
+      }),
+    }
+    vi.spyOn(document, "createElement").mockImplementation((tag: string) => {
+      if (tag === "canvas") return nullBlobCanvas as unknown as HTMLCanvasElement
+      return document.createElement(tag)
+    })
+
+    const image = createMockImage(100, 100)
+    await expect(splitImage(image, [], "image/png")).rejects.toThrow(
+      "Failed to create blob from canvas"
+    )
+  })
+
+  it("should reject when getContext returns null", async () => {
+    const nullCtxCanvas = {
+      width: 0,
+      height: 0,
+      getContext: vi.fn(() => null),
+      toBlob: vi.fn(),
+    }
+    vi.spyOn(document, "createElement").mockImplementation((tag: string) => {
+      if (tag === "canvas") return nullCtxCanvas as unknown as HTMLCanvasElement
+      return document.createElement(tag)
+    })
+
+    const image = createMockImage(100, 100)
+    await expect(splitImage(image, [], "image/png")).rejects.toThrow(
+      "Failed to get canvas 2d context"
+    )
+  })
 })

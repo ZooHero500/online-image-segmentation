@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 
 const MIN_SCALE = 0.1
 const MAX_SCALE = 10
@@ -77,6 +77,11 @@ export function useCanvasViewport({
     scale: fitScale,
     position: fitPosition,
   })
+
+  // Sync viewState when fit values change (image load, container resize)
+  useEffect(() => {
+    setViewState({ scale: fitScale, position: fitPosition })
+  }, [fitScale, fitPosition])
 
   const { scale, position } = viewState
 

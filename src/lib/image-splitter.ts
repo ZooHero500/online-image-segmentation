@@ -4,7 +4,8 @@ const JPEG_QUALITY = 0.92
 
 function resolveOutputMimeType(originalMimeType: string): string {
   if (originalMimeType === "image/webp") return "image/png"
-  return originalMimeType
+  if (originalMimeType === "image/jpeg" || originalMimeType === "image/png") return originalMimeType
+  return "image/png"
 }
 
 function computeRegions(

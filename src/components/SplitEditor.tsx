@@ -12,6 +12,7 @@ import { useSplitLines } from "@/hooks/use-split-lines"
 import { useImageExport } from "@/hooks/use-image-export"
 import { useRulerDrag } from "@/hooks/use-ruler-drag"
 import { useCanvasViewport } from "@/hooks/use-canvas-viewport"
+import { consumePendingUpload } from "@/lib/pending-upload"
 import { toast } from "sonner"
 import type { SplitLine, UploadResult } from "@/types"
 
@@ -20,6 +21,13 @@ const RULER_THICKNESS = 20
 interface SplitEditorProps {
   onSplitComplete?: (isFirstSplit: boolean) => void
   onImageUpload?: (uploadCount: number) => void
+  onSaveHistory?: (data: {
+    originalFileName: string
+    originalMimeType: string
+    lines: SplitLine[]
+    imageBlob: Blob
+    thumbnailDataUrl: string
+  }) => void
   initialState?: {
     imageBlob: Blob
     lines: SplitLine[]
@@ -43,6 +51,7 @@ function getFileNameWithoutExtension(fileName: string): string {
 export function SplitEditor({
   onSplitComplete,
   onImageUpload,
+  onSaveHistory,
   initialState,
   showShortcutHints = false,
 }: SplitEditorProps) {
@@ -60,6 +69,17 @@ export function SplitEditor({
   const imageWidth = image?.naturalWidth ?? 1
   const imageHeight = image?.naturalHeight ?? 1
 
+  // Viewport hook — must be before useSplitLines for snap threshold
+  const stageWidth = containerSize.width - RULER_THICKNESS
+  const stageHeight = containerSize.height - RULER_THICKNESS
+
+  const viewport = useCanvasViewport({
+    containerWidth: stageWidth,
+    containerHeight: stageHeight,
+    imageWidth,
+    imageHeight,
+  })
+
   const {
     lines,
     addLine,
@@ -74,7 +94,7 @@ export function SplitEditor({
     canUndo,
     canRedo,
     setLines,
-  } = useSplitLines({ imageWidth, imageHeight })
+  } = useSplitLines({ imageWidth, imageHeight, snapThreshold: 12 / viewport.scale })
 
   const {
     splitResults,
@@ -84,17 +104,6 @@ export function SplitEditor({
     downloadOne,
     clearResults,
   } = useImageExport()
-
-  // Viewport hook replaces old scale calculation
-  const stageWidth = containerSize.width - RULER_THICKNESS
-  const stageHeight = containerSize.height - RULER_THICKNESS
-
-  const viewport = useCanvasViewport({
-    containerWidth: stageWidth,
-    containerHeight: stageHeight,
-    imageWidth,
-    imageHeight,
-  })
 
   const {
     isDragging,
@@ -141,7 +150,8 @@ export function SplitEditor({
     }
   }, [])
 
-  // Resize observer
+  // Resize observer — re-run when image changes because containerRef
+  // is only mounted when image is loaded (different return branches)
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
@@ -156,7 +166,18 @@ export function SplitEditor({
     })
     observer.observe(el)
     return () => observer.disconnect()
-  }, [])
+  }, [image])
+
+  // Load pending upload from homepage navigation
+  useEffect(() => {
+    if (image) return // already has an image
+    const pending = consumePendingUpload()
+    if (pending) {
+      setImage(pending.image)
+      setOriginalFileName(pending.file.name)
+      setOriginalMimeType(pending.mimeType)
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Load initial state
   useEffect(() => {
@@ -196,7 +217,46 @@ export function SplitEditor({
     const newCount = splitCount + 1
     setSplitCount(newCount)
     onSplitComplete?.(newCount === 1)
-  }, [image, lines, originalMimeType, generateSplit, splitCount, onSplitComplete])
+
+    // Save to history
+    if (onSaveHistory) {
+      // Thumbnail
+      const thumbCanvas = document.createElement("canvas")
+      const thumbSize = 128
+      const ratio = Math.min(thumbSize / image.naturalWidth, thumbSize / image.naturalHeight)
+      thumbCanvas.width = image.naturalWidth * ratio
+      thumbCanvas.height = image.naturalHeight * ratio
+      const thumbCtx = thumbCanvas.getContext("2d")
+      if (thumbCtx) {
+        thumbCtx.drawImage(image, 0, 0, thumbCanvas.width, thumbCanvas.height)
+        const thumbnailDataUrl = thumbCanvas.toDataURL("image/jpeg", 0.6)
+        // Full-size blob via canvas (blob URL may be revoked)
+        const fullCanvas = document.createElement("canvas")
+        fullCanvas.width = image.naturalWidth
+        fullCanvas.height = image.naturalHeight
+        const fullCtx = fullCanvas.getContext("2d")
+        if (fullCtx) {
+          fullCtx.drawImage(image, 0, 0)
+          const mimeForBlob = ["image/png", "image/jpeg"].includes(originalMimeType)
+            ? originalMimeType
+            : "image/png"
+          const imageBlob = await new Promise<Blob>((resolve, reject) =>
+            fullCanvas.toBlob(
+              (b) => (b ? resolve(b) : reject(new Error("toBlob returned null"))),
+              mimeForBlob
+            )
+          )
+          onSaveHistory({
+            originalFileName,
+            originalMimeType,
+            lines: [...lines],
+            imageBlob,
+            thumbnailDataUrl,
+          })
+        }
+      }
+    }
+  }, [image, lines, originalFileName, originalMimeType, generateSplit, splitCount, onSplitComplete, onSaveHistory])
 
   const handleDownloadAll = useCallback(() => {
     const baseName = getFileNameWithoutExtension(originalFileName)
@@ -411,7 +471,7 @@ export function SplitEditor({
                   y={-viewport.position.y / viewport.scale}
                   width={stageWidth / viewport.scale}
                   height={stageHeight / viewport.scale}
-                  fill="#1e1e1e"
+                  fill="#e0e0e0"
                   listening={false}
                 />
                 <KonvaImage
