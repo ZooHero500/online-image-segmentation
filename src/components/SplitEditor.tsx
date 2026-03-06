@@ -15,8 +15,69 @@ import { useCanvasViewport } from "@/hooks/use-canvas-viewport"
 import { consumePendingUpload } from "@/lib/pending-upload"
 import { toast } from "sonner"
 import type { SplitLine, UploadResult } from "@/types"
+import { X } from "lucide-react"
 
 const RULER_THICKNESS = 20
+const IMAGE_GAP = 40 // gap between images in image-space pixels
+
+interface ImageItem {
+  image: HTMLImageElement
+  fileName: string
+  mimeType: string
+}
+
+interface LayoutResult {
+  direction: "vertical" | "horizontal"
+  offsets: { x: number; y: number }[]
+  totalWidth: number
+  totalHeight: number
+}
+
+function calculateLayout(images: ImageItem[]): LayoutResult {
+  if (images.length === 0)
+    return { direction: "vertical", offsets: [], totalWidth: 1, totalHeight: 1 }
+
+  if (images.length === 1) {
+    const img = images[0].image
+    return {
+      direction: "vertical",
+      offsets: [{ x: 0, y: 0 }],
+      totalWidth: img.naturalWidth,
+      totalHeight: img.naturalHeight,
+    }
+  }
+
+  // Heuristic: landscape images (width >= height) → stack vertically; portrait → horizontal
+  const avgAspect =
+    images.reduce(
+      (sum, item) =>
+        sum + item.image.naturalWidth / item.image.naturalHeight,
+      0
+    ) / images.length
+
+  const direction: "vertical" | "horizontal" = avgAspect >= 1 ? "vertical" : "horizontal"
+  const offsets: { x: number; y: number }[] = []
+
+  if (direction === "vertical") {
+    let y = 0
+    let maxW = 0
+    for (const item of images) {
+      offsets.push({ x: 0, y })
+      y += item.image.naturalHeight + IMAGE_GAP
+      maxW = Math.max(maxW, item.image.naturalWidth)
+    }
+    return { direction, offsets, totalWidth: maxW, totalHeight: y - IMAGE_GAP }
+  } else {
+    let x = 0
+    let maxH = 0
+    for (const item of images) {
+      offsets.push({ x, y: 0 })
+      x += item.image.naturalWidth + IMAGE_GAP
+      maxH = Math.max(maxH, item.image.naturalHeight)
+    }
+    return { direction, offsets, totalWidth: x - IMAGE_GAP, totalHeight: maxH }
+  }
+}
 
 interface SplitEditorProps {
   onSplitComplete?: (isFirstSplit: boolean) => void
@@ -58,29 +119,37 @@ export function SplitEditor({
   const containerRef = useRef<HTMLDivElement>(null)
   const editorAreaRef = useRef<HTMLDivElement>(null)
   const stageContainerRef = useRef<HTMLDivElement>(null)
-  const [image, setImage] = useState<HTMLImageElement | null>(null)
-  const [originalFileName, setOriginalFileName] = useState("")
-  const [originalMimeType, setOriginalMimeType] = useState("")
+  const [images, setImages] = useState<ImageItem[]>([])
   const [containerSize, setContainerSize] = useState({ width: 800, height: 600 })
   const [selectedLineId, setSelectedLineId] = useState<string | null>(null)
   const [splitCount, setSplitCount] = useState(0)
   const [sheetOpen, setSheetOpen] = useState(false)
   const uploadCountRef = useRef(0)
 
-  const imageWidth = image?.naturalWidth ?? 1
-  const imageHeight = image?.naturalHeight ?? 1
+  const isMultiImage = images.length > 1
 
-  // Viewport hook — must be before useSplitLines for snap threshold
+  // Layout calculation
+  const layout = useMemo(() => calculateLayout(images), [images])
+
+  // Reference image (first) for split line positioning
+  const refImage = images[0] ?? null
+  const refWidth = refImage?.image.naturalWidth ?? 1
+  const refHeight = refImage?.image.naturalHeight ?? 1
+  const originalFileName = refImage?.fileName ?? ""
+  const originalMimeType = refImage?.mimeType ?? ""
+
+  // Viewport uses total layout dimensions
   const stageWidth = containerSize.width - RULER_THICKNESS
   const stageHeight = containerSize.height - RULER_THICKNESS
 
   const viewport = useCanvasViewport({
     containerWidth: stageWidth,
     containerHeight: stageHeight,
-    imageWidth,
-    imageHeight,
+    imageWidth: layout.totalWidth,
+    imageHeight: layout.totalHeight,
   })
 
+  // Split lines use reference image dimensions
   const {
     lines,
     addLine,
@@ -95,13 +164,16 @@ export function SplitEditor({
     canUndo,
     canRedo,
     setLines,
-  } = useSplitLines({ imageWidth, imageHeight, snapThreshold: 12 / viewport.scale })
+  } = useSplitLines({ imageWidth: refWidth, imageHeight: refHeight, snapThreshold: 12 / viewport.scale })
 
   const {
     splitResults,
+    batchResults,
     isSplitting,
     generateSplit,
+    generateBatchSplit,
     downloadAll,
+    downloadBatchAll,
     downloadOne,
     clearResults,
     selectedKeys,
@@ -110,6 +182,7 @@ export function SplitEditor({
     deselectAll,
     clearSelection,
     downloadSelected,
+    downloadBatchSelected,
   } = useImageExport()
 
   const {
@@ -157,8 +230,7 @@ export function SplitEditor({
     }
   }, [])
 
-  // Resize observer — re-run when image changes because containerRef
-  // is only mounted when image is loaded (different return branches)
+  // Resize observer
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
@@ -173,16 +245,20 @@ export function SplitEditor({
     })
     observer.observe(el)
     return () => observer.disconnect()
-  }, [image])
+  }, [images.length])
 
   // Load pending upload from homepage navigation
   useEffect(() => {
-    if (image) return // already has an image
+    if (images.length > 0) return
     const pending = consumePendingUpload()
-    if (pending) {
-      setImage(pending.image)
-      setOriginalFileName(pending.file.name)
-      setOriginalMimeType(pending.mimeType)
+    if (pending && pending.length > 0) {
+      setImages(
+        pending.map((p) => ({
+          image: p.image,
+          fileName: p.file.name,
+          mimeType: p.mimeType,
+        }))
+      )
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -193,20 +269,28 @@ export function SplitEditor({
     const img = new Image()
     img.onload = () => {
       URL.revokeObjectURL(url)
-      setImage(img)
-      setOriginalFileName(initialState.originalFileName)
-      setOriginalMimeType(initialState.originalMimeType)
+      setImages([
+        {
+          image: img,
+          fileName: initialState.originalFileName,
+          mimeType: initialState.originalMimeType,
+        },
+      ])
       setLines(initialState.lines)
     }
     img.src = url
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialState])
 
-  const handleImageLoaded = useCallback(
-    (result: UploadResult) => {
-      setImage(result.image)
-      setOriginalFileName(result.file.name)
-      setOriginalMimeType(result.mimeType)
+  const handleImagesLoaded = useCallback(
+    (results: UploadResult[]) => {
+      setImages(
+        results.map((r) => ({
+          image: r.image,
+          fileName: r.file.name,
+          mimeType: r.mimeType,
+        }))
+      )
       clearResults()
       uploadCountRef.current++
       onImageUpload?.(uploadCountRef.current)
@@ -214,39 +298,51 @@ export function SplitEditor({
     [onImageUpload, clearResults]
   )
 
+  const handleRemoveImage = useCallback((index: number) => {
+    setImages((prev) => {
+      if (prev.length <= 1) return prev
+      return prev.filter((_, i) => i !== index)
+    })
+  }, [])
+
   const handleGenerate = useCallback(async () => {
-    if (!image) return
+    if (images.length === 0) return
     if (lines.length === 0) {
       toast.error("请先添加分割线")
       return
     }
-    await generateSplit(image, lines, originalMimeType)
+
+    if (isMultiImage) {
+      await generateBatchSplit(images, lines)
+    } else {
+      await generateSplit(images[0].image, lines, images[0].mimeType)
+    }
+
     const newCount = splitCount + 1
     setSplitCount(newCount)
     setSheetOpen(true)
     onSplitComplete?.(newCount === 1)
 
-    // Save to history
-    if (onSaveHistory) {
-      // Thumbnail
+    // Save to history (first image)
+    if (onSaveHistory && images.length > 0) {
+      const firstImage = images[0].image
       const thumbCanvas = document.createElement("canvas")
       const thumbSize = 128
-      const ratio = Math.min(thumbSize / image.naturalWidth, thumbSize / image.naturalHeight)
-      thumbCanvas.width = image.naturalWidth * ratio
-      thumbCanvas.height = image.naturalHeight * ratio
+      const ratio = Math.min(thumbSize / firstImage.naturalWidth, thumbSize / firstImage.naturalHeight)
+      thumbCanvas.width = firstImage.naturalWidth * ratio
+      thumbCanvas.height = firstImage.naturalHeight * ratio
       const thumbCtx = thumbCanvas.getContext("2d")
       if (thumbCtx) {
-        thumbCtx.drawImage(image, 0, 0, thumbCanvas.width, thumbCanvas.height)
+        thumbCtx.drawImage(firstImage, 0, 0, thumbCanvas.width, thumbCanvas.height)
         const thumbnailDataUrl = thumbCanvas.toDataURL("image/jpeg", 0.6)
-        // Full-size blob via canvas (blob URL may be revoked)
         const fullCanvas = document.createElement("canvas")
-        fullCanvas.width = image.naturalWidth
-        fullCanvas.height = image.naturalHeight
+        fullCanvas.width = firstImage.naturalWidth
+        fullCanvas.height = firstImage.naturalHeight
         const fullCtx = fullCanvas.getContext("2d")
         if (fullCtx) {
-          fullCtx.drawImage(image, 0, 0)
-          const mimeForBlob = ["image/png", "image/jpeg"].includes(originalMimeType)
-            ? originalMimeType
+          fullCtx.drawImage(firstImage, 0, 0)
+          const mimeForBlob = ["image/png", "image/jpeg"].includes(images[0].mimeType)
+            ? images[0].mimeType
             : "image/png"
           const imageBlob = await new Promise<Blob>((resolve, reject) =>
             fullCanvas.toBlob(
@@ -255,8 +351,8 @@ export function SplitEditor({
             )
           )
           onSaveHistory({
-            originalFileName,
-            originalMimeType,
+            originalFileName: images[0].fileName,
+            originalMimeType: images[0].mimeType,
             lines: [...lines],
             imageBlob,
             thumbnailDataUrl,
@@ -264,19 +360,27 @@ export function SplitEditor({
         }
       }
     }
-  }, [image, lines, originalFileName, originalMimeType, generateSplit, splitCount, onSplitComplete, onSaveHistory])
+  }, [images, lines, isMultiImage, generateSplit, generateBatchSplit, splitCount, onSplitComplete, onSaveHistory])
 
   const handleDownloadAll = useCallback(() => {
-    const baseName = getFileNameWithoutExtension(originalFileName)
-    const ext = getFileExtension(originalMimeType)
-    downloadAll(baseName, ext)
-  }, [originalFileName, originalMimeType, downloadAll])
+    if (isMultiImage) {
+      downloadBatchAll()
+    } else {
+      const baseName = getFileNameWithoutExtension(originalFileName)
+      const ext = getFileExtension(originalMimeType)
+      downloadAll(baseName, ext)
+    }
+  }, [isMultiImage, originalFileName, originalMimeType, downloadAll, downloadBatchAll])
 
   const handleDownloadSelected = useCallback(() => {
-    const baseName = getFileNameWithoutExtension(originalFileName)
-    const ext = getFileExtension(originalMimeType)
-    downloadSelected(baseName, ext)
-  }, [originalFileName, originalMimeType, downloadSelected])
+    if (isMultiImage) {
+      downloadBatchSelected()
+    } else {
+      const baseName = getFileNameWithoutExtension(originalFileName)
+      const ext = getFileExtension(originalMimeType)
+      downloadSelected(baseName, ext)
+    }
+  }, [isMultiImage, originalFileName, originalMimeType, downloadSelected, downloadBatchSelected])
 
   const handleSelectAll = useCallback(() => {
     if (selectedKeys.size === splitResults.length && splitResults.length > 0) {
@@ -297,19 +401,16 @@ export function SplitEditor({
     (e: React.KeyboardEvent) => {
       const isCmd = e.metaKey || e.ctrlKey
 
-      // Cmd+0 = fit to view
       if (isCmd && e.key === "0") {
         e.preventDefault()
         viewport.fitToView()
         return
       }
-      // Cmd+1 = 100%
       if (isCmd && e.key === "1") {
         e.preventDefault()
         viewport.resetTo100()
         return
       }
-
       if (isCmd && e.shiftKey && e.key === "z") {
         e.preventDefault()
         redo()
@@ -329,13 +430,37 @@ export function SplitEditor({
     [undo, redo, removeLine, selectedLineId, viewport]
   )
 
-  // Track which line is being dragged near ruler zone for delete feedback
   const [lineNearRuler, setLineNearRuler] = useState<string | null>(null)
 
-  if (!image) {
+  // Thumbnail URLs for image management strip
+  const thumbnailUrls = useMemo(() => {
+    return images.map((item) => {
+      const canvas = document.createElement("canvas")
+      const thumbSize = 64
+      const ratio = Math.min(
+        thumbSize / item.image.naturalWidth,
+        thumbSize / item.image.naturalHeight
+      )
+      canvas.width = item.image.naturalWidth * ratio
+      canvas.height = item.image.naturalHeight * ratio
+      const ctx = canvas.getContext("2d")
+      if (ctx) {
+        ctx.drawImage(item.image, 0, 0, canvas.width, canvas.height)
+      }
+      return canvas.toDataURL("image/jpeg", 0.6)
+    })
+  }, [images])
+
+  // Compute world bounds for line rendering
+  const worldLeft = -viewport.position.x / viewport.scale
+  const worldTop = -viewport.position.y / viewport.scale
+  const worldRight = worldLeft + stageWidth / viewport.scale
+  const worldBottom = worldTop + stageHeight / viewport.scale
+
+  if (images.length === 0) {
     return (
       <div className="w-full max-w-2xl mx-auto">
-        <UploadZone onImageLoaded={handleImageLoaded} />
+        <UploadZone onImagesLoaded={handleImagesLoaded} />
       </div>
     )
   }
@@ -383,7 +508,7 @@ export function SplitEditor({
           onClick={handleGenerate}
           disabled={isSplitting}
         >
-          {isSplitting ? "生成中..." : "生成"}
+          {isSplitting ? "生成中..." : isMultiImage ? `批量生成 (${images.length} 张)` : "生成"}
         </Button>
         {splitResults.length > 0 && (
           <Button size="sm" variant="secondary" onClick={() => setSheetOpen(true)}>
@@ -391,11 +516,16 @@ export function SplitEditor({
           </Button>
         )}
         <div className="flex-1" />
+        {isMultiImage && (
+          <span className="text-xs text-muted-foreground">
+            {images.length} 张图片 · {layout.direction === "vertical" ? "纵向排列" : "横向排列"}
+          </span>
+        )}
         <Button
           size="sm"
           variant="ghost"
           onClick={() => {
-            setImage(null)
+            setImages([])
             clearResults()
             setSelectedLineId(null)
           }}
@@ -408,6 +538,34 @@ export function SplitEditor({
         <p className="text-xs text-muted-foreground flex-shrink-0">
           快捷键: Ctrl+Z 撤销 | Ctrl+Shift+Z 重做 | Delete 删除选中分割线 | 从标尺拖拽创建分割线 | 拖回标尺删除 | 滚轮缩放 | 空格+拖拽平移 | Cmd+0 适应 | Cmd+1 100%
         </p>
+      )}
+
+      {/* Image management strip for multi-image */}
+      {isMultiImage && (
+        <div className="flex gap-2 overflow-x-auto pb-1 flex-shrink-0">
+          {images.map((item, index) => (
+            <div
+              key={`thumb-${index}`}
+              className="group/thumb relative shrink-0 rounded border border-[#1A1A1A]/15 overflow-hidden"
+            >
+              <img
+                src={thumbnailUrls[index]}
+                alt={item.fileName}
+                className="h-12 w-auto object-cover"
+              />
+              {/* Delete button */}
+              <button
+                className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover/thumb:opacity-100 transition-opacity"
+                onClick={() => handleRemoveImage(index)}
+              >
+                <X className="h-2.5 w-2.5" strokeWidth={2} />
+              </button>
+              <span className="absolute bottom-0 left-0 right-0 text-center text-[8px] bg-black/50 text-white leading-4">
+                {index + 1}
+              </span>
+            </div>
+          ))}
+        </div>
       )}
 
       {/* Editor area with rulers */}
@@ -432,25 +590,25 @@ export function SplitEditor({
           {/* Corner block */}
           <CornerBlock thickness={RULER_THICKNESS} />
 
-          {/* Horizontal ruler */}
+          {/* Horizontal ruler — uses reference image width */}
           <Ruler
             orientation="horizontal"
             length={stageWidth}
             viewportScale={viewport.scale}
             viewportOffset={viewport.position.x}
-            imageSize={imageWidth}
+            imageSize={refWidth}
             thickness={RULER_THICKNESS}
             lines={lines}
             onDragStart={startDrag}
           />
 
-          {/* Vertical ruler */}
+          {/* Vertical ruler — uses reference image height */}
           <Ruler
             orientation="vertical"
             length={stageHeight}
             viewportScale={viewport.scale}
             viewportOffset={viewport.position.y}
-            imageSize={imageHeight}
+            imageSize={refHeight}
             thickness={RULER_THICKNESS}
             lines={lines}
             onDragStart={startDrag}
@@ -492,48 +650,52 @@ export function SplitEditor({
               }}
               style={{ cursor: isPanning ? "grab" : "default" }}
             >
-              {/* Background + Image layer */}
+              {/* Background + Images layer */}
               <Layer listening={false}>
                 {/* Canvas background */}
                 <Rect
-                  x={-viewport.position.x / viewport.scale}
-                  y={-viewport.position.y / viewport.scale}
+                  x={worldLeft}
+                  y={worldTop}
                   width={stageWidth / viewport.scale}
                   height={stageHeight / viewport.scale}
                   fill="#e0e0e0"
                   listening={false}
                 />
-                <KonvaImage
-                  image={image}
-                  width={imageWidth}
-                  height={imageHeight}
-                />
+                {/* Render ALL images at their layout offsets */}
+                {images.map((item, index) => (
+                  <KonvaImage
+                    key={`img-${index}`}
+                    image={item.image}
+                    x={layout.offsets[index].x}
+                    y={layout.offsets[index].y}
+                    width={item.image.naturalWidth}
+                    height={item.image.naturalHeight}
+                  />
+                ))}
               </Layer>
 
               {/* Split lines layer */}
               <Layer>
-                {/* Preview regions overlay */}
-                {lines.length > 0 && (
-                  <SplitRegionOverlay
-                    lines={lines}
-                    imageWidth={imageWidth}
-                    imageHeight={imageHeight}
-                    scale={1}
-                  />
-                )}
+                {/* Preview regions overlay — render per image */}
+                {lines.length > 0 &&
+                  images.map((item, index) => (
+                    <SplitRegionOverlay
+                      key={`overlay-${index}`}
+                      lines={lines}
+                      imageWidth={item.image.naturalWidth}
+                      imageHeight={item.image.naturalHeight}
+                      offsetX={layout.offsets[index].x}
+                      offsetY={layout.offsets[index].y}
+                    />
+                  ))}
 
-                {/* Split lines */}
+                {/* Split lines — primary segments (first image, interactive) */}
                 {lines.map((line) => {
                   const isHorizontal = line.orientation === "horizontal"
                   const isSelected = line.id === selectedLineId
                   const isAboutToDelete = line.id === lineNearRuler
 
-                  // Calculate visible world bounds for full-viewport lines
-                  const worldLeft = -viewport.position.x / viewport.scale
-                  const worldTop = -viewport.position.y / viewport.scale
-                  const worldRight = worldLeft + stageWidth / viewport.scale
-                  const worldBottom = worldTop + stageHeight / viewport.scale
-
+                  // Primary line on first image (at offset 0,0 — same logic as before)
                   const points = isHorizontal
                     ? [worldLeft, line.position, worldRight, line.position]
                     : [line.position, worldTop, line.position, worldBottom]
@@ -586,7 +748,6 @@ export function SplitEditor({
                         const node = e.target
                         const stageContainer = stageContainerRef.current
 
-                        // Check if line was dragged to ruler zone (delete)
                         if (stageContainer && lineNearRuler === line.id) {
                           removeLine(line.id)
                           setLineNearRuler(null)
@@ -611,10 +772,52 @@ export function SplitEditor({
                     />
                   )
                 })}
+
+                {/* Split lines — mirror segments on other images (visual only) */}
+                {isMultiImage &&
+                  lines.map((line) =>
+                    images.slice(1).map((item, i) => {
+                      const imgIndex = i + 1
+                      const offset = layout.offsets[imgIndex]
+                      const isHorizontal = line.orientation === "horizontal"
+                      const isAboutToDelete = line.id === lineNearRuler
+                      const isSelected = line.id === selectedLineId
+
+                      // For vertical layout: horizontal lines need per-image y offset
+                      // For horizontal layout: vertical lines need per-image x offset
+                      let points: number[]
+                      if (layout.direction === "vertical" && isHorizontal) {
+                        points = [worldLeft, offset.y + line.position, worldRight, offset.y + line.position]
+                      } else if (layout.direction === "horizontal" && !isHorizontal) {
+                        points = [offset.x + line.position, worldTop, offset.x + line.position, worldBottom]
+                      } else {
+                        // This direction already covered by the primary full-span line
+                        return null
+                      }
+
+                      return (
+                        <Line
+                          key={`${line.id}-mirror-${imgIndex}`}
+                          points={points}
+                          stroke={
+                            isAboutToDelete
+                              ? "#f97316"
+                              : isSelected
+                                ? "#3b82f6"
+                                : "#ef4444"
+                          }
+                          strokeWidth={(isSelected ? 3 : 2) / viewport.scale}
+                          opacity={isAboutToDelete ? 0.5 : 0.8}
+                          hitStrokeWidth={20 / viewport.scale}
+                          listening={false}
+                        />
+                      )
+                    })
+                  )}
               </Layer>
             </Stage>
 
-            {/* Drag preview line (relative to stage container) */}
+            {/* Drag preview line */}
             {isDragging && dragOrientation && (
               <DragPreviewLine
                 isDragging={isDragging}
@@ -642,6 +845,7 @@ export function SplitEditor({
         open={sheetOpen && splitResults.length > 0}
         onClose={handleSheetClose}
         results={splitResults}
+        batchResults={batchResults}
         originalFileName={getFileNameWithoutExtension(originalFileName)}
         fileExtension={getFileExtension(originalMimeType)}
         onDownloadSingle={downloadOne}
@@ -656,17 +860,19 @@ export function SplitEditor({
   )
 }
 
-// Helper component: region overlay for split preview
+// Helper component: region overlay for split preview — now supports offset
 function SplitRegionOverlay({
   lines,
   imageWidth,
   imageHeight,
-  scale,
+  offsetX = 0,
+  offsetY = 0,
 }: {
   lines: SplitLine[]
   imageWidth: number
   imageHeight: number
-  scale: number
+  offsetX?: number
+  offsetY?: number
 }) {
   const hPositions = lines
     .filter((l) => l.orientation === "horizontal")
@@ -687,10 +893,10 @@ function SplitRegionOverlay({
       rects.push(
         <Rect
           key={`region-${r}-${c}`}
-          x={xEdges[c] * scale}
-          y={yEdges[r] * scale}
-          width={(xEdges[c + 1] - xEdges[c]) * scale}
-          height={(yEdges[r + 1] - yEdges[r]) * scale}
+          x={offsetX + xEdges[c]}
+          y={offsetY + yEdges[r]}
+          width={xEdges[c + 1] - xEdges[c]}
+          height={yEdges[r + 1] - yEdges[r]}
           stroke="rgba(255,255,255,0.3)"
           strokeWidth={1}
           listening={false}

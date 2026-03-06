@@ -1,12 +1,12 @@
 import type { UploadResult } from "@/types"
 
-let pending: UploadResult | null = null
+let pending: UploadResult[] | null = null
 
-export function setPendingUpload(data: UploadResult) {
+export function setPendingUpload(data: UploadResult[]) {
   pending = data
 }
 
-export function consumePendingUpload(): UploadResult | null {
+export function consumePendingUpload(): UploadResult[] | null {
   const d = pending
   pending = null
   return d

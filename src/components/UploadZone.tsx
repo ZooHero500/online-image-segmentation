@@ -1,13 +1,16 @@
 "use client"
 
 import { useCallback, useRef, useState } from "react"
+import { toast } from "sonner"
 import type { UploadResult } from "@/types"
 
 const ACCEPTED_TYPES = ["image/png", "image/jpeg", "image/webp"]
-const MAX_SIZE = 20 * 1024 * 1024 // 20MB
+const MAX_SIZE = 20 * 1024 * 1024 // 20MB per file
+const MAX_TOTAL_SIZE = 50 * 1024 * 1024 // 50MB total
 
 interface UploadZoneProps {
-  onImageLoaded: (result: UploadResult) => void
+  onImageLoaded?: (result: UploadResult) => void
+  onImagesLoaded?: (results: UploadResult[]) => void
 }
 
 function loadImage(file: File): Promise<HTMLImageElement> {
@@ -26,43 +29,67 @@ function loadImage(file: File): Promise<HTMLImageElement> {
   })
 }
 
-export function UploadZone({ onImageLoaded }: UploadZoneProps) {
+export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
   const [error, setError] = useState<string | null>(null)
   const [isDragOver, setIsDragOver] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const processFile = useCallback(
-    async (file: File) => {
+  const processFiles = useCallback(
+    async (files: FileList) => {
       setError(null)
 
-      if (!ACCEPTED_TYPES.includes(file.type)) {
-        setError("不支持的文件格式，请上传 PNG、JPG 或 WebP 格式的图片")
-        return
+      const validFiles: File[] = []
+      for (const file of Array.from(files)) {
+        if (!ACCEPTED_TYPES.includes(file.type)) {
+          setError("不支持的文件格式，请上传 PNG、JPG 或 WebP 格式的图片")
+          return
+        }
+        if (file.size > MAX_SIZE) {
+          setError(`文件 "${file.name}" 过大（超过 20MB），建议压缩后重试`)
+          return
+        }
+        validFiles.push(file)
       }
 
-      if (file.size > MAX_SIZE) {
-        setError("文件过大（超过 20MB），建议压缩后重试")
-        return
+      if (validFiles.length === 0) return
+
+      // Check total size
+      const totalSize = validFiles.reduce((sum, f) => sum + f.size, 0)
+      if (totalSize > MAX_TOTAL_SIZE) {
+        toast.warning(
+          `总文件大小 ${(totalSize / 1024 / 1024).toFixed(1)}MB 超过 50MB，可能导致浏览器卡顿`
+        )
       }
 
       try {
-        const image = await loadImage(file)
-        onImageLoaded({ file, image, mimeType: file.type })
+        const results: UploadResult[] = []
+        for (const file of validFiles) {
+          const image = await loadImage(file)
+          results.push({ file, image, mimeType: file.type })
+        }
+
+        // Support both single and multi callbacks
+        if (onImagesLoaded) {
+          onImagesLoaded(results)
+        } else if (onImageLoaded && results.length > 0) {
+          onImageLoaded(results[0])
+        }
       } catch {
         setError("图片加载失败，请重试")
       }
     },
-    [onImageLoaded]
+    [onImageLoaded, onImagesLoaded]
   )
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
       e.preventDefault()
       setIsDragOver(false)
-      const file = e.dataTransfer.files[0]
-      if (file) processFile(file)
+      if (e.dataTransfer.files.length > 0) {
+        processFiles(e.dataTransfer.files)
+      }
     },
-    [processFile]
+    [processFiles]
   )
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -77,11 +104,12 @@ export function UploadZone({ onImageLoaded }: UploadZoneProps) {
 
   const handleFileChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0]
-      if (file) processFile(file)
+      if (e.target.files && e.target.files.length > 0) {
+        processFiles(e.target.files)
+      }
       if (inputRef.current) inputRef.current.value = ""
     },
-    [processFile]
+    [processFiles]
   )
 
   return (
@@ -100,6 +128,7 @@ export function UploadZone({ onImageLoaded }: UploadZoneProps) {
         ref={inputRef}
         type="file"
         accept="image/png,image/jpeg,image/webp"
+        multiple
         className="hidden"
         onChange={handleFileChange}
       />
@@ -109,7 +138,7 @@ export function UploadZone({ onImageLoaded }: UploadZoneProps) {
           上传图片
         </p>
         <p className="font-serif text-2xl md:text-3xl text-[#1A1A1A] mb-4">
-          拖拽图片到此处
+          拖拽一张或多张图片到此处
         </p>
         <div className="flex items-center gap-4 justify-center mb-6">
           <span className="h-px w-8 bg-[#1A1A1A]/20" />
@@ -117,10 +146,10 @@ export function UploadZone({ onImageLoaded }: UploadZoneProps) {
           <span className="h-px w-8 bg-[#1A1A1A]/20" />
         </div>
         <p className="text-sm text-[#1A1A1A] group-hover:text-[#D4AF37] transition-colors duration-500">
-          点击选择文件
+          点击选择文件（支持多选）
         </p>
         <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-[#6C6863]/70">
-          PNG / JPG / WebP &middot; 最大 20MB
+          PNG / JPG / WebP &middot; 单张最大 20MB
         </p>
       </div>
 

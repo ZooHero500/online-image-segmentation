@@ -1,14 +1,14 @@
 "use client"
 
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { Button } from "@/components/ui/button"
 import { X, Download, ZoomIn, Check } from "lucide-react"
-import type { SplitResult } from "@/types"
+import type { SplitResult, BatchSplitResult } from "@/types"
 
 interface ResultSheetProps {
   open: boolean
   onClose: () => void
   results: SplitResult[]
+  batchResults?: BatchSplitResult[]
   originalFileName: string
   fileExtension: string
   onDownloadSingle: (result: SplitResult, fileName: string) => void
@@ -20,7 +20,10 @@ interface ResultSheetProps {
   onDownloadSelected: () => void
 }
 
-function getResultKey(result: SplitResult): string {
+function getResultKey(result: SplitResult, imageIndex?: number): string {
+  if (imageIndex !== undefined) {
+    return `${imageIndex}-${result.row}-${result.col}`
+  }
   return `${result.row}-${result.col}`
 }
 
@@ -30,6 +33,17 @@ function getFileName(
   ext: string
 ): string {
   return `${originalFileName}_r${result.row}_c${result.col}.${ext}`
+}
+
+function getFileExtension(mimeType: string): string {
+  if (mimeType === "image/webp") return "png"
+  if (mimeType === "image/jpeg") return "jpg"
+  if (mimeType === "image/png") return "png"
+  return "png"
+}
+
+function getFileNameWithoutExtension(fileName: string): string {
+  return fileName.replace(/\.[^.]+$/, "")
 }
 
 /* ─── Lightbox ─── */
@@ -178,6 +192,7 @@ export function ResultSheet({
   open,
   onClose,
   results,
+  batchResults,
   originalFileName,
   fileExtension,
   onDownloadSingle,
@@ -193,10 +208,16 @@ export function ResultSheet({
     alt: string
   } | null>(null)
 
+  const isMultiImage = batchResults && batchResults.length > 1
+
   const maxCols = useMemo(
-    () => Math.max(...results.map((r) => r.col)),
+    () => Math.max(...results.map((r) => r.col), 1),
     [results]
   )
+
+  const totalCount = isMultiImage
+    ? batchResults.reduce((sum, b) => sum + b.results.length, 0)
+    : results.length
 
   const selectedCount = selectedKeys.size
 
@@ -231,10 +252,15 @@ export function ResultSheet({
               分割结果
             </span>
             <span className="text-xs text-[#1A1A1A] font-medium">
-              {results.length} 张图片
+              {totalCount} 张图片
+              {isMultiImage && (
+                <span className="text-[#6C6863] ml-1">
+                  ({batchResults.length} 张原图)
+                </span>
+              )}
               {selectedCount > 0 && (
                 <span className="text-[#D4AF37] ml-2">
-                  · 已选 {selectedCount}/{results.length} 张
+                  · 已选 {selectedCount}/{totalCount} 张
                 </span>
               )}
             </span>
@@ -295,28 +321,74 @@ export function ResultSheet({
 
         {/* Results grid */}
         <div className="flex-1 overflow-y-auto px-6 py-4">
-          <div
-            className="grid gap-4"
-            style={{
-              gridTemplateColumns: `repeat(${Math.min(maxCols, 2)}, minmax(0, 1fr))`,
-            }}
-          >
-            {results.map((result) => {
-              const key = getResultKey(result)
-              return (
-                <ResultItem
-                  key={key}
-                  result={result}
-                  originalFileName={originalFileName}
-                  fileExtension={fileExtension}
-                  onDownload={onDownloadSingle}
-                  onPreview={handlePreview}
-                  selected={selectedKeys.has(key)}
-                  onToggleSelect={() => onToggleSelect(key)}
-                />
-              )
-            })}
-          </div>
+          {isMultiImage ? (
+            // Multi-image: group by source image
+            <div className="space-y-6">
+              {batchResults.map((batch, imageIndex) => {
+                const batchFileName = getFileNameWithoutExtension(batch.fileName)
+                const batchExt = getFileExtension(batch.mimeType)
+                const batchMaxCols = Math.max(...batch.results.map((r) => r.col), 1)
+                return (
+                  <div key={`batch-${imageIndex}`}>
+                    <div className="mb-3 pb-2 border-b border-[#1A1A1A]/10">
+                      <span className="text-[10px] uppercase tracking-[0.2em] text-[#6C6863]">
+                        {batch.fileName}
+                      </span>
+                      <span className="text-[10px] text-[#6C6863]/60 ml-2">
+                        ({batch.results.length} 张)
+                      </span>
+                    </div>
+                    <div
+                      className="grid gap-4"
+                      style={{
+                        gridTemplateColumns: `repeat(${Math.min(batchMaxCols, 2)}, minmax(0, 1fr))`,
+                      }}
+                    >
+                      {batch.results.map((result) => {
+                        const key = getResultKey(result, imageIndex)
+                        return (
+                          <ResultItem
+                            key={key}
+                            result={result}
+                            originalFileName={batchFileName}
+                            fileExtension={batchExt}
+                            onDownload={onDownloadSingle}
+                            onPreview={handlePreview}
+                            selected={selectedKeys.has(key)}
+                            onToggleSelect={() => onToggleSelect(key)}
+                          />
+                        )
+                      })}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          ) : (
+            // Single image: flat grid (backward compatible)
+            <div
+              className="grid gap-4"
+              style={{
+                gridTemplateColumns: `repeat(${Math.min(maxCols, 2)}, minmax(0, 1fr))`,
+              }}
+            >
+              {results.map((result) => {
+                const key = getResultKey(result)
+                return (
+                  <ResultItem
+                    key={key}
+                    result={result}
+                    originalFileName={originalFileName}
+                    fileExtension={fileExtension}
+                    onDownload={onDownloadSingle}
+                    onPreview={handlePreview}
+                    selected={selectedKeys.has(key)}
+                    onToggleSelect={() => onToggleSelect(key)}
+                  />
+                )
+              })}
+            </div>
+          )}
         </div>
       </div>
 

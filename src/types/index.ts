@@ -38,9 +38,25 @@ export interface UploadResult {
   mimeType: string
 }
 
-/** ZIP 导出选项 */
+/** 批量分割结果（单张图片） */
+export interface BatchSplitResult {
+  fileName: string
+  mimeType: string
+  results: SplitResult[]
+}
+
+/** ZIP 导出选项（单图） */
 export interface ZipExportOptions {
   originalFileName: string
   results: SplitResult[]
   fileExtension: string
+}
+
+/** ZIP 导出选项（多图） */
+export interface BatchZipExportOptions {
+  items: {
+    originalFileName: string
+    results: SplitResult[]
+    fileExtension: string
+  }[]
 }

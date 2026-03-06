@@ -9,13 +9,13 @@ import type { UploadResult } from "@/types"
 export function LandingContent() {
   const router = useRouter()
 
-  const handleImageLoaded = useCallback(
-    (result: UploadResult) => {
-      setPendingUpload(result)
+  const handleImagesLoaded = useCallback(
+    (results: UploadResult[]) => {
+      setPendingUpload(results)
       router.push("/workspace")
     },
     [router]
   )
 
-  return <UploadZone onImageLoaded={handleImageLoaded} />
+  return <UploadZone onImagesLoaded={handleImagesLoaded} />
 }

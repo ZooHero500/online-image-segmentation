@@ -4,28 +4,56 @@ import { useCallback, useState } from "react"
 import { splitImage } from "@/lib/image-splitter"
 import {
   exportAsZip,
+  exportBatchAsZip,
   downloadSingle,
   getZipFileName,
   getSelectedZipFileName,
+  getBatchZipFileName,
 } from "@/lib/zip-exporter"
-import type { SplitLine, SplitResult } from "@/types"
+import type { SplitLine, SplitResult, BatchSplitResult } from "@/types"
 
-function getResultKey(result: SplitResult): string {
+function getResultKey(result: SplitResult, imageIndex?: number): string {
+  if (imageIndex !== undefined) {
+    return `${imageIndex}-${result.row}-${result.col}`
+  }
   return `${result.row}-${result.col}`
+}
+
+function getFileExtension(mimeType: string): string {
+  if (mimeType === "image/webp") return "png"
+  if (mimeType === "image/jpeg") return "jpg"
+  if (mimeType === "image/png") return "png"
+  return "png"
+}
+
+function getFileNameWithoutExtension(fileName: string): string {
+  return fileName.replace(/\.[^.]+$/, "")
+}
+
+interface ImageItem {
+  image: HTMLImageElement
+  fileName: string
+  mimeType: string
 }
 
 interface UseImageExportReturn {
   splitResults: SplitResult[]
+  batchResults: BatchSplitResult[]
   isSplitting: boolean
   generateSplit: (
     image: HTMLImageElement,
     lines: SplitLine[],
     mimeType: string
   ) => Promise<SplitResult[]>
+  generateBatchSplit: (
+    images: ImageItem[],
+    lines: SplitLine[]
+  ) => Promise<BatchSplitResult[]>
   downloadAll: (
     originalFileName: string,
     fileExtension: string
   ) => Promise<void>
+  downloadBatchAll: () => Promise<void>
   downloadOne: (result: SplitResult, fileName: string) => void
   clearResults: () => void
   selectedKeys: ReadonlySet<string>
@@ -37,10 +65,12 @@ interface UseImageExportReturn {
     originalFileName: string,
     fileExtension: string
   ) => Promise<void>
+  downloadBatchSelected: () => Promise<void>
 }
 
 export function useImageExport(): UseImageExportReturn {
   const [splitResults, setSplitResults] = useState<SplitResult[]>([])
+  const [batchResults, setBatchResults] = useState<BatchSplitResult[]>([])
   const [isSplitting, setIsSplitting] = useState(false)
   const [selectedKeys, setSelectedKeys] = useState<Set<string>>(new Set())
 
@@ -54,8 +84,40 @@ export function useImageExport(): UseImageExportReturn {
       try {
         const results = await splitImage(image, lines, mimeType)
         setSplitResults(results)
+        setBatchResults([])
         setSelectedKeys(new Set())
         return results
+      } finally {
+        setIsSplitting(false)
+      }
+    },
+    []
+  )
+
+  const generateBatchSplit = useCallback(
+    async (
+      images: ImageItem[],
+      lines: SplitLine[]
+    ): Promise<BatchSplitResult[]> => {
+      setIsSplitting(true)
+      try {
+        const batch: BatchSplitResult[] = []
+        for (const item of images) {
+          const results = await splitImage(item.image, lines, item.mimeType)
+          batch.push({
+            fileName: item.fileName,
+            mimeType: item.mimeType,
+            results,
+          })
+        }
+        setBatchResults(batch)
+        // Flatten for backward compatible display
+        const allResults = batch.flatMap((b, i) =>
+          b.results.map((r) => ({ ...r, _imageIndex: i }))
+        )
+        setSplitResults(allResults)
+        setSelectedKeys(new Set())
+        return batch
       } finally {
         setIsSplitting(false)
       }
@@ -81,6 +143,23 @@ export function useImageExport(): UseImageExportReturn {
     [splitResults]
   )
 
+  const downloadBatchAll = useCallback(async () => {
+    if (batchResults.length === 0) return
+    const zipBlob = await exportBatchAsZip({
+      items: batchResults.map((b) => ({
+        originalFileName: getFileNameWithoutExtension(b.fileName),
+        results: b.results,
+        fileExtension: getFileExtension(b.mimeType),
+      })),
+    })
+    const url = URL.createObjectURL(zipBlob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = getBatchZipFileName()
+    a.click()
+    URL.revokeObjectURL(url)
+  }, [batchResults])
+
   const downloadOne = useCallback(
     (result: SplitResult, fileName: string) => {
       downloadSingle(result, fileName)
@@ -90,6 +169,7 @@ export function useImageExport(): UseImageExportReturn {
 
   const clearResults = useCallback(() => {
     setSplitResults([])
+    setBatchResults([])
     setSelectedKeys(new Set())
   }, [])
 
@@ -106,8 +186,16 @@ export function useImageExport(): UseImageExportReturn {
   }, [])
 
   const selectAll = useCallback(() => {
-    setSelectedKeys(new Set(splitResults.map(getResultKey)))
-  }, [splitResults])
+    if (batchResults.length > 0) {
+      const keys: string[] = []
+      batchResults.forEach((b, i) => {
+        b.results.forEach((r) => keys.push(getResultKey(r, i)))
+      })
+      setSelectedKeys(new Set(keys))
+    } else {
+      setSelectedKeys(new Set(splitResults.map((r) => getResultKey(r))))
+    }
+  }, [splitResults, batchResults])
 
   const deselectAll = useCallback(() => {
     setSelectedKeys(new Set())
@@ -139,11 +227,34 @@ export function useImageExport(): UseImageExportReturn {
     [splitResults, selectedKeys]
   )
 
+  const downloadBatchSelected = useCallback(async () => {
+    if (selectedKeys.size === 0 || batchResults.length === 0) return
+
+    const items = batchResults.map((b, i) => ({
+      originalFileName: getFileNameWithoutExtension(b.fileName),
+      results: b.results.filter((r) => selectedKeys.has(getResultKey(r, i))),
+      fileExtension: getFileExtension(b.mimeType),
+    })).filter((item) => item.results.length > 0)
+
+    if (items.length === 0) return
+
+    const zipBlob = await exportBatchAsZip({ items })
+    const url = URL.createObjectURL(zipBlob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = "selected_split.zip"
+    a.click()
+    URL.revokeObjectURL(url)
+  }, [batchResults, selectedKeys])
+
   return {
     splitResults,
+    batchResults,
     isSplitting,
     generateSplit,
+    generateBatchSplit,
     downloadAll,
+    downloadBatchAll,
     downloadOne,
     clearResults,
     selectedKeys,
@@ -152,5 +263,6 @@ export function useImageExport(): UseImageExportReturn {
     deselectAll,
     clearSelection,
     downloadSelected,
+    downloadBatchSelected,
   }
 }
