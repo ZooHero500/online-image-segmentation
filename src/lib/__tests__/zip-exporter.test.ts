@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest"
-import { exportAsZip, downloadSingle } from "../zip-exporter"
+import { exportAsZip, downloadSingle, getSelectedZipFileName, getZipFileName } from "../zip-exporter"
 import type { SplitResult } from "@/types"
 
 function createMockResult(row: number, col: number): SplitResult {
@@ -69,6 +69,21 @@ describe("exportAsZip", () => {
     const fileNames = Object.keys(zip.files)
 
     expect(fileNames).toContain("my-image_r3_c2.jpg")
+  })
+})
+
+describe("getSelectedZipFileName", () => {
+  it("should return filename with _selected.zip suffix", () => {
+    expect(getSelectedZipFileName("photo")).toBe("photo_selected.zip")
+  })
+
+  it("should handle filenames with special characters", () => {
+    expect(getSelectedZipFileName("my-image")).toBe("my-image_selected.zip")
+  })
+
+  it("should differ from getZipFileName", () => {
+    const name = "photo"
+    expect(getSelectedZipFileName(name)).not.toBe(getZipFileName(name))
   })
 })
 

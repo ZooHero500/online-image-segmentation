@@ -104,6 +104,12 @@ export function SplitEditor({
     downloadAll,
     downloadOne,
     clearResults,
+    selectedKeys,
+    toggleSelect,
+    selectAll,
+    deselectAll,
+    clearSelection,
+    downloadSelected,
   } = useImageExport()
 
   const {
@@ -265,6 +271,27 @@ export function SplitEditor({
     const ext = getFileExtension(originalMimeType)
     downloadAll(baseName, ext)
   }, [originalFileName, originalMimeType, downloadAll])
+
+  const handleDownloadSelected = useCallback(() => {
+    const baseName = getFileNameWithoutExtension(originalFileName)
+    const ext = getFileExtension(originalMimeType)
+    downloadSelected(baseName, ext)
+  }, [originalFileName, originalMimeType, downloadSelected])
+
+  const handleSelectAll = useCallback(() => {
+    if (selectedKeys.size === splitResults.length && splitResults.length > 0) {
+      deselectAll()
+    } else {
+      selectAll()
+    }
+  }, [selectedKeys.size, splitResults.length, selectAll, deselectAll])
+
+  const isAllSelected = splitResults.length > 0 && selectedKeys.size === splitResults.length
+
+  const handleSheetClose = useCallback(() => {
+    setSheetOpen(false)
+    clearSelection()
+  }, [clearSelection])
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -613,12 +640,17 @@ export function SplitEditor({
       {/* Split results sheet */}
       <ResultSheet
         open={sheetOpen && splitResults.length > 0}
-        onClose={() => setSheetOpen(false)}
+        onClose={handleSheetClose}
         results={splitResults}
         originalFileName={getFileNameWithoutExtension(originalFileName)}
         fileExtension={getFileExtension(originalMimeType)}
         onDownloadSingle={downloadOne}
         onDownloadAll={handleDownloadAll}
+        selectedKeys={selectedKeys}
+        onToggleSelect={toggleSelect}
+        onSelectAll={handleSelectAll}
+        isAllSelected={isAllSelected}
+        onDownloadSelected={handleDownloadSelected}
       />
     </div>
   )

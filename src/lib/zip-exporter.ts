@@ -36,3 +36,7 @@ export function downloadSingle(result: SplitResult, fileName: string): void {
 export function getZipFileName(originalFileName: string): string {
   return `${originalFileName}_split.zip`
 }
+
+export function getSelectedZipFileName(originalFileName: string): string {
+  return `${originalFileName}_selected.zip`
+}

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { X, Download, ZoomIn } from "lucide-react"
+import { X, Download, ZoomIn, Check } from "lucide-react"
 import type { SplitResult } from "@/types"
 
 interface ResultSheetProps {
@@ -13,6 +13,15 @@ interface ResultSheetProps {
   fileExtension: string
   onDownloadSingle: (result: SplitResult, fileName: string) => void
   onDownloadAll: () => void
+  selectedKeys: ReadonlySet<string>
+  onToggleSelect: (key: string) => void
+  onSelectAll: () => void
+  isAllSelected: boolean
+  onDownloadSelected: () => void
+}
+
+function getResultKey(result: SplitResult): string {
+  return `${result.row}-${result.col}`
 }
 
 function getFileName(
@@ -79,12 +88,16 @@ function ResultItem({
   fileExtension,
   onDownload,
   onPreview,
+  selected,
+  onToggleSelect,
 }: {
   result: SplitResult
   originalFileName: string
   fileExtension: string
   onDownload: (result: SplitResult, fileName: string) => void
   onPreview: (src: string, alt: string) => void
+  selected: boolean
+  onToggleSelect: () => void
 }) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
 
@@ -97,7 +110,13 @@ function ResultItem({
   const fileName = getFileName(originalFileName, result, fileExtension)
 
   return (
-    <div className="group border-t border-[#1A1A1A]/10 dark:border-[#F9F8F6]/10">
+    <div
+      className={`group border-t transition-colors duration-300 ${
+        selected
+          ? "border-[#D4AF37] ring-1 ring-[#D4AF37]/40"
+          : "border-[#1A1A1A]/10 dark:border-[#F9F8F6]/10"
+      }`}
+    >
       {/* Image preview */}
       {previewUrl && (
         <div
@@ -109,8 +128,22 @@ function ResultItem({
             alt={fileName}
             className="w-full h-full object-contain transition-transform duration-[1500ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-105"
           />
+          {/* Checkbox overlay */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              onToggleSelect()
+            }}
+            className={`absolute top-2 left-2 w-5 h-5 flex items-center justify-center border transition-all duration-300 ${
+              selected
+                ? "bg-[#D4AF37] border-[#D4AF37] text-white"
+                : "bg-white/80 border-[#1A1A1A]/25 text-transparent hover:border-[#D4AF37]/60"
+            }`}
+          >
+            <Check className="h-3 w-3" strokeWidth={2} />
+          </button>
           {/* Hover overlay */}
-          <div className="absolute inset-0 bg-[#1A1A1A]/0 group-hover:bg-[#1A1A1A]/10 transition-colors duration-700 flex items-center justify-center">
+          <div className="absolute inset-0 bg-[#1A1A1A]/0 group-hover:bg-[#1A1A1A]/10 transition-colors duration-700 flex items-center justify-center pointer-events-none">
             <ZoomIn
               className="h-5 w-5 text-[#F9F8F6] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               strokeWidth={1.5}
@@ -149,6 +182,11 @@ export function ResultSheet({
   fileExtension,
   onDownloadSingle,
   onDownloadAll,
+  selectedKeys,
+  onToggleSelect,
+  onSelectAll,
+  isAllSelected,
+  onDownloadSelected,
 }: ResultSheetProps) {
   const [lightbox, setLightbox] = useState<{
     src: string
@@ -159,6 +197,8 @@ export function ResultSheet({
     () => Math.max(...results.map((r) => r.col)),
     [results]
   )
+
+  const selectedCount = selectedKeys.size
 
   const handlePreview = useCallback((src: string, alt: string) => {
     setLightbox({ src, alt })
@@ -192,6 +232,11 @@ export function ResultSheet({
             </span>
             <span className="text-xs text-[#1A1A1A] font-medium">
               {results.length} 张图片
+              {selectedCount > 0 && (
+                <span className="text-[#D4AF37] ml-2">
+                  · 已选 {selectedCount}/{results.length} 张
+                </span>
+              )}
             </span>
           </div>
           <button
@@ -203,7 +248,7 @@ export function ResultSheet({
         </div>
 
         {/* Download all button */}
-        <div className="px-6 py-4 border-b border-[#1A1A1A]/10 shrink-0">
+        <div className="px-6 py-4 border-b border-[#1A1A1A]/10 shrink-0 space-y-3">
           <button
             onClick={onDownloadAll}
             className="group relative w-full inline-flex items-center justify-center gap-2 bg-[#1A1A1A] text-[#F9F8F6] px-6 py-3 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500"
@@ -212,6 +257,40 @@ export function ResultSheet({
             <Download className="relative z-10 h-3.5 w-3.5" strokeWidth={1.5} />
             <span className="relative z-10">下载全部 (ZIP)</span>
           </button>
+
+          {/* Selection action bar */}
+          <div className="flex items-center gap-3">
+            {/* Select all checkbox */}
+            <button
+              onClick={onSelectAll}
+              className={`shrink-0 w-5 h-5 flex items-center justify-center border transition-all duration-300 ${
+                isAllSelected
+                  ? "bg-[#D4AF37] border-[#D4AF37] text-white"
+                  : "bg-white border-[#1A1A1A]/25 text-transparent hover:border-[#D4AF37]/60"
+              }`}
+            >
+              <Check className="h-3 w-3" strokeWidth={2} />
+            </button>
+            <span className="text-[10px] uppercase tracking-[0.15em] text-[#6C6863]">
+              全选
+            </span>
+
+            <div className="flex-1" />
+
+            {/* Download selected button */}
+            <button
+              onClick={onDownloadSelected}
+              disabled={selectedCount === 0}
+              className={`inline-flex items-center gap-1.5 px-4 py-2 text-[10px] uppercase tracking-[0.15em] border transition-all duration-500 ${
+                selectedCount > 0
+                  ? "border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-white"
+                  : "border-[#1A1A1A]/10 text-[#1A1A1A]/25 cursor-not-allowed"
+              }`}
+            >
+              <Download className="h-3 w-3" strokeWidth={1.5} />
+              下载选中{selectedCount > 0 ? ` (${selectedCount})` : ""}
+            </button>
+          </div>
         </div>
 
         {/* Results grid */}
@@ -222,16 +301,21 @@ export function ResultSheet({
               gridTemplateColumns: `repeat(${Math.min(maxCols, 2)}, minmax(0, 1fr))`,
             }}
           >
-            {results.map((result) => (
-              <ResultItem
-                key={`${result.row}-${result.col}`}
-                result={result}
-                originalFileName={originalFileName}
-                fileExtension={fileExtension}
-                onDownload={onDownloadSingle}
-                onPreview={handlePreview}
-              />
-            ))}
+            {results.map((result) => {
+              const key = getResultKey(result)
+              return (
+                <ResultItem
+                  key={key}
+                  result={result}
+                  originalFileName={originalFileName}
+                  fileExtension={fileExtension}
+                  onDownload={onDownloadSingle}
+                  onPreview={handlePreview}
+                  selected={selectedKeys.has(key)}
+                  onToggleSelect={() => onToggleSelect(key)}
+                />
+              )
+            })}
           </div>
         </div>
       </div>
