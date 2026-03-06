@@ -17,29 +17,29 @@
 **示例**: `components/ui/button.tsx`、`components/ui/dialog.tsx`
 
 ### 业务组件
-**位置**: `components/` 下按功能分组
+**位置**: `components/`（扁平结构）
 **用途**: 包含业务逻辑的功能组件
-**示例**: `components/canvas/`（画布交互）、`components/sidebar/`（历史记录）
+**示例**: `components/SplitEditor.tsx`（画布编辑器）、`components/ResultSheet.tsx`（结果面板）、`components/HistorySidebar.tsx`（历史记录）
 
 ### 核心逻辑
-**位置**: `lib/`
+**位置**: `lib/`（扁平结构）
 **用途**: 与 UI 无关的纯逻辑模块
-**示例**: `lib/image/`（图片分割算法）、`lib/storage/`（本地存储封装）
+**示例**: `lib/image-splitter.ts`（图片分割算法）、`lib/storage-service.ts`（本地存储封装）
 
 ### 自定义 Hooks
 **位置**: `hooks/`
 **用途**: 可复用的 React Hooks
-**示例**: `hooks/useImageSplit.ts`、`hooks/useHistory.ts`
+**示例**: `hooks/use-split-lines.ts`、`hooks/use-history.ts`
 
 ### 类型定义
 **位置**: `types/`
 **用途**: 全局共享的 TypeScript 类型
-**示例**: `types/image.ts`、`types/history.ts`
+**示例**: `types/index.ts`（集中定义所有接口）
 
 ## 命名规范
 
 - **React 组件文件**: PascalCase（`SplitLine.tsx`、`ImageCanvas.tsx`）
-- **工具/hooks 文件**: camelCase（`useImageSplit.ts`、`splitImage.ts`）
+- **工具/hooks 文件**: kebab-case（`use-split-lines.ts`、`image-splitter.ts`）
 - **页面路由文件**: Next.js 约定（`page.tsx`、`layout.tsx`）
 - **组件名**: PascalCase
 - **函数/变量名**: camelCase

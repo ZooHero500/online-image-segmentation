@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { Stage, Layer, Image as KonvaImage, Line, Rect } from "react-konva"
+import { Stage, Layer, Image as KonvaImage, Line, Rect, Group } from "react-konva"
 import type Konva from "konva"
 import { Button } from "@/components/ui/button"
 import { UploadZone } from "./UploadZone"
@@ -18,7 +18,108 @@ import type { SplitLine, UploadResult } from "@/types"
 import { X } from "lucide-react"
 
 const RULER_THICKNESS = 20
-const IMAGE_GAP = 40 // gap between images in image-space pixels
+const IMAGE_GAP = 40
+const SNAP_THRESHOLD_PX = 8 // screen pixels for image alignment snap
+const LINE_EXTEND = 20 // how far split lines extend beyond image edges
+
+// ─── Image snap alignment ───
+
+interface SnapGuide {
+  orientation: "horizontal" | "vertical"
+  position: number
+  start: number
+  end: number
+}
+
+function calculateImageSnap(
+  draggedIdx: number,
+  proposedX: number,
+  proposedY: number,
+  dragW: number,
+  dragH: number,
+  positions: { x: number; y: number }[],
+  sizes: { w: number; h: number }[],
+  threshold: number
+): { x: number; y: number; guides: SnapGuide[] } {
+  let bestX = proposedX
+  let bestY = proposedY
+  let bestDx = Infinity
+  let bestDy = Infinity
+  let snapXEdge = 0
+  let snapXOtherIdx = -1
+  let snapYEdge = 0
+  let snapYOtherIdx = -1
+
+  for (let i = 0; i < positions.length; i++) {
+    if (i === draggedIdx) continue
+    const ox = positions[i].x
+    const oy = positions[i].y
+    const ow = sizes[i].w
+    const oh = sizes[i].h
+
+    // X-axis: left/right/center edges
+    const dragXEdges = [proposedX, proposedX + dragW, proposedX + dragW / 2]
+    const otherXEdges = [ox, ox + ow, ox + ow / 2]
+    for (const de of dragXEdges) {
+      for (const oe of otherXEdges) {
+        const d = Math.abs(de - oe)
+        if (d < bestDx) {
+          bestDx = d
+          bestX = proposedX + (oe - de)
+          snapXEdge = oe
+          snapXOtherIdx = i
+        }
+      }
+    }
+
+    // Y-axis: top/bottom/center edges
+    const dragYEdges = [proposedY, proposedY + dragH, proposedY + dragH / 2]
+    const otherYEdges = [oy, oy + oh, oy + oh / 2]
+    for (const de of dragYEdges) {
+      for (const oe of otherYEdges) {
+        const d = Math.abs(de - oe)
+        if (d < bestDy) {
+          bestDy = d
+          bestY = proposedY + (oe - de)
+          snapYEdge = oe
+          snapYOtherIdx = i
+        }
+      }
+    }
+  }
+
+  // Apply threshold — only snap if close enough
+  if (bestDx >= threshold) bestX = proposedX
+  if (bestDy >= threshold) bestY = proposedY
+
+  const guides: SnapGuide[] = []
+
+  if (bestDx < threshold && snapXOtherIdx >= 0) {
+    const oy = positions[snapXOtherIdx].y
+    const oh = sizes[snapXOtherIdx].h
+    guides.push({
+      orientation: "vertical",
+      position: snapXEdge,
+      start: Math.min(bestY, oy) - 10,
+      end: Math.max(bestY + dragH, oy + oh) + 10,
+    })
+  }
+
+  if (bestDy < threshold && snapYOtherIdx >= 0) {
+    const ox = positions[snapYOtherIdx].x
+    const ow = sizes[snapYOtherIdx].w
+    guides.push({
+      orientation: "horizontal",
+      position: snapYEdge,
+      start: Math.min(bestX, ox) - 10,
+      end: Math.max(bestX + dragW, ox + ow) + 10,
+    })
+  }
+
+  return { x: bestX, y: bestY, guides }
+}
+
+// ─── Layout ───
 
 interface ImageItem {
   image: HTMLImageElement
@@ -47,11 +148,9 @@ function calculateLayout(images: ImageItem[]): LayoutResult {
     }
   }
 
-  // Heuristic: landscape images (width >= height) → stack vertically; portrait → horizontal
   const avgAspect =
     images.reduce(
-      (sum, item) =>
-        sum + item.image.naturalWidth / item.image.naturalHeight,
+      (sum, item) => sum + item.image.naturalWidth / item.image.naturalHeight,
       0
     ) / images.length
 
@@ -78,6 +177,8 @@ function calculateLayout(images: ImageItem[]): LayoutResult {
     return { direction, offsets, totalWidth: x - IMAGE_GAP, totalHeight: maxH }
   }
 }
+
+// ─── Editor ───
 
 interface SplitEditorProps {
   onSplitComplete?: (isFirstSplit: boolean) => void
@@ -120,15 +221,20 @@ export function SplitEditor({
   const editorAreaRef = useRef<HTMLDivElement>(null)
   const stageContainerRef = useRef<HTMLDivElement>(null)
   const [images, setImages] = useState<ImageItem[]>([])
+  const [imagePositions, setImagePositions] = useState<{ x: number; y: number }[]>([])
   const [containerSize, setContainerSize] = useState({ width: 800, height: 600 })
   const [selectedLineId, setSelectedLineId] = useState<string | null>(null)
   const [splitCount, setSplitCount] = useState(0)
   const [sheetOpen, setSheetOpen] = useState(false)
+  const [snapGuides, setSnapGuides] = useState<SnapGuide[]>([])
+  const snapGuidesRef = useRef<SnapGuide[]>([])
   const uploadCountRef = useRef(0)
+  const [hoveredImageIdx, setHoveredImageIdx] = useState<number | null>(null)
+  const [draggingImageIdx, setDraggingImageIdx] = useState<number | null>(null)
 
   const isMultiImage = images.length > 1
 
-  // Layout calculation
+  // Stable layout for viewport (only depends on images identity, not positions)
   const layout = useMemo(() => calculateLayout(images), [images])
 
   // Reference image (first) for split line positioning
@@ -138,7 +244,12 @@ export function SplitEditor({
   const originalFileName = refImage?.fileName ?? ""
   const originalMimeType = refImage?.mimeType ?? ""
 
-  // Viewport uses total layout dimensions
+  // Image sizes for snap calculation
+  const imageSizes = useMemo(
+    () => images.map((img) => ({ w: img.image.naturalWidth, h: img.image.naturalHeight })),
+    [images]
+  )
+
   const stageWidth = containerSize.width - RULER_THICKNESS
   const stageHeight = containerSize.height - RULER_THICKNESS
 
@@ -149,7 +260,6 @@ export function SplitEditor({
     imageHeight: layout.totalHeight,
   })
 
-  // Split lines use reference image dimensions
   const {
     lines,
     addLine,
@@ -204,7 +314,7 @@ export function SplitEditor({
     rulerThickness: RULER_THICKNESS,
   })
 
-  // Panning state (space+drag)
+  // Panning
   const [isPanning, setIsPanning] = useState(false)
   const isPanningRef = useRef(false)
 
@@ -247,12 +357,19 @@ export function SplitEditor({
     return () => observer.disconnect()
   }, [images.length])
 
-  // Load pending upload from homepage navigation
+  // Helper: set images + initial positions from layout
+  const initializeImages = useCallback((newImages: ImageItem[]) => {
+    setImages(newImages)
+    const newLayout = calculateLayout(newImages)
+    setImagePositions(newLayout.offsets)
+  }, [])
+
+  // Load pending upload
   useEffect(() => {
     if (images.length > 0) return
     const pending = consumePendingUpload()
     if (pending && pending.length > 0) {
-      setImages(
+      initializeImages(
         pending.map((p) => ({
           image: p.image,
           fileName: p.file.name,
@@ -262,20 +379,18 @@ export function SplitEditor({
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Load initial state
+  // Load initial state (history)
   useEffect(() => {
     if (!initialState) return
     const url = URL.createObjectURL(initialState.imageBlob)
     const img = new Image()
     img.onload = () => {
       URL.revokeObjectURL(url)
-      setImages([
-        {
-          image: img,
-          fileName: initialState.originalFileName,
-          mimeType: initialState.originalMimeType,
-        },
-      ])
+      initializeImages([{
+        image: img,
+        fileName: initialState.originalFileName,
+        mimeType: initialState.originalMimeType,
+      }])
       setLines(initialState.lines)
     }
     img.src = url
@@ -284,7 +399,7 @@ export function SplitEditor({
 
   const handleImagesLoaded = useCallback(
     (results: UploadResult[]) => {
-      setImages(
+      initializeImages(
         results.map((r) => ({
           image: r.image,
           fileName: r.file.name,
@@ -295,7 +410,7 @@ export function SplitEditor({
       uploadCountRef.current++
       onImageUpload?.(uploadCountRef.current)
     },
-    [onImageUpload, clearResults]
+    [initializeImages, onImageUpload, clearResults]
   )
 
   const handleRemoveImage = useCallback((index: number) => {
@@ -303,7 +418,61 @@ export function SplitEditor({
       if (prev.length <= 1) return prev
       return prev.filter((_, i) => i !== index)
     })
+    setImagePositions((prev) => {
+      if (prev.length <= 1) return prev
+      return prev.filter((_, i) => i !== index)
+    })
   }, [])
+
+  // ─── Image drag with snap ───
+
+  const makeImageDragBound = useCallback(
+    (index: number) => (proposedAbsPos: { x: number; y: number }) => {
+      const worldX = (proposedAbsPos.x - viewport.position.x) / viewport.scale
+      const worldY = (proposedAbsPos.y - viewport.position.y) / viewport.scale
+      const threshold = SNAP_THRESHOLD_PX / viewport.scale
+
+      const snap = calculateImageSnap(
+        index,
+        worldX,
+        worldY,
+        imageSizes[index]?.w ?? 0,
+        imageSizes[index]?.h ?? 0,
+        imagePositions,
+        imageSizes,
+        threshold
+      )
+
+      snapGuidesRef.current = snap.guides
+
+      return {
+        x: snap.x * viewport.scale + viewport.position.x,
+        y: snap.y * viewport.scale + viewport.position.y,
+      }
+    },
+    [viewport.scale, viewport.position, imagePositions, imageSizes]
+  )
+
+  const handleImageDragMove = useCallback(() => {
+    setSnapGuides([...snapGuidesRef.current])
+  }, [])
+
+  const handleImageDragEnd = useCallback(
+    (index: number) => (e: Konva.KonvaEventObject<DragEvent>) => {
+      const node = e.target
+      setImagePositions((prev) => {
+        const next = [...prev]
+        next[index] = { x: node.x(), y: node.y() }
+        return next
+      })
+      setSnapGuides([])
+      snapGuidesRef.current = []
+      setDraggingImageIdx(null)
+    },
+    []
+  )
+
+  // ─── Generate / Download ───
 
   const handleGenerate = useCallback(async () => {
     if (images.length === 0) return
@@ -323,7 +492,6 @@ export function SplitEditor({
     setSheetOpen(true)
     onSplitComplete?.(newCount === 1)
 
-    // Save to history (first image)
     if (onSaveHistory && images.length > 0) {
       const firstImage = images[0].image
       const thumbCanvas = document.createElement("canvas")
@@ -400,27 +568,10 @@ export function SplitEditor({
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       const isCmd = e.metaKey || e.ctrlKey
-
-      if (isCmd && e.key === "0") {
-        e.preventDefault()
-        viewport.fitToView()
-        return
-      }
-      if (isCmd && e.key === "1") {
-        e.preventDefault()
-        viewport.resetTo100()
-        return
-      }
-      if (isCmd && e.shiftKey && e.key === "z") {
-        e.preventDefault()
-        redo()
-        return
-      }
-      if (isCmd && e.key === "z") {
-        e.preventDefault()
-        undo()
-        return
-      }
+      if (isCmd && e.key === "0") { e.preventDefault(); viewport.fitToView(); return }
+      if (isCmd && e.key === "1") { e.preventDefault(); viewport.resetTo100(); return }
+      if (isCmd && e.shiftKey && e.key === "z") { e.preventDefault(); redo(); return }
+      if (isCmd && e.key === "z") { e.preventDefault(); undo(); return }
       if ((e.key === "Delete" || e.key === "Backspace") && selectedLineId) {
         e.preventDefault()
         removeLine(selectedLineId)
@@ -437,25 +588,14 @@ export function SplitEditor({
     return images.map((item) => {
       const canvas = document.createElement("canvas")
       const thumbSize = 64
-      const ratio = Math.min(
-        thumbSize / item.image.naturalWidth,
-        thumbSize / item.image.naturalHeight
-      )
+      const ratio = Math.min(thumbSize / item.image.naturalWidth, thumbSize / item.image.naturalHeight)
       canvas.width = item.image.naturalWidth * ratio
       canvas.height = item.image.naturalHeight * ratio
       const ctx = canvas.getContext("2d")
-      if (ctx) {
-        ctx.drawImage(item.image, 0, 0, canvas.width, canvas.height)
-      }
+      if (ctx) ctx.drawImage(item.image, 0, 0, canvas.width, canvas.height)
       return canvas.toDataURL("image/jpeg", 0.6)
     })
   }, [images])
-
-  // Compute world bounds for line rendering
-  const worldLeft = -viewport.position.x / viewport.scale
-  const worldTop = -viewport.position.y / viewport.scale
-  const worldRight = worldLeft + stageWidth / viewport.scale
-  const worldBottom = worldTop + stageHeight / viewport.scale
 
   if (images.length === 0) {
     return (
@@ -469,56 +609,26 @@ export function SplitEditor({
     <div className="flex flex-col gap-4 w-full h-full">
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-2 flex-shrink-0">
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => addLine("horizontal")}
-          disabled={!canAddHorizontal}
-        >
+        <Button size="sm" variant="outline" onClick={() => addLine("horizontal")} disabled={!canAddHorizontal}>
           + 横向分割线
         </Button>
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => addLine("vertical")}
-          disabled={!canAddVertical}
-        >
+        <Button size="sm" variant="outline" onClick={() => addLine("vertical")} disabled={!canAddVertical}>
           + 纵向分割线
         </Button>
         <div className="w-px h-6 bg-border mx-1" />
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={undo}
-          disabled={!canUndo}
-        >
-          撤销
-        </Button>
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={redo}
-          disabled={!canRedo}
-        >
-          重做
-        </Button>
+        <Button size="sm" variant="outline" onClick={undo} disabled={!canUndo}>撤销</Button>
+        <Button size="sm" variant="outline" onClick={redo} disabled={!canRedo}>重做</Button>
         <div className="w-px h-6 bg-border mx-1" />
-        <Button
-          size="sm"
-          onClick={handleGenerate}
-          disabled={isSplitting}
-        >
+        <Button size="sm" onClick={handleGenerate} disabled={isSplitting}>
           {isSplitting ? "生成中..." : isMultiImage ? `批量生成 (${images.length} 张)` : "生成"}
         </Button>
         {splitResults.length > 0 && (
-          <Button size="sm" variant="secondary" onClick={() => setSheetOpen(true)}>
-            查看结果
-          </Button>
+          <Button size="sm" variant="secondary" onClick={() => setSheetOpen(true)}>查看结果</Button>
         )}
         <div className="flex-1" />
         {isMultiImage && (
           <span className="text-xs text-muted-foreground">
-            {images.length} 张图片 · {layout.direction === "vertical" ? "纵向排列" : "横向排列"}
+            {images.length} 张图片 · 可拖拽移动
           </span>
         )}
         <Button
@@ -526,6 +636,7 @@ export function SplitEditor({
           variant="ghost"
           onClick={() => {
             setImages([])
+            setImagePositions([])
             clearResults()
             setSelectedLineId(null)
           }}
@@ -540,7 +651,7 @@ export function SplitEditor({
         </p>
       )}
 
-      {/* Image management strip for multi-image */}
+      {/* Image management strip */}
       {isMultiImage && (
         <div className="flex gap-2 overflow-x-auto pb-1 flex-shrink-0">
           {images.map((item, index) => (
@@ -553,7 +664,6 @@ export function SplitEditor({
                 alt={item.fileName}
                 className="h-12 w-auto object-cover"
               />
-              {/* Delete button */}
               <button
                 className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover/thumb:opacity-100 transition-opacity"
                 onClick={() => handleRemoveImage(index)}
@@ -587,10 +697,7 @@ export function SplitEditor({
             height: "100%",
           }}
         >
-          {/* Corner block */}
           <CornerBlock thickness={RULER_THICKNESS} />
-
-          {/* Horizontal ruler — uses reference image width */}
           <Ruler
             orientation="horizontal"
             length={stageWidth}
@@ -601,8 +708,6 @@ export function SplitEditor({
             lines={lines}
             onDragStart={startDrag}
           />
-
-          {/* Vertical ruler — uses reference image height */}
           <Ruler
             orientation="vertical"
             length={stageHeight}
@@ -625,9 +730,7 @@ export function SplitEditor({
               y={viewport.position.y}
               draggable={isPanning}
               onClick={(e: Konva.KonvaEventObject<MouseEvent>) => {
-                if (e.target === e.target.getStage()) {
-                  setSelectedLineId(null)
-                }
+                if (e.target === e.target.getStage()) setSelectedLineId(null)
               }}
               onWheel={(e: Konva.KonvaEventObject<WheelEvent>) => {
                 e.evt.preventDefault()
@@ -650,170 +753,139 @@ export function SplitEditor({
               }}
               style={{ cursor: isPanning ? "grab" : "default" }}
             >
-              {/* Background + Images layer */}
+              {/* Background */}
               <Layer listening={false}>
-                {/* Canvas background */}
                 <Rect
-                  x={worldLeft}
-                  y={worldTop}
+                  x={-viewport.position.x / viewport.scale}
+                  y={-viewport.position.y / viewport.scale}
                   width={stageWidth / viewport.scale}
                   height={stageHeight / viewport.scale}
                   fill="#e0e0e0"
                   listening={false}
                 />
-                {/* Render ALL images at their layout offsets */}
-                {images.map((item, index) => (
-                  <KonvaImage
-                    key={`img-${index}`}
-                    image={item.image}
-                    x={layout.offsets[index].x}
-                    y={layout.offsets[index].y}
-                    width={item.image.naturalWidth}
-                    height={item.image.naturalHeight}
-                  />
-                ))}
               </Layer>
 
-              {/* Split lines layer */}
+              {/* Image groups (draggable) with split lines */}
               <Layer>
-                {/* Preview regions overlay — render per image */}
-                {lines.length > 0 &&
-                  images.map((item, index) => (
-                    <SplitRegionOverlay
-                      key={`overlay-${index}`}
-                      lines={lines}
-                      imageWidth={item.image.naturalWidth}
-                      imageHeight={item.image.naturalHeight}
-                      offsetX={layout.offsets[index].x}
-                      offsetY={layout.offsets[index].y}
-                    />
-                  ))}
-
-                {/* Split lines — primary segments (first image, interactive) */}
-                {lines.map((line) => {
-                  const isHorizontal = line.orientation === "horizontal"
-                  const isSelected = line.id === selectedLineId
-                  const isAboutToDelete = line.id === lineNearRuler
-
-                  // Primary line on first image (at offset 0,0 — same logic as before)
-                  const points = isHorizontal
-                    ? [worldLeft, line.position, worldRight, line.position]
-                    : [line.position, worldTop, line.position, worldBottom]
+                {images.map((item, index) => {
+                  const pos = imagePositions[index] ?? { x: 0, y: 0 }
+                  const imgW = item.image.naturalWidth
+                  const imgH = item.image.naturalHeight
+                  const isPrimary = index === 0
 
                   return (
-                    <Line
-                      key={line.id}
-                      points={points}
-                      stroke={
-                        isAboutToDelete
-                          ? "#f97316"
-                          : isSelected
-                            ? "#3b82f6"
-                            : "#ef4444"
-                      }
-                      strokeWidth={(isSelected ? 3 : 2) / viewport.scale}
-                      opacity={isAboutToDelete ? 0.5 : 1}
-                      hitStrokeWidth={20 / viewport.scale}
-                      draggable
-                      onClick={() => setSelectedLineId(line.id)}
-                      onTap={() => setSelectedLineId(line.id)}
-                      dragBoundFunc={(pos) => {
-                        if (isHorizontal) {
-                          const worldY = (pos.y - viewport.position.y) / viewport.scale
-                          const snapped = calculateSnap(worldY, "horizontal")
-                          return { x: pos.x, y: snapped * viewport.scale + viewport.position.y }
-                        } else {
-                          const worldX = (pos.x - viewport.position.x) / viewport.scale
-                          const snapped = calculateSnap(worldX, "vertical")
-                          return { x: snapped * viewport.scale + viewport.position.x, y: pos.y }
+                    <Group
+                      key={`img-group-${index}`}
+                      x={pos.x}
+                      y={pos.y}
+                      draggable={!isPanning && isMultiImage}
+                      dragBoundFunc={isMultiImage ? makeImageDragBound(index) : undefined}
+                      onDragMove={isMultiImage ? handleImageDragMove : undefined}
+                      onDragStart={isMultiImage ? () => setDraggingImageIdx(index) : undefined}
+                      onDragEnd={isMultiImage ? handleImageDragEnd(index) : undefined}
+                      onMouseEnter={isMultiImage ? () => {
+                        setHoveredImageIdx(index)
+                        if (stageContainerRef.current) {
+                          stageContainerRef.current.style.cursor = isPanning ? "grab" : "move"
                         }
-                      }}
-                      onDragMove={(e: Konva.KonvaEventObject<DragEvent>) => {
-                        const node = e.target
-                        const stageContainer = stageContainerRef.current
-                        if (!stageContainer) return
-
-                        const stageRect = stageContainer.getBoundingClientRect()
-                        if (isHorizontal) {
-                          const screenY = stageRect.top + (node.y() + line.position) * viewport.scale + viewport.position.y
-                          const near = isNearRulerZone(screenY, "horizontal")
-                          setLineNearRuler(near ? line.id : null)
-                        } else {
-                          const screenX = stageRect.left + (node.x() + line.position) * viewport.scale + viewport.position.x
-                          const near = isNearRulerZone(screenX, "vertical")
-                          setLineNearRuler(near ? line.id : null)
+                      } : undefined}
+                      onMouseLeave={isMultiImage ? () => {
+                        setHoveredImageIdx(null)
+                        if (stageContainerRef.current) {
+                          stageContainerRef.current.style.cursor = ""
                         }
-                      }}
-                      onDragEnd={(e: Konva.KonvaEventObject<DragEvent>) => {
-                        const node = e.target
-                        const stageContainer = stageContainerRef.current
+                      } : undefined}
+                      onClick={() => setSelectedLineId(null)}
+                    >
+                      {/* Selection / hover border */}
+                      {isMultiImage && (hoveredImageIdx === index || draggingImageIdx === index) && (
+                        <Rect
+                          x={-3 / viewport.scale}
+                          y={-3 / viewport.scale}
+                          width={imgW + 6 / viewport.scale}
+                          height={imgH + 6 / viewport.scale}
+                          stroke={draggingImageIdx === index ? "#3b82f6" : "#3b82f6"}
+                          strokeWidth={(draggingImageIdx === index ? 2.5 : 1.5) / viewport.scale}
+                          opacity={draggingImageIdx === index ? 0.9 : 0.5}
+                          dash={draggingImageIdx === index ? undefined : [6 / viewport.scale, 3 / viewport.scale]}
+                          listening={false}
+                        />
+                      )}
+                      {/* Image */}
+                      <KonvaImage
+                        image={item.image}
+                        width={imgW}
+                        height={imgH}
+                      />
 
-                        if (stageContainer && lineNearRuler === line.id) {
-                          removeLine(line.id)
-                          setLineNearRuler(null)
-                          if (selectedLineId === line.id) {
-                            setSelectedLineId(null)
-                          }
-                          node.y(0)
-                          node.x(0)
-                          return
-                        }
+                      {/* Region overlay */}
+                      {lines.length > 0 && (
+                        <SplitRegionOverlay
+                          lines={lines}
+                          imageWidth={imgW}
+                          imageHeight={imgH}
+                        />
+                      )}
 
-                        setLineNearRuler(null)
-
-                        if (isHorizontal) {
-                          updateLinePosition(line.id, Math.round(line.position + node.y()))
-                          node.y(0)
-                        } else {
-                          updateLinePosition(line.id, Math.round(line.position + node.x()))
-                          node.x(0)
-                        }
-                      }}
-                    />
+                      {/* Split lines on this image */}
+                      {isPrimary
+                        ? lines.map((line) => (
+                            <PrimarySplitLine
+                              key={line.id}
+                              line={line}
+                              imageWidth={imgW}
+                              imageHeight={imgH}
+                              groupPos={pos}
+                              viewportScale={viewport.scale}
+                              viewportPosition={viewport.position}
+                              selectedLineId={selectedLineId}
+                              lineNearRuler={lineNearRuler}
+                              stageContainerRef={stageContainerRef}
+                              calculateSnap={calculateSnap}
+                              isNearRulerZone={isNearRulerZone}
+                              updateLinePosition={updateLinePosition}
+                              removeLine={removeLine}
+                              setSelectedLineId={setSelectedLineId}
+                              setLineNearRuler={setLineNearRuler}
+                            />
+                          ))
+                        : lines.map((line) => {
+                            const isHorizontal = line.orientation === "horizontal"
+                            const isSelected = line.id === selectedLineId
+                            const pts = isHorizontal
+                              ? [-LINE_EXTEND, line.position, imgW + LINE_EXTEND, line.position]
+                              : [line.position, -LINE_EXTEND, line.position, imgH + LINE_EXTEND]
+                            return (
+                              <Line
+                                key={`${line.id}-mirror-${index}`}
+                                points={pts}
+                                stroke={isSelected ? "#3b82f6" : "#ef4444"}
+                                strokeWidth={2 / viewport.scale}
+                                opacity={0.4}
+                                dash={[8 / viewport.scale, 4 / viewport.scale]}
+                                listening={false}
+                              />
+                            )
+                          })}
+                    </Group>
                   )
                 })}
 
-                {/* Split lines — mirror segments on other images (visual only) */}
-                {isMultiImage &&
-                  lines.map((line) =>
-                    images.slice(1).map((item, i) => {
-                      const imgIndex = i + 1
-                      const offset = layout.offsets[imgIndex]
-                      const isHorizontal = line.orientation === "horizontal"
-                      const isAboutToDelete = line.id === lineNearRuler
-                      const isSelected = line.id === selectedLineId
-
-                      // For vertical layout: horizontal lines need per-image y offset
-                      // For horizontal layout: vertical lines need per-image x offset
-                      let points: number[]
-                      if (layout.direction === "vertical" && isHorizontal) {
-                        points = [worldLeft, offset.y + line.position, worldRight, offset.y + line.position]
-                      } else if (layout.direction === "horizontal" && !isHorizontal) {
-                        points = [offset.x + line.position, worldTop, offset.x + line.position, worldBottom]
-                      } else {
-                        // This direction already covered by the primary full-span line
-                        return null
-                      }
-
-                      return (
-                        <Line
-                          key={`${line.id}-mirror-${imgIndex}`}
-                          points={points}
-                          stroke={
-                            isAboutToDelete
-                              ? "#f97316"
-                              : isSelected
-                                ? "#3b82f6"
-                                : "#ef4444"
-                          }
-                          strokeWidth={(isSelected ? 3 : 2) / viewport.scale}
-                          opacity={isAboutToDelete ? 0.5 : 0.8}
-                          hitStrokeWidth={20 / viewport.scale}
-                          listening={false}
-                        />
-                      )
-                    })
-                  )}
+                {/* Snap alignment guides */}
+                {snapGuides.map((guide, i) => (
+                  <Line
+                    key={`snap-guide-${i}`}
+                    points={
+                      guide.orientation === "vertical"
+                        ? [guide.position, guide.start, guide.position, guide.end]
+                        : [guide.start, guide.position, guide.end, guide.position]
+                    }
+                    stroke="#3b82f6"
+                    strokeWidth={1 / viewport.scale}
+                    dash={[6 / viewport.scale, 3 / viewport.scale]}
+                    listening={false}
+                  />
+                ))}
               </Layer>
             </Stage>
 
@@ -860,19 +932,131 @@ export function SplitEditor({
   )
 }
 
-// Helper component: region overlay for split preview — now supports offset
+// ─── Primary split line (interactive, inside Group) ───
+
+function PrimarySplitLine({
+  line,
+  imageWidth,
+  imageHeight,
+  groupPos,
+  viewportScale,
+  viewportPosition,
+  selectedLineId,
+  lineNearRuler,
+  stageContainerRef,
+  calculateSnap,
+  isNearRulerZone,
+  updateLinePosition,
+  removeLine,
+  setSelectedLineId,
+  setLineNearRuler,
+}: {
+  line: SplitLine
+  imageWidth: number
+  imageHeight: number
+  groupPos: { x: number; y: number }
+  viewportScale: number
+  viewportPosition: { x: number; y: number }
+  selectedLineId: string | null
+  lineNearRuler: string | null
+  stageContainerRef: React.RefObject<HTMLDivElement | null>
+  calculateSnap: (position: number, orientation: "horizontal" | "vertical") => number
+  isNearRulerZone: (screenPos: number, orientation: "horizontal" | "vertical") => boolean
+  updateLinePosition: (id: string, position: number) => void
+  removeLine: (id: string) => void
+  setSelectedLineId: (id: string | null) => void
+  setLineNearRuler: (id: string | null) => void
+}) {
+  const isHorizontal = line.orientation === "horizontal"
+  const isSelected = line.id === selectedLineId
+  const isAboutToDelete = line.id === lineNearRuler
+
+  const pts = isHorizontal
+    ? [-LINE_EXTEND, line.position, imageWidth + LINE_EXTEND, line.position]
+    : [line.position, -LINE_EXTEND, line.position, imageHeight + LINE_EXTEND]
+
+  return (
+    <Line
+      points={pts}
+      stroke={
+        isAboutToDelete ? "#f97316" : isSelected ? "#3b82f6" : "#ef4444"
+      }
+      strokeWidth={(isSelected ? 3 : 2) / viewportScale}
+      opacity={isAboutToDelete ? 0.5 : 1}
+      hitStrokeWidth={20 / viewportScale}
+      draggable
+      onClick={() => setSelectedLineId(line.id)}
+      onTap={() => setSelectedLineId(line.id)}
+      dragBoundFunc={(pos) => {
+        // Convert absolute position to world coords, then to group-local coords
+        if (isHorizontal) {
+          const worldY = (pos.y - viewportPosition.y) / viewportScale
+          const localY = worldY - groupPos.y
+          const snapped = calculateSnap(localY, "horizontal")
+          const newWorldY = snapped + groupPos.y
+          return { x: pos.x, y: newWorldY * viewportScale + viewportPosition.y }
+        } else {
+          const worldX = (pos.x - viewportPosition.x) / viewportScale
+          const localX = worldX - groupPos.x
+          const snapped = calculateSnap(localX, "vertical")
+          const newWorldX = snapped + groupPos.x
+          return { x: newWorldX * viewportScale + viewportPosition.x, y: pos.y }
+        }
+      }}
+      onDragMove={(e: Konva.KonvaEventObject<DragEvent>) => {
+        const node = e.target
+        const stageContainer = stageContainerRef.current
+        if (!stageContainer) return
+
+        const stageRect = stageContainer.getBoundingClientRect()
+        if (isHorizontal) {
+          const lineWorldY = groupPos.y + node.y() + line.position
+          const screenY = stageRect.top + lineWorldY * viewportScale + viewportPosition.y
+          const near = isNearRulerZone(screenY, "horizontal")
+          setLineNearRuler(near ? line.id : null)
+        } else {
+          const lineWorldX = groupPos.x + node.x() + line.position
+          const screenX = stageRect.left + lineWorldX * viewportScale + viewportPosition.x
+          const near = isNearRulerZone(screenX, "vertical")
+          setLineNearRuler(near ? line.id : null)
+        }
+      }}
+      onDragEnd={(e: Konva.KonvaEventObject<DragEvent>) => {
+        const node = e.target
+
+        if (lineNearRuler === line.id) {
+          removeLine(line.id)
+          setLineNearRuler(null)
+          if (selectedLineId === line.id) setSelectedLineId(null)
+          node.y(0)
+          node.x(0)
+          return
+        }
+
+        setLineNearRuler(null)
+
+        if (isHorizontal) {
+          updateLinePosition(line.id, Math.round(line.position + node.y()))
+          node.y(0)
+        } else {
+          updateLinePosition(line.id, Math.round(line.position + node.x()))
+          node.x(0)
+        }
+      }}
+    />
+  )
+}
+
+// ─── Split region overlay ───
+
 function SplitRegionOverlay({
   lines,
   imageWidth,
   imageHeight,
-  offsetX = 0,
-  offsetY = 0,
 }: {
   lines: SplitLine[]
   imageWidth: number
   imageHeight: number
-  offsetX?: number
-  offsetY?: number
 }) {
   const hPositions = lines
     .filter((l) => l.orientation === "horizontal")
@@ -887,14 +1071,13 @@ function SplitRegionOverlay({
   const xEdges = [0, ...vPositions, imageWidth]
 
   const rects: React.ReactElement[] = []
-
   for (let r = 0; r < yEdges.length - 1; r++) {
     for (let c = 0; c < xEdges.length - 1; c++) {
       rects.push(
         <Rect
           key={`region-${r}-${c}`}
-          x={offsetX + xEdges[c]}
-          y={offsetY + yEdges[r]}
+          x={xEdges[c]}
+          y={yEdges[r]}
           width={xEdges[c + 1] - xEdges[c]}
           height={yEdges[r + 1] - yEdges[r]}
           stroke="rgba(255,255,255,0.3)"
@@ -904,6 +1087,5 @@ function SplitRegionOverlay({
       )
     }
   }
-
   return <>{rects}</>
 }

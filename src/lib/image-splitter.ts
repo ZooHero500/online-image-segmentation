@@ -2,6 +2,10 @@ import type { SplitLine, SplitResult } from "@/types"
 
 const JPEG_QUALITY = 0.92
 
+// Conservative cross-browser canvas limits
+const MAX_CANVAS_AREA = 16_777_216 // 4096 * 4096
+const MAX_CANVAS_DIMENSION = 16_384
+
 function resolveOutputMimeType(originalMimeType: string): string {
   if (originalMimeType === "image/webp") return "image/png"
   if (originalMimeType === "image/jpeg" || originalMimeType === "image/png") return originalMimeType
@@ -50,6 +54,29 @@ function computeRegions(
   return regions
 }
 
+function dataUrlToBlob(dataUrl: string, fallbackMime: string): Blob {
+  const parts = dataUrl.split(",")
+  const mime = parts[0].match(/:(.*?);/)?.[1] ?? fallbackMime
+  const raw = atob(parts[1])
+  const u8 = new Uint8Array(raw.length)
+  for (let i = 0; i < raw.length; i++) u8[i] = raw.charCodeAt(i)
+  return new Blob([u8], { type: mime })
+}
+
+function computeScale(w: number, h: number): number {
+  let scale = 1
+  if (w * h > MAX_CANVAS_AREA) {
+    scale = Math.sqrt(MAX_CANVAS_AREA / (w * h))
+  }
+  if (w * scale > MAX_CANVAS_DIMENSION) {
+    scale = MAX_CANVAS_DIMENSION / w
+  }
+  if (h * scale > MAX_CANVAS_DIMENSION) {
+    scale = MAX_CANVAS_DIMENSION / h
+  }
+  return scale
+}
+
 function cropRegion(
   image: HTMLImageElement,
   x: number,
@@ -59,20 +86,32 @@ function cropRegion(
   mimeType: string
 ): Promise<Blob> {
   return new Promise((resolve, reject) => {
+    const scale = computeScale(w, h)
     const canvas = document.createElement("canvas")
-    canvas.width = w
-    canvas.height = h
+    canvas.width = Math.round(w * scale)
+    canvas.height = Math.round(h * scale)
     const ctx = canvas.getContext("2d")
     if (!ctx) {
       reject(new Error("Failed to get canvas 2d context"))
       return
     }
+    if (scale < 1) {
+      ctx.scale(scale, scale)
+    }
     ctx.drawImage(image, x, y, w, h, 0, 0, w, h)
     const quality = mimeType === "image/jpeg" ? JPEG_QUALITY : undefined
     canvas.toBlob(
       (blob) => {
-        if (blob) resolve(blob)
-        else reject(new Error("Failed to create blob from canvas"))
+        if (blob) {
+          resolve(blob)
+          return
+        }
+        // Fallback: try toDataURL when toBlob returns null
+        try {
+          resolve(dataUrlToBlob(canvas.toDataURL(mimeType, quality), mimeType))
+        } catch {
+          reject(new Error("Failed to create blob from canvas"))
+        }
       },
       mimeType,
       quality
