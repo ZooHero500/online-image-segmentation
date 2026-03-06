@@ -1,21 +1,23 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Playfair_Display, Inter } from "next/font/google"
 import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import "./globals.css"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
+  display: "swap",
 })
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 })
 
 export const metadata: Metadata = {
-  title: "在线图片分割工具 - 免费在线裁切图片",
+  title: "ImageSplit - 精准图片分割工具",
   description:
     "免费在线图片分割工具，支持拖拽分割线、磁吸对齐、一键生成并下载所有子图片。纯浏览器端处理，保护您的隐私。",
 }
@@ -28,10 +30,11 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${playfair.variable} ${inter.variable} font-sans antialiased`}
       >
         <TooltipProvider>{children}</TooltipProvider>
         <Toaster />
+        <div className="noise-overlay" aria-hidden="true" />
       </body>
     </html>
   )

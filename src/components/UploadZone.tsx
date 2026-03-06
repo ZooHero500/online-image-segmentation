@@ -86,10 +86,10 @@ export function UploadZone({ onImageLoaded }: UploadZoneProps) {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-12 transition-colors cursor-pointer ${
+      className={`group flex flex-col items-center justify-center border-t border-b p-16 md:p-24 transition-all duration-700 ease-luxury cursor-pointer ${
         isDragOver
-          ? "border-primary bg-primary/5"
-          : "border-muted-foreground/25 hover:border-primary/50"
+          ? "border-[#D4AF37] bg-[#D4AF37]/5"
+          : "border-[#1A1A1A]/20 hover:border-[#1A1A1A]/40"
       }`}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
@@ -105,30 +105,27 @@ export function UploadZone({ onImageLoaded }: UploadZoneProps) {
       />
 
       <div className="text-center">
-        <svg
-          className="mx-auto h-12 w-12 text-muted-foreground/50"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1.5}
-            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-          />
-        </svg>
-        <p className="mt-4 text-sm text-muted-foreground">
-          拖拽图片到此处，或{" "}
-          <span className="text-primary font-medium">点击选择文件</span>
+        <p className="text-xs uppercase tracking-[0.3em] text-[#6C6863] mb-6">
+          上传图片
         </p>
-        <p className="mt-1 text-xs text-muted-foreground/70">
-          支持 PNG、JPG、WebP，最大 20MB
+        <p className="font-serif text-2xl md:text-3xl text-[#1A1A1A] mb-4">
+          拖拽图片到此处
+        </p>
+        <div className="flex items-center gap-4 justify-center mb-6">
+          <span className="h-px w-8 bg-[#1A1A1A]/20" />
+          <span className="text-xs uppercase tracking-[0.25em] text-[#6C6863]">或</span>
+          <span className="h-px w-8 bg-[#1A1A1A]/20" />
+        </div>
+        <p className="text-sm text-[#1A1A1A] group-hover:text-[#D4AF37] transition-colors duration-500">
+          点击选择文件
+        </p>
+        <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-[#6C6863]/70">
+          PNG / JPG / WebP &middot; 最大 20MB
         </p>
       </div>
 
       {error && (
-        <p className="mt-4 text-sm text-destructive">{error}</p>
+        <p className="mt-6 text-sm text-destructive">{error}</p>
       )}
     </div>
   )
