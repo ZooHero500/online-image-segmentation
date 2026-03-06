@@ -5,7 +5,7 @@ import { Stage, Layer, Image as KonvaImage, Line, Rect } from "react-konva"
 import type Konva from "konva"
 import { Button } from "@/components/ui/button"
 import { UploadZone } from "./UploadZone"
-import { SplitPreview } from "./SplitPreview"
+import { ResultSheet } from "./ResultSheet"
 import { Ruler, CornerBlock, DragPreviewLine } from "./Ruler"
 import { ZoomIndicator } from "./ZoomIndicator"
 import { useSplitLines } from "@/hooks/use-split-lines"
@@ -64,6 +64,7 @@ export function SplitEditor({
   const [containerSize, setContainerSize] = useState({ width: 800, height: 600 })
   const [selectedLineId, setSelectedLineId] = useState<string | null>(null)
   const [splitCount, setSplitCount] = useState(0)
+  const [sheetOpen, setSheetOpen] = useState(false)
   const uploadCountRef = useRef(0)
 
   const imageWidth = image?.naturalWidth ?? 1
@@ -216,6 +217,7 @@ export function SplitEditor({
     await generateSplit(image, lines, originalMimeType)
     const newCount = splitCount + 1
     setSplitCount(newCount)
+    setSheetOpen(true)
     onSplitComplete?.(newCount === 1)
 
     // Save to history
@@ -357,8 +359,8 @@ export function SplitEditor({
           {isSplitting ? "生成中..." : "生成"}
         </Button>
         {splitResults.length > 0 && (
-          <Button size="sm" variant="secondary" onClick={handleDownloadAll}>
-            下载全部
+          <Button size="sm" variant="secondary" onClick={() => setSheetOpen(true)}>
+            查看结果
           </Button>
         )}
         <div className="flex-1" />
@@ -608,16 +610,16 @@ export function SplitEditor({
         </div>
       </div>
 
-      {/* Split results */}
-      {splitResults.length > 0 && (
-        <SplitPreview
-          results={splitResults}
-          originalFileName={getFileNameWithoutExtension(originalFileName)}
-          fileExtension={getFileExtension(originalMimeType)}
-          onDownloadSingle={downloadOne}
-          onDownloadAll={handleDownloadAll}
-        />
-      )}
+      {/* Split results sheet */}
+      <ResultSheet
+        open={sheetOpen && splitResults.length > 0}
+        onClose={() => setSheetOpen(false)}
+        results={splitResults}
+        originalFileName={getFileNameWithoutExtension(originalFileName)}
+        fileExtension={getFileExtension(originalMimeType)}
+        onDownloadSingle={downloadOne}
+        onDownloadAll={handleDownloadAll}
+      />
     </div>
   )
 }
