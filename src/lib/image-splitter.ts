@@ -17,14 +17,20 @@ function computeRegions(
   imageHeight: number,
   lines: SplitLine[]
 ): { x: number; y: number; w: number; h: number; row: number; col: number }[] {
-  const hPositions = lines
-    .filter((l) => l.orientation === "horizontal")
-    .map((l) => l.position)
-    .sort((a, b) => a - b)
-  const vPositions = lines
-    .filter((l) => l.orientation === "vertical")
-    .map((l) => l.position)
-    .sort((a, b) => a - b)
+  const hPositions = [
+    ...new Set(
+      lines
+        .filter((l) => l.orientation === "horizontal")
+        .map((l) => l.position)
+    ),
+  ].sort((a, b) => a - b)
+  const vPositions = [
+    ...new Set(
+      lines
+        .filter((l) => l.orientation === "vertical")
+        .map((l) => l.position)
+    ),
+  ].sort((a, b) => a - b)
 
   const yEdges = [0, ...hPositions, imageHeight]
   const xEdges = [0, ...vPositions, imageWidth]
@@ -38,15 +44,23 @@ function computeRegions(
     col: number
   }[] = []
 
+  let actualRow = 0
   for (let r = 0; r < yEdges.length - 1; r++) {
+    const h = yEdges[r + 1] - yEdges[r]
+    if (h <= 0) continue
+    actualRow++
+    let actualCol = 0
     for (let c = 0; c < xEdges.length - 1; c++) {
+      const w = xEdges[c + 1] - xEdges[c]
+      if (w <= 0) continue
+      actualCol++
       regions.push({
         x: xEdges[c],
         y: yEdges[r],
-        w: xEdges[c + 1] - xEdges[c],
-        h: yEdges[r + 1] - yEdges[r],
-        row: r + 1,
-        col: c + 1,
+        w,
+        h,
+        row: actualRow,
+        col: actualCol,
       })
     }
   }
