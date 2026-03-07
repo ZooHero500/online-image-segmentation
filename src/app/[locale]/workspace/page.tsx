@@ -4,6 +4,7 @@ import { useCallback, useState } from "react"
 import { DynamicSplitEditor } from "@/components/DynamicSplitEditor"
 import { HistorySidebar } from "@/components/HistorySidebar"
 import { useHistory } from "@/hooks/use-history"
+import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import type { SplitLine } from "@/types"
 
 interface EditorState {
@@ -47,13 +48,18 @@ export default function WorkspacePage() {
         onLoadRecord={handleLoadRecord}
         onNewCanvas={handleNewCanvas}
       />
-      <main className="flex-1 flex flex-col overflow-hidden p-4">
-        <DynamicSplitEditor
-          key={editorKey}
-          initialState={initialState}
-          onSaveHistory={handleSaveHistory}
-          showShortcutHints
-        />
+      <main className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex items-center justify-end px-4 py-2 border-b shrink-0">
+          <LocaleSwitcher />
+        </div>
+        <div className="flex-1 flex flex-col overflow-hidden p-4">
+          <DynamicSplitEditor
+            key={editorKey}
+            initialState={initialState}
+            onSaveHistory={handleSaveHistory}
+            showShortcutHints
+          />
+        </div>
       </main>
     </div>
   )
