@@ -47,7 +47,7 @@ interface UseImageExportReturn {
   ) => Promise<SplitResult[]>
   generateBatchSplit: (
     images: ImageItem[],
-    lines: SplitLine[]
+    linesPerImage: SplitLine[][]
   ) => Promise<BatchSplitResult[]>
   downloadAll: (
     originalFileName: string,
@@ -97,12 +97,14 @@ export function useImageExport(): UseImageExportReturn {
   const generateBatchSplit = useCallback(
     async (
       images: ImageItem[],
-      lines: SplitLine[]
+      linesPerImage: SplitLine[][]
     ): Promise<BatchSplitResult[]> => {
       setIsSplitting(true)
       try {
         const batch: BatchSplitResult[] = []
-        for (const item of images) {
+        for (let i = 0; i < images.length; i++) {
+          const item = images[i]
+          const lines = linesPerImage[i] ?? []
           const results = await splitImage(item.image, lines, item.mimeType)
           batch.push({
             fileName: item.fileName,

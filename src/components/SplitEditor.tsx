@@ -20,7 +20,6 @@ import { X } from "lucide-react"
 const RULER_THICKNESS = 20
 const IMAGE_GAP = 40
 const SNAP_THRESHOLD_PX = 8 // screen pixels for image alignment snap
-const LINE_EXTEND = 20 // how far split lines extend beyond image edges
 
 // ─── Image snap alignment ───
 
@@ -274,7 +273,7 @@ export function SplitEditor({
     canUndo,
     canRedo,
     setLines,
-  } = useSplitLines({ imageWidth: refWidth, imageHeight: refHeight, snapThreshold: 12 / viewport.scale })
+  } = useSplitLines({ workspaceWidth: layout.totalWidth, workspaceHeight: layout.totalHeight, snapThreshold: 12 / viewport.scale })
 
   const {
     splitResults,
@@ -474,6 +473,27 @@ export function SplitEditor({
 
   // ─── Generate / Download ───
 
+  // Convert workspace lines to local coordinates for a specific image
+  const getLocalLines = useCallback(
+    (
+      wsLines: SplitLine[],
+      imgPos: { x: number; y: number },
+      imgW: number,
+      imgH: number
+    ): SplitLine[] => {
+      return wsLines
+        .map((line) => {
+          const isH = line.orientation === "horizontal"
+          const localPos = isH ? line.position - imgPos.y : line.position - imgPos.x
+          const max = isH ? imgH : imgW
+          if (localPos <= 0 || localPos >= max) return null
+          return { ...line, position: Math.round(localPos) }
+        })
+        .filter((l): l is SplitLine => l !== null)
+    },
+    []
+  )
+
   const handleGenerate = useCallback(async () => {
     if (images.length === 0) return
     if (lines.length === 0) {
@@ -481,10 +501,38 @@ export function SplitEditor({
       return
     }
 
-    if (isMultiImage) {
-      await generateBatchSplit(images, lines)
-    } else {
-      await generateSplit(images[0].image, lines, images[0].mimeType)
+    try {
+      if (isMultiImage) {
+        // Convert workspace lines to per-image local lines
+        const linesPerImage = images.map((item, index) => {
+          const pos = imagePositions[index] ?? { x: 0, y: 0 }
+          return getLocalLines(
+            lines,
+            pos,
+            item.image.naturalWidth,
+            item.image.naturalHeight
+          )
+        })
+        await generateBatchSplit(images, linesPerImage)
+      } else {
+        // Single image: convert workspace lines to local coords
+        const pos = imagePositions[0] ?? { x: 0, y: 0 }
+        const localLines = getLocalLines(
+          lines,
+          pos,
+          images[0].image.naturalWidth,
+          images[0].image.naturalHeight
+        )
+        if (localLines.length === 0) {
+          toast.error("分割线未穿过图片")
+          return
+        }
+        await generateSplit(images[0].image, localLines, images[0].mimeType)
+      }
+    } catch (err) {
+      console.error("Split failed:", err)
+      toast.error("分割失败，请重试")
+      return
     }
 
     const newCount = splitCount + 1
@@ -493,42 +541,46 @@ export function SplitEditor({
     onSplitComplete?.(newCount === 1)
 
     if (onSaveHistory && images.length > 0) {
-      const firstImage = images[0].image
-      const thumbCanvas = document.createElement("canvas")
-      const thumbSize = 128
-      const ratio = Math.min(thumbSize / firstImage.naturalWidth, thumbSize / firstImage.naturalHeight)
-      thumbCanvas.width = firstImage.naturalWidth * ratio
-      thumbCanvas.height = firstImage.naturalHeight * ratio
-      const thumbCtx = thumbCanvas.getContext("2d")
-      if (thumbCtx) {
-        thumbCtx.drawImage(firstImage, 0, 0, thumbCanvas.width, thumbCanvas.height)
-        const thumbnailDataUrl = thumbCanvas.toDataURL("image/jpeg", 0.6)
-        const fullCanvas = document.createElement("canvas")
-        fullCanvas.width = firstImage.naturalWidth
-        fullCanvas.height = firstImage.naturalHeight
-        const fullCtx = fullCanvas.getContext("2d")
-        if (fullCtx) {
-          fullCtx.drawImage(firstImage, 0, 0)
-          const mimeForBlob = ["image/png", "image/jpeg"].includes(images[0].mimeType)
-            ? images[0].mimeType
-            : "image/png"
-          const imageBlob = await new Promise<Blob>((resolve, reject) =>
-            fullCanvas.toBlob(
-              (b) => (b ? resolve(b) : reject(new Error("toBlob returned null"))),
-              mimeForBlob
+      try {
+        const firstImage = images[0].image
+        const thumbCanvas = document.createElement("canvas")
+        const thumbSize = 128
+        const ratio = Math.min(thumbSize / firstImage.naturalWidth, thumbSize / firstImage.naturalHeight)
+        thumbCanvas.width = firstImage.naturalWidth * ratio
+        thumbCanvas.height = firstImage.naturalHeight * ratio
+        const thumbCtx = thumbCanvas.getContext("2d")
+        if (thumbCtx) {
+          thumbCtx.drawImage(firstImage, 0, 0, thumbCanvas.width, thumbCanvas.height)
+          const thumbnailDataUrl = thumbCanvas.toDataURL("image/jpeg", 0.6)
+          const fullCanvas = document.createElement("canvas")
+          fullCanvas.width = firstImage.naturalWidth
+          fullCanvas.height = firstImage.naturalHeight
+          const fullCtx = fullCanvas.getContext("2d")
+          if (fullCtx) {
+            fullCtx.drawImage(firstImage, 0, 0)
+            const mimeForBlob = ["image/png", "image/jpeg"].includes(images[0].mimeType)
+              ? images[0].mimeType
+              : "image/png"
+            const imageBlob = await new Promise<Blob>((resolve, reject) =>
+              fullCanvas.toBlob(
+                (b) => (b ? resolve(b) : reject(new Error("toBlob returned null"))),
+                mimeForBlob
+              )
             )
-          )
-          onSaveHistory({
-            originalFileName: images[0].fileName,
-            originalMimeType: images[0].mimeType,
-            lines: [...lines],
-            imageBlob,
-            thumbnailDataUrl,
-          })
+            onSaveHistory({
+              originalFileName: images[0].fileName,
+              originalMimeType: images[0].mimeType,
+              lines: [...lines],
+              imageBlob,
+              thumbnailDataUrl,
+            })
+          }
         }
+      } catch (err) {
+        console.error("Save history failed:", err)
       }
     }
-  }, [images, lines, isMultiImage, generateSplit, generateBatchSplit, splitCount, onSplitComplete, onSaveHistory])
+  }, [images, lines, imagePositions, isMultiImage, getLocalLines, generateSplit, generateBatchSplit, splitCount, onSplitComplete, onSaveHistory])
 
   const handleDownloadAll = useCallback(() => {
     if (isMultiImage) {
@@ -703,7 +755,7 @@ export function SplitEditor({
             length={stageWidth}
             viewportScale={viewport.scale}
             viewportOffset={viewport.position.x}
-            imageSize={refWidth}
+            imageSize={layout.totalWidth}
             thickness={RULER_THICKNESS}
             lines={lines}
             onDragStart={startDrag}
@@ -713,7 +765,7 @@ export function SplitEditor({
             length={stageHeight}
             viewportScale={viewport.scale}
             viewportOffset={viewport.position.y}
-            imageSize={refHeight}
+            imageSize={layout.totalHeight}
             thickness={RULER_THICKNESS}
             lines={lines}
             onDragStart={startDrag}
@@ -765,13 +817,23 @@ export function SplitEditor({
                 />
               </Layer>
 
-              {/* Image groups (draggable) with split lines */}
+              {/* Image groups (draggable) */}
               <Layer>
                 {images.map((item, index) => {
                   const pos = imagePositions[index] ?? { x: 0, y: 0 }
                   const imgW = item.image.naturalWidth
                   const imgH = item.image.naturalHeight
-                  const isPrimary = index === 0
+
+                  // Convert workspace lines to local coordinates for this image
+                  const localLines = lines
+                    .map((line) => {
+                      const isH = line.orientation === "horizontal"
+                      const localPos = isH ? line.position - pos.y : line.position - pos.x
+                      const max = isH ? imgH : imgW
+                      if (localPos <= 0 || localPos >= max) return null
+                      return { ...line, position: Math.round(localPos) }
+                    })
+                    .filter((l): l is SplitLine => l !== null)
 
                   return (
                     <Group
@@ -818,58 +880,39 @@ export function SplitEditor({
                         height={imgH}
                       />
 
-                      {/* Region overlay */}
-                      {lines.length > 0 && (
+                      {/* Region overlay — uses local lines that intersect this image */}
+                      {localLines.length > 0 && (
                         <SplitRegionOverlay
-                          lines={lines}
+                          lines={localLines}
                           imageWidth={imgW}
                           imageHeight={imgH}
                         />
                       )}
-
-                      {/* Split lines on this image */}
-                      {isPrimary
-                        ? lines.map((line) => (
-                            <PrimarySplitLine
-                              key={line.id}
-                              line={line}
-                              imageWidth={imgW}
-                              imageHeight={imgH}
-                              groupPos={pos}
-                              viewportScale={viewport.scale}
-                              viewportPosition={viewport.position}
-                              selectedLineId={selectedLineId}
-                              lineNearRuler={lineNearRuler}
-                              stageContainerRef={stageContainerRef}
-                              calculateSnap={calculateSnap}
-                              isNearRulerZone={isNearRulerZone}
-                              updateLinePosition={updateLinePosition}
-                              removeLine={removeLine}
-                              setSelectedLineId={setSelectedLineId}
-                              setLineNearRuler={setLineNearRuler}
-                            />
-                          ))
-                        : lines.map((line) => {
-                            const isHorizontal = line.orientation === "horizontal"
-                            const isSelected = line.id === selectedLineId
-                            const pts = isHorizontal
-                              ? [-LINE_EXTEND, line.position, imgW + LINE_EXTEND, line.position]
-                              : [line.position, -LINE_EXTEND, line.position, imgH + LINE_EXTEND]
-                            return (
-                              <Line
-                                key={`${line.id}-mirror-${index}`}
-                                points={pts}
-                                stroke={isSelected ? "#3b82f6" : "#ef4444"}
-                                strokeWidth={2 / viewport.scale}
-                                opacity={0.4}
-                                dash={[8 / viewport.scale, 4 / viewport.scale]}
-                                listening={false}
-                              />
-                            )
-                          })}
                     </Group>
                   )
                 })}
+
+                {/* Workspace split lines (fixed in workspace coordinates) */}
+                {lines.map((line) => (
+                  <WorkspaceSplitLine
+                    key={line.id}
+                    line={line}
+                    totalWidth={layout.totalWidth}
+                    totalHeight={layout.totalHeight}
+                    lineExtend={layout.totalWidth + layout.totalHeight}
+                    viewportScale={viewport.scale}
+                    viewportPosition={viewport.position}
+                    selectedLineId={selectedLineId}
+                    lineNearRuler={lineNearRuler}
+                    stageContainerRef={stageContainerRef}
+                    calculateSnap={calculateSnap}
+                    isNearRulerZone={isNearRulerZone}
+                    updateLinePosition={updateLinePosition}
+                    removeLine={removeLine}
+                    setSelectedLineId={setSelectedLineId}
+                    setLineNearRuler={setLineNearRuler}
+                  />
+                ))}
 
                 {/* Snap alignment guides */}
                 {snapGuides.map((guide, i) => (
@@ -932,13 +975,13 @@ export function SplitEditor({
   )
 }
 
-// ─── Primary split line (interactive, inside Group) ───
+// ─── Workspace split line (fixed in workspace coordinates) ───
 
-function PrimarySplitLine({
+function WorkspaceSplitLine({
   line,
-  imageWidth,
-  imageHeight,
-  groupPos,
+  totalWidth,
+  totalHeight,
+  lineExtend,
   viewportScale,
   viewportPosition,
   selectedLineId,
@@ -952,9 +995,9 @@ function PrimarySplitLine({
   setLineNearRuler,
 }: {
   line: SplitLine
-  imageWidth: number
-  imageHeight: number
-  groupPos: { x: number; y: number }
+  totalWidth: number
+  totalHeight: number
+  lineExtend: number
   viewportScale: number
   viewportPosition: { x: number; y: number }
   selectedLineId: string | null
@@ -972,8 +1015,8 @@ function PrimarySplitLine({
   const isAboutToDelete = line.id === lineNearRuler
 
   const pts = isHorizontal
-    ? [-LINE_EXTEND, line.position, imageWidth + LINE_EXTEND, line.position]
-    : [line.position, -LINE_EXTEND, line.position, imageHeight + LINE_EXTEND]
+    ? [-lineExtend, line.position, totalWidth + lineExtend, line.position]
+    : [line.position, -lineExtend, line.position, totalHeight + lineExtend]
 
   return (
     <Line
@@ -988,19 +1031,15 @@ function PrimarySplitLine({
       onClick={() => setSelectedLineId(line.id)}
       onTap={() => setSelectedLineId(line.id)}
       dragBoundFunc={(pos) => {
-        // Convert absolute position to world coords, then to group-local coords
+        // Directly in workspace (world) coordinates — no group offset needed
         if (isHorizontal) {
           const worldY = (pos.y - viewportPosition.y) / viewportScale
-          const localY = worldY - groupPos.y
-          const snapped = calculateSnap(localY, "horizontal")
-          const newWorldY = snapped + groupPos.y
-          return { x: pos.x, y: newWorldY * viewportScale + viewportPosition.y }
+          const snapped = calculateSnap(worldY, "horizontal")
+          return { x: pos.x, y: snapped * viewportScale + viewportPosition.y }
         } else {
           const worldX = (pos.x - viewportPosition.x) / viewportScale
-          const localX = worldX - groupPos.x
-          const snapped = calculateSnap(localX, "vertical")
-          const newWorldX = snapped + groupPos.x
-          return { x: newWorldX * viewportScale + viewportPosition.x, y: pos.y }
+          const snapped = calculateSnap(worldX, "vertical")
+          return { x: snapped * viewportScale + viewportPosition.x, y: pos.y }
         }
       }}
       onDragMove={(e: Konva.KonvaEventObject<DragEvent>) => {
@@ -1010,12 +1049,12 @@ function PrimarySplitLine({
 
         const stageRect = stageContainer.getBoundingClientRect()
         if (isHorizontal) {
-          const lineWorldY = groupPos.y + node.y() + line.position
+          const lineWorldY = node.y() + line.position
           const screenY = stageRect.top + lineWorldY * viewportScale + viewportPosition.y
           const near = isNearRulerZone(screenY, "horizontal")
           setLineNearRuler(near ? line.id : null)
         } else {
-          const lineWorldX = groupPos.x + node.x() + line.position
+          const lineWorldX = node.x() + line.position
           const screenX = stageRect.left + lineWorldX * viewportScale + viewportPosition.x
           const near = isNearRulerZone(screenX, "vertical")
           setLineNearRuler(near ? line.id : null)

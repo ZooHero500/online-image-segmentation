@@ -5,8 +5,8 @@ import { useUndoRedo } from "./use-undo-redo"
 import type { SplitLine } from "@/types"
 
 interface UseSplitLinesOptions {
-  imageWidth: number
-  imageHeight: number
+  workspaceWidth: number
+  workspaceHeight: number
   snapThreshold?: number
   maxLinesPerDirection?: number
 }
@@ -36,8 +36,8 @@ function generateLineId(): string {
 }
 
 export function useSplitLines({
-  imageWidth,
-  imageHeight,
+  workspaceWidth,
+  workspaceHeight,
   snapThreshold = 8,
   maxLinesPerDirection = 20,
 }: UseSplitLinesOptions): UseSplitLinesReturn {
@@ -64,15 +64,15 @@ export function useSplitLines({
 
   const clampPosition = useCallback(
     (position: number, orientation: "horizontal" | "vertical"): number => {
-      const max = orientation === "horizontal" ? imageHeight : imageWidth
+      const max = orientation === "horizontal" ? workspaceHeight : workspaceWidth
       return Math.max(0, Math.min(position, max))
     },
-    [imageWidth, imageHeight]
+    [workspaceWidth, workspaceHeight]
   )
 
   const calculateSnap = useCallback(
     (position: number, orientation: "horizontal" | "vertical"): number => {
-      const max = orientation === "horizontal" ? imageHeight : imageWidth
+      const max = orientation === "horizontal" ? workspaceHeight : workspaceWidth
       const targets = [
         0,
         max,
@@ -88,7 +88,7 @@ export function useSplitLines({
       }
       return position
     },
-    [lines, imageWidth, imageHeight, snapThreshold]
+    [lines, workspaceWidth, workspaceHeight, snapThreshold]
   )
 
   const addLine = useCallback(
@@ -98,7 +98,7 @@ export function useSplitLines({
       if (count >= maxLinesPerDirection) return
 
       const center =
-        orientation === "horizontal" ? imageHeight / 2 : imageWidth / 2
+        orientation === "horizontal" ? workspaceHeight / 2 : workspaceWidth / 2
       const newLine: SplitLine = {
         id: generateLineId(),
         orientation,
@@ -109,8 +109,8 @@ export function useSplitLines({
     [
       lines,
       setLinesWithHistory,
-      imageWidth,
-      imageHeight,
+      workspaceWidth,
+      workspaceHeight,
       horizontalCount,
       verticalCount,
       maxLinesPerDirection,

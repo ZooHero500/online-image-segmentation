@@ -3,7 +3,7 @@ import { renderHook, act } from "@testing-library/react"
 import { useSplitLines } from "../use-split-lines"
 
 describe("useSplitLines", () => {
-  const defaultOptions = { imageWidth: 400, imageHeight: 300 }
+  const defaultOptions = { workspaceWidth: 400, workspaceHeight: 300 }
 
   it("should initialize with empty lines", () => {
     const { result } = renderHook(() => useSplitLines(defaultOptions))
