@@ -80,7 +80,7 @@ export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
         setError(t("loadFailed"))
       }
     },
-    [onImageLoaded, onImagesLoaded]
+    [onImageLoaded, onImagesLoaded, t]
   )
 
   const handleDrop = useCallback(
