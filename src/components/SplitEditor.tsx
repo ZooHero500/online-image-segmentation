@@ -313,6 +313,10 @@ export function SplitEditor({
     canAddHorizontal,
     canAddVertical,
     rulerThickness: RULER_THICKNESS,
+    messages: {
+      horizontalLimitReached: t("horizontalLimitReached"),
+      verticalLimitReached: t("verticalLimitReached"),
+    },
   })
 
   // Panning
