@@ -8,7 +8,7 @@ export const DynamicSplitEditor = dynamic(
     ssr: false,
     loading: () => (
       <div className="flex items-center justify-center h-64 text-muted-foreground">
-        加载编辑器...
+        Loading...
       </div>
     ),
   }

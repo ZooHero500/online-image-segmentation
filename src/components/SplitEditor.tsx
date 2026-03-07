@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useTranslations } from "next-intl"
 import { Stage, Layer, Image as KonvaImage, Line, Rect, Group } from "react-konva"
 import type Konva from "konva"
 import { Button } from "@/components/ui/button"
@@ -216,6 +217,7 @@ export function SplitEditor({
   initialState,
   showShortcutHints = false,
 }: SplitEditorProps) {
+  const t = useTranslations("workspace")
   const containerRef = useRef<HTMLDivElement>(null)
   const editorAreaRef = useRef<HTMLDivElement>(null)
   const stageContainerRef = useRef<HTMLDivElement>(null)
@@ -498,7 +500,7 @@ export function SplitEditor({
   const handleGenerate = useCallback(async () => {
     if (images.length === 0) return
     if (lines.length === 0) {
-      toast.error("请先添加分割线")
+      toast.error(t("addLinesFirst"))
       return
     }
 
@@ -525,14 +527,14 @@ export function SplitEditor({
           images[0].image.naturalHeight
         )
         if (localLines.length === 0) {
-          toast.error("分割线未穿过图片")
+          toast.error(t("linesNotCrossing"))
           return
         }
         await generateSplit(images[0].image, localLines, images[0].mimeType)
       }
     } catch (err) {
       console.error("Split failed:", err)
-      toast.error("分割失败，请重试")
+      toast.error(t("splitFailed"))
       return
     }
 
@@ -663,25 +665,25 @@ export function SplitEditor({
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-2 flex-shrink-0">
         <Button size="sm" variant="outline" onClick={() => addLine("horizontal")} disabled={!canAddHorizontal}>
-          + 横向分割线
+          {t("addHorizontal")}
         </Button>
         <Button size="sm" variant="outline" onClick={() => addLine("vertical")} disabled={!canAddVertical}>
-          + 纵向分割线
+          {t("addVertical")}
         </Button>
         <div className="w-px h-6 bg-border mx-1" />
-        <Button size="sm" variant="outline" onClick={undo} disabled={!canUndo}>撤销</Button>
-        <Button size="sm" variant="outline" onClick={redo} disabled={!canRedo}>重做</Button>
+        <Button size="sm" variant="outline" onClick={undo} disabled={!canUndo}>{t("undo")}</Button>
+        <Button size="sm" variant="outline" onClick={redo} disabled={!canRedo}>{t("redo")}</Button>
         <div className="w-px h-6 bg-border mx-1" />
         <Button size="sm" onClick={handleGenerate} disabled={isSplitting}>
-          {isSplitting ? "生成中..." : isMultiImage ? `批量生成 (${images.length} 张)` : "生成"}
+          {isSplitting ? t("generating") : isMultiImage ? t("batchGenerate", { count: images.length }) : t("generate")}
         </Button>
         {splitResults.length > 0 && (
-          <Button size="sm" variant="secondary" onClick={() => setSheetOpen(true)}>查看结果</Button>
+          <Button size="sm" variant="secondary" onClick={() => setSheetOpen(true)}>{t("viewResults")}</Button>
         )}
         <div className="flex-1" />
         {isMultiImage && (
           <span className="text-xs text-muted-foreground">
-            {images.length} 张图片 · 可拖拽移动
+            {t("imageCount", { count: images.length })}
           </span>
         )}
         <Button
@@ -694,13 +696,13 @@ export function SplitEditor({
             setSelectedLineId(null)
           }}
         >
-          重新上传
+          {t("reupload")}
         </Button>
       </div>
 
       {showShortcutHints && (
         <p className="text-xs text-muted-foreground flex-shrink-0">
-          快捷键: Ctrl+Z 撤销 | Ctrl+Shift+Z 重做 | Delete 删除选中分割线 | 从标尺拖拽创建分割线 | 拖回标尺删除 | 滚轮缩放 | 空格+拖拽平移 | Cmd+0 适应 | Cmd+1 100%
+          {t("shortcutHints")}
         </p>
       )}
 
