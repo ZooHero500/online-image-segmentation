@@ -98,6 +98,31 @@ describe("useUndoRedo", () => {
     expect(result.current.state).toBe("a")
   })
 
+  it("should track canUndo and canRedo correctly as state", () => {
+    const { result } = renderHook(() =>
+      useUndoRedo({ initialState: "a" })
+    )
+
+    // Initially no undo/redo
+    expect(result.current.canUndo).toBe(false)
+    expect(result.current.canRedo).toBe(false)
+
+    // After setState, canUndo should be true
+    act(() => result.current.setState("b"))
+    expect(result.current.canUndo).toBe(true)
+    expect(result.current.canRedo).toBe(false)
+
+    // After undo, canRedo should be true, canUndo false
+    act(() => result.current.undo())
+    expect(result.current.canUndo).toBe(false)
+    expect(result.current.canRedo).toBe(true)
+
+    // After redo, back to canUndo=true, canRedo=false
+    act(() => result.current.redo())
+    expect(result.current.canUndo).toBe(true)
+    expect(result.current.canRedo).toBe(false)
+  })
+
   it("should default max stack size to 50", () => {
     const { result } = renderHook(() =>
       useUndoRedo({ initialState: 0 })
