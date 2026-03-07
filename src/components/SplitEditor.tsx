@@ -234,6 +234,7 @@ export function SplitEditor({
   const appendInputRef = useRef<HTMLInputElement>(null)
   const [hoveredImageIdx, setHoveredImageIdx] = useState<number | null>(null)
   const [draggingImageIdx, setDraggingImageIdx] = useState<number | null>(null)
+  const [isFileDragOver, setIsFileDragOver] = useState(false)
 
   const isMultiImage = images.length > 1
 
@@ -799,10 +800,32 @@ export function SplitEditor({
       {/* Editor area with rulers */}
       <div
         ref={containerRef}
-        className="relative w-full bg-muted/30 rounded-lg overflow-hidden flex-1"
+        className={`relative w-full bg-muted/30 rounded-lg overflow-hidden flex-1 ${
+          isFileDragOver ? "ring-2 ring-[#D4AF37] bg-[#D4AF37]/5" : ""
+        }`}
         style={{ minHeight: 400 }}
         tabIndex={0}
         onKeyDown={handleKeyDown}
+        onDragOver={(e) => {
+          // Only react to file drags, not Konva internal drags
+          if (e.dataTransfer.types.includes("Files")) {
+            e.preventDefault()
+            setIsFileDragOver(true)
+          }
+        }}
+        onDragLeave={(e) => {
+          // Only reset if leaving the container (not entering a child)
+          if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+            setIsFileDragOver(false)
+          }
+        }}
+        onDrop={(e) => {
+          setIsFileDragOver(false)
+          if (e.dataTransfer.files.length > 0) {
+            e.preventDefault()
+            handleAppendImages(e.dataTransfer.files)
+          }
+        }}
       >
         <div
           ref={editorAreaRef}
