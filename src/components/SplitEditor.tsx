@@ -14,9 +14,10 @@ import { useImageExport } from "@/hooks/use-image-export"
 import { useRulerDrag } from "@/hooks/use-ruler-drag"
 import { useCanvasViewport } from "@/hooks/use-canvas-viewport"
 import { consumePendingUpload } from "@/lib/pending-upload"
+import { validateFiles, loadImage } from "@/lib/upload-utils"
 import { toast } from "sonner"
 import type { SplitLine, UploadResult } from "@/types"
-import { X } from "lucide-react"
+import { X, ImagePlus } from "lucide-react"
 
 const RULER_THICKNESS = 20
 const IMAGE_GAP = 40
@@ -230,6 +231,7 @@ export function SplitEditor({
   const [snapGuides, setSnapGuides] = useState<SnapGuide[]>([])
   const snapGuidesRef = useRef<SnapGuide[]>([])
   const uploadCountRef = useRef(0)
+  const appendInputRef = useRef<HTMLInputElement>(null)
   const [hoveredImageIdx, setHoveredImageIdx] = useState<number | null>(null)
   const [draggingImageIdx, setDraggingImageIdx] = useState<number | null>(null)
 
@@ -416,6 +418,40 @@ export function SplitEditor({
       onImageUpload?.(uploadCountRef.current)
     },
     [initializeImages, onImageUpload, clearResults]
+  )
+
+  const handleAppendImages = useCallback(
+    async (fileList: FileList) => {
+      const result = validateFiles(Array.from(fileList))
+      if (!result.valid) {
+        toast.error(result.error!)
+        return
+      }
+      if (result.totalSizeWarning) {
+        const totalSize = result.files.reduce((sum, f) => sum + f.size, 0)
+        toast.warning(
+          `总文件大小 ${(totalSize / 1024 / 1024).toFixed(1)}MB 超过 50MB，可能导致浏览器卡顿`
+        )
+      }
+      try {
+        const newItems: ImageItem[] = []
+        for (const file of result.files) {
+          const image = await loadImage(file)
+          newItems.push({ image, fileName: file.name, mimeType: file.type })
+        }
+        setImages((prev) => {
+          const merged = [...prev, ...newItems]
+          const newLayout = calculateLayout(merged)
+          setImagePositions(newLayout.offsets)
+          return merged
+        })
+        clearResults()
+        toast.success(`已添加 ${newItems.length} 张图片`)
+      } catch {
+        toast.error("图片加载失败，请重试")
+      }
+    },
+    [clearResults]
   )
 
   const handleRemoveImage = useCallback((index: number) => {
@@ -690,6 +726,29 @@ export function SplitEditor({
             {t("imageCount", { count: images.length })}
           </span>
         )}
+        <>
+          <input
+            ref={appendInputRef}
+            type="file"
+            accept="image/png,image/jpeg,image/webp"
+            multiple
+            className="hidden"
+            onChange={(e) => {
+              if (e.target.files && e.target.files.length > 0) {
+                handleAppendImages(e.target.files)
+              }
+              if (appendInputRef.current) appendInputRef.current.value = ""
+            }}
+          />
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => appendInputRef.current?.click()}
+          >
+            <ImagePlus className="h-4 w-4 mr-1" />
+            添加图片
+          </Button>
+        </>
         <Button
           size="sm"
           variant="ghost"
