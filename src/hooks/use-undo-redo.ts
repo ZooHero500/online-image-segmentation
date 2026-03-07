@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useState } from "react"
 
 interface UseUndoRedoOptions<T> {
   initialState: T
@@ -16,52 +16,71 @@ interface UseUndoRedoReturn<T> {
   canRedo: boolean
 }
 
+interface UndoRedoState<T> {
+  current: T
+  undoStack: T[]
+  redoStack: T[]
+}
+
 export function useUndoRedo<T>({
   initialState,
   maxStackSize = 50,
 }: UseUndoRedoOptions<T>): UseUndoRedoReturn<T> {
-  const [state, setStateInternal] = useState<T>(initialState)
-  const undoStack = useRef<T[]>([])
-  const redoStack = useRef<T[]>([])
+  const [internal, setInternal] = useState<UndoRedoState<T>>({
+    current: initialState,
+    undoStack: [],
+    redoStack: [],
+  })
 
   const setState = useCallback(
     (newState: T) => {
-      setStateInternal((prev) => {
-        undoStack.current.push(prev)
-        if (undoStack.current.length > maxStackSize) {
-          undoStack.current.shift()
+      setInternal((prev) => {
+        const newUndo = [...prev.undoStack, prev.current]
+        if (newUndo.length > maxStackSize) {
+          newUndo.shift()
         }
-        redoStack.current = []
-        return newState
+        return {
+          current: newState,
+          undoStack: newUndo,
+          redoStack: [],
+        }
       })
     },
     [maxStackSize]
   )
 
   const undo = useCallback(() => {
-    if (undoStack.current.length === 0) return
-    setStateInternal((prev) => {
-      const previousState = undoStack.current.pop()!
-      redoStack.current.push(prev)
-      return previousState
+    setInternal((prev) => {
+      if (prev.undoStack.length === 0) return prev
+      const newUndo = prev.undoStack.slice(0, -1)
+      const previousState = prev.undoStack[prev.undoStack.length - 1]
+      return {
+        current: previousState,
+        undoStack: newUndo,
+        redoStack: [...prev.redoStack, prev.current],
+      }
     })
   }, [])
 
   const redo = useCallback(() => {
-    if (redoStack.current.length === 0) return
-    setStateInternal((prev) => {
-      const nextState = redoStack.current.pop()!
-      undoStack.current.push(prev)
-      return nextState
+    setInternal((prev) => {
+      if (prev.redoStack.length === 0) return prev
+      const newRedo = prev.redoStack.slice(0, -1)
+      const nextState = prev.redoStack[prev.redoStack.length - 1]
+      return {
+        current: nextState,
+        undoStack: [...prev.undoStack, prev.current],
+        redoStack: newRedo,
+      }
     })
   }, [])
 
   return {
-    state,
+    state: internal.current,
     setState,
     undo,
     redo,
-    canUndo: undoStack.current.length > 0,
-    canRedo: redoStack.current.length > 0,
+    canUndo: internal.undoStack.length > 0,
+    canRedo: internal.redoStack.length > 0,
   }
 }

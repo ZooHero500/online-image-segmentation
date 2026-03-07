@@ -154,6 +154,61 @@ describe("splitImage", () => {
     )
   })
 
+  it("should filter out zero-height regions from duplicate horizontal lines", async () => {
+    const image = createMockImage(100, 300)
+    const lines: SplitLine[] = [
+      { id: "1", orientation: "horizontal", position: 100 },
+      { id: "2", orientation: "horizontal", position: 100 }, // duplicate
+    ]
+
+    const results = await splitImage(image, lines, "image/png")
+
+    // Should produce 2 regions (0→100, 100→300), not 3 with a zero-height one
+    expect(results).toHaveLength(2)
+    expect(results[0]).toMatchObject({ row: 1, col: 1, width: 100, height: 100 })
+    expect(results[1]).toMatchObject({ row: 2, col: 1, width: 100, height: 200 })
+  })
+
+  it("should filter out zero-width regions from duplicate vertical lines", async () => {
+    const image = createMockImage(300, 100)
+    const lines: SplitLine[] = [
+      { id: "1", orientation: "vertical", position: 150 },
+      { id: "2", orientation: "vertical", position: 150 }, // duplicate
+    ]
+
+    const results = await splitImage(image, lines, "image/png")
+
+    expect(results).toHaveLength(2)
+    expect(results[0]).toMatchObject({ row: 1, col: 1, width: 150 })
+    expect(results[1]).toMatchObject({ row: 1, col: 2, width: 150 })
+  })
+
+  it("should filter out regions from lines at image boundary (position 0)", async () => {
+    const image = createMockImage(100, 200)
+    const lines: SplitLine[] = [
+      { id: "1", orientation: "horizontal", position: 0 },
+    ]
+
+    const results = await splitImage(image, lines, "image/png")
+
+    // Line at 0 produces edges [0, 0, 200] → regions h=0 and h=200
+    // The zero-height region should be filtered
+    expect(results).toHaveLength(1)
+    expect(results[0]).toMatchObject({ row: 1, col: 1, width: 100, height: 200 })
+  })
+
+  it("should filter out regions from lines at image boundary (position = imageSize)", async () => {
+    const image = createMockImage(100, 200)
+    const lines: SplitLine[] = [
+      { id: "1", orientation: "horizontal", position: 200 },
+    ]
+
+    const results = await splitImage(image, lines, "image/png")
+
+    expect(results).toHaveLength(1)
+    expect(results[0]).toMatchObject({ row: 1, col: 1, width: 100, height: 200 })
+  })
+
   it("should reject when getContext returns null", async () => {
     const nullCtxCanvas = {
       width: 0,
