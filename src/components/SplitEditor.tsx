@@ -421,7 +421,8 @@ export function SplitEditor({
       if (prev.length <= 1) return prev
       return prev.filter((_, i) => i !== index)
     })
-  }, [])
+    clearResults()
+  }, [clearResults])
 
   // ─── Image drag with snap ───
 
