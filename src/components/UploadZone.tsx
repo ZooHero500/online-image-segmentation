@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useRef, useState } from "react"
+import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 import type { UploadResult } from "@/types"
 
@@ -30,6 +31,7 @@ function loadImage(file: File): Promise<HTMLImageElement> {
 }
 
 export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
+  const t = useTranslations("upload")
   const [error, setError] = useState<string | null>(null)
   const [isDragOver, setIsDragOver] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -41,11 +43,11 @@ export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
       const validFiles: File[] = []
       for (const file of Array.from(files)) {
         if (!ACCEPTED_TYPES.includes(file.type)) {
-          setError("不支持的文件格式，请上传 PNG、JPG 或 WebP 格式的图片")
+          setError(t("unsupportedFormat"))
           return
         }
         if (file.size > MAX_SIZE) {
-          setError(`文件 "${file.name}" 过大（超过 20MB），建议压缩后重试`)
+          setError(t("fileTooLarge", { name: file.name }))
           return
         }
         validFiles.push(file)
@@ -57,7 +59,7 @@ export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
       const totalSize = validFiles.reduce((sum, f) => sum + f.size, 0)
       if (totalSize > MAX_TOTAL_SIZE) {
         toast.warning(
-          `总文件大小 ${(totalSize / 1024 / 1024).toFixed(1)}MB 超过 50MB，可能导致浏览器卡顿`
+          t("totalSizeWarning", { size: (totalSize / 1024 / 1024).toFixed(1) })
         )
       }
 
@@ -75,7 +77,7 @@ export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
           onImageLoaded(results[0])
         }
       } catch {
-        setError("图片加载失败，请重试")
+        setError(t("loadFailed"))
       }
     },
     [onImageLoaded, onImagesLoaded]
@@ -135,21 +137,21 @@ export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
 
       <div className="text-center">
         <p className="text-xs uppercase tracking-[0.3em] text-[#6C6863] mb-6">
-          上传图片
+          {t("title")}
         </p>
         <p className="font-serif text-2xl md:text-3xl text-[#1A1A1A] mb-4">
-          拖拽一张或多张图片到此处
+          {t("dragHint")}
         </p>
         <div className="flex items-center gap-4 justify-center mb-6">
           <span className="h-px w-8 bg-[#1A1A1A]/20" />
-          <span className="text-xs uppercase tracking-[0.25em] text-[#6C6863]">或</span>
+          <span className="text-xs uppercase tracking-[0.25em] text-[#6C6863]">{t("or")}</span>
           <span className="h-px w-8 bg-[#1A1A1A]/20" />
         </div>
         <p className="text-sm text-[#1A1A1A] group-hover:text-[#D4AF37] transition-colors duration-500">
-          点击选择文件（支持多选）
+          {t("clickHint")}
         </p>
         <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-[#6C6863]/70">
-          PNG / JPG / WebP &middot; 单张最大 20MB
+          {t("formatHint")}
         </p>
       </div>
 
