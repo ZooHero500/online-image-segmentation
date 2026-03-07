@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 import { LandingContent } from "./LandingContent"
 import {
   Scissors,
@@ -18,6 +19,8 @@ import {
 import type React from "react"
 
 export default function Home() {
+  const t = useTranslations()
+
   return (
     <main className="min-h-screen bg-[#F9F8F6] relative">
       {/* Visible Grid Lines */}
@@ -37,26 +40,26 @@ export default function Home() {
               href="#features"
               className="hidden md:inline uppercase tracking-[0.2em] text-[#6C6863] hover:text-[#D4AF37] transition-colors duration-500"
             >
-              功能
+              {t("nav.features")}
             </a>
             <a
               href="#how-it-works"
               className="hidden md:inline uppercase tracking-[0.2em] text-[#6C6863] hover:text-[#D4AF37] transition-colors duration-500"
             >
-              使用说明
+              {t("nav.howItWorks")}
             </a>
             <a
               href="#faq"
               className="hidden md:inline uppercase tracking-[0.2em] text-[#6C6863] hover:text-[#D4AF37] transition-colors duration-500"
             >
-              常见问题
+              {t("nav.faq")}
             </a>
             <a
               href="#upload"
               className="group relative inline-flex items-center gap-2 bg-[#1A1A1A] text-[#F9F8F6] px-6 py-2.5 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500"
             >
               <span className="absolute inset-0 bg-[#D4AF37] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
-              <span className="relative z-10">开始使用</span>
+              <span className="relative z-10">{t("nav.getStarted")}</span>
               <ArrowRight className="relative z-10 h-3 w-3" />
             </a>
           </div>
@@ -71,20 +74,20 @@ export default function Home() {
             <div className="flex items-center gap-4 mb-8">
               <span className="h-px w-8 md:w-12 bg-[#1A1A1A]" />
               <span className="text-[10px] uppercase tracking-[0.3em] text-[#6C6863]">
-                在线图片分割工具
+                {t("hero.overline")}
               </span>
             </div>
 
             {/* Hero headline with mixed italic */}
             <h1 className="font-serif text-5xl md:text-7xl lg:text-9xl leading-[0.9] tracking-tight mb-8">
-              精准
-              <em className="text-[#D4AF37] not-italic font-serif italic">分割</em>
+              {t("hero.headlinePart1")}
+              <em className="text-[#D4AF37] not-italic font-serif italic">{t("hero.headlineAccent")}</em>
               <br />
-              图片
+              {t("hero.headlinePart2")}
             </h1>
 
             <p className="text-base md:text-lg text-[#6C6863] leading-relaxed max-w-md mb-10">
-              免费在线图片裁切工具，支持拖拽分割线、磁吸对齐、像素级精确裁切。纯浏览器端处理，您的图片永远不会离开您的设备。
+              {t("hero.description")}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -93,14 +96,14 @@ export default function Home() {
                 className="group relative inline-flex items-center justify-center gap-2 bg-[#1A1A1A] text-[#F9F8F6] px-10 py-4 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500"
               >
                 <span className="absolute inset-0 bg-[#D4AF37] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
-                <span className="relative z-10">立即免费使用</span>
+                <span className="relative z-10">{t("hero.ctaPrimary")}</span>
                 <ArrowRight className="relative z-10 h-3.5 w-3.5" />
               </a>
               <a
                 href="#how-it-works"
                 className="inline-flex items-center justify-center gap-2 border border-[#1A1A1A] text-[#1A1A1A] px-10 py-4 text-xs uppercase tracking-[0.2em] hover:bg-[#1A1A1A] hover:text-[#F9F8F6] transition-all duration-500"
               >
-                了解使用方法
+                {t("hero.ctaSecondary")}
               </a>
             </div>
           </div>
@@ -119,23 +122,23 @@ export default function Home() {
         <div className="max-w-[1600px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           <TrustItem
             icon={<Shield className="h-4 w-4" strokeWidth={1.5} />}
-            label="隐私零风险"
-            desc="数据不离开浏览器"
+            label={t("trust.privacyLabel")}
+            desc={t("trust.privacyDesc")}
           />
           <TrustItem
             icon={<Zap className="h-4 w-4" strokeWidth={1.5} />}
-            label="秒级处理"
-            desc="本地高速运算"
+            label={t("trust.speedLabel")}
+            desc={t("trust.speedDesc")}
           />
           <TrustItem
             icon={<Image className="h-4 w-4" strokeWidth={1.5} />}
-            label="无损质量"
-            desc="原始分辨率输出"
+            label={t("trust.qualityLabel")}
+            desc={t("trust.qualityDesc")}
           />
           <TrustItem
             icon={<Download className="h-4 w-4" strokeWidth={1.5} />}
-            label="完全免费"
-            desc="无限次使用"
+            label={t("trust.freeLabel")}
+            desc={t("trust.freeDesc")}
           />
         </div>
       </section>
@@ -144,7 +147,7 @@ export default function Home() {
       <section id="upload" className="px-8 md:px-16 pb-24 md:pb-32 max-w-[1600px] mx-auto">
         <div className="mb-8">
           <span className="text-[10px] uppercase tracking-[0.3em] text-[#6C6863]">
-            开始创作
+            {t("uploadSection.overline")}
           </span>
         </div>
         <LandingContent />
@@ -156,16 +159,16 @@ export default function Home() {
           <div className="grid grid-cols-12 gap-4 mb-16">
             <div className="col-span-12 md:col-span-6">
               <span className="text-[10px] uppercase tracking-[0.3em] text-[#F9F8F6]/40 mb-4 block">
-                为什么选择我们
+                {t("benefits.overline")}
               </span>
               <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9] text-[#F9F8F6]">
-                告别
-                <em className="text-[#D4AF37] italic">繁琐</em>
+                {t("benefits.headlinePart1")}
+                <em className="text-[#D4AF37] italic">{t("benefits.headlineAccent")}</em>
               </h2>
             </div>
             <div className="col-span-12 md:col-span-4 md:col-start-8 flex items-end">
               <p className="text-sm text-[#F9F8F6]/60 leading-relaxed">
-                告别繁琐的图片编辑软件，用最简单的方式完成图片分割
+                {t("benefits.subtitle")}
               </p>
             </div>
           </div>
@@ -173,23 +176,23 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-0">
             <BenefitCard
               icon={<MousePointerClick className="h-4 w-4" strokeWidth={1.5} />}
-              title="告别复杂的 PS 操作"
-              description="无需安装 Photoshop 或学习复杂的切片工具，拖拽分割线即可精准裁切，新手也能轻松上手。"
+              title={t("benefits.noPsTitle")}
+              description={t("benefits.noPsDesc")}
             />
             <BenefitCard
               icon={<Shield className="h-4 w-4" strokeWidth={1.5} />}
-              title="敏感图片也能放心处理"
-              description="合同、证件、设计稿等敏感文件无需上传到第三方服务器，所有处理都在本地浏览器完成。"
+              title={t("benefits.privacyTitle")}
+              description={t("benefits.privacyDesc")}
             />
             <BenefitCard
               icon={<Grid3X3 className="h-4 w-4" strokeWidth={1.5} />}
-              title="批量分割效率翻倍"
-              description="一次添加多条横向和纵向分割线，自动生成网格，批量下载所有子图片，大幅节省时间。"
+              title={t("benefits.batchTitle")}
+              description={t("benefits.batchDesc")}
             />
             <BenefitCard
               icon={<Layers className="h-4 w-4" strokeWidth={1.5} />}
-              title="所有设备随时可用"
-              description="无需安装任何软件，打开浏览器即可使用，手机、平板、电脑全平台支持。"
+              title={t("benefits.crossPlatformTitle")}
+              description={t("benefits.crossPlatformDesc")}
             />
           </div>
         </div>
@@ -201,11 +204,11 @@ export default function Home() {
           <div className="grid grid-cols-12 gap-4 mb-16">
             <div className="col-span-12 md:col-span-8 md:col-start-2">
               <span className="text-[10px] uppercase tracking-[0.3em] text-[#6C6863] mb-4 block">
-                功能特点
+                {t("features.overline")}
               </span>
               <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
-                专业级
-                <em className="text-[#D4AF37] italic">能力</em>
+                {t("features.headlinePart1")}
+                <em className="text-[#D4AF37] italic">{t("features.headlineAccent")}</em>
               </h2>
             </div>
           </div>
@@ -213,33 +216,33 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-0">
             <FeatureCard
               icon={<Scissors className="h-4 w-4" strokeWidth={1.5} />}
-              title="精确分割"
-              description="拖拽分割线自由定位，支持磁吸对齐，精确到像素级别的图片裁切。"
+              title={t("features.preciseTitle")}
+              description={t("features.preciseDesc")}
             />
             <FeatureCard
               icon={<Shield className="h-4 w-4" strokeWidth={1.5} />}
-              title="隐私安全"
-              description="所有处理在浏览器本地完成，图片不会上传到任何服务器，保护您的隐私。"
+              title={t("features.privacyTitle")}
+              description={t("features.privacyDesc")}
             />
             <FeatureCard
               icon={<Download className="h-4 w-4" strokeWidth={1.5} />}
-              title="一键下载"
-              description="支持一键打包下载所有分割后的子图片，也可单独下载每张图片。"
+              title={t("features.downloadTitle")}
+              description={t("features.downloadDesc")}
             />
             <FeatureCard
               icon={<Grid3X3 className="h-4 w-4" strokeWidth={1.5} />}
-              title="网格分割"
-              description="同时添加横向和纵向分割线，快速创建规则网格，批量裁切更高效。"
+              title={t("features.gridTitle")}
+              description={t("features.gridDesc")}
             />
             <FeatureCard
               icon={<Image className="h-4 w-4" strokeWidth={1.5} />}
-              title="多格式支持"
-              description="支持 PNG、JPG/JPEG 和 WebP 格式，文件大小最高支持 20MB。"
+              title={t("features.formatTitle")}
+              description={t("features.formatDesc")}
             />
             <FeatureCard
               icon={<Zap className="h-4 w-4" strokeWidth={1.5} />}
-              title="即时预览"
-              description="实时预览分割效果，调整分割线位置后立即查看裁切区域变化。"
+              title={t("features.previewTitle")}
+              description={t("features.previewDesc")}
             />
           </div>
         </div>
@@ -250,34 +253,34 @@ export default function Home() {
         <div className="max-w-[1600px] mx-auto">
           <div className="mb-16">
             <span className="text-[10px] uppercase tracking-[0.3em] text-[#6C6863] mb-4 block">
-              使用说明
+              {t("steps.overline")}
             </span>
             <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
-              四步
-              <em className="text-[#D4AF37] italic">完成</em>
+              {t("steps.headlinePart1")}
+              <em className="text-[#D4AF37] italic">{t("steps.headlineAccent")}</em>
             </h2>
           </div>
 
           <div className="grid md:grid-cols-4 gap-0">
             <StepCard
               step={1}
-              title="上传图片"
-              description="拖拽或点击上传您要分割的图片，支持 PNG、JPG、WebP 格式"
+              title={t("steps.step1Title")}
+              description={t("steps.step1Desc")}
             />
             <StepCard
               step={2}
-              title="添加分割线"
-              description="添加横向或纵向分割线，拖拽调整位置，支持磁吸对齐"
+              title={t("steps.step2Title")}
+              description={t("steps.step2Desc")}
             />
             <StepCard
               step={3}
-              title="预览效果"
-              description="实时预览每个分割区域，确认裁切效果满足需求"
+              title={t("steps.step3Title")}
+              description={t("steps.step3Desc")}
             />
             <StepCard
               step={4}
-              title="下载结果"
-              description="一键打包下载所有子图片，或单独下载指定区域"
+              title={t("steps.step4Title")}
+              description={t("steps.step4Desc")}
             />
           </div>
         </div>
@@ -289,30 +292,30 @@ export default function Home() {
           <div className="grid grid-cols-12 gap-4 mb-16">
             <div className="col-span-12 md:col-span-6">
               <span className="text-[10px] uppercase tracking-[0.3em] text-[#F9F8F6]/40 mb-4 block">
-                应用场景
+                {t("useCases.overline")}
               </span>
               <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9] text-[#F9F8F6]">
-                无限
-                <em className="text-[#D4AF37] italic">可能</em>
+                {t("useCases.headlinePart1")}
+                <em className="text-[#D4AF37] italic">{t("useCases.headlineAccent")}</em>
               </h2>
             </div>
           </div>
 
           <div className="grid md:grid-cols-3 gap-0">
             <UseCaseCard
-              title="电商运营"
-              description="将长图商品详情页按模块分割，上传到不同的商品展示区域，提升页面加载速度。"
-              result="页面加载速度提升 40%+"
+              title={t("useCases.ecommerceTitle")}
+              description={t("useCases.ecommerceDesc")}
+              result={t("useCases.ecommerceResult")}
             />
             <UseCaseCard
-              title="UI 设计师"
-              description="快速将设计稿切片导出，无需打开 Photoshop，直接在浏览器中完成切图交付。"
-              result="切图效率提升 3 倍"
+              title={t("useCases.designerTitle")}
+              description={t("useCases.designerDesc")}
+              result={t("useCases.designerResult")}
             />
             <UseCaseCard
-              title="社交媒体"
-              description="将全景图或长图分割成多张小图，制作九宫格拼图效果，提升社交平台发布质量。"
-              result="发布体验更专业"
+              title={t("useCases.socialTitle")}
+              description={t("useCases.socialDesc")}
+              result={t("useCases.socialResult")}
             />
           </div>
         </div>
@@ -323,18 +326,18 @@ export default function Home() {
         <div className="max-w-[1600px] mx-auto grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-7 md:col-start-2">
             <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9] mb-6">
-              立即
-              <em className="text-[#D4AF37] italic">开始</em>
+              {t("cta.headlinePart1")}
+              <em className="text-[#D4AF37] italic">{t("cta.headlineAccent")}</em>
             </h2>
             <p className="text-sm text-[#6C6863] leading-relaxed max-w-md mb-10">
-              无需注册，无需安装，打开浏览器即可免费使用。您的图片数据安全始终受到保护。
+              {t("cta.description")}
             </p>
             <a
               href="#upload"
               className="group relative inline-flex items-center gap-2 bg-[#1A1A1A] text-[#F9F8F6] px-10 py-4 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500"
             >
               <span className="absolute inset-0 bg-[#D4AF37] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
-              <span className="relative z-10">免费开始使用</span>
+              <span className="relative z-10">{t("cta.button")}</span>
               <ArrowRight className="relative z-10 h-3.5 w-3.5" />
             </a>
           </div>
@@ -347,41 +350,41 @@ export default function Home() {
           <div className="grid grid-cols-12 gap-8 md:gap-16">
             <div className="col-span-12 md:col-span-4">
               <span className="text-[10px] uppercase tracking-[0.3em] text-[#6C6863] mb-4 block">
-                常见问题
+                {t("faq.overline")}
               </span>
               <h2 className="font-serif text-4xl md:text-5xl leading-[0.9] mb-4">
-                疑问
-                <em className="text-[#D4AF37] italic">解答</em>
+                {t("faq.headlinePart1")}
+                <em className="text-[#D4AF37] italic">{t("faq.headlineAccent")}</em>
               </h2>
               <p className="text-sm text-[#6C6863] leading-relaxed">
-                关于图片分割工具的常见疑问
+                {t("faq.subtitle")}
               </p>
             </div>
             <div className="col-span-12 md:col-span-7 md:col-start-6">
               <div className="space-y-0">
                 <FaqItem
-                  question="支持哪些图片格式？"
-                  answer="支持 PNG、JPG/JPEG 和 WebP 格式的图片，文件大小限制为 20MB。"
+                  question={t("faq.q1")}
+                  answer={t("faq.a1")}
                 />
                 <FaqItem
-                  question="分割后的图片质量会降低吗？"
-                  answer="不会。工具以原始图片分辨率进行裁切，不压缩不缩放，保持原始画质。"
+                  question={t("faq.q2")}
+                  answer={t("faq.a2")}
                 />
                 <FaqItem
-                  question="我的图片数据安全吗？"
-                  answer="完全安全。所有图片处理都在您的浏览器本地完成，不会将任何图片数据上传到服务器。关闭页面后，所有数据自动清除。"
+                  question={t("faq.q3")}
+                  answer={t("faq.a3")}
                 />
                 <FaqItem
-                  question="可以同时添加多少条分割线？"
-                  answer="横向和纵向各最多支持 20 条分割线，可以创建非常精细的网格分割。"
+                  question={t("faq.q4")}
+                  answer={t("faq.a4")}
                 />
                 <FaqItem
-                  question="需要注册账号吗？"
-                  answer="不需要。无需注册、无需登录，打开网页即可直接使用，完全免费。"
+                  question={t("faq.q5")}
+                  answer={t("faq.a5")}
                 />
                 <FaqItem
-                  question="支持手机端使用吗？"
-                  answer="支持。工具采用响应式设计，在手机和平板上也可以正常使用。"
+                  question={t("faq.q6")}
+                  answer={t("faq.a6")}
                 />
               </div>
             </div>
@@ -399,26 +402,26 @@ export default function Home() {
             </span>
           </div>
           <p className="text-[10px] uppercase tracking-[0.25em] text-[#6C6863]">
-            在线图片分割工具 &mdash; 免费 &middot; 安全 &middot; 高效
+            {t("footer.tagline")}
           </p>
           <div className="flex gap-6 text-[10px] uppercase tracking-[0.2em] text-[#6C6863]">
             <a
               href="#features"
               className="hover:text-[#D4AF37] transition-colors duration-500"
             >
-              功能
+              {t("footer.navFeatures")}
             </a>
             <a
               href="#how-it-works"
               className="hover:text-[#D4AF37] transition-colors duration-500"
             >
-              说明
+              {t("footer.navHowItWorks")}
             </a>
             <a
               href="#faq"
               className="hover:text-[#D4AF37] transition-colors duration-500"
             >
-              问题
+              {t("footer.navFaq")}
             </a>
           </div>
         </div>
