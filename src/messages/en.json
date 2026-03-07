@@ -1,0 +1,171 @@
+{
+  "metadata": {
+    "title": "ImageSplit - Precision Image Splitting Tool",
+    "description": "Free online image splitting tool with drag-and-drop split lines, snap alignment, and instant download. All processing happens in your browser — your images never leave your device."
+  },
+  "nav": {
+    "features": "Features",
+    "howItWorks": "How It Works",
+    "faq": "FAQ",
+    "getStarted": "Get Started"
+  },
+  "hero": {
+    "overline": "Online Image Splitting Tool",
+    "headlinePart1": "Precision",
+    "headlineAccent": "Splitting",
+    "headlinePart2": "for Images",
+    "description": "Free online image splitting tool with drag-and-drop split lines, snap alignment, and pixel-perfect precision. Everything runs in your browser — your images never leave your device.",
+    "ctaPrimary": "Start Free Now",
+    "ctaSecondary": "See How It Works"
+  },
+  "trust": {
+    "privacyLabel": "Zero Privacy Risk",
+    "privacyDesc": "Data stays in your browser",
+    "speedLabel": "Instant Processing",
+    "speedDesc": "Local high-speed computation",
+    "qualityLabel": "Lossless Quality",
+    "qualityDesc": "Original resolution output",
+    "freeLabel": "Completely Free",
+    "freeDesc": "Unlimited usage"
+  },
+  "uploadSection": {
+    "overline": "Get Started"
+  },
+  "benefits": {
+    "overline": "Why Choose Us",
+    "headlinePart1": "Say Goodbye to",
+    "headlineAccent": "Complexity",
+    "subtitle": "Skip the bloated image editors — split images the simple way.",
+    "noPsTitle": "No More Photoshop",
+    "noPsDesc": "No need to install Photoshop or learn complicated slicing tools. Just drag split lines and cut — anyone can do it.",
+    "privacyTitle": "Safe for Sensitive Images",
+    "privacyDesc": "Contracts, IDs, design files — no need to upload to third-party servers. All processing happens locally in your browser.",
+    "batchTitle": "Batch Splitting, Double the Speed",
+    "batchDesc": "Add multiple horizontal and vertical split lines at once, auto-generate grids, and download all sub-images in bulk.",
+    "crossPlatformTitle": "Works on Any Device",
+    "crossPlatformDesc": "No installation needed. Open your browser and go — phone, tablet, or desktop."
+  },
+  "features": {
+    "overline": "Capabilities",
+    "headlinePart1": "Professional",
+    "headlineAccent": "Tools",
+    "preciseTitle": "Pixel-Perfect Splitting",
+    "preciseDesc": "Drag split lines freely with snap alignment for precise, pixel-level image cropping.",
+    "privacyTitle": "Privacy First",
+    "privacyDesc": "All processing happens in your browser. Images are never uploaded to any server.",
+    "downloadTitle": "One-Click Download",
+    "downloadDesc": "Download all split images as a ZIP, or save individual pieces one by one.",
+    "gridTitle": "Grid Splitting",
+    "gridDesc": "Add horizontal and vertical lines simultaneously to quickly create regular grids for efficient batch cropping.",
+    "formatTitle": "Multi-Format Support",
+    "formatDesc": "Supports PNG, JPG/JPEG, and WebP formats, with files up to 20MB.",
+    "previewTitle": "Live Preview",
+    "previewDesc": "See split results in real-time as you adjust line positions."
+  },
+  "steps": {
+    "overline": "How It Works",
+    "headlinePart1": "Four Simple",
+    "headlineAccent": "Steps",
+    "step1Title": "Upload Image",
+    "step1Desc": "Drag and drop or click to upload your image. Supports PNG, JPG, and WebP.",
+    "step2Title": "Add Split Lines",
+    "step2Desc": "Add horizontal or vertical split lines and drag them into position with snap alignment.",
+    "step3Title": "Preview Results",
+    "step3Desc": "See each split region in real-time and confirm the results meet your needs.",
+    "step4Title": "Download",
+    "step4Desc": "Download all sub-images as a ZIP, or save specific regions individually."
+  },
+  "useCases": {
+    "overline": "Use Cases",
+    "headlinePart1": "Endless",
+    "headlineAccent": "Possibilities",
+    "ecommerceTitle": "E-Commerce",
+    "ecommerceDesc": "Split long product detail pages into modules for different display areas, improving page load speed.",
+    "ecommerceResult": "40%+ faster page loads",
+    "designerTitle": "UI Designers",
+    "designerDesc": "Quickly export design slices without opening Photoshop — complete asset delivery right in the browser.",
+    "designerResult": "3x faster asset export",
+    "socialTitle": "Social Media",
+    "socialDesc": "Split panoramas or long images into multiple tiles for grid-style posts that look professional.",
+    "socialResult": "More polished posts"
+  },
+  "cta": {
+    "headlinePart1": "Start",
+    "headlineAccent": "Now",
+    "description": "No sign-up. No installation. Just open your browser and go. Your image data is always protected.",
+    "button": "Get Started Free"
+  },
+  "faq": {
+    "overline": "FAQ",
+    "headlinePart1": "Questions",
+    "headlineAccent": "Answered",
+    "subtitle": "Common questions about the image splitting tool",
+    "q1": "What image formats are supported?",
+    "a1": "PNG, JPG/JPEG, and WebP images are supported, with a maximum file size of 20MB.",
+    "q2": "Will image quality be reduced after splitting?",
+    "a2": "No. The tool crops at the original resolution — no compression, no scaling, no quality loss.",
+    "q3": "Is my image data safe?",
+    "a3": "Absolutely. All processing happens locally in your browser. No image data is ever uploaded to a server. Everything is cleared when you close the page.",
+    "q4": "How many split lines can I add?",
+    "a4": "Up to 20 horizontal and 20 vertical lines, allowing for very fine grid splits.",
+    "q5": "Do I need to create an account?",
+    "a5": "No. No registration, no login required. Open the page and start using it — completely free.",
+    "q6": "Does it work on mobile?",
+    "a6": "Yes. The tool uses responsive design and works on phones and tablets."
+  },
+  "footer": {
+    "tagline": "Online Image Splitting Tool — Free · Secure · Fast",
+    "navFeatures": "Features",
+    "navHowItWorks": "Guide",
+    "navFaq": "FAQ"
+  },
+  "upload": {
+    "title": "Upload Image",
+    "dragHint": "Drag and drop one or more images here",
+    "or": "or",
+    "clickHint": "Click to select files (multiple allowed)",
+    "formatHint": "PNG / JPG / WebP · Max 20MB per file",
+    "unsupportedFormat": "Unsupported format. Please upload PNG, JPG, or WebP images.",
+    "loadFailed": "Failed to load image. Please try again.",
+    "fileTooLarge": "File \"{name}\" exceeds 20MB. Consider compressing it first.",
+    "totalSizeWarning": "Total file size {size}MB exceeds 50MB and may cause browser slowdown."
+  },
+  "workspace": {
+    "addHorizontal": "+ Horizontal Line",
+    "addVertical": "+ Vertical Line",
+    "undo": "Undo",
+    "redo": "Redo",
+    "generate": "Generate",
+    "generating": "Generating...",
+    "batchGenerate": "Batch Generate ({count} images)",
+    "viewResults": "View Results",
+    "imageCount": "{count} images · drag to reposition",
+    "reupload": "Re-upload",
+    "addLinesFirst": "Add split lines first",
+    "linesNotCrossing": "Split lines don't intersect the image",
+    "splitFailed": "Split failed. Please try again.",
+    "horizontalLimitReached": "Horizontal split line limit reached (max 20)",
+    "verticalLimitReached": "Vertical split line limit reached (max 20)",
+    "loadingEditor": "Loading editor...",
+    "shortcutHints": "Shortcuts: Ctrl+Z Undo | Ctrl+Shift+Z Redo | Delete Remove selected line | Drag from ruler to create | Drag back to ruler to delete | Scroll to zoom | Space+drag to pan | Cmd+0 Fit | Cmd+1 100%"
+  },
+  "results": {
+    "title": "Split Results",
+    "imageCount": "{count} images",
+    "sourceCount": "({count} source images)",
+    "selectedCount": "· {selected}/{total} selected",
+    "downloadAll": "Download All (ZIP)",
+    "selectAll": "Select All",
+    "downloadSelected": "Download Selected",
+    "downloadSelectedCount": "Download Selected ({count})"
+  },
+  "history": {
+    "title": "History",
+    "new": "New",
+    "empty": "No history yet",
+    "loading": "Loading...",
+    "today": "Today {time}",
+    "lineCount": "{count} split lines",
+    "delete": "Delete"
+  }
+}

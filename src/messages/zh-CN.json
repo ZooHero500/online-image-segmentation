@@ -1,0 +1,171 @@
+{
+  "metadata": {
+    "title": "ImageSplit - 精准图片分割工具",
+    "description": "免费在线图片分割工具，支持拖拽分割线、磁吸对齐、一键生成并下载所有子图片。纯浏览器端处理，保护您的隐私。"
+  },
+  "nav": {
+    "features": "功能",
+    "howItWorks": "使用说明",
+    "faq": "常见问题",
+    "getStarted": "开始使用"
+  },
+  "hero": {
+    "overline": "在线图片分割工具",
+    "headlinePart1": "精准",
+    "headlineAccent": "分割",
+    "headlinePart2": "图片",
+    "description": "免费在线图片裁切工具，支持拖拽分割线、磁吸对齐、像素级精确裁切。纯浏览器端处理，您的图片永远不会离开您的设备。",
+    "ctaPrimary": "立即免费使用",
+    "ctaSecondary": "了解使用方法"
+  },
+  "trust": {
+    "privacyLabel": "隐私零风险",
+    "privacyDesc": "数据不离开浏览器",
+    "speedLabel": "秒级处理",
+    "speedDesc": "本地高速运算",
+    "qualityLabel": "无损质量",
+    "qualityDesc": "原始分辨率输出",
+    "freeLabel": "完全免费",
+    "freeDesc": "无限次使用"
+  },
+  "uploadSection": {
+    "overline": "开始创作"
+  },
+  "benefits": {
+    "overline": "为什么选择我们",
+    "headlinePart1": "告别",
+    "headlineAccent": "繁琐",
+    "subtitle": "告别繁琐的图片编辑软件，用最简单的方式完成图片分割",
+    "noPsTitle": "告别复杂的 PS 操作",
+    "noPsDesc": "无需安装 Photoshop 或学习复杂的切片工具，拖拽分割线即可精准裁切，新手也能轻松上手。",
+    "privacyTitle": "敏感图片也能放心处理",
+    "privacyDesc": "合同、证件、设计稿等敏感文件无需上传到第三方服务器，所有处理都在本地浏览器完成。",
+    "batchTitle": "批量分割效率翻倍",
+    "batchDesc": "一次添加多条横向和纵向分割线，自动生成网格，批量下载所有子图片，大幅节省时间。",
+    "crossPlatformTitle": "所有设备随时可用",
+    "crossPlatformDesc": "无需安装任何软件，打开浏览器即可使用，手机、平板、电脑全平台支持。"
+  },
+  "features": {
+    "overline": "功能特点",
+    "headlinePart1": "专业级",
+    "headlineAccent": "能力",
+    "preciseTitle": "精确分割",
+    "preciseDesc": "拖拽分割线自由定位，支持磁吸对齐，精确到像素级别的图片裁切。",
+    "privacyTitle": "隐私安全",
+    "privacyDesc": "所有处理在浏览器本地完成，图片不会上传到任何服务器，保护您的隐私。",
+    "downloadTitle": "一键下载",
+    "downloadDesc": "支持一键打包下载所有分割后的子图片，也可单独下载每张图片。",
+    "gridTitle": "网格分割",
+    "gridDesc": "同时添加横向和纵向分割线，快速创建规则网格，批量裁切更高效。",
+    "formatTitle": "多格式支持",
+    "formatDesc": "支持 PNG、JPG/JPEG 和 WebP 格式，文件大小最高支持 20MB。",
+    "previewTitle": "即时预览",
+    "previewDesc": "实时预览分割效果，调整分割线位置后立即查看裁切区域变化。"
+  },
+  "steps": {
+    "overline": "使用说明",
+    "headlinePart1": "四步",
+    "headlineAccent": "完成",
+    "step1Title": "上传图片",
+    "step1Desc": "拖拽或点击上传您要分割的图片，支持 PNG、JPG、WebP 格式",
+    "step2Title": "添加分割线",
+    "step2Desc": "添加横向或纵向分割线，拖拽调整位置，支持磁吸对齐",
+    "step3Title": "预览效果",
+    "step3Desc": "实时预览每个分割区域，确认裁切效果满足需求",
+    "step4Title": "下载结果",
+    "step4Desc": "一键打包下载所有子图片，或单独下载指定区域"
+  },
+  "useCases": {
+    "overline": "应用场景",
+    "headlinePart1": "无限",
+    "headlineAccent": "可能",
+    "ecommerceTitle": "电商运营",
+    "ecommerceDesc": "将长图商品详情页按模块分割，上传到不同的商品展示区域，提升页面加载速度。",
+    "ecommerceResult": "页面加载速度提升 40%+",
+    "designerTitle": "UI 设计师",
+    "designerDesc": "快速将设计稿切片导出，无需打开 Photoshop，直接在浏览器中完成切图交付。",
+    "designerResult": "切图效率提升 3 倍",
+    "socialTitle": "社交媒体",
+    "socialDesc": "将全景图或长图分割成多张小图，制作九宫格拼图效果，提升社交平台发布质量。",
+    "socialResult": "发布体验更专业"
+  },
+  "cta": {
+    "headlinePart1": "立即",
+    "headlineAccent": "开始",
+    "description": "无需注册，无需安装，打开浏览器即可免费使用。您的图片数据安全始终受到保护。",
+    "button": "免费开始使用"
+  },
+  "faq": {
+    "overline": "常见问题",
+    "headlinePart1": "疑问",
+    "headlineAccent": "解答",
+    "subtitle": "关于图片分割工具的常见疑问",
+    "q1": "支持哪些图片格式？",
+    "a1": "支持 PNG、JPG/JPEG 和 WebP 格式的图片，文件大小限制为 20MB。",
+    "q2": "分割后的图片质量会降低吗？",
+    "a2": "不会。工具以原始图片分辨率进行裁切，不压缩不缩放，保持原始画质。",
+    "q3": "我的图片数据安全吗？",
+    "a3": "完全安全。所有图片处理都在您的浏览器本地完成，不会将任何图片数据上传到服务器。关闭页面后，所有数据自动清除。",
+    "q4": "可以同时添加多少条分割线？",
+    "a4": "横向和纵向各最多支持 20 条分割线，可以创建非常精细的网格分割。",
+    "q5": "需要注册账号吗？",
+    "a5": "不需要。无需注册、无需登录，打开网页即可直接使用，完全免费。",
+    "q6": "支持手机端使用吗？",
+    "a6": "支持。工具采用响应式设计，在手机和平板上也可以正常使用。"
+  },
+  "footer": {
+    "tagline": "在线图片分割工具 — 免费 · 安全 · 高效",
+    "navFeatures": "功能",
+    "navHowItWorks": "说明",
+    "navFaq": "问题"
+  },
+  "upload": {
+    "title": "上传图片",
+    "dragHint": "拖拽一张或多张图片到此处",
+    "or": "或",
+    "clickHint": "点击选择文件（支持多选）",
+    "formatHint": "PNG / JPG / WebP · 单张最大 20MB",
+    "unsupportedFormat": "不支持的文件格式，请上传 PNG、JPG 或 WebP 格式的图片",
+    "loadFailed": "图片加载失败，请重试",
+    "fileTooLarge": "文件 \"{name}\" 过大（超过 20MB），建议压缩后重试",
+    "totalSizeWarning": "总文件大小 {size}MB 超过 50MB，可能导致浏览器卡顿"
+  },
+  "workspace": {
+    "addHorizontal": "+ 横向分割线",
+    "addVertical": "+ 纵向分割线",
+    "undo": "撤销",
+    "redo": "重做",
+    "generate": "生成",
+    "generating": "生成中...",
+    "batchGenerate": "批量生成 ({count} 张)",
+    "viewResults": "查看结果",
+    "imageCount": "{count} 张图片 · 可拖拽移动",
+    "reupload": "重新上传",
+    "addLinesFirst": "请先添加分割线",
+    "linesNotCrossing": "分割线未穿过图片",
+    "splitFailed": "分割失败，请重试",
+    "horizontalLimitReached": "横向分割线已达上限（20条）",
+    "verticalLimitReached": "纵向分割线已达上限（20条）",
+    "loadingEditor": "加载编辑器...",
+    "shortcutHints": "快捷键: Ctrl+Z 撤销 | Ctrl+Shift+Z 重做 | Delete 删除选中分割线 | 从标尺拖拽创建分割线 | 拖回标尺删除 | 滚轮缩放 | 空格+拖拽平移 | Cmd+0 适应 | Cmd+1 100%"
+  },
+  "results": {
+    "title": "分割结果",
+    "imageCount": "{count} 张图片",
+    "sourceCount": "({count} 张原图)",
+    "selectedCount": "· 已选 {selected}/{total} 张",
+    "downloadAll": "下载全部 (ZIP)",
+    "selectAll": "全选",
+    "downloadSelected": "下载选中",
+    "downloadSelectedCount": "下载选中 ({count})"
+  },
+  "history": {
+    "title": "历史记录",
+    "new": "新建",
+    "empty": "暂无历史记录",
+    "loading": "加载中...",
+    "today": "今天 {time}",
+    "lineCount": "{count} 条分割线",
+    "delete": "删除"
+  }
+}
