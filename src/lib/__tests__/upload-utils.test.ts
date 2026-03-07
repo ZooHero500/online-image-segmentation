@@ -60,4 +60,20 @@ describe("validateFiles", () => {
     expect(result.valid).toBe(true)
     expect(result.totalSizeWarning).toBe(true)
   })
+
+  it("should warn when new files + existing size exceeds 50MB", () => {
+    const file = makeFile("new.png", 10 * 1024 * 1024, "image/png")
+    const existingSize = 45 * 1024 * 1024 // 45MB already loaded
+    const result = validateFiles([file], existingSize)
+    expect(result.valid).toBe(true)
+    expect(result.totalSizeWarning).toBe(true)
+  })
+
+  it("should not warn when new files + existing size is under 50MB", () => {
+    const file = makeFile("new.png", 1024, "image/png")
+    const existingSize = 10 * 1024 * 1024
+    const result = validateFiles([file], existingSize)
+    expect(result.valid).toBe(true)
+    expect(result.totalSizeWarning).toBe(false)
+  })
 })

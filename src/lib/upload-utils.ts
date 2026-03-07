@@ -14,7 +14,7 @@ interface ValidationResult {
   totalSizeWarning?: boolean
 }
 
-export function validateFiles(files: File[]): ValidationResult {
+export function validateFiles(files: File[], existingSize: number = 0): ValidationResult {
   const validFiles: File[] = []
 
   for (const file of files) {
@@ -40,7 +40,7 @@ export function validateFiles(files: File[]): ValidationResult {
   return {
     valid: true,
     files: validFiles,
-    totalSizeWarning: totalSize > MAX_TOTAL_SIZE,
+    totalSizeWarning: totalSize + existingSize > MAX_TOTAL_SIZE,
   }
 }
 

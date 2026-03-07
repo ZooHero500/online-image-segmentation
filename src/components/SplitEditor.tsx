@@ -423,7 +423,11 @@ export function SplitEditor({
 
   const handleAppendImages = useCallback(
     async (fileList: FileList) => {
-      const result = validateFiles(Array.from(fileList))
+      // Estimate existing images total size (use naturalWidth * naturalHeight * 4 as rough byte estimate)
+      const existingSize = images.reduce((sum, img) => {
+        return sum + img.image.naturalWidth * img.image.naturalHeight * 4
+      }, 0)
+      const result = validateFiles(Array.from(fileList), existingSize)
       if (!result.valid) {
         toast.error(result.error!)
         return
@@ -452,7 +456,7 @@ export function SplitEditor({
         toast.error("图片加载失败，请重试")
       }
     },
-    [clearResults]
+    [images, clearResults]
   )
 
   const handleRemoveImage = useCallback((index: number) => {
