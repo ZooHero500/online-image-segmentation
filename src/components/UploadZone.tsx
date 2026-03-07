@@ -4,30 +4,11 @@ import { useCallback, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 import type { UploadResult } from "@/types"
-
-const ACCEPTED_TYPES = ["image/png", "image/jpeg", "image/webp"]
-const MAX_SIZE = 20 * 1024 * 1024 // 20MB per file
-const MAX_TOTAL_SIZE = 50 * 1024 * 1024 // 50MB total
+import { validateFiles, loadImage, ACCEPTED_TYPES } from "@/lib/upload-utils"
 
 interface UploadZoneProps {
   onImageLoaded?: (result: UploadResult) => void
   onImagesLoaded?: (results: UploadResult[]) => void
-}
-
-function loadImage(file: File): Promise<HTMLImageElement> {
-  return new Promise((resolve, reject) => {
-    const url = URL.createObjectURL(file)
-    const img = new Image()
-    img.onload = () => {
-      URL.revokeObjectURL(url)
-      resolve(img)
-    }
-    img.onerror = () => {
-      URL.revokeObjectURL(url)
-      reject(new Error("Failed to load image"))
-    }
-    img.src = url
-  })
 }
 
 export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
@@ -40,24 +21,14 @@ export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
     async (files: FileList) => {
       setError(null)
 
-      const validFiles: File[] = []
-      for (const file of Array.from(files)) {
-        if (!ACCEPTED_TYPES.includes(file.type)) {
-          setError(t("unsupportedFormat"))
-          return
-        }
-        if (file.size > MAX_SIZE) {
-          setError(t("fileTooLarge", { name: file.name }))
-          return
-        }
-        validFiles.push(file)
+      const result = validateFiles(Array.from(files))
+      if (!result.valid) {
+        setError(t(result.error!.key, result.error!.params))
+        return
       }
 
-      if (validFiles.length === 0) return
-
-      // Check total size
-      const totalSize = validFiles.reduce((sum, f) => sum + f.size, 0)
-      if (totalSize > MAX_TOTAL_SIZE) {
+      if (result.totalSizeWarning) {
+        const totalSize = result.files.reduce((sum, f) => sum + f.size, 0)
         toast.warning(
           t("totalSizeWarning", { size: (totalSize / 1024 / 1024).toFixed(1) })
         )
@@ -65,12 +36,11 @@ export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
 
       try {
         const results: UploadResult[] = []
-        for (const file of validFiles) {
+        for (const file of result.files) {
           const image = await loadImage(file)
           results.push({ file, image, mimeType: file.type })
         }
 
-        // Support both single and multi callbacks
         if (onImagesLoaded) {
           onImagesLoaded(results)
         } else if (onImageLoaded && results.length > 0) {
@@ -129,7 +99,7 @@ export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
       <input
         ref={inputRef}
         type="file"
-        accept="image/png,image/jpeg,image/webp"
+        accept={ACCEPTED_TYPES.join(",")}
         multiple
         className="hidden"
         onChange={handleFileChange}
