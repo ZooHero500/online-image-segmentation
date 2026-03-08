@@ -11,6 +11,7 @@ interface EditorState {
   lines: SplitLine[]
   originalFileName: string
   originalMimeType: string
+  images?: Array<{ blob: Blob; fileName: string; mimeType: string }>
 }
 
 export default function WorkspacePage() {
@@ -35,6 +36,7 @@ export default function WorkspacePage() {
       lines: SplitLine[]
       imageBlob: Blob
       thumbnailDataUrl: string
+      images?: Array<{ blob: Blob; fileName: string; mimeType: string }>
     }) => {
       await saveCurrentWork(data)
     },

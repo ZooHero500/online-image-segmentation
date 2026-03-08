@@ -191,12 +191,14 @@ interface SplitEditorProps {
     lines: SplitLine[]
     imageBlob: Blob
     thumbnailDataUrl: string
+    images?: Array<{ blob: Blob; fileName: string; mimeType: string }>
   }) => void
   initialState?: {
     imageBlob: Blob
     lines: SplitLine[]
     originalFileName: string
     originalMimeType: string
+    images?: Array<{ blob: Blob; fileName: string; mimeType: string }>
   }
   showShortcutHints?: boolean
 }
@@ -392,18 +394,46 @@ export function SplitEditor({
   // Load initial state (history)
   useEffect(() => {
     if (!initialState) return
-    const url = URL.createObjectURL(initialState.imageBlob)
-    const img = new Image()
-    img.onload = () => {
-      URL.revokeObjectURL(url)
-      initializeImages([{
-        image: img,
-        fileName: initialState.originalFileName,
-        mimeType: initialState.originalMimeType,
-      }])
-      setLines(initialState.lines)
+
+    // 多图恢复
+    if (initialState.images && initialState.images.length > 0) {
+      const imageItems: ImageItem[] = []
+      let loadedCount = 0
+      const total = initialState.images.length
+
+      initialState.images.forEach((imgData, index) => {
+        const url = URL.createObjectURL(imgData.blob)
+        const img = new Image()
+        img.onload = () => {
+          URL.revokeObjectURL(url)
+          imageItems[index] = {
+            image: img,
+            fileName: imgData.fileName,
+            mimeType: imgData.mimeType,
+          }
+          loadedCount++
+          if (loadedCount === total) {
+            initializeImages(imageItems)
+            setLines(initialState.lines)
+          }
+        }
+        img.src = url
+      })
+    } else {
+      // 单图兼容（旧历史记录）
+      const url = URL.createObjectURL(initialState.imageBlob)
+      const img = new Image()
+      img.onload = () => {
+        URL.revokeObjectURL(url)
+        initializeImages([{
+          image: img,
+          fileName: initialState.originalFileName,
+          mimeType: initialState.originalMimeType,
+        }])
+        setLines(initialState.lines)
+      }
+      img.src = url
     }
-    img.src = url
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialState])
 
@@ -592,6 +622,7 @@ export function SplitEditor({
 
     if (onSaveHistory && images.length > 0) {
       try {
+        // 缩略图：始终使用第一张图片
         const firstImage = images[0].image
         const thumbCanvas = document.createElement("canvas")
         const thumbSize = 128
@@ -602,29 +633,37 @@ export function SplitEditor({
         if (thumbCtx) {
           thumbCtx.drawImage(firstImage, 0, 0, thumbCanvas.width, thumbCanvas.height)
           const thumbnailDataUrl = thumbCanvas.toDataURL("image/jpeg", 0.6)
-          const fullCanvas = document.createElement("canvas")
-          fullCanvas.width = firstImage.naturalWidth
-          fullCanvas.height = firstImage.naturalHeight
-          const fullCtx = fullCanvas.getContext("2d")
-          if (fullCtx) {
-            fullCtx.drawImage(firstImage, 0, 0)
-            const mimeForBlob = ["image/png", "image/jpeg"].includes(images[0].mimeType)
-              ? images[0].mimeType
-              : "image/png"
-            const imageBlob = await new Promise<Blob>((resolve, reject) =>
-              fullCanvas.toBlob(
-                (b) => (b ? resolve(b) : reject(new Error("toBlob returned null"))),
-                mimeForBlob
+
+          // 将所有图片转换为 Blob
+          const imageDataList = await Promise.all(
+            images.map(async (item) => {
+              const canvas = document.createElement("canvas")
+              canvas.width = item.image.naturalWidth
+              canvas.height = item.image.naturalHeight
+              const ctx = canvas.getContext("2d")
+              if (!ctx) throw new Error("canvas context is null")
+              ctx.drawImage(item.image, 0, 0)
+              const mime = ["image/png", "image/jpeg"].includes(item.mimeType)
+                ? item.mimeType
+                : "image/png"
+              const blob = await new Promise<Blob>((resolve, reject) =>
+                canvas.toBlob(
+                  (b) => (b ? resolve(b) : reject(new Error("toBlob returned null"))),
+                  mime
+                )
               )
-            )
-            onSaveHistory({
-              originalFileName: images[0].fileName,
-              originalMimeType: images[0].mimeType,
-              lines: [...lines],
-              imageBlob,
-              thumbnailDataUrl,
+              return { blob, fileName: item.fileName, mimeType: item.mimeType }
             })
-          }
+          )
+
+          onSaveHistory({
+            originalFileName: images[0].fileName,
+            originalMimeType: images[0].mimeType,
+            lines: [...lines],
+            imageBlob: imageDataList[0].blob,
+            thumbnailDataUrl,
+            images: imageDataList,
+          })
         }
       } catch (err) {
         console.error("Save history failed:", err)

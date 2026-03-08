@@ -17,6 +17,13 @@ export interface SplitResult {
   height: number
 }
 
+/** 图片数据（用于历史记录存储） */
+export interface ImageData {
+  blob: Blob
+  fileName: string
+  mimeType: string
+}
+
 /** 历史记录 */
 export interface HistoryRecord {
   id: string
@@ -27,8 +34,10 @@ export interface HistoryRecord {
   createdAt: number
   /** 缩略图 base64 */
   thumbnailDataUrl: string
-  /** 原始图片 Blob */
+  /** 原始图片 Blob（第一张图片，向后兼容） */
   imageBlob: Blob
+  /** 所有图片（多图时使用） */
+  images?: ImageData[]
 }
 
 /** 上传结果 */

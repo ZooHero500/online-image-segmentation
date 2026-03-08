@@ -24,15 +24,33 @@ export function useHistory(): UseHistoryReturn {
     []
   )
 
-  const records: HistoryRecord[] = (rawRecords ?? []).map((r) => ({
-    id: r.externalId,
-    originalFileName: r.originalFileName,
-    originalMimeType: r.originalMimeType,
-    lines: JSON.parse(r.lines),
-    createdAt: r.createdAt,
-    thumbnailDataUrl: r.thumbnailDataUrl,
-    imageBlob: r.imageBlob,
-  }))
+  const records: HistoryRecord[] = (rawRecords ?? []).map((r) => {
+    const record: HistoryRecord = {
+      id: r.externalId,
+      originalFileName: r.originalFileName,
+      originalMimeType: r.originalMimeType,
+      lines: JSON.parse(r.lines),
+      createdAt: r.createdAt,
+      thumbnailDataUrl: r.thumbnailDataUrl,
+      imageBlob: r.imageBlob,
+    }
+
+    if (r.imageBlobs && r.imageBlobs.length > 0) {
+      const fileNames: string[] = r.imageFileNames
+        ? JSON.parse(r.imageFileNames as string)
+        : []
+      const mimeTypes: string[] = r.imageMimeTypes
+        ? JSON.parse(r.imageMimeTypes as string)
+        : []
+      record.images = r.imageBlobs.map((blob: Blob, i: number) => ({
+        blob,
+        fileName: fileNames[i] || r.originalFileName,
+        mimeType: mimeTypes[i] || r.originalMimeType,
+      }))
+    }
+
+    return record
+  })
 
   const isLoading = rawRecords === undefined
 

@@ -13,6 +13,7 @@ interface HistorySidebarProps {
     lines: SplitLine[]
     originalFileName: string
     originalMimeType: string
+    images?: Array<{ blob: Blob; fileName: string; mimeType: string }>
   }) => void
   onNewCanvas: () => void
 }
@@ -41,6 +42,7 @@ export function HistorySidebar({
         lines: record.lines,
         originalFileName: record.originalFileName,
         originalMimeType: record.originalMimeType,
+        images: record.images,
       })
     },
     [onLoadRecord]

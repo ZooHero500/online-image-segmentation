@@ -1,5 +1,5 @@
 import Dexie, { type EntityTable } from "dexie"
-import type { HistoryRecord } from "@/types"
+import type { HistoryRecord, ImageData } from "@/types"
 
 const MAX_RECORDS = 50
 const LS_RECORD_PREFIX = "img-split:record:"
@@ -13,6 +13,10 @@ interface DBHistoryRecord {
   createdAt: number
   thumbnailDataUrl: string
   imageBlob: Blob
+  // 多图支持（非索引字段，无需 schema 变更）
+  imageBlobs?: Blob[]
+  imageFileNames?: string // JSON serialized string[]
+  imageMimeTypes?: string // JSON serialized string[]
 }
 
 class ImageSplitDB extends Dexie {
@@ -33,7 +37,7 @@ function generateId(): string {
 }
 
 function toHistoryRecord(dbRecord: DBHistoryRecord): HistoryRecord {
-  return {
+  const record: HistoryRecord = {
     id: dbRecord.externalId,
     originalFileName: dbRecord.originalFileName,
     originalMimeType: dbRecord.originalMimeType,
@@ -42,6 +46,22 @@ function toHistoryRecord(dbRecord: DBHistoryRecord): HistoryRecord {
     thumbnailDataUrl: dbRecord.thumbnailDataUrl,
     imageBlob: dbRecord.imageBlob,
   }
+
+  if (dbRecord.imageBlobs && dbRecord.imageBlobs.length > 0) {
+    const fileNames: string[] = dbRecord.imageFileNames
+      ? JSON.parse(dbRecord.imageFileNames)
+      : []
+    const mimeTypes: string[] = dbRecord.imageMimeTypes
+      ? JSON.parse(dbRecord.imageMimeTypes)
+      : []
+    record.images = dbRecord.imageBlobs.map((blob, i) => ({
+      blob,
+      fileName: fileNames[i] || dbRecord.originalFileName,
+      mimeType: mimeTypes[i] || dbRecord.originalMimeType,
+    }))
+  }
+
+  return record
 }
 
 function clearRecordLocalData(id: string): void {
@@ -86,6 +106,16 @@ export const storageService = {
       createdAt,
       thumbnailDataUrl: data.thumbnailDataUrl,
       imageBlob: data.imageBlob,
+    }
+
+    if (data.images && data.images.length > 0) {
+      dbRecord.imageBlobs = data.images.map((img) => img.blob)
+      dbRecord.imageFileNames = JSON.stringify(
+        data.images.map((img) => img.fileName)
+      )
+      dbRecord.imageMimeTypes = JSON.stringify(
+        data.images.map((img) => img.mimeType)
+      )
     }
 
     await db.history.add(dbRecord)
