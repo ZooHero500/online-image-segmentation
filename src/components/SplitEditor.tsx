@@ -730,19 +730,6 @@ export function SplitEditor({
 
   const [lineNearRuler, setLineNearRuler] = useState<string | null>(null)
 
-  // Thumbnail URLs for image management strip
-  const thumbnailUrls = useMemo(() => {
-    return images.map((item) => {
-      const canvas = document.createElement("canvas")
-      const thumbSize = 64
-      const ratio = Math.min(thumbSize / item.image.naturalWidth, thumbSize / item.image.naturalHeight)
-      canvas.width = item.image.naturalWidth * ratio
-      canvas.height = item.image.naturalHeight * ratio
-      const ctx = canvas.getContext("2d")
-      if (ctx) ctx.drawImage(item.image, 0, 0, canvas.width, canvas.height)
-      return canvas.toDataURL("image/jpeg", 0.6)
-    })
-  }, [images])
 
   if (images.length === 0) {
     return (
@@ -846,33 +833,6 @@ export function SplitEditor({
           )}
         </div>
       </TooltipProvider>
-
-      {/* Image management strip */}
-      {isMultiImage && (
-        <div className="flex gap-2 overflow-x-auto pb-1 flex-shrink-0">
-          {images.map((item, index) => (
-            <div
-              key={`thumb-${index}`}
-              className="group/thumb relative shrink-0 rounded border border-[#1A1A1A]/15 overflow-hidden"
-            >
-              <img
-                src={thumbnailUrls[index]}
-                alt={item.fileName}
-                className="h-12 w-auto object-cover"
-              />
-              <button
-                className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover/thumb:opacity-100 transition-opacity"
-                onClick={() => handleRemoveImage(index)}
-              >
-                <X className="h-2.5 w-2.5" strokeWidth={2} />
-              </button>
-              <span className="absolute bottom-0 left-0 right-0 text-center text-[8px] bg-black/50 text-white leading-4">
-                {index + 1}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
 
       {/* Editor area with rulers */}
       <div
