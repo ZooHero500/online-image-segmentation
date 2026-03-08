@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl"
 import { Stage, Layer, Image as KonvaImage, Line, Rect, Group } from "react-konva"
 import type Konva from "konva"
 import { Button } from "@/components/ui/button"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { UploadZone } from "./UploadZone"
 import { ResultSheet } from "./ResultSheet"
 import { Ruler, CornerBlock, DragPreviewLine } from "./Ruler"
@@ -17,7 +18,7 @@ import { consumePendingUpload } from "@/lib/pending-upload"
 import { validateFiles, loadImage } from "@/lib/upload-utils"
 import { toast } from "sonner"
 import type { SplitLine, UploadResult } from "@/types"
-import { X, ImagePlus } from "lucide-react"
+import { X, ImagePlus, Keyboard, Undo2, Redo2, RefreshCw } from "lucide-react"
 
 const RULER_THICKNESS = 20
 const IMAGE_GAP = 40
@@ -219,6 +220,7 @@ export function SplitEditor({
   showShortcutHints = false,
 }: SplitEditorProps) {
   const t = useTranslations("workspace")
+  const tUpload = useTranslations("upload")
   const containerRef = useRef<HTMLDivElement>(null)
   const editorAreaRef = useRef<HTMLDivElement>(null)
   const stageContainerRef = useRef<HTMLDivElement>(null)
@@ -429,13 +431,13 @@ export function SplitEditor({
       }, 0)
       const result = validateFiles(Array.from(fileList), existingSize)
       if (!result.valid) {
-        toast.error(result.error!)
+        toast.error(tUpload(result.error!.key, result.error!.params))
         return
       }
       if (result.totalSizeWarning) {
         const totalSize = result.files.reduce((sum, f) => sum + f.size, 0)
         toast.warning(
-          `总文件大小 ${(totalSize / 1024 / 1024).toFixed(1)}MB 超过 50MB，可能导致浏览器卡顿`
+          tUpload("totalSizeWarning", { size: (totalSize / 1024 / 1024).toFixed(1) })
         )
       }
       try {
@@ -451,12 +453,12 @@ export function SplitEditor({
           return merged
         })
         clearResults()
-        toast.success(`已添加 ${newItems.length} 张图片`)
+        toast.success(t("imagesAdded", { count: newItems.length }))
       } catch {
-        toast.error("图片加载失败，请重试")
+        toast.error(t("appendFailed"))
       }
     },
-    [images, clearResults]
+    [images, clearResults, t, tUpload]
   )
 
   const handleRemoveImage = useCallback((index: number) => {
@@ -708,30 +710,45 @@ export function SplitEditor({
   return (
     <div className="flex flex-col gap-4 w-full h-full">
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-2 flex-shrink-0">
-        <Button size="sm" variant="outline" onClick={() => addLine("horizontal")} disabled={!canAddHorizontal}>
-          {t("addHorizontal")}
-        </Button>
-        <Button size="sm" variant="outline" onClick={() => addLine("vertical")} disabled={!canAddVertical}>
-          {t("addVertical")}
-        </Button>
-        <div className="w-px h-6 bg-border mx-1" />
-        <Button size="sm" variant="outline" onClick={undo} disabled={!canUndo}>{t("undo")}</Button>
-        <Button size="sm" variant="outline" onClick={redo} disabled={!canRedo}>{t("redo")}</Button>
-        <div className="w-px h-6 bg-border mx-1" />
-        <Button size="sm" onClick={handleGenerate} disabled={isSplitting}>
-          {isSplitting ? t("generating") : isMultiImage ? t("batchGenerate", { count: images.length }) : t("generate")}
-        </Button>
-        {splitResults.length > 0 && (
-          <Button size="sm" variant="secondary" onClick={() => setSheetOpen(true)}>{t("viewResults")}</Button>
-        )}
-        <div className="flex-1" />
-        {isMultiImage && (
-          <span className="text-xs text-muted-foreground">
-            {t("imageCount", { count: images.length })}
-          </span>
-        )}
-        <>
+      <TooltipProvider>
+        <div className="flex items-center gap-1.5 flex-shrink-0">
+          <Button size="xs" variant="outline" onClick={() => addLine("horizontal")} disabled={!canAddHorizontal}>
+            {t("addHorizontal")}
+          </Button>
+          <Button size="xs" variant="outline" onClick={() => addLine("vertical")} disabled={!canAddVertical}>
+            {t("addVertical")}
+          </Button>
+          <div className="w-px h-5 bg-border mx-0.5" />
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button size="icon-xs" variant="outline" onClick={undo} disabled={!canUndo}>
+                <Undo2 className="h-3.5 w-3.5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{t("undo")}</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button size="icon-xs" variant="outline" onClick={redo} disabled={!canRedo}>
+                <Redo2 className="h-3.5 w-3.5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{t("redo")}</TooltipContent>
+          </Tooltip>
+          <div className="w-px h-5 bg-border mx-0.5" />
+          <Button size="xs" onClick={handleGenerate} disabled={isSplitting}>
+            {isSplitting ? t("generating") : isMultiImage ? t("batchGenerate", { count: images.length }) : t("generate")}
+          </Button>
+          {splitResults.length > 0 && (
+            <Button size="xs" variant="secondary" onClick={() => setSheetOpen(true)}>{t("viewResults")}</Button>
+          )}
+          <div className="flex-1" />
+          {isMultiImage && (
+            <span className="text-[10px] text-muted-foreground">
+              {t("imageCount", { count: images.length })}
+            </span>
+          )}
+          <div className="w-px h-5 bg-border mx-0.5" />
           <input
             ref={appendInputRef}
             type="file"
@@ -745,34 +762,45 @@ export function SplitEditor({
               if (appendInputRef.current) appendInputRef.current.value = ""
             }}
           />
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={() => appendInputRef.current?.click()}
-          >
-            <ImagePlus className="h-4 w-4 mr-1" />
-            添加图片
-          </Button>
-        </>
-        <Button
-          size="sm"
-          variant="ghost"
-          onClick={() => {
-            setImages([])
-            setImagePositions([])
-            clearResults()
-            setSelectedLineId(null)
-          }}
-        >
-          {t("reupload")}
-        </Button>
-      </div>
-
-      {showShortcutHints && (
-        <p className="text-xs text-muted-foreground flex-shrink-0">
-          {t("shortcutHints")}
-        </p>
-      )}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button size="icon-xs" variant="ghost" onClick={() => appendInputRef.current?.click()}>
+                <ImagePlus className="h-3.5 w-3.5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{t("appendImages")}</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                size="icon-xs"
+                variant="ghost"
+                onClick={() => {
+                  setImages([])
+                  setImagePositions([])
+                  clearResults()
+                  setSelectedLineId(null)
+                }}
+              >
+                <RefreshCw className="h-3.5 w-3.5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{t("reupload")}</TooltipContent>
+          </Tooltip>
+          {showShortcutHints && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button size="icon-xs" variant="ghost">
+                  <Keyboard className="h-3.5 w-3.5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent className="max-w-sm">
+                {t("shortcutHints")}
+              </TooltipContent>
+            </Tooltip>
+          )}
+        </div>
+      </TooltipProvider>
 
       {/* Image management strip */}
       {isMultiImage && (
