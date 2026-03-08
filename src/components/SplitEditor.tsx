@@ -16,6 +16,7 @@ import { useRulerDrag } from "@/hooks/use-ruler-drag"
 import { useCanvasViewport } from "@/hooks/use-canvas-viewport"
 import { consumePendingUpload } from "@/lib/pending-upload"
 import { validateFiles, loadImage } from "@/lib/upload-utils"
+import { calculateWorkspaceBounds } from "@/lib/workspace-bounds"
 import { toast } from "sonner"
 import type { SplitLine, UploadResult } from "@/types"
 import { X, ImagePlus, Keyboard, Undo2, Redo2, RefreshCw } from "lucide-react"
@@ -259,6 +260,11 @@ export function SplitEditor({
     [images]
   )
 
+  const workspaceBounds = useMemo(
+    () => calculateWorkspaceBounds(imagePositions, imageSizes),
+    [imagePositions, imageSizes]
+  )
+
   const stageWidth = containerSize.width - RULER_THICKNESS
   const stageHeight = containerSize.height - RULER_THICKNESS
 
@@ -283,7 +289,11 @@ export function SplitEditor({
     canUndo,
     canRedo,
     setLines,
-  } = useSplitLines({ workspaceWidth: layout.totalWidth, workspaceHeight: layout.totalHeight, snapThreshold: 12 / viewport.scale })
+  } = useSplitLines({
+    workspaceWidth: workspaceBounds.width,
+    workspaceHeight: workspaceBounds.height,
+    snapThreshold: 12 / viewport.scale,
+  })
 
   const {
     splitResults,
@@ -881,7 +891,7 @@ export function SplitEditor({
             length={stageWidth}
             viewportScale={viewport.scale}
             viewportOffset={viewport.position.x}
-            imageSize={layout.totalWidth}
+            imageSize={workspaceBounds.width}
             thickness={RULER_THICKNESS}
             lines={lines}
             onDragStart={startDrag}
@@ -891,7 +901,7 @@ export function SplitEditor({
             length={stageHeight}
             viewportScale={viewport.scale}
             viewportOffset={viewport.position.y}
-            imageSize={layout.totalHeight}
+            imageSize={workspaceBounds.height}
             thickness={RULER_THICKNESS}
             lines={lines}
             onDragStart={startDrag}
@@ -1029,9 +1039,9 @@ export function SplitEditor({
                   <WorkspaceSplitLine
                     key={line.id}
                     line={line}
-                    totalWidth={layout.totalWidth}
-                    totalHeight={layout.totalHeight}
-                    lineExtend={layout.totalWidth + layout.totalHeight}
+                    totalWidth={workspaceBounds.width}
+                    totalHeight={workspaceBounds.height}
+                    lineExtend={workspaceBounds.width + workspaceBounds.height}
                     viewportScale={viewport.scale}
                     viewportPosition={viewport.position}
                     selectedLineId={selectedLineId}
