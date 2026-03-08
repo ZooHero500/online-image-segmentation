@@ -1173,15 +1173,20 @@ function WorkspaceSplitLine({
       onClick={() => setSelectedLineId(line.id)}
       onTap={() => setSelectedLineId(line.id)}
       dragBoundFunc={(pos) => {
-        // Directly in workspace (world) coordinates — no group offset needed
+        // pos is the node's absolute position; convert to world, add line.position
+        // to get actual line position, snap that, then convert back to node offset
         if (isHorizontal) {
-          const worldY = (pos.y - viewportPosition.y) / viewportScale
-          const snapped = calculateSnap(worldY, "horizontal")
-          return { x: pos.x, y: snapped * viewportScale + viewportPosition.y }
+          const nodeOffsetY = (pos.y - viewportPosition.y) / viewportScale
+          const actualWorldY = nodeOffsetY + line.position
+          const snapped = calculateSnap(actualWorldY, "horizontal")
+          const snappedOffset = snapped - line.position
+          return { x: pos.x, y: snappedOffset * viewportScale + viewportPosition.y }
         } else {
-          const worldX = (pos.x - viewportPosition.x) / viewportScale
-          const snapped = calculateSnap(worldX, "vertical")
-          return { x: snapped * viewportScale + viewportPosition.x, y: pos.y }
+          const nodeOffsetX = (pos.x - viewportPosition.x) / viewportScale
+          const actualWorldX = nodeOffsetX + line.position
+          const snapped = calculateSnap(actualWorldX, "vertical")
+          const snappedOffset = snapped - line.position
+          return { x: snappedOffset * viewportScale + viewportPosition.x, y: pos.y }
         }
       }}
       onDragMove={(e: Konva.KonvaEventObject<DragEvent>) => {
