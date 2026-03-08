@@ -3,6 +3,7 @@
 import { useCallback } from "react"
 import { useTranslations, useLocale } from "next-intl"
 import { Button } from "@/components/ui/button"
+import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { useHistory } from "@/hooks/use-history"
 import type { HistoryRecord, SplitLine } from "@/types"
 
@@ -101,6 +102,10 @@ export function HistorySidebar({
             </button>
           </div>
         ))}
+      </div>
+
+      <div className="border-t p-3">
+        <LocaleSwitcher />
       </div>
     </div>
   )
