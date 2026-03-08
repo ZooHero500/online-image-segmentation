@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useMemo, useState } from "react"
+import { useTranslations } from "next-intl"
 import { X, Download, ZoomIn, Check } from "lucide-react"
 import type { SplitResult, BatchSplitResult } from "@/types"
 
@@ -203,6 +204,7 @@ export function ResultSheet({
   isAllSelected,
   onDownloadSelected,
 }: ResultSheetProps) {
+  const t = useTranslations("results")
   const [lightbox, setLightbox] = useState<{
     src: string
     alt: string
@@ -249,18 +251,18 @@ export function ResultSheet({
         <div className="flex items-center justify-between px-6 py-5 border-b border-[#1A1A1A]/10 shrink-0">
           <div>
             <span className="text-[10px] uppercase tracking-[0.3em] text-[#6C6863] block mb-1">
-              分割结果
+              {t("title")}
             </span>
             <span className="text-xs text-[#1A1A1A] font-medium">
-              {totalCount} 张图片
+              {t("imageCount", { count: totalCount })}
               {isMultiImage && (
                 <span className="text-[#6C6863] ml-1">
-                  ({batchResults.length} 张原图)
+                  {t("sourceCount", { count: batchResults.length })}
                 </span>
               )}
               {selectedCount > 0 && (
                 <span className="text-[#D4AF37] ml-2">
-                  · 已选 {selectedCount}/{totalCount} 张
+                  {t("selectedCount", { selected: selectedCount, total: totalCount })}
                 </span>
               )}
             </span>
@@ -281,7 +283,7 @@ export function ResultSheet({
           >
             <span className="absolute inset-0 bg-[#D4AF37] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
             <Download className="relative z-10 h-3.5 w-3.5" strokeWidth={1.5} />
-            <span className="relative z-10">下载全部 (ZIP)</span>
+            <span className="relative z-10">{t("downloadAll")}</span>
           </button>
 
           {/* Selection action bar */}
@@ -298,7 +300,7 @@ export function ResultSheet({
               <Check className="h-3 w-3" strokeWidth={2} />
             </button>
             <span className="text-[10px] uppercase tracking-[0.15em] text-[#6C6863]">
-              全选
+              {t("selectAll")}
             </span>
 
             <div className="flex-1" />
@@ -314,7 +316,7 @@ export function ResultSheet({
               }`}
             >
               <Download className="h-3 w-3" strokeWidth={1.5} />
-              下载选中{selectedCount > 0 ? ` (${selectedCount})` : ""}
+              {selectedCount > 0 ? t("downloadSelectedCount", { count: selectedCount }) : t("downloadSelected")}
             </button>
           </div>
         </div>
@@ -335,7 +337,7 @@ export function ResultSheet({
                         {batch.fileName}
                       </span>
                       <span className="text-[10px] text-[#6C6863]/60 ml-2">
-                        ({batch.results.length} 张)
+                        {t("imageCount", { count: batch.results.length })}
                       </span>
                     </div>
                     <div

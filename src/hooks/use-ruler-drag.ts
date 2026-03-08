@@ -14,6 +14,10 @@ interface UseRulerDragOptions {
   canAddHorizontal: boolean
   canAddVertical: boolean
   rulerThickness: number
+  messages: {
+    horizontalLimitReached: string
+    verticalLimitReached: string
+  }
 }
 
 interface UseRulerDragReturn {
@@ -35,6 +39,7 @@ export function useRulerDrag({
   canAddHorizontal,
   canAddVertical,
   rulerThickness,
+  messages,
 }: UseRulerDragOptions): UseRulerDragReturn {
   const [isDragging, setIsDragging] = useState(false)
   const [dragOrientation, setDragOrientation] = useState<"horizontal" | "vertical" | null>(null)
@@ -56,7 +61,11 @@ export function useRulerDrag({
     (orientation: "horizontal" | "vertical") => {
       const canAdd = orientation === "horizontal" ? canAddHorizontal : canAddVertical
       if (!canAdd) {
-        toast.error(`${orientation === "horizontal" ? "横向" : "纵向"}分割线已达上限（20条）`)
+        toast.error(
+          orientation === "horizontal"
+            ? messages.horizontalLimitReached
+            : messages.verticalLimitReached
+        )
         return
       }
       dragStateRef.current.isDragging = true
@@ -64,7 +73,7 @@ export function useRulerDrag({
       setIsDragging(true)
       setDragOrientation(orientation)
     },
-    [canAddHorizontal, canAddVertical]
+    [canAddHorizontal, canAddVertical, messages]
   )
 
   const isNearRulerZone = useCallback(
