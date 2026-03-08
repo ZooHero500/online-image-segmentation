@@ -238,6 +238,7 @@ export function SplitEditor({
   const appendInputRef = useRef<HTMLInputElement>(null)
   const [hoveredImageIdx, setHoveredImageIdx] = useState<number | null>(null)
   const [draggingImageIdx, setDraggingImageIdx] = useState<number | null>(null)
+  const [selectedImageIdx, setSelectedImageIdx] = useState<number | null>(null)
   const [isFileDragOver, setIsFileDragOver] = useState(false)
 
   const isMultiImage = images.length > 1
@@ -500,6 +501,7 @@ export function SplitEditor({
       if (prev.length <= 1) return prev
       return prev.filter((_, i) => i !== index)
     })
+    setSelectedImageIdx(null)
     clearResults()
   }, [clearResults])
 
@@ -713,13 +715,17 @@ export function SplitEditor({
       if (isCmd && e.key === "1") { e.preventDefault(); viewport.resetTo100(); return }
       if (isCmd && e.shiftKey && e.key === "z") { e.preventDefault(); redo(); return }
       if (isCmd && e.key === "z") { e.preventDefault(); undo(); return }
-      if ((e.key === "Delete" || e.key === "Backspace") && selectedLineId) {
+      if (e.key === "Delete" || e.key === "Backspace") {
         e.preventDefault()
-        removeLine(selectedLineId)
-        setSelectedLineId(null)
+        if (selectedLineId) {
+          removeLine(selectedLineId)
+          setSelectedLineId(null)
+        } else if (selectedImageIdx !== null && images.length > 1) {
+          handleRemoveImage(selectedImageIdx)
+        }
       }
     },
-    [undo, redo, removeLine, selectedLineId, viewport]
+    [undo, redo, removeLine, selectedLineId, selectedImageIdx, images.length, handleRemoveImage, viewport]
   )
 
   const [lineNearRuler, setLineNearRuler] = useState<string | null>(null)
@@ -942,7 +948,10 @@ export function SplitEditor({
               y={viewport.position.y}
               draggable={isPanning}
               onClick={(e: Konva.KonvaEventObject<MouseEvent>) => {
-                if (e.target === e.target.getStage()) setSelectedLineId(null)
+                if (e.target === e.target.getStage()) {
+                  setSelectedLineId(null)
+                  setSelectedImageIdx(null)
+                }
               }}
               onWheel={(e: Konva.KonvaEventObject<WheelEvent>) => {
                 e.evt.preventDefault()
@@ -1017,19 +1026,22 @@ export function SplitEditor({
                           stageContainerRef.current.style.cursor = ""
                         }
                       } : undefined}
-                      onClick={() => setSelectedLineId(null)}
+                      onClick={() => {
+                        setSelectedLineId(null)
+                        if (isMultiImage) setSelectedImageIdx(index)
+                      }}
                     >
-                      {/* Selection / hover border */}
-                      {isMultiImage && (hoveredImageIdx === index || draggingImageIdx === index) && (
+                      {/* Selection / hover / drag border */}
+                      {isMultiImage && (selectedImageIdx === index || hoveredImageIdx === index || draggingImageIdx === index) && (
                         <Rect
                           x={-3 / viewport.scale}
                           y={-3 / viewport.scale}
                           width={imgW + 6 / viewport.scale}
                           height={imgH + 6 / viewport.scale}
-                          stroke={draggingImageIdx === index ? "#3b82f6" : "#3b82f6"}
-                          strokeWidth={(draggingImageIdx === index ? 2.5 : 1.5) / viewport.scale}
-                          opacity={draggingImageIdx === index ? 0.9 : 0.5}
-                          dash={draggingImageIdx === index ? undefined : [6 / viewport.scale, 3 / viewport.scale]}
+                          stroke={selectedImageIdx === index ? "#2563eb" : "#3b82f6"}
+                          strokeWidth={(selectedImageIdx === index || draggingImageIdx === index ? 2.5 : 1.5) / viewport.scale}
+                          opacity={selectedImageIdx === index ? 1 : draggingImageIdx === index ? 0.9 : 0.5}
+                          dash={selectedImageIdx === index || draggingImageIdx === index ? undefined : [6 / viewport.scale, 3 / viewport.scale]}
                           listening={false}
                         />
                       )}
