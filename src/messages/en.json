@@ -22,11 +22,11 @@
     "privacyLabel": "Zero Privacy Risk",
     "privacyDesc": "Data stays in your browser",
     "speedLabel": "Instant Processing",
-    "speedDesc": "Local high-speed computation",
+    "speedDesc": "Processed right in your browser",
     "qualityLabel": "Lossless Quality",
-    "qualityDesc": "Original resolution output",
+    "qualityDesc": "Pixel-for-pixel quality",
     "freeLabel": "Completely Free",
-    "freeDesc": "Unlimited usage"
+    "freeDesc": "No limits"
   },
   "uploadSection": {
     "overline": "Get Started"
@@ -40,8 +40,8 @@
     "noPsDesc": "No need to install Photoshop or learn complicated slicing tools. Just drag split lines and cut — anyone can do it.",
     "privacyTitle": "Safe for Sensitive Images",
     "privacyDesc": "Contracts, IDs, design files — no need to upload to third-party servers. All processing happens locally in your browser.",
-    "batchTitle": "Batch Splitting, Double the Speed",
-    "batchDesc": "Add multiple horizontal and vertical split lines at once, auto-generate grids, and download all sub-images in bulk.",
+    "batchTitle": "Batch Split, Twice as Fast",
+    "batchDesc": "Add multiple horizontal and vertical split lines at once, auto-generate grids, and download all pieces in one go.",
     "crossPlatformTitle": "Works on Any Device",
     "crossPlatformDesc": "No installation needed. Open your browser and go — phone, tablet, or desktop."
   },
@@ -50,7 +50,7 @@
     "headlinePart1": "Professional",
     "headlineAccent": "Tools",
     "preciseTitle": "Pixel-Perfect Splitting",
-    "preciseDesc": "Drag split lines freely with snap alignment for precise, pixel-level image cropping.",
+    "preciseDesc": "Drag split lines freely with snap alignment for pixel-perfect precision.",
     "privacyTitle": "Privacy First",
     "privacyDesc": "All processing happens in your browser. Images are never uploaded to any server.",
     "downloadTitle": "One-Click Download",
@@ -58,7 +58,7 @@
     "gridTitle": "Grid Splitting",
     "gridDesc": "Add horizontal and vertical lines simultaneously to quickly create regular grids for efficient batch cropping.",
     "formatTitle": "Multi-Format Support",
-    "formatDesc": "Supports PNG, JPG/JPEG, and WebP formats, with files up to 20MB.",
+    "formatDesc": "Supports PNG, JPG/JPEG, and WebP. Up to 20MB per file.",
     "previewTitle": "Live Preview",
     "previewDesc": "See split results in real-time as you adjust line positions."
   },
@@ -73,17 +73,17 @@
     "step3Title": "Preview Results",
     "step3Desc": "See each split region in real-time and confirm the results meet your needs.",
     "step4Title": "Download",
-    "step4Desc": "Download all sub-images as a ZIP, or save specific regions individually."
+    "step4Desc": "Download all pieces as a ZIP, or save specific regions individually."
   },
   "useCases": {
     "overline": "Use Cases",
     "headlinePart1": "Endless",
     "headlineAccent": "Possibilities",
     "ecommerceTitle": "E-Commerce",
-    "ecommerceDesc": "Split long product detail pages into modules for different display areas, improving page load speed.",
+    "ecommerceDesc": "Split long product images into sections for different display areas — faster page loads, better user experience.",
     "ecommerceResult": "40%+ faster page loads",
     "designerTitle": "UI Designers",
-    "designerDesc": "Quickly export design slices without opening Photoshop — complete asset delivery right in the browser.",
+    "designerDesc": "Quickly export design slices without opening Photoshop — deliver assets right in your browser.",
     "designerResult": "3x faster asset export",
     "socialTitle": "Social Media",
     "socialDesc": "Split panoramas or long images into multiple tiles for grid-style posts that look professional.",
@@ -111,7 +111,7 @@
     "q5": "Do I need to create an account?",
     "a5": "No. No registration, no login required. Open the page and start using it — completely free.",
     "q6": "Does it work on mobile?",
-    "a6": "Yes. The tool uses responsive design and works on phones and tablets."
+    "a6": "Yes — it works great on phones and tablets too."
   },
   "footer": {
     "tagline": "Online Image Splitting Tool — Free · Secure · Fast",
