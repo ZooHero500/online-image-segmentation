@@ -55,7 +55,7 @@ export default function Home() {
             >
               {t("nav.faq")}
             </a>
-            <LocaleSwitcher />
+            <LocaleSwitcher variant="compact" />
             <a
               href="#upload"
               className="group relative inline-flex items-center gap-2 bg-[#1A1A1A] text-[#F9F8F6] px-6 py-2.5 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500"

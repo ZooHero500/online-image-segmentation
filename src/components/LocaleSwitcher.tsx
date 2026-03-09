@@ -18,7 +18,18 @@ const localeLabels: Record<string, string> = {
   "zh-CN": "中文",
 }
 
-export function LocaleSwitcher({ className }: { className?: string }) {
+const localeShortLabels: Record<string, string> = {
+  en: "EN",
+  "zh-CN": "中文",
+}
+
+export function LocaleSwitcher({
+  className,
+  variant = "default",
+}: {
+  className?: string
+  variant?: "default" | "compact"
+}) {
   const locale = useLocale()
   const router = useRouter()
   const pathname = usePathname()
@@ -28,6 +39,26 @@ export function LocaleSwitcher({ className }: { className?: string }) {
     startTransition(() => {
       router.replace(pathname, { locale: value })
     })
+  }
+
+  if (variant === "compact") {
+    return (
+      <div className={`relative inline-flex items-center ${className ?? ""}`}>
+        <Globe className="absolute left-2 size-3.5 text-[#6C6863] pointer-events-none" />
+        <select
+          value={locale}
+          onChange={(e) => handleChange(e.target.value)}
+          disabled={isPending}
+          className="appearance-none bg-transparent border-0 text-xs uppercase tracking-[0.2em] text-[#6C6863] hover:text-[#D4AF37] transition-colors duration-500 cursor-pointer outline-none pl-7 pr-1 py-1"
+        >
+          {routing.locales.map((loc) => (
+            <option key={loc} value={loc}>
+              {localeShortLabels[loc] ?? loc}
+            </option>
+          ))}
+        </select>
+      </div>
+    )
   }
 
   return (
