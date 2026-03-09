@@ -55,7 +55,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages()
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={`${playfair.variable} ${inter.variable} font-sans antialiased`}
       >
