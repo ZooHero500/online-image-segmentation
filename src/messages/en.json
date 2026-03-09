@@ -165,6 +165,7 @@
   "history": {
     "title": "History",
     "new": "New",
+    "backToHome": "Back to Home",
     "empty": "No history yet",
     "loading": "Loading...",
     "today": "Today {time}",

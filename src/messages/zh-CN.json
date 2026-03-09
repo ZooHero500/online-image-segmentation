@@ -165,6 +165,7 @@
   "history": {
     "title": "历史记录",
     "new": "新建",
+    "backToHome": "回到首页",
     "empty": "暂无历史记录",
     "loading": "加载中...",
     "today": "今天 {time}",

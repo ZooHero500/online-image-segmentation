@@ -2,8 +2,10 @@
 
 import { useCallback } from "react"
 import { useTranslations, useLocale } from "next-intl"
+import { Scissors } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
+import { Link } from "@/i18n/navigation"
 import { useHistory } from "@/hooks/use-history"
 import type { HistoryRecord, SplitLine } from "@/types"
 
@@ -58,6 +60,17 @@ export function HistorySidebar({
 
   return (
     <div className="flex flex-col h-full w-64 border-r bg-card">
+      <Link
+        href="/"
+        className="flex items-center gap-2 px-3 py-3 border-b hover:bg-muted/50 transition-colors"
+        title={t("backToHome")}
+      >
+        <Scissors className="h-4 w-4 text-foreground" strokeWidth={1.5} />
+        <span className="text-xs uppercase tracking-[0.2em] font-medium text-foreground">
+          ImageSplit
+        </span>
+      </Link>
+
       <div className="flex items-center justify-between p-3 border-b">
         <h2 className="text-sm font-medium">{t("title")}</h2>
         <Button size="sm" variant="outline" onClick={onNewCanvas}>
