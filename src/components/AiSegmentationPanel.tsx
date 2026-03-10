@@ -56,14 +56,6 @@ export function AiSegmentationPanel({
     reset: resetSegment,
   } = useAiSegment()
 
-  // Sync layers to parent
-  const updateLayers = useCallback(
-    (newLayers: SegmentLayer[]) => {
-      onLayersChange(newLayers)
-    },
-    [onLayersChange]
-  )
-
   // Step 1: Start analysis
   const handleAnalyze = useCallback(async () => {
     if (!imageBlob) return
