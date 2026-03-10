@@ -1,18 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import Replicate from "replicate"
+import { LAYER_COLORS } from "@/lib/ai-segmentation"
 
-const LAYER_COLORS = [
-  "#3B82F6", // blue
-  "#22C55E", // green
-  "#F59E0B", // amber
-  "#EF4444", // red
-  "#8B5CF6", // violet
-  "#EC4899", // pink
-  "#06B6D4", // cyan
-  "#F97316", // orange
-  "#14B8A6", // teal
-  "#6366F1", // indigo
-]
+const MAX_IMAGE_SIZE = 15_000_000 // ~10MB as base64
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,6 +12,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: "Image and labels are required" },
         { status: 400 }
+      )
+    }
+
+    if (typeof image === "string" && image.length > MAX_IMAGE_SIZE) {
+      return NextResponse.json(
+        { error: "Image too large (max 10MB)" },
+        { status: 413 }
       )
     }
 
@@ -57,8 +54,18 @@ export async function POST(request: NextRequest) {
         }
       )
 
-      // Lang-SAM returns an image URL of the segmented result
-      const maskUrl = typeof output === "string" ? output : String(output)
+      // Lang-SAM may return string, array of strings, or other formats
+      let maskUrl: string | null = null
+      if (typeof output === "string") {
+        maskUrl = output
+      } else if (Array.isArray(output) && typeof output[0] === "string") {
+        maskUrl = output[0]
+      }
+
+      if (!maskUrl) {
+        console.error(`Unexpected Replicate output format for ${label.label_en}:`, output)
+        continue
+      }
 
       segments.push({
         label_en: label.label_en,

@@ -116,8 +116,8 @@ export interface AnalyzeResponse {
 export interface SegmentRequest {
   /** 图片 URL 或 Base64 */
   image: string
-  /** 要分割的标签（英文） */
-  labels: string[]
+  /** 要分割的标签 */
+  labels: Array<{ label_en: string; label_zh: string }>
 }
 
 /** /api/segment 单个分割结果 */

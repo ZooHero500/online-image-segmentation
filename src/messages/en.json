@@ -197,6 +197,10 @@
     "exportAllZip": "Export All (ZIP)",
     "backToSelect": "Back to Select",
     "noImage": "Upload or select an image first",
-    "selectAtLeastOne": "Select at least one element"
+    "selectAtLeastOne": "Select at least one element",
+    "hideLayer": "Hide layer",
+    "showLayer": "Show layer",
+    "segmentComplete": "Segmentation complete",
+    "exportFailed": "Export failed. Please try again."
   }
 }

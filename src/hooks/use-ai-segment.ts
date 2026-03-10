@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useRef, useEffect } from "react"
 import type { RecognizedElement, SegmentLayer } from "@/types"
-import { generateLayerId, loadImage } from "@/lib/ai-segmentation"
+import { blobToBase64DataUrl, generateLayerId, loadImage } from "@/lib/ai-segmentation"
 
 interface UseAiSegmentReturn {
   layers: SegmentLayer[]
@@ -20,21 +20,28 @@ export function useAiSegment(): UseAiSegmentReturn {
   const [isSegmenting, setIsSegmenting] = useState(false)
   const [progress, setProgress] = useState({ current: 0, total: 0 })
   const [error, setError] = useState<string | null>(null)
+  const abortControllerRef = useRef<AbortController | null>(null)
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort()
+    }
+  }, [])
 
   const segment = useCallback(async (imageBlob: Blob, labels: RecognizedElement[]) => {
+    // Abort any in-flight request
+    abortControllerRef.current?.abort()
+    const controller = new AbortController()
+    abortControllerRef.current = controller
+
     setIsSegmenting(true)
     setError(null)
     setLayers([])
     setProgress({ current: 0, total: labels.length })
 
     try {
-      // Convert blob to data URL for API
-      const dataUrl = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader()
-        reader.onload = () => resolve(reader.result as string)
-        reader.onerror = reject
-        reader.readAsDataURL(imageBlob)
-      })
+      const dataUrl = await blobToBase64DataUrl(imageBlob)
 
       const response = await fetch("/api/segment", {
         method: "POST",
@@ -43,6 +50,7 @@ export function useAiSegment(): UseAiSegmentReturn {
           image: dataUrl,
           labels: labels.map(l => ({ label_en: l.label_en, label_zh: l.label_zh })),
         }),
+        signal: controller.signal,
       })
 
       if (!response.ok) {
@@ -55,6 +63,8 @@ export function useAiSegment(): UseAiSegmentReturn {
       // Load mask images and create layers
       const newLayers: SegmentLayer[] = []
       for (let i = 0; i < data.segments.length; i++) {
+        if (controller.signal.aborted) return
+
         const seg = data.segments[i]
         setProgress({ current: i + 1, total: data.segments.length })
 
@@ -79,6 +89,7 @@ export function useAiSegment(): UseAiSegmentReturn {
         setLayers([...newLayers])
       }
     } catch (err) {
+      if (err instanceof DOMException && err.name === "AbortError") return
       setError(err instanceof Error ? err.message : "Unknown error")
     } finally {
       setIsSegmenting(false)
@@ -94,6 +105,7 @@ export function useAiSegment(): UseAiSegmentReturn {
   }, [])
 
   const reset = useCallback(() => {
+    abortControllerRef.current?.abort()
     setLayers([])
     setError(null)
     setIsSegmenting(false)

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest"
-import { assignLayerColors, blobToBase64DataUrl, generateLayerId } from "../ai-segmentation"
+import { blobToBase64DataUrl, generateLayerId, LAYER_COLORS } from "../ai-segmentation"
 
 describe("ai-segmentation", () => {
   describe("generateLayerId", () => {
@@ -8,19 +8,19 @@ describe("ai-segmentation", () => {
       const id2 = generateLayerId()
       expect(id1).not.toBe(id2)
     })
+
+    it("generates valid UUID format", () => {
+      const id = generateLayerId()
+      expect(id).toMatch(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
+      )
+    })
   })
 
-  describe("assignLayerColors", () => {
-    it("assigns distinct colors to labels", () => {
-      const colors = assignLayerColors(3)
-      expect(colors).toHaveLength(3)
-      expect(new Set(colors).size).toBe(3) // all unique
-    })
-
-    it("cycles colors when more labels than palette", () => {
-      const colors = assignLayerColors(12)
-      expect(colors).toHaveLength(12)
-      expect(colors[0]).toBe(colors[10]) // wraps around
+  describe("LAYER_COLORS", () => {
+    it("has 10 distinct colors", () => {
+      expect(LAYER_COLORS).toHaveLength(10)
+      expect(new Set(LAYER_COLORS).size).toBe(10)
     })
   })
 

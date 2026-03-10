@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import OpenAI from "openai"
 
+const MAX_IMAGE_SIZE = 15_000_000 // ~10MB as base64
+
 const client = new OpenAI({
   apiKey: process.env.XAI_API_KEY,
   baseURL: "https://api.x.ai/v1",
@@ -29,6 +31,21 @@ Example output:
 
 Return ONLY the JSON array, no other text.`
 
+function validateElements(parsed: unknown): Array<{ label_en: string; label_zh: string; confidence: number }> {
+  if (!Array.isArray(parsed)) return []
+  return parsed.filter(
+    (e: unknown): e is { label_en: string; label_zh: string; confidence: number } =>
+      typeof e === "object" &&
+      e !== null &&
+      "label_en" in e &&
+      typeof (e as Record<string, unknown>).label_en === "string" &&
+      "label_zh" in e &&
+      typeof (e as Record<string, unknown>).label_zh === "string" &&
+      "confidence" in e &&
+      typeof (e as Record<string, unknown>).confidence === "number"
+  )
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { image } = await request.json()
@@ -37,6 +54,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: "Image is required" },
         { status: 400 }
+      )
+    }
+
+    if (typeof image === "string" && image.length > MAX_IMAGE_SIZE) {
+      return NextResponse.json(
+        { error: "Image too large (max 10MB)" },
+        { status: 413 }
       )
     }
 
@@ -75,7 +99,8 @@ export async function POST(request: NextRequest) {
 
     // Parse JSON from response (handle possible markdown code blocks)
     const jsonStr = content.replace(/```json?\n?/g, "").replace(/```/g, "").trim()
-    const elements = JSON.parse(jsonStr)
+    const parsed = JSON.parse(jsonStr)
+    const elements = validateElements(parsed)
 
     return NextResponse.json({ elements })
   } catch (error) {

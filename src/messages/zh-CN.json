@@ -197,6 +197,10 @@
     "exportAllZip": "全部导出 (ZIP)",
     "backToSelect": "返回重新选择",
     "noImage": "请先上传或选择一张图片",
-    "selectAtLeastOne": "请至少选择一个元素"
+    "selectAtLeastOne": "请至少选择一个元素",
+    "hideLayer": "隐藏图层",
+    "showLayer": "显示图层",
+    "segmentComplete": "分割完成",
+    "exportFailed": "导出失败，请重试。"
   }
 }

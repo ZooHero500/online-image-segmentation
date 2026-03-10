@@ -27,11 +27,17 @@ export function AiSegmentationCanvas({
   // Load main image from blob
   useEffect(() => {
     if (!imageBlob) return
+    let revoked = false
     const url = URL.createObjectURL(imageBlob)
     const img = new Image()
-    img.onload = () => setMainImage(img)
+    img.onload = () => {
+      if (!revoked) setMainImage(img)
+    }
     img.src = url
-    return () => URL.revokeObjectURL(url)
+    return () => {
+      revoked = true
+      URL.revokeObjectURL(url)
+    }
   }, [imageBlob])
 
   // Track container size

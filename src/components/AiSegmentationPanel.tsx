@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import { useTranslations } from "next-intl"
+import { toast } from "sonner"
 import {
   Sparkles,
   RefreshCw,
@@ -56,27 +57,36 @@ export function AiSegmentationPanel({
     reset: resetSegment,
   } = useAiSegment()
 
-  // Step 1: Start analysis
+  // C2 fix: Sync layers to parent whenever they change
+  useEffect(() => {
+    onLayersChange(layers)
+  }, [layers, onLayersChange])
+
+  // C1 fix: analyze() now returns elements directly, no stale closure
   const handleAnalyze = useCallback(async () => {
     if (!imageBlob) return
     setStep("analyze")
-    await analyze(imageBlob)
-    setStep("select")
-    // Default: select first 2 elements
-    const allElements = elements
-    const defaults = new Set(allElements.slice(0, 2).map((e) => e.label_en))
-    setSelectedLabels(defaults)
-  }, [imageBlob, analyze, elements])
+    const result = await analyze(imageBlob)
+    if (result.length > 0) {
+      setStep("select")
+      const defaults = new Set(result.slice(0, 2).map((e) => e.label_en))
+      setSelectedLabels(defaults)
+    }
+  }, [imageBlob, analyze])
 
-  // Retry analysis
+  // Retry analysis — also uses returned elements
   const handleReanalyze = useCallback(async () => {
     resetAnalyze()
     setCustomLabels([])
     setSelectedLabels(new Set())
     if (!imageBlob) return
     setStep("analyze")
-    await analyze(imageBlob)
-    setStep("select")
+    const result = await analyze(imageBlob)
+    if (result.length > 0) {
+      setStep("select")
+      const defaults = new Set(result.slice(0, 2).map((e) => e.label_en))
+      setSelectedLabels(defaults)
+    }
   }, [imageBlob, analyze, resetAnalyze])
 
   // Toggle label selection
@@ -115,7 +125,8 @@ export function AiSegmentationPanel({
     setStep("segment")
     await segment(imageBlob, selected)
     setStep("result")
-  }, [imageBlob, elements, customLabels, selectedLabels, segment])
+    toast.success(t("segmentComplete"))
+  }, [imageBlob, elements, customLabels, selectedLabels, segment, t])
 
   // Toggle layer visibility
   const handleToggleVisibility = useCallback(
@@ -135,33 +146,43 @@ export function AiSegmentationPanel({
     [isolatedLayerId, onIsolateLayer]
   )
 
-  // Export single layer as PNG
+  // I5 fix: Export with error handling and toast
   const handleExportOne = useCallback(
     async (layer: SegmentLayer) => {
       if (!layer.maskUrl) return
-      const response = await fetch(layer.maskUrl)
-      const blob = await response.blob()
-      downloadBlob(blob, `${layer.label_en}.png`)
+      try {
+        const response = await fetch(layer.maskUrl)
+        if (!response.ok) throw new Error("Download failed")
+        const blob = await response.blob()
+        downloadBlob(blob, `${layer.label_en}.png`)
+      } catch {
+        toast.error(t("exportFailed"))
+      }
     },
-    []
+    [t]
   )
 
-  // Export all visible layers as ZIP
+  // I5 fix: Export all with error handling and toast
   const handleExportAll = useCallback(async () => {
-    const { default: JSZip } = await import("jszip")
-    const zip = new JSZip()
-    const visibleLayers = layers.filter((l) => l.visible)
+    try {
+      const { default: JSZip } = await import("jszip")
+      const zip = new JSZip()
+      const visibleLayers = layers.filter((l) => l.visible)
 
-    for (const layer of visibleLayers) {
-      if (!layer.maskUrl) continue
-      const response = await fetch(layer.maskUrl)
-      const blob = await response.blob()
-      zip.file(`${layer.label_en}.png`, blob)
+      for (const layer of visibleLayers) {
+        if (!layer.maskUrl) continue
+        const response = await fetch(layer.maskUrl)
+        if (!response.ok) throw new Error(`Failed to download ${layer.label_en}`)
+        const blob = await response.blob()
+        zip.file(`${layer.label_en}.png`, blob)
+      }
+
+      const zipBlob = await zip.generateAsync({ type: "blob" })
+      downloadBlob(zipBlob, "ai-segments.zip")
+    } catch {
+      toast.error(t("exportFailed"))
     }
-
-    const zipBlob = await zip.generateAsync({ type: "blob" })
-    downloadBlob(zipBlob, "ai-segments.zip")
-  }, [layers])
+  }, [layers, t])
 
   // Back to select step
   const handleBackToSelect = useCallback(() => {
@@ -169,8 +190,7 @@ export function AiSegmentationPanel({
     setStep("select")
     setIsolatedLayerId(null)
     onIsolateLayer(null)
-    onLayersChange([])
-  }, [resetSegment, onIsolateLayer, onLayersChange])
+  }, [resetSegment, onIsolateLayer])
 
   // Auto-start analysis when image is available
   const handleStart = useCallback(() => {
@@ -228,11 +248,11 @@ export function AiSegmentationPanel({
           </div>
         )}
 
-        {/* Analyzing state */}
+        {/* Analyzing state — S4 fix: motion-safe for reduced-motion */}
         {step === "analyze" && isAnalyzing && (
           <div className="space-y-3">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-8 bg-muted animate-pulse rounded" />
+              <div key={i} className="h-8 bg-muted motion-safe:animate-pulse rounded" />
             ))}
             <p className="text-xs text-muted-foreground text-center">
               {t("analyzing")}
@@ -367,13 +387,14 @@ export function AiSegmentationPanel({
                   onMouseEnter={() => onHoverLayer(layer.id)}
                   onMouseLeave={() => onHoverLayer(null)}
                 >
+                  {/* S5 fix: aria-label uses i18n */}
                   <button
                     className="p-1 hover:bg-muted rounded transition-colors"
                     onClick={(e) => {
                       e.stopPropagation()
                       handleToggleVisibility(layer.id)
                     }}
-                    aria-label={layer.visible ? "Hide layer" : "Show layer"}
+                    aria-label={layer.visible ? t("hideLayer") : t("showLayer")}
                   >
                     {layer.visible ? (
                       <Eye className="h-3.5 w-3.5" />
@@ -454,7 +475,7 @@ function StepDot({
           done
             ? "bg-primary"
             : active
-              ? "bg-primary animate-pulse"
+              ? "bg-primary motion-safe:animate-pulse"
               : "bg-muted-foreground/30"
         }`}
       />

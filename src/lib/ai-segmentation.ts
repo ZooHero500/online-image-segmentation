@@ -1,4 +1,4 @@
-const LAYER_COLORS = [
+export const LAYER_COLORS = [
   "#3B82F6", // blue
   "#22C55E", // green
   "#F59E0B", // amber
@@ -11,14 +11,8 @@ const LAYER_COLORS = [
   "#6366F1", // indigo
 ]
 
-let counter = 0
-
 export function generateLayerId(): string {
-  return `layer-${Date.now()}-${++counter}`
-}
-
-export function assignLayerColors(count: number): string[] {
-  return Array.from({ length: count }, (_, i) => LAYER_COLORS[i % LAYER_COLORS.length])
+  return crypto.randomUUID()
 }
 
 export function blobToBase64DataUrl(blob: Blob): Promise<string> {
