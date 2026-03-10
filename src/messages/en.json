@@ -171,5 +171,32 @@
     "today": "Today {time}",
     "lineCount": "{count} split lines",
     "delete": "Delete"
+  },
+  "aiSegmentation": {
+    "title": "AI Segmentation",
+    "sidebarButton": "AI Split",
+    "backToManual": "Manual Split",
+    "stepAnalyze": "Analyze",
+    "stepSelect": "Select",
+    "stepSegment": "Segment",
+    "analyzing": "Analyzing image...",
+    "analyzeFailed": "Failed to analyze image. Please try again.",
+    "elementsFound": "{count} elements found",
+    "selectElements": "Select elements to segment:",
+    "customLabel": "Custom keyword...",
+    "addCustom": "Add",
+    "reanalyze": "Re-analyze",
+    "startSegment": "Start Segmentation",
+    "segmenting": "Segmenting... ({current}/{total})",
+    "segmentFailed": "Segmentation failed. Please try again.",
+    "layers": "Layers",
+    "displayMode": "Display mode:",
+    "maskOverlay": "Overlay",
+    "isolatedPreview": "Isolated",
+    "exportOne": "Export",
+    "exportAllZip": "Export All (ZIP)",
+    "backToSelect": "Back to Select",
+    "noImage": "Upload or select an image first",
+    "selectAtLeastOne": "Select at least one element"
   }
 }

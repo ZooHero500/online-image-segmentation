@@ -171,5 +171,32 @@
     "today": "今天 {time}",
     "lineCount": "{count} 条分割线",
     "delete": "删除"
+  },
+  "aiSegmentation": {
+    "title": "AI 智能分割",
+    "sidebarButton": "AI 分割",
+    "backToManual": "手动分割",
+    "stepAnalyze": "识别",
+    "stepSelect": "选择",
+    "stepSegment": "分割",
+    "analyzing": "正在识别图片内容...",
+    "analyzeFailed": "图片识别失败，请重试。",
+    "elementsFound": "识别到 {count} 个元素",
+    "selectElements": "选择要分割的元素：",
+    "customLabel": "自定义关键词...",
+    "addCustom": "添加",
+    "reanalyze": "重新识别",
+    "startSegment": "开始分割",
+    "segmenting": "正在分割... ({current}/{total})",
+    "segmentFailed": "分割失败，请重试。",
+    "layers": "图层",
+    "displayMode": "显示模式：",
+    "maskOverlay": "遮罩叠加",
+    "isolatedPreview": "独立预览",
+    "exportOne": "导出",
+    "exportAllZip": "全部导出 (ZIP)",
+    "backToSelect": "返回重新选择",
+    "noImage": "请先上传或选择一张图片",
+    "selectAtLeastOne": "请至少选择一个元素"
   }
 }
