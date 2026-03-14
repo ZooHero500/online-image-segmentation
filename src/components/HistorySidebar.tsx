@@ -67,7 +67,7 @@ export function HistorySidebar({
       >
         <Scissors className="h-4 w-4 text-foreground" strokeWidth={1.5} />
         <span className="text-xs uppercase tracking-[0.2em] font-medium text-foreground">
-          ImageSplit
+          ImgSplit
         </span>
       </Link>
 

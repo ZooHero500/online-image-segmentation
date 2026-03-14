@@ -33,7 +33,7 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <Scissors className="h-4 w-4 text-[#1A1A1A]" strokeWidth={1.5} />
             <span className="text-xs uppercase tracking-[0.3em] font-medium text-[#1A1A1A]">
-              ImageSplit
+              ImgSplit
             </span>
           </div>
           <div className="flex items-center gap-8 text-xs">
@@ -400,7 +400,7 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <Scissors className="h-3.5 w-3.5 text-[#1A1A1A]" strokeWidth={1.5} />
             <span className="text-xs uppercase tracking-[0.3em] font-medium">
-              ImageSplit
+              ImgSplit
             </span>
           </div>
           <p className="text-[10px] uppercase tracking-[0.25em] text-[#6C6863]">
