@@ -33,6 +33,11 @@ Kiro-style Spec Driven Development implementation on AI-DLC (AI Development Life
   - `/kiro:validate-impl {feature}` (optional: after implementation)
 - Progress check: `/kiro:spec-status {feature}` (use anytime)
 
+## Package Manager
+- 本项目使用 **bun** 作为包管理器，禁止使用 npm/yarn/pnpm
+- 安装依赖: `bun install` / `bun add <pkg>`
+- 运行脚本: `bun run <script>`
+
 ## Development Rules
 - 3-phase approval workflow: Requirements → Design → Tasks → Implementation
 - Human review required each phase; use `-y` only for intentional fast-track

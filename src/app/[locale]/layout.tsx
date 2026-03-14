@@ -6,6 +6,7 @@ import { notFound } from "next/navigation"
 import { routing } from "@/i18n/routing"
 import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { Analytics } from "@vercel/analytics/react"
 import "../globals.css"
 
 const playfair = Playfair_Display({
@@ -62,6 +63,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <NextIntlClientProvider messages={messages}>
           <TooltipProvider>{children}</TooltipProvider>
           <Toaster />
+          <Analytics />
           <div className="noise-overlay" aria-hidden="true" />
         </NextIntlClientProvider>
       </body>
