@@ -184,5 +184,47 @@
     "today": "Today {time}",
     "lineCount": "{count} split lines",
     "delete": "Delete"
+  },
+  "grid": {
+    "metadata": {
+      "title": "ImgSplit - Free Online Image Grid Splitter",
+      "description": "Split images into 3×3, 1×3, or 2×2 grids for WeChat Moments, Instagram, and social media. Free, private, browser-based."
+    },
+    "steps": {
+      "upload": "Upload",
+      "adjust": "Adjust",
+      "download": "Download"
+    },
+    "gridType": {
+      "3x3": "3×3",
+      "1x3": "1×3",
+      "2x2": "2×2",
+      "label": "Grid Type"
+    },
+    "gap": {
+      "label": "White Border"
+    },
+    "editor": {
+      "dragHint": "Drag to move · Scroll to zoom",
+      "pinchHint": "Drag to move · Pinch to zoom"
+    },
+    "download": {
+      "zip": "Download All (ZIP)",
+      "readjust": "Readjust",
+      "count": "{count} images",
+      "tapToSave": "Tap an image to save individually",
+      "failed": "Download failed. Please try again.",
+      "generating": "Generating..."
+    },
+    "upload": {
+      "title": "Upload Image",
+      "dragHint": "Drag an image here",
+      "clickHint": "or click to select",
+      "formatHint": "PNG / JPG / WebP · Max 20MB"
+    },
+    "nav": {
+      "grid": "Grid",
+      "split": "Split"
+    }
   }
 }
