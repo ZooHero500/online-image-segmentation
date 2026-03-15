@@ -28,5 +28,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   }
 
+  // Add /grid page
+  for (const locale of routing.locales) {
+    const url =
+      locale === routing.defaultLocale
+        ? `${BASE_URL}/grid`
+        : `${BASE_URL}/${locale}/grid`
+
+    entries.push({
+      url,
+      lastModified: new Date("2026-03-15"),
+      changeFrequency: "weekly",
+      priority: 0.9,
+      alternates: {
+        languages: Object.fromEntries(
+          routing.locales.map((l) => [
+            l,
+            l === routing.defaultLocale
+              ? `${BASE_URL}/grid`
+              : `${BASE_URL}/${l}/grid`,
+          ])
+        ),
+      },
+    })
+  }
+
   return entries
 }
