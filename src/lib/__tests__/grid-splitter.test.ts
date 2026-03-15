@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest"
 import { splitGrid, getGridConfig } from "../grid-splitter"
-import type { GridType } from "../grid-splitter"
 
 function createMockImage(width: number, height: number): HTMLImageElement {
   return {

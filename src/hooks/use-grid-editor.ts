@@ -75,6 +75,7 @@ export function useGridEditor(
   // Auto-reset when frameSize changes (depends on gridType)
   useEffect(() => {
     if (imageSize.width > 1) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       resetToFit()
     }
   }, [frameSize.width, frameSize.height]) // eslint-disable-line react-hooks/exhaustive-deps
