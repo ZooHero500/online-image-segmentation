@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest"
-import { exportAsZip, downloadSingle, getSelectedZipFileName, getZipFileName } from "../zip-exporter"
+import { exportAsZip, downloadSingle, getSelectedZipFileName, getZipFileName, exportGridAsZip, getGridZipFileName } from "../zip-exporter"
 import type { SplitResult } from "@/types"
 
 function createMockResult(row: number, col: number): SplitResult {
@@ -84,6 +84,42 @@ describe("getSelectedZipFileName", () => {
   it("should differ from getZipFileName", () => {
     const name = "photo"
     expect(getSelectedZipFileName(name)).not.toBe(getZipFileName(name))
+  })
+})
+
+describe("exportGridAsZip", () => {
+  it("should create ZIP with sequential naming", async () => {
+    const blobs = [
+      new Blob(["1"], { type: "image/png" }),
+      new Blob(["2"], { type: "image/png" }),
+      new Blob(["3"], { type: "image/png" }),
+    ]
+    const zipBlob = await exportGridAsZip(blobs, "jpg")
+    expect(zipBlob).toBeInstanceOf(Blob)
+    expect(zipBlob.type).toBe("application/zip")
+    const JSZip = (await import("jszip")).default
+    const zip = await JSZip.loadAsync(zipBlob)
+    const fileNames = Object.keys(zip.files)
+    expect(fileNames).toEqual(["grid-1.jpg", "grid-2.jpg", "grid-3.jpg"])
+  })
+
+  it("should handle 9 files for 3x3 grid", async () => {
+    const blobs = Array.from({ length: 9 }, (_, i) =>
+      new Blob([String(i)], { type: "image/jpeg" })
+    )
+    const zipBlob = await exportGridAsZip(blobs, "jpg")
+    const JSZip = (await import("jszip")).default
+    const zip = await JSZip.loadAsync(zipBlob)
+    const fileNames = Object.keys(zip.files)
+    expect(fileNames).toHaveLength(9)
+    expect(fileNames[0]).toBe("grid-1.jpg")
+    expect(fileNames[8]).toBe("grid-9.jpg")
+  })
+})
+
+describe("getGridZipFileName", () => {
+  it("should return grid_split.zip", () => {
+    expect(getGridZipFileName()).toBe("grid_split.zip")
   })
 })
 

@@ -70,3 +70,19 @@ export function getSelectedZipFileName(originalFileName: string): string {
 export function getBatchZipFileName(): string {
   return `batch_split.zip`
 }
+
+export async function exportGridAsZip(
+  blobs: Blob[],
+  fileExtension: string
+): Promise<Blob> {
+  const { default: JSZip } = await import("jszip")
+  const zip = new JSZip()
+  for (let i = 0; i < blobs.length; i++) {
+    zip.file(`grid-${i + 1}.${fileExtension}`, blobs[i])
+  }
+  return zip.generateAsync({ type: "blob", mimeType: "application/zip" })
+}
+
+export function getGridZipFileName(): string {
+  return "grid_split.zip"
+}
