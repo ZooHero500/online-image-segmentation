@@ -28,6 +28,20 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <JsonLd
         data={{
           "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "ImgSplit",
+          url: "https://imgsplit.com",
+          description: t("metadata.description"),
+          inLanguage: [locale === "zh-CN" ? "zh-Hans" : "en"],
+          potentialAction: {
+            "@type": "SearchAction",
+            target: "https://imgsplit.com",
+          },
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "ImgSplit",
           url: "https://imgsplit.com",
@@ -40,12 +54,12 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             priceCurrency: "USD",
           },
           featureList: [
-            "Drag-and-drop split lines",
-            "Snap alignment",
-            "Grid splitting",
-            "One-click ZIP download",
-            "Browser-based processing",
-            "Privacy-first design",
+            t("jsonLd.feature1"),
+            t("jsonLd.feature2"),
+            t("jsonLd.feature3"),
+            t("jsonLd.feature4"),
+            t("jsonLd.feature5"),
+            t("jsonLd.feature6"),
           ],
         }}
       />

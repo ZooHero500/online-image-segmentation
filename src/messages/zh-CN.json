@@ -113,6 +113,19 @@
     "q6": "支持手机端使用吗？",
     "a6": "支持。工具采用响应式设计，在手机和平板上也可以正常使用。"
   },
+  "jsonLd": {
+    "feature1": "拖拽式分割线操作",
+    "feature2": "磁吸对齐功能",
+    "feature3": "网格批量分割",
+    "feature4": "一键 ZIP 打包下载",
+    "feature5": "纯浏览器端处理",
+    "feature6": "隐私优先设计"
+  },
+  "notFound": {
+    "title": "页面未找到",
+    "description": "您访问的页面不存在或已被移动。",
+    "backHome": "返回首页"
+  },
   "footer": {
     "tagline": "在线图片分割工具 — 免费 · 安全 · 高效",
     "navFeatures": "功能",

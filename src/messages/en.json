@@ -113,6 +113,19 @@
     "q6": "Does it work on mobile?",
     "a6": "Yes — it works great on phones and tablets too."
   },
+  "jsonLd": {
+    "feature1": "Drag-and-drop split lines",
+    "feature2": "Snap alignment",
+    "feature3": "Grid splitting",
+    "feature4": "One-click ZIP download",
+    "feature5": "Browser-based processing",
+    "feature6": "Privacy-first design"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "backHome": "Back to Home"
+  },
   "footer": {
     "tagline": "Online Image Splitting Tool — Free · Secure · Fast",
     "navFeatures": "Features",
