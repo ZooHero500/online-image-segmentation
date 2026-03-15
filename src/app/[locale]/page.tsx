@@ -1,4 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server"
+import { Link } from "@/i18n/navigation"
 import { LandingContent } from "./LandingContent"
 import { FaqItem } from "./FaqSection"
 import { JsonLd } from "@/components/JsonLd"
@@ -109,6 +110,18 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             >
               {t("nav.faq")}
             </a>
+            <Link
+              href="/grid"
+              className="hidden md:inline uppercase tracking-[0.2em] text-[#6C6863] hover:text-[#D4AF37] transition-colors duration-500"
+            >
+              Grid
+            </Link>
+            <Link
+              href="/workspace"
+              className="hidden md:inline uppercase tracking-[0.2em] text-[#6C6863] hover:text-[#D4AF37] transition-colors duration-500"
+            >
+              Split
+            </Link>
             <LocaleSwitcher variant="compact" />
             <a
               href="#upload"
@@ -289,6 +302,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               icon={<Grid3X3 className="h-4 w-4" strokeWidth={1.5} />}
               title={t("features.gridTitle")}
               description={t("features.gridDesc")}
+              href="/grid"
             />
             <FeatureCard
               icon={<Image className="h-4 w-4" strokeWidth={1.5} />}
@@ -372,6 +386,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               title={t("useCases.socialTitle")}
               description={t("useCases.socialDesc")}
               result={t("useCases.socialResult")}
+              href="/grid"
             />
           </div>
         </div>
@@ -551,12 +566,14 @@ function FeatureCard({
   icon,
   title,
   description,
+  href,
 }: {
   icon: React.ReactNode
   title: string
   description: string
+  href?: string
 }) {
-  return (
+  const content = (
     <div className="group border-t border-[#1A1A1A]/10 p-8 md:p-12 transition-colors duration-700 hover:bg-[#F9F8F6]/50">
       <div className="text-[#6C6863] mb-6 group-hover:text-[#D4AF37] transition-colors duration-500">
         {icon}
@@ -567,6 +584,10 @@ function FeatureCard({
       <p className="text-sm text-[#6C6863] leading-relaxed">{description}</p>
     </div>
   )
+  if (href) {
+    return <a href={href}>{content}</a>
+  }
+  return content
 }
 
 /* ─── Step Card ─── */
@@ -597,12 +618,14 @@ function UseCaseCard({
   title,
   description,
   result,
+  href,
 }: {
   title: string
   description: string
   result: string
+  href?: string
 }) {
-  return (
+  const content = (
     <div className="group border-t border-[#F9F8F6]/10 p-8 md:p-12 transition-colors duration-700 hover:bg-[#F9F8F6]/[0.03]">
       <h3 className="text-sm uppercase tracking-[0.15em] text-[#F9F8F6] mb-3 font-medium">
         {title}
@@ -614,4 +637,8 @@ function UseCaseCard({
       </div>
     </div>
   )
+  if (href) {
+    return <a href={href}>{content}</a>
+  }
+  return content
 }
