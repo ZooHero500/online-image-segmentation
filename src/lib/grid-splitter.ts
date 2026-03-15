@@ -97,11 +97,14 @@ export async function splitGrid(
 ): Promise<GridSplitResult[]> {
   const mimeType = resolveOutputMimeType(originalMimeType)
   const { rows, cols } = getGridConfig(state.gridType)
-  const scaleRatio = image.naturalWidth / (displaySize.displayWidth * state.scale)
-  const srcX = -state.offsetX * scaleRatio
-  const srcY = -state.offsetY * scaleRatio
-  const srcW = displaySize.displayWidth * scaleRatio
-  const srcH = displaySize.displayHeight * scaleRatio
+  // Convert display coordinates to source image coordinates
+  // In the editor, the image is displayed at (naturalWidth * scale) CSS pixels.
+  // The frame shows a (frameWidth × frameHeight) window into the scaled image.
+  // To get source coordinates: divide display coordinates by scale.
+  const srcX = -state.offsetX / state.scale
+  const srcY = -state.offsetY / state.scale
+  const srcW = displaySize.displayWidth / state.scale
+  const srcH = displaySize.displayHeight / state.scale
   const cellW = srcW / cols
   const cellH = srcH / rows
   const results: GridSplitResult[] = []
