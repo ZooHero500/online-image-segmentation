@@ -1,0 +1,15 @@
+<svg width="100%" viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="680" height="360" fill="#F9F8F6"/>
+  <g transform="translate(340, 150)">
+    <rect x="-34" y="-34" width="30" height="30" fill="#1A1A1A"/>
+    <rect x="4"   y="-34" width="30" height="30" fill="#1A1A1A"/>
+    <rect x="-34" y="4"   width="30" height="30" fill="#1A1A1A"/>
+    <rect x="4"   y="4"   width="30" height="30" fill="#1A1A1A"/>
+    <line x1="0" y1="-40" x2="0" y2="40" stroke="#D4AF37" stroke-width="0.8"/>
+    <line x1="-40" y1="0" x2="40" y2="0" stroke="#D4AF37" stroke-width="0.8"/>
+    <text x="0" y="80" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="34" letter-spacing="-0.01em">
+      <tspan fill="#D4AF37" font-style="italic">Img</tspan><tspan fill="#1A1A1A">Split</tspan>
+    </text>
+    <text x="0" y="105" text-anchor="middle" font-family="Inter, 'Helvetica Neue', sans-serif" font-size="8" fill="#1A1A1A" letter-spacing="0.3em" opacity="0.4">SPLIT YOUR IMAGES</text>
+  </g>
+</svg>

@@ -30,17 +30,56 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
 }
 
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imgsplit.com"
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: "metadata" })
 
+  const canonicalUrl =
+    locale === routing.defaultLocale ? BASE_URL : `${BASE_URL}/${locale}`
+
   return {
     title: t("title"),
     description: t("description"),
+    icons: {
+      icon: [
+        { url: "/favicon.svg", type: "image/svg+xml" },
+        { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+      ],
+      apple: "/apple-touch-icon.png",
+    },
+    manifest: "/site.webmanifest",
     alternates: {
+      canonical: canonicalUrl,
       languages: Object.fromEntries(
-        routing.locales.map((l) => [l, l === routing.defaultLocale ? "/" : `/${l}`])
+        routing.locales.map((l) => [
+          l,
+          l === routing.defaultLocale ? BASE_URL : `${BASE_URL}/${l}`,
+        ])
       ),
+    },
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      url: canonicalUrl,
+      siteName: "ImgSplit",
+      type: "website",
+      locale: locale === "zh-CN" ? "zh_CN" : "en_US",
+      images: [
+        {
+          url: `${BASE_URL}/og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: t("title"),
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+      images: [`${BASE_URL}/og-image.png`],
     },
   }
 }

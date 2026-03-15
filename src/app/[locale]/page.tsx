@@ -1,8 +1,8 @@
-"use client"
-
-import { useState } from "react"
-import { useTranslations } from "next-intl"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 import { LandingContent } from "./LandingContent"
+import { FaqItem } from "./FaqSection"
+import { JsonLd } from "@/components/JsonLd"
+import { LogoIcon } from "@/components/LogoIcon"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import {
   Scissors,
@@ -15,15 +15,55 @@ import {
   Layers,
   ArrowRight,
   CheckCircle2,
-  Plus,
 } from "lucide-react"
 import type React from "react"
 
-export default function Home() {
-  const t = useTranslations()
+export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  setRequestLocale(locale)
+  const t = await getTranslations()
 
   return (
     <main className="min-h-screen bg-[#F9F8F6] relative">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "ImgSplit",
+          url: "https://imgsplit.com",
+          description: t("hero.description"),
+          applicationCategory: "DesignApplication",
+          operatingSystem: "Any",
+          offers: {
+            "@type": "Offer",
+            price: "0",
+            priceCurrency: "USD",
+          },
+          featureList: [
+            "Drag-and-drop split lines",
+            "Snap alignment",
+            "Grid splitting",
+            "One-click ZIP download",
+            "Browser-based processing",
+            "Privacy-first design",
+          ],
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: [
+            { "@type": "Question", name: t("faq.q1"), acceptedAnswer: { "@type": "Answer", text: t("faq.a1") } },
+            { "@type": "Question", name: t("faq.q2"), acceptedAnswer: { "@type": "Answer", text: t("faq.a2") } },
+            { "@type": "Question", name: t("faq.q3"), acceptedAnswer: { "@type": "Answer", text: t("faq.a3") } },
+            { "@type": "Question", name: t("faq.q4"), acceptedAnswer: { "@type": "Answer", text: t("faq.a4") } },
+            { "@type": "Question", name: t("faq.q5"), acceptedAnswer: { "@type": "Answer", text: t("faq.a5") } },
+            { "@type": "Question", name: t("faq.q6"), acceptedAnswer: { "@type": "Answer", text: t("faq.a6") } },
+          ],
+        }}
+      />
+
       {/* Visible Grid Lines */}
       <GridLines />
 
@@ -31,7 +71,7 @@ export default function Home() {
       <nav className="sticky top-0 z-40 bg-[#F9F8F6]/90 backdrop-blur-sm border-b border-[#1A1A1A]/10">
         <div className="max-w-[1600px] mx-auto px-8 md:px-16 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Scissors className="h-4 w-4 text-[#1A1A1A]" strokeWidth={1.5} />
+            <LogoIcon className="h-4 w-4 text-[#1A1A1A]" />
             <span className="text-xs uppercase tracking-[0.3em] font-medium text-[#1A1A1A]">
               ImgSplit
             </span>
@@ -398,7 +438,7 @@ export default function Home() {
       <footer className="border-t border-[#1A1A1A]/10 py-12 md:py-16 px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <Scissors className="h-3.5 w-3.5 text-[#1A1A1A]" strokeWidth={1.5} />
+            <LogoIcon className="h-3.5 w-3.5 text-[#1A1A1A]" />
             <span className="text-xs uppercase tracking-[0.3em] font-medium">
               ImgSplit
             </span>
@@ -558,48 +598,6 @@ function UseCaseCard({
         <CheckCircle2 className="h-3 w-3" strokeWidth={1.5} />
         {result}
       </div>
-    </div>
-  )
-}
-
-/* ─── FAQ Item ─── */
-function FaqItem({
-  question,
-  answer,
-}: {
-  question: string
-  answer: string
-}) {
-  const [isOpen, setIsOpen] = useState(false)
-
-  return (
-    <div className="border-t border-[#1A1A1A]/10">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-start justify-between gap-4 py-6 text-left group"
-      >
-        <h3
-          className={`text-sm font-medium transition-colors duration-500 ${
-            isOpen ? "text-[#D4AF37]" : "text-[#1A1A1A] group-hover:text-[#D4AF37]"
-          }`}
-        >
-          {question}
-        </h3>
-        <div
-          className={`shrink-0 w-6 h-6 border flex items-center justify-center transition-all duration-500 ${
-            isOpen
-              ? "border-[#D4AF37] rotate-45"
-              : "border-[#1A1A1A]/20 rotate-0 group-hover:border-[#D4AF37]"
-          }`}
-        >
-          <Plus className="h-3 w-3 text-[#1A1A1A]" strokeWidth={1.5} />
-        </div>
-      </button>
-      {isOpen && (
-        <div className="pb-6 animate-fade-in-down">
-          <p className="text-sm text-[#6C6863] leading-relaxed">{answer}</p>
-        </div>
-      )}
     </div>
   )
 }
