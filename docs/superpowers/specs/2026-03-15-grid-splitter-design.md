@@ -133,7 +133,7 @@ src/
 | 模块 | 用途 |
 |------|------|
 | `lib/upload-utils.ts` | 文件验证、图片加载 |
-| `lib/zip-exporter.ts` | ZIP 打包下载 |
+| `lib/zip-exporter.ts` | ZIP 打包下载（新增 `exportGridAsZip` 函数，使用 `grid-1.jpg` 顺序命名，不修改现有 `getFileName` 逻辑） |
 | `components/ui/*` | shadcn 基础组件 |
 | `i18n/*` | 国际化框架 |
 
@@ -144,10 +144,16 @@ interface GridEditorState {
   gridType: '3x3' | '1x3' | '2x2'
   offsetX: number        // 图片水平偏移（px）
   offsetY: number        // 图片垂直偏移（px）
-  scale: number          // 图片缩放比例
+  scale: number          // 图片缩放比例，最小值需保证图片完全覆盖裁切框
   withGap: boolean       // 白边间距开关
 }
 ```
+
+### 缩放约束
+
+- **最小缩放**：图片短边恰好填满裁切框对应边（即图片不能小于裁切框，不允许出现空白区域）
+- **最大缩放**：原图尺寸的 3 倍（避免过度放大导致画质差）
+- **拖拽边界**：图片边缘不能拖入裁切框内部（clamping），确保裁切框始终被图片完全覆盖
 
 ### 裁切框比例
 
@@ -166,14 +172,18 @@ interface GridEditorState {
 
 ### 切割算法 (`grid-splitter.ts`)
 
+**输出分辨率**：裁切框映射到原图的实际像素区域，以原图分辨率切割。例如一张 6000×4000 的横图，3×3 模式裁切框映射到 4000×4000 像素区域，每格输出 1333×1333px。上限遵循现有 `image-splitter.ts` 的 16384×16384 Canvas 限制。
+
 ```
-输入：HTMLImageElement, GridEditorState
-1. 创建临时 Canvas，尺寸 = 裁切框尺寸（由 gridType 决定）
-2. 根据 offsetX/Y 和 scale 将图片绘制到 Canvas
-3. 如果 withGap=true，每格四周留白（比例约 3%）
-4. 按网格类型将 Canvas 等分为 N 块
-5. 每块导出为 Blob（JPEG 92% 质量）
-6. 返回 Blob[] 按序编号
+输入：HTMLImageElement, GridEditorState, 编辑器显示尺寸
+1. 根据编辑器显示尺寸与原图尺寸的比例，将 offsetX/Y/scale 换算为原图坐标系
+2. 计算裁切框在原图上的实际像素区域
+3. 创建临时 Canvas，尺寸 = 裁切区域的原图像素尺寸（受 16384 上限约束）
+4. 将原图对应区域绘制到 Canvas
+5. 按网格类型将 Canvas 等分为 N 块
+6. 如果 withGap=true，每格内容区域缩小为 94%（四周各留 3% 白色边距），白色填充不透明
+7. 每块导出为 Blob（JPEG 92% 质量，PNG 图片保持 PNG 格式）
+8. 返回 Blob[] 按序编号
 ```
 
 ### 数据流
@@ -184,6 +194,16 @@ File → validateFiles() → loadImage() → HTMLImageElement
   → GridPreview（CSS transform 预览切片效果）
   → 点击下载 → grid-splitter.ts 切割 → zip-exporter.ts 打包 → 下载
 ```
+
+## 错误处理
+
+| 场景 | 处理方式 |
+|------|---------|
+| 图片加载失败 | 复用现有 `upload-utils.ts` 的错误提示（toast），留在步骤 1 |
+| 不支持的格式/文件过大 | 复用现有验证逻辑，toast 提示 |
+| Canvas 内存限制（超大图） | 复用现有 `image-splitter.ts` 的 16384 缩放逻辑，自动降采样 |
+| ZIP 生成失败 | toast 提示"下载失败，请重试"，保留当前编辑状态 |
+| 移动端单张保存 | iOS Safari 不支持 `<a download>`，改为在新标签页打开图片，提示用户长按保存 |
 
 ## 落地页集成
 
