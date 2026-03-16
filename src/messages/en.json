@@ -209,12 +209,14 @@
       "pinchHint": "Drag to move · Pinch to zoom"
     },
     "download": {
+      "generate": "Generate",
       "zip": "Download All (ZIP)",
       "readjust": "Readjust",
       "count": "{count} images",
       "tapToSave": "Tap an image to save individually",
       "failed": "Download failed. Please try again.",
-      "generating": "Generating..."
+      "generating": "Generating...",
+      "reupload": "Re-upload"
     },
     "upload": {
       "title": "Upload Image",

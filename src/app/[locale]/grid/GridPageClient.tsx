@@ -34,10 +34,13 @@ export function GridPageClient() {
   )
 
   const handleImageLoaded = useCallback((img: HTMLImageElement, file: File) => {
+    // Revoke previous URL if exists
+    if (imageUrl) URL.revokeObjectURL(imageUrl)
     const url = URL.createObjectURL(file)
     setImage(img)
     setImageUrl(url)
     setMimeType(file.type)
+    setResults(null)
     setStep(2)
     requestAnimationFrame(() => {
       if (containerRef.current) {
@@ -48,25 +51,32 @@ export function GridPageClient() {
         })
       }
     })
+  }, [imageUrl])
+
+  // Bug fix #1: Re-upload — go back to step 1
+  const handleReupload = useCallback(() => {
+    setResults(null)
+    setStep(1)
   }, [])
 
-  const handleShowResults = useCallback((r: GridSplitResult[]) => {
+  // Bug fix #2: Generate goes to step 3 (no download yet)
+  const handleGenerated = useCallback((r: GridSplitResult[]) => {
     setResults(r)
     setStep(3)
   }, [])
 
+  // Step 3: Go back to step 2 to readjust
   const handleReadjust = useCallback(() => {
     setResults(null)
     setStep(2)
   }, [])
 
-  // Pre-compute result preview URLs, memoized to avoid re-creating on every render
+  // Pre-compute result preview URLs
   const resultUrls = useMemo(() => {
     if (!results) return []
     return results.map((r) => URL.createObjectURL(r.blob))
   }, [results])
 
-  // Cleanup object URLs when results change
   useEffect(() => {
     return () => {
       resultUrls.forEach((url) => URL.revokeObjectURL(url))
@@ -77,8 +87,6 @@ export function GridPageClient() {
     (result: GridSplitResult) => {
       const ext = mimeType === "image/jpeg" ? "jpg" : "png"
       const url = URL.createObjectURL(result.blob)
-
-      // iOS Safari doesn't support <a download> — open in new tab instead
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
       if (isIOS) {
         window.open(url, "_blank")
@@ -137,15 +145,18 @@ export function GridPageClient() {
       <GridSteps currentStep={step} />
 
       <div className="flex-1 flex flex-col">
+        {/* Step 1: Upload */}
         {step === 1 && (
           <div className="max-w-[800px] mx-auto w-full px-4 md:px-8 py-8">
             <GridUploadZone onImageLoaded={handleImageLoaded} />
           </div>
         )}
 
+        {/* Step 2: Adjust — left: grid type + options, center: editor, right: preview + generate */}
         {step === 2 && image && (
-          <div className="flex-1 flex flex-col md:flex-row gap-0 px-4 md:px-8 pb-4 md:pb-8 max-w-[1400px] mx-auto w-full">
-            <div className="hidden md:block w-[180px] flex-shrink-0 p-4">
+          <div className="flex-1 flex flex-col md:flex-row gap-0 max-w-[1400px] mx-auto w-full">
+            {/* Left sidebar — desktop */}
+            <div className="hidden md:flex md:flex-col w-[180px] flex-shrink-0 p-4">
               <GridTypeSelector
                 value={editor.state.gridType}
                 onChange={editor.setGridType}
@@ -153,16 +164,35 @@ export function GridPageClient() {
                 onGapChange={editor.setWithGap}
                 layout="vertical"
               />
+              {/* Re-upload button */}
+              <button
+                onClick={handleReupload}
+                className="mt-auto py-2.5 border border-[#1A1A1A]/20 text-[#6C6863] text-xs uppercase tracking-[0.15em] hover:border-[#1A1A1A]/40 hover:text-[#1A1A1A] transition-colors duration-500"
+              >
+                {tDownload("reupload")}
+              </button>
             </div>
-            <div className="md:hidden px-2 py-3">
-              <GridTypeSelector
-                value={editor.state.gridType}
-                onChange={editor.setGridType}
-                withGap={editor.state.withGap}
-                onGapChange={editor.setWithGap}
-                layout="horizontal"
-              />
+
+            {/* Mobile toolbar */}
+            <div className="md:hidden px-2 py-3 flex items-center gap-2">
+              <div className="flex-1">
+                <GridTypeSelector
+                  value={editor.state.gridType}
+                  onChange={editor.setGridType}
+                  withGap={editor.state.withGap}
+                  onGapChange={editor.setWithGap}
+                  layout="horizontal"
+                />
+              </div>
+              <button
+                onClick={handleReupload}
+                className="px-3 py-2.5 border border-[#EBE5DE] text-[#6C6863] text-xs tracking-[0.1em] flex-shrink-0"
+              >
+                {tDownload("reupload")}
+              </button>
             </div>
+
+            {/* Center editor */}
             <div ref={containerRef} className="flex-1 flex items-center justify-center">
               <GridEditor
                 image={image}
@@ -177,29 +207,36 @@ export function GridPageClient() {
                 onZoom={editor.handleZoom}
               />
             </div>
+
+            {/* Right preview — desktop */}
             <div className="hidden md:block w-[180px] flex-shrink-0 p-4">
               <GridPreview
                 image={image}
+                imageUrl={imageUrl}
                 mimeType={mimeType}
                 state={editor.state}
                 frameWidth={editor.frameSize.width}
                 frameHeight={editor.frameSize.height}
-                onShowResults={handleShowResults}
+                onGenerated={handleGenerated}
               />
             </div>
+
+            {/* Mobile generate */}
             <div className="md:hidden px-2 py-3">
               <GridPreview
                 image={image}
+                imageUrl={imageUrl}
                 mimeType={mimeType}
                 state={editor.state}
                 frameWidth={editor.frameSize.width}
                 frameHeight={editor.frameSize.height}
-                onShowResults={handleShowResults}
+                onGenerated={handleGenerated}
               />
             </div>
           </div>
         )}
 
+        {/* Step 3: Download results */}
         {step === 3 && results && (
           <div className="max-w-[600px] mx-auto w-full px-4 md:px-8 py-8">
             <div className="text-[10px] uppercase tracking-[0.2em] text-[#6C6863] mb-4">

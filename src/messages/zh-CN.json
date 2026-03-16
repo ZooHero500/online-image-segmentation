@@ -209,12 +209,14 @@
       "pinchHint": "拖拽移动 · 双指缩放"
     },
     "download": {
+      "generate": "生成",
       "zip": "下载全部 (ZIP)",
       "readjust": "重新调整",
       "count": "{count} 张图片",
       "tapToSave": "点击单张图片可单独保存",
       "failed": "下载失败，请重试",
-      "generating": "生成中..."
+      "generating": "生成中...",
+      "reupload": "重新上传"
     },
     "upload": {
       "title": "上传图片",

@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useCallback } from "react"
+import { useRef, useCallback, useEffect } from "react"
 import { useTranslations } from "next-intl"
 import type { GridType } from "@/lib/grid-splitter"
 import { getGridConfig } from "@/lib/grid-splitter"
@@ -36,7 +36,25 @@ export function GridEditor({
   const lastPos = useRef({ x: 0, y: 0 })
   const lastTouchDist = useRef<number | null>(null)
 
-  // Mouse drag
+  // Use refs to avoid stale closures in native event listener
+  const onZoomRef = useRef(onZoom)
+  onZoomRef.current = onZoom
+
+  // Register wheel with { passive: false } to allow preventDefault
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const handler = (e: WheelEvent) => {
+      e.preventDefault()
+      const rect = el.getBoundingClientRect()
+      const centerX = e.clientX - rect.left
+      const centerY = e.clientY - rect.top
+      onZoomRef.current(e.deltaY, centerX, centerY)
+    }
+    el.addEventListener("wheel", handler, { passive: false })
+    return () => el.removeEventListener("wheel", handler)
+  }, [])
+
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     if (e.button !== 0) return
     isDragging.current = true
@@ -59,20 +77,6 @@ export function GridEditor({
     isDragging.current = false
   }, [])
 
-  // Wheel zoom
-  const handleWheel = useCallback(
-    (e: React.WheelEvent) => {
-      e.preventDefault()
-      const rect = containerRef.current?.getBoundingClientRect()
-      if (!rect) return
-      const centerX = e.clientX - rect.left
-      const centerY = e.clientY - rect.top
-      onZoom(e.deltaY, centerX, centerY)
-    },
-    [onZoom]
-  )
-
-  // Touch pinch zoom
   const handleTouchMove = useCallback(
     (e: React.TouchEvent) => {
       if (e.touches.length === 2) {
@@ -104,7 +108,6 @@ export function GridEditor({
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center bg-[#EBE5DE]/50 p-4 md:p-6 min-h-[280px] relative">
-      {/* Crop frame */}
       <div
         ref={containerRef}
         className="relative overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.15)] cursor-grab active:cursor-grabbing"
@@ -112,7 +115,6 @@ export function GridEditor({
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
-        onWheel={handleWheel}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
@@ -155,7 +157,6 @@ export function GridEditor({
         </div>
       </div>
 
-      {/* Hint text */}
       <p className="mt-3 text-[10px] uppercase tracking-[0.15em] text-[#6C6863]">
         {isTouchDevice ? t("pinchHint") : t("dragHint")}
       </p>
