@@ -31,22 +31,30 @@ export function GridEditor({
   onZoom,
 }: GridEditorProps) {
   const t = useTranslations("grid.editor")
-  const containerRef = useRef<HTMLDivElement>(null)
+  const outerRef = useRef<HTMLDivElement>(null)
+  const frameRef = useRef<HTMLDivElement>(null)
   const isDragging = useRef(false)
   const lastPos = useRef({ x: 0, y: 0 })
   const lastTouchDist = useRef<number | null>(null)
 
-  // Use refs to avoid stale closures in native event listener
+  // Refs to avoid stale closures in native event listeners
   const onZoomRef = useRef(onZoom)
   onZoomRef.current = onZoom
+  const onDragRef = useRef(onDrag)
+  onDragRef.current = onDrag
 
-  // Register wheel with { passive: false } to allow preventDefault
+  // Wheel listener on the OUTER container (not just the crop frame)
+  // so scrolling anywhere in the editor area triggers zoom
   useEffect(() => {
-    const el = containerRef.current
+    const el = outerRef.current
     if (!el) return
     const handler = (e: WheelEvent) => {
       e.preventDefault()
-      const rect = el.getBoundingClientRect()
+      e.stopPropagation()
+      // Use the crop frame center as zoom anchor
+      const frameEl = frameRef.current
+      if (!frameEl) return
+      const rect = frameEl.getBoundingClientRect()
       const centerX = e.clientX - rect.left
       const centerY = e.clientY - rect.top
       onZoomRef.current(e.deltaY, centerX, centerY)
@@ -86,7 +94,7 @@ export function GridEditor({
         )
         if (lastTouchDist.current !== null) {
           const delta = lastTouchDist.current - dist
-          const rect = containerRef.current?.getBoundingClientRect()
+          const rect = frameRef.current?.getBoundingClientRect()
           if (rect) {
             const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left
             const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top
@@ -107,11 +115,16 @@ export function GridEditor({
   const isTouchDevice = typeof window !== "undefined" && "ontouchstart" in window
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center bg-[#EBE5DE]/50 p-4 md:p-6 min-h-[280px] relative">
+    <div
+      ref={outerRef}
+      className="flex-1 flex flex-col items-center justify-center bg-[#EBE5DE]/50 p-4 md:p-6 min-h-[280px] relative"
+      style={{ touchAction: "none", overscrollBehavior: "contain" }}
+    >
+      {/* Crop frame */}
       <div
-        ref={containerRef}
+        ref={frameRef}
         className="relative overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.15)] cursor-grab active:cursor-grabbing"
-        style={{ width: frameWidth, height: frameHeight }}
+        style={{ width: frameWidth, height: frameHeight, touchAction: "none" }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}

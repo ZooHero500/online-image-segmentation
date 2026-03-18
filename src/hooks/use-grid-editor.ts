@@ -72,13 +72,14 @@ export function useGridEditor(
     setGridTypeState(type)
   }, [])
 
-  // Auto-reset when frameSize changes (depends on gridType)
+  // Auto-reset when frameSize or imageSize changes
   useEffect(() => {
     if (imageSize.width > 1) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       resetToFit()
     }
-  }, [frameSize.width, frameSize.height]) // eslint-disable-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [frameSize.width, frameSize.height, imageSize.width, imageSize.height])
 
   const handleDrag = useCallback(
     (deltaX: number, deltaY: number) => {
