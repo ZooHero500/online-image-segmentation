@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useRef, useEffect } from "react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 import type { GridEditorState, GridSplitResult } from "@/lib/grid-splitter"
@@ -27,10 +27,19 @@ export function GridPreview({
 }: GridPreviewProps) {
   const t = useTranslations("grid.download")
   const [isGenerating, setIsGenerating] = useState(false)
+  const gridRef = useRef<HTMLDivElement>(null)
+  const [cellPx, setCellPx] = useState(48)
 
   const { rows, cols } = getGridConfig(state.gridType)
-  const cellW = frameWidth / cols
-  const cellH = frameHeight / rows
+
+  // Measure actual cell pixel size
+  useEffect(() => {
+    if (!gridRef.current) return
+    const firstCell = gridRef.current.firstElementChild as HTMLElement
+    if (firstCell) {
+      setCellPx(firstCell.getBoundingClientRect().width)
+    }
+  })
 
   const handleGenerate = useCallback(async () => {
     setIsGenerating(true)
@@ -49,51 +58,64 @@ export function GridPreview({
     }
   }, [image, state, frameWidth, frameHeight, mimeType, onGenerated, t])
 
+  // Each preview cell is a scaled-down copy of the editor frame,
+  // translated to show only the relevant cell portion.
+  // This is 100% reliable because it uses the same CSS rendering as the editor.
+  const cellW = frameWidth / cols
+  const cellH = frameHeight / rows
+  const scaleFactor = cellPx / cellW
+  const imgW = image.naturalWidth * state.scale
+  const imgH = image.naturalHeight * state.scale
+
   return (
     <div>
       <div className="text-[10px] uppercase tracking-[0.2em] text-[#6C6863] mb-3">
         {t("count", { count: rows * cols })}
       </div>
 
-      {/* Live CSS preview grid — shows actual cropped regions */}
       <div
+        ref={gridRef}
         className="grid gap-[2px] mb-6"
         style={{
           gridTemplateColumns: `repeat(${cols}, 1fr)`,
-          gridTemplateRows: `repeat(${rows}, 1fr)`,
         }}
       >
         {Array.from({ length: rows * cols }).map((_, i) => {
           const r = Math.floor(i / cols)
           const c = i % cols
-          // Map each cell back to the corresponding region of the image
-          // in the editor coordinate system
-          const previewSize = 48
-          const previewScale = previewSize / cellW
           return (
             <div
               key={i}
               className="aspect-square overflow-hidden bg-[#EBE5DE]"
-              style={{ position: "relative" }}
             >
-              <img
-                src={imageUrl}
-                alt=""
-                draggable={false}
-                className="absolute pointer-events-none select-none"
+              {/* Scaled-down copy of the frame with image, translated to this cell */}
+              <div
                 style={{
-                  width: image.naturalWidth * state.scale * previewScale,
-                  height: image.naturalHeight * state.scale * previewScale,
-                  left: (state.offsetX - c * cellW) * previewScale,
-                  top: (state.offsetY - r * cellH) * previewScale,
+                  width: frameWidth,
+                  height: frameHeight,
+                  transform: `scale(${scaleFactor}) translate(${-c * cellW}px, ${-r * cellH}px)`,
+                  transformOrigin: "0 0",
+                  position: "relative",
                 }}
-              />
+              >
+                <img
+                  src={imageUrl}
+                  alt=""
+                  draggable={false}
+                  style={{
+                    position: "absolute",
+                    width: imgW,
+                    height: imgH,
+                    transform: `translate(${state.offsetX}px, ${state.offsetY}px)`,
+                    pointerEvents: "none",
+                  }}
+                />
+              </div>
             </div>
           )
         })}
       </div>
 
-      {/* Generate button — only generates, does not download */}
       <button
         onClick={handleGenerate}
         disabled={isGenerating}
