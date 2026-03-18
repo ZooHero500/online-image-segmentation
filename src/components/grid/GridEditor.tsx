@@ -51,13 +51,8 @@ export function GridEditor({
     const handler = (e: WheelEvent) => {
       e.preventDefault()
       e.stopPropagation()
-      // Use the crop frame center as zoom anchor
-      const frameEl = frameRef.current
-      if (!frameEl) return
-      const rect = frameEl.getBoundingClientRect()
-      const centerX = e.clientX - rect.left
-      const centerY = e.clientY - rect.top
-      onZoomRef.current(e.deltaY, centerX, centerY)
+      // Pass deltaY only; hook always zooms toward frame center
+      onZoomRef.current(e.deltaY, 0, 0)
     }
     el.addEventListener("wheel", handler, { passive: false })
     return () => el.removeEventListener("wheel", handler)
