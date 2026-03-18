@@ -201,6 +201,8 @@ export function GridPageClient() {
                 offsetX={editor.state.offsetX}
                 offsetY={editor.state.offsetY}
                 scale={editor.state.scale}
+                minScale={editor.scaleRange.minScale}
+                maxScale={editor.scaleRange.maxScale}
                 frameWidth={editor.frameSize.width}
                 frameHeight={editor.frameSize.height}
                 onDrag={editor.handleDrag}

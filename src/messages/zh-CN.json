@@ -205,7 +205,7 @@
       "label": "白边间距"
     },
     "editor": {
-      "dragHint": "拖拽移动 · 拖拽角标缩放",
+      "dragHint": "拖拽移动 · 滑条缩放",
       "pinchHint": "拖拽移动 · 双指缩放"
     },
     "download": {
