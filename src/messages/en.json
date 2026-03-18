@@ -205,8 +205,8 @@
       "label": "White Border"
     },
     "editor": {
-      "dragHint": "Drag to move · Scroll to zoom",
-      "pinchHint": "Drag to move · Pinch to zoom"
+      "dragHint": "Drag to move · Corners to resize",
+      "pinchHint": "Drag to move · Pinch to resize"
     },
     "download": {
       "generate": "Generate",

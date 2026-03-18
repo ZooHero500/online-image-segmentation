@@ -90,24 +90,22 @@ export function useGridEditor(
     [clampOffset, scale, offsetX, offsetY]
   )
 
-  const handleZoom = useCallback(
-    (delta: number, _centerX: number, _centerY: number) => {
+  const handleScale = useCallback(
+    (newScale: number) => {
       const { minScale, maxScale } = scaleRange
-      // Use continuous delta for smooth trackpad zoom (clamp step to avoid huge jumps)
-      const step = Math.sign(delta) * Math.min(Math.abs(delta), 50) * 0.002
-      const newScale = Math.min(maxScale, Math.max(minScale, scale * (1 - step)))
-      if (newScale === scale) return
+      const clamped = Math.min(maxScale, Math.max(minScale, newScale))
+      if (clamped === scale) return
 
-      // Always zoom toward frame center for predictable behavior
+      // Scale toward frame center
       const cx = frameSize.width / 2
       const cy = frameSize.height / 2
-      const ratio = newScale / scale
+      const ratio = clamped / scale
       const newOffsetX = cx - (cx - offsetX) * ratio
       const newOffsetY = cy - (cy - offsetY) * ratio
-      const clamped = clampOffset(newOffsetX, newOffsetY, newScale)
-      setScaleState(newScale)
-      setOffsetX(clamped.x)
-      setOffsetY(clamped.y)
+      const clampedOffset = clampOffset(newOffsetX, newOffsetY, clamped)
+      setScaleState(clamped)
+      setOffsetX(clampedOffset.x)
+      setOffsetY(clampedOffset.y)
     },
     [scale, offsetX, offsetY, scaleRange, clampOffset, frameSize]
   )
@@ -121,7 +119,7 @@ export function useGridEditor(
     setGridType,
     setWithGap,
     handleDrag,
-    handleZoom,
+    handleScale,
     resetToFit,
   }
 }

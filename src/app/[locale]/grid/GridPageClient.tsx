@@ -204,7 +204,7 @@ export function GridPageClient() {
                 frameWidth={editor.frameSize.width}
                 frameHeight={editor.frameSize.height}
                 onDrag={editor.handleDrag}
-                onZoom={editor.handleZoom}
+                onScale={editor.handleScale}
               />
             </div>
 
