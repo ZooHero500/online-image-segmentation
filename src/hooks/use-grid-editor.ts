@@ -23,6 +23,7 @@ export function useGridEditor(
   const [scale, setScaleState] = useState(1)
   const [withGap, setWithGap] = useState(false)
 
+  // Frame size based on grid type aspect ratio, fit within container
   const frameSize = useMemo<FrameSize>(() => {
     const { aspectRatio } = getGridConfig(gridType)
     const maxW = containerSize.width
@@ -40,25 +41,16 @@ export function useGridEditor(
     return { width: Math.round(w), height: Math.round(h) }
   }, [gridType, containerSize.width, containerSize.height])
 
+  // Scale range: min = image must fill frame, max = 3x
   const scaleRange = useMemo(() => {
     const scaleToFillW = frameSize.width / imageSize.width
     const scaleToFillH = frameSize.height / imageSize.height
     const minScale = Math.max(scaleToFillW, scaleToFillH)
-    const maxScale = Math.max(minScale, 3)
+    const maxScale = Math.max(minScale * 3, 3)
     return { minScale, maxScale }
   }, [frameSize, imageSize])
 
-  const clampOffset = useCallback(
-    (ox: number, oy: number, s: number) => {
-      const scaledW = imageSize.width * s
-      const scaledH = imageSize.height * s
-      const clampedX = Math.min(0, Math.max(frameSize.width - scaledW, ox))
-      const clampedY = Math.min(0, Math.max(frameSize.height - scaledH, oy))
-      return { x: clampedX, y: clampedY }
-    },
-    [imageSize, frameSize]
-  )
-
+  // Reset: fit image centered at minScale
   const resetToFit = useCallback(() => {
     const { minScale } = scaleRange
     setScaleState(minScale)
@@ -72,7 +64,7 @@ export function useGridEditor(
     setGridTypeState(type)
   }, [])
 
-  // Auto-reset when frameSize or imageSize changes
+  // Auto-reset when frame or image changes
   useEffect(() => {
     if (imageSize.width > 1) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -81,33 +73,37 @@ export function useGridEditor(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [frameSize.width, frameSize.height, imageSize.width, imageSize.height])
 
-  const handleDrag = useCallback(
-    (deltaX: number, deltaY: number) => {
-      const clamped = clampOffset(offsetX + deltaX, offsetY + deltaY, scale)
-      setOffsetX(clamped.x)
-      setOffsetY(clamped.y)
-    },
-    [clampOffset, scale, offsetX, offsetY]
-  )
+  // Called by Konva onDragEnd
+  const setOffset = useCallback((x: number, y: number) => {
+    setOffsetX(x)
+    setOffsetY(y)
+  }, [])
 
+  // Called by zoom slider — scale toward frame center, clamp offset
   const handleScale = useCallback(
     (newScale: number) => {
       const { minScale, maxScale } = scaleRange
       const clamped = Math.min(maxScale, Math.max(minScale, newScale))
       if (clamped === scale) return
 
-      // Scale toward frame center
+      // Re-center: scale toward frame center
       const cx = frameSize.width / 2
       const cy = frameSize.height / 2
       const ratio = clamped / scale
-      const newOffsetX = cx - (cx - offsetX) * ratio
-      const newOffsetY = cy - (cy - offsetY) * ratio
-      const clampedOffset = clampOffset(newOffsetX, newOffsetY, clamped)
+      const newOX = cx - (cx - offsetX) * ratio
+      const newOY = cy - (cy - offsetY) * ratio
+
+      // Clamp offset
+      const scaledW = imageSize.width * clamped
+      const scaledH = imageSize.height * clamped
+      const clampedX = Math.min(0, Math.max(frameSize.width - scaledW, newOX))
+      const clampedY = Math.min(0, Math.max(frameSize.height - scaledH, newOY))
+
       setScaleState(clamped)
-      setOffsetX(clampedOffset.x)
-      setOffsetY(clampedOffset.y)
+      setOffsetX(clampedX)
+      setOffsetY(clampedY)
     },
-    [scale, offsetX, offsetY, scaleRange, clampOffset, frameSize]
+    [scale, offsetX, offsetY, scaleRange, frameSize, imageSize]
   )
 
   const state: GridEditorState = { gridType, offsetX, offsetY, scale, withGap }
@@ -118,7 +114,7 @@ export function useGridEditor(
     scaleRange,
     setGridType,
     setWithGap,
-    handleDrag,
+    setOffset,
     handleScale,
     resetToFit,
   }

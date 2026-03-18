@@ -8,7 +8,7 @@ import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { GridSteps } from "@/components/grid/GridSteps"
 import { GridUploadZone } from "@/components/grid/GridUploadZone"
 import { GridTypeSelector } from "@/components/grid/GridTypeSelector"
-import { GridEditor } from "@/components/grid/GridEditor"
+import { DynamicGridEditor } from "@/components/grid/DynamicGridEditor"
 import { GridPreview } from "@/components/grid/GridPreview"
 import { useGridEditor } from "@/hooks/use-grid-editor"
 import { getGridConfig } from "@/lib/grid-splitter"
@@ -194,9 +194,8 @@ export function GridPageClient() {
 
             {/* Center editor */}
             <div ref={containerRef} className="flex-1 flex items-center justify-center">
-              <GridEditor
+              <DynamicGridEditor
                 image={image}
-                imageUrl={imageUrl}
                 gridType={editor.state.gridType}
                 offsetX={editor.state.offsetX}
                 offsetY={editor.state.offsetY}
@@ -205,8 +204,8 @@ export function GridPageClient() {
                 maxScale={editor.scaleRange.maxScale}
                 frameWidth={editor.frameSize.width}
                 frameHeight={editor.frameSize.height}
-                onDrag={editor.handleDrag}
-                onScale={editor.handleScale}
+                onOffsetChange={editor.setOffset}
+                onScaleChange={editor.handleScale}
               />
             </div>
 
