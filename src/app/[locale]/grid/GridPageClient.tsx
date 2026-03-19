@@ -9,7 +9,7 @@ import { GridSteps } from "@/components/grid/GridSteps"
 import { GridUploadZone } from "@/components/grid/GridUploadZone"
 import { GridTypeSelector } from "@/components/grid/GridTypeSelector"
 import { DynamicGridEditor } from "@/components/grid/DynamicGridEditor"
-import { GridPreview } from "@/components/grid/GridPreview"
+import { DynamicGridPreview as GridPreview } from "@/components/grid/DynamicGridPreview"
 import { useGridEditor } from "@/hooks/use-grid-editor"
 import { getGridConfig } from "@/lib/grid-splitter"
 import type { GridSplitResult } from "@/lib/grid-splitter"
@@ -200,8 +200,6 @@ export function GridPageClient() {
                 offsetX={editor.state.offsetX}
                 offsetY={editor.state.offsetY}
                 scale={editor.state.scale}
-                minScale={editor.scaleRange.minScale}
-                maxScale={editor.scaleRange.maxScale}
                 frameWidth={editor.frameSize.width}
                 frameHeight={editor.frameSize.height}
                 onOffsetChange={editor.setOffset}
@@ -213,7 +211,6 @@ export function GridPageClient() {
             <div className="hidden md:block w-[180px] flex-shrink-0 p-4">
               <GridPreview
                 image={image}
-                imageUrl={imageUrl}
                 mimeType={mimeType}
                 state={editor.state}
                 frameWidth={editor.frameSize.width}
@@ -226,7 +223,6 @@ export function GridPageClient() {
             <div className="md:hidden px-2 py-3">
               <GridPreview
                 image={image}
-                imageUrl={imageUrl}
                 mimeType={mimeType}
                 state={editor.state}
                 frameWidth={editor.frameSize.width}

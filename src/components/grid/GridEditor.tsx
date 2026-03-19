@@ -1,19 +1,17 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { Stage, Layer, Image as KonvaImage, Line } from "react-konva"
+import { useCallback, useEffect, useMemo, useRef } from "react"
+import { Stage, Layer, Image as KonvaImage, Line } from "@/lib/konva"
 import type Konva from "konva"
 import { useTranslations } from "next-intl"
 import { getGridConfig } from "@/lib/grid-splitter"
-import type { GridType, GridEditorState } from "@/lib/grid-splitter"
+import type { GridType } from "@/lib/grid-splitter"
 
 interface GridEditorProps {
   image: HTMLImageElement
   gridType: GridType
   frameWidth: number
   frameHeight: number
-  minScale: number
-  maxScale: number
   scale: number
   offsetX: number
   offsetY: number
@@ -26,8 +24,6 @@ export function GridEditor({
   gridType,
   frameWidth,
   frameHeight,
-  minScale,
-  maxScale,
   scale,
   offsetX,
   offsetY,
@@ -71,12 +67,10 @@ export function GridEditor({
   // Grid overlay lines
   const gridLines = useMemo(() => {
     const lines: { points: number[] }[] = []
-    // Vertical lines
     for (let c = 1; c < cols; c++) {
       const x = (frameWidth / cols) * c
       lines.push({ points: [x, 0, x, frameHeight] })
     }
-    // Horizontal lines
     for (let r = 1; r < rows; r++) {
       const y = (frameHeight / rows) * r
       lines.push({ points: [0, y, frameWidth, y] })
@@ -84,11 +78,23 @@ export function GridEditor({
     return lines
   }, [frameWidth, frameHeight, rows, cols])
 
+  // Mouse wheel zoom
+  const handleWheel = useCallback(
+    (e: Konva.KonvaEventObject<WheelEvent>) => {
+      e.evt.preventDefault()
+      const scaleStep = 0.03
+      const direction = e.evt.deltaY < 0 ? 1 : -1
+      const newScale = scale + direction * scaleStep * scale
+      onScaleChange(newScale)
+    },
+    [scale, onScaleChange]
+  )
+
   return (
     <div className="flex-1 flex flex-col items-center justify-center bg-[#EBE5DE]/50 p-4 md:p-6 min-h-[280px]">
       {/* Konva Stage = crop frame */}
       <div className="shadow-[0_2px_12px_rgba(0,0,0,0.15)]">
-        <Stage width={frameWidth} height={frameHeight}>
+        <Stage width={frameWidth} height={frameHeight} onWheel={handleWheel}>
           <Layer>
             {/* Draggable image */}
             <KonvaImage
@@ -117,22 +123,7 @@ export function GridEditor({
         </Stage>
       </div>
 
-      {/* Zoom slider */}
-      <div className="flex items-center gap-3 mt-4 w-full max-w-[300px]">
-        <span className="text-[10px] text-[#6C6863]">-</span>
-        <input
-          type="range"
-          min={Math.round(minScale * 100)}
-          max={Math.round(maxScale * 100)}
-          value={Math.round(scale * 100)}
-          step={1}
-          onChange={(e) => onScaleChange(Number(e.target.value) / 100)}
-          className="flex-1 h-1 appearance-none bg-[#EBE5DE] cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-[#1A1A1A] [&::-webkit-slider-thumb]:cursor-pointer"
-        />
-        <span className="text-[10px] text-[#6C6863]">+</span>
-      </div>
-
-      <p className="mt-2 text-[10px] uppercase tracking-[0.15em] text-[#6C6863]">
+      <p className="mt-3 text-[10px] uppercase tracking-[0.15em] text-[#6C6863]">
         {t("dragHint")}
       </p>
     </div>

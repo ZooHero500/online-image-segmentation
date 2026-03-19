@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useCallback, useRef, useEffect } from "react"
+import { useState, useCallback, useMemo } from "react"
+import { Stage, Layer, Image as KonvaImage, Group, Rect } from "@/lib/konva"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 import type { GridEditorState, GridSplitResult } from "@/lib/grid-splitter"
@@ -8,7 +9,6 @@ import { splitGrid, getGridConfig } from "@/lib/grid-splitter"
 
 interface GridPreviewProps {
   image: HTMLImageElement
-  imageUrl: string
   mimeType: string
   state: GridEditorState
   frameWidth: number
@@ -18,7 +18,6 @@ interface GridPreviewProps {
 
 export function GridPreview({
   image,
-  imageUrl,
   mimeType,
   state,
   frameWidth,
@@ -27,19 +26,8 @@ export function GridPreview({
 }: GridPreviewProps) {
   const t = useTranslations("grid.download")
   const [isGenerating, setIsGenerating] = useState(false)
-  const gridRef = useRef<HTMLDivElement>(null)
-  const [cellPx, setCellPx] = useState(48)
 
   const { rows, cols } = getGridConfig(state.gridType)
-
-  // Measure actual cell pixel size
-  useEffect(() => {
-    if (!gridRef.current) return
-    const firstCell = gridRef.current.firstElementChild as HTMLElement
-    if (firstCell) {
-      setCellPx(firstCell.getBoundingClientRect().width)
-    }
-  })
 
   const handleGenerate = useCallback(async () => {
     setIsGenerating(true)
@@ -58,14 +46,40 @@ export function GridPreview({
     }
   }, [image, state, frameWidth, frameHeight, mimeType, onGenerated, t])
 
-  // Each preview cell is a scaled-down copy of the editor frame,
-  // translated to show only the relevant cell portion.
-  // This is 100% reliable because it uses the same CSS rendering as the editor.
-  const cellW = frameWidth / cols
-  const cellH = frameHeight / rows
-  const scaleFactor = cellPx / cellW
+  // Preview layout: fit the grid into ~160px wide area with 2px gaps
+  const gap = 2
+  const containerWidth = 160
+  const totalGapX = gap * (cols - 1)
+  const totalGapY = gap * (rows - 1)
+  const cellW = (containerWidth - totalGapX) / cols
+  const cellH = cellW // square cells
+  const stageWidth = containerWidth
+  const stageHeight = cellH * rows + totalGapY
+
+  // Scale factor: how much to shrink the editor frame to fit in one cell
+  const editorCellW = frameWidth / cols
+  const editorCellH = frameHeight / rows
+  const scaleX = cellW / editorCellW
+  const scaleY = cellH / editorCellH
+  const cellScale = Math.min(scaleX, scaleY)
+
   const imgW = image.naturalWidth * state.scale
   const imgH = image.naturalHeight * state.scale
+
+  // Build cell data
+  const cells = useMemo(() => {
+    return Array.from({ length: rows * cols }, (_, i) => {
+      const r = Math.floor(i / cols)
+      const c = i % cols
+      // Position of this cell in the stage
+      const x = c * (cellW + gap)
+      const y = r * (cellH + gap)
+      // Clip region offset within the editor frame
+      const clipX = c * editorCellW
+      const clipY = r * editorCellH
+      return { r, c, x, y, clipX, clipY }
+    })
+  }, [rows, cols, cellW, cellH, gap, editorCellW, editorCellH])
 
   return (
     <div>
@@ -73,47 +87,47 @@ export function GridPreview({
         {t("count", { count: rows * cols })}
       </div>
 
-      <div
-        ref={gridRef}
-        className="grid gap-[2px] mb-6"
-        style={{
-          gridTemplateColumns: `repeat(${cols}, 1fr)`,
-        }}
-      >
-        {Array.from({ length: rows * cols }).map((_, i) => {
-          const r = Math.floor(i / cols)
-          const c = i % cols
-          return (
-            <div
-              key={i}
-              className="aspect-square overflow-hidden bg-[#EBE5DE]"
-            >
-              {/* Scaled-down copy of the frame with image, translated to this cell */}
-              <div
-                style={{
-                  width: frameWidth,
-                  height: frameHeight,
-                  transform: `scale(${scaleFactor}) translate(${-c * cellW}px, ${-r * cellH}px)`,
-                  transformOrigin: "0 0",
-                  position: "relative",
-                }}
+      <div className="mb-6 flex justify-center">
+        <Stage width={stageWidth} height={stageHeight} listening={false}>
+          <Layer>
+            {cells.map(({ r, c, x, y, clipX, clipY }, i) => (
+              <Group
+                key={i}
+                x={x}
+                y={y}
+                clipX={0}
+                clipY={0}
+                clipWidth={cellW}
+                clipHeight={cellH}
               >
-                <img
-                  src={imageUrl}
-                  alt=""
-                  draggable={false}
-                  style={{
-                    position: "absolute",
-                    width: imgW,
-                    height: imgH,
-                    transform: `translate(${state.offsetX}px, ${state.offsetY}px)`,
-                    pointerEvents: "none",
-                  }}
+                {/* Cell background */}
+                <Rect width={cellW} height={cellH} fill="#EBE5DE" />
+                {/* Scaled-down image, offset to show only this cell's portion */}
+                <KonvaImage
+                  image={image}
+                  x={(state.offsetX - clipX) * cellScale}
+                  y={(state.offsetY - clipY) * cellScale}
+                  width={imgW * cellScale}
+                  height={imgH * cellScale}
                 />
-              </div>
-            </div>
-          )
-        })}
+              </Group>
+            ))}
+
+            {/* Grid gap lines (white separators) */}
+            {Array.from({ length: cols - 1 }, (_, c) => {
+              const x = (c + 1) * (cellW + gap) - gap
+              return (
+                <Rect key={`v${c}`} x={x} y={0} width={gap} height={stageHeight} fill="#F9F8F6" />
+              )
+            })}
+            {Array.from({ length: rows - 1 }, (_, r) => {
+              const y = (r + 1) * (cellH + gap) - gap
+              return (
+                <Rect key={`h${r}`} x={0} y={y} width={stageWidth} height={gap} fill="#F9F8F6" />
+              )
+            })}
+          </Layer>
+        </Stage>
       </div>
 
       <button
