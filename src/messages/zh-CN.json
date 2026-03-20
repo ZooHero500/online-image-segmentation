@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "title": "ImgSplit - 免费在线图片分割工具",
-    "description": "免费在线图片分割工具，支持拖拽分割线、磁吸对齐、一键生成并下载所有子图片。纯浏览器端处理，保护您的隐私。"
+    "title": "免费在线图片裁剪分割工具 — 一键切图下载 | ImgSplit",
+    "description": "免费在线图片裁剪、分割工具，拖拽分割线、网格切图、一键打包下载。无需上传，纯浏览器处理，保护隐私。支持手机和电脑。"
   },
   "nav": {
     "features": "功能",
@@ -12,11 +12,11 @@
     "close": "关闭"
   },
   "hero": {
-    "overline": "在线图片分割工具",
-    "headlinePart1": "精准",
-    "headlineAccent": "分割",
-    "headlinePart2": "图片",
-    "description": "免费在线图片裁切工具，支持拖拽分割线、磁吸对齐、像素级精确裁切。纯浏览器端处理，您的图片永远不会离开您的设备。",
+    "overline": "免费在线图片裁剪分割工具",
+    "headlinePart1": "在线图片",
+    "headlineAccent": "裁剪分割",
+    "headlinePart2": "工具",
+    "description": "免费在线图片裁剪、分割工具，拖拽分割线、磁吸对齐、像素级精确裁切。无需上传，纯浏览器处理，保护隐私。",
     "ctaPrimary": "立即免费使用",
     "ctaSecondary": "了解使用方法"
   },

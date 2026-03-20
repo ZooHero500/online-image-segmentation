@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "title": "ImgSplit - Free Online Image Splitting Tool",
-    "description": "Free online image splitting tool with drag-and-drop split lines, snap alignment, and instant download. All processing happens in your browser — your images never leave your device."
+    "title": "Free Online Image Splitter — Split & Cut Photos Instantly | ImgSplit",
+    "description": "Free online image splitter — drag split lines, snap to grid, and download all pieces instantly. No upload needed, 100% browser-based image cutter. Works on desktop & mobile."
   },
   "nav": {
     "features": "Features",
@@ -12,11 +12,11 @@
     "close": "Close"
   },
   "hero": {
-    "overline": "Online Image Splitting Tool",
-    "headlinePart1": "Precision",
-    "headlineAccent": "Splitting",
-    "headlinePart2": "for Images",
-    "description": "Free online image splitting tool with drag-and-drop split lines, snap alignment, and pixel-perfect precision. Everything runs in your browser — your images never leave your device.",
+    "overline": "Free Online Image Splitter",
+    "headlinePart1": "Online",
+    "headlineAccent": "Image Splitter",
+    "headlinePart2": "— Free & Precise",
+    "description": "Free online image splitter with drag-and-drop split lines, snap alignment, and pixel-perfect precision. No upload needed — everything runs in your browser.",
     "ctaPrimary": "Start Free Now",
     "ctaSecondary": "See How It Works"
   },
