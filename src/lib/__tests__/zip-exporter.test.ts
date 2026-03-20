@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest"
-import { exportAsZip, downloadSingle, getSelectedZipFileName, getZipFileName, exportGridAsZip, getGridZipFileName } from "../zip-exporter"
+import { exportAsZip, exportBatchAsZip, downloadSingle, getSelectedZipFileName, getZipFileName, getBatchZipFileName, exportGridAsZip, getGridZipFileName } from "../zip-exporter"
 import type { SplitResult } from "@/types"
 
 function createMockResult(row: number, col: number): SplitResult {
@@ -120,6 +120,68 @@ describe("exportGridAsZip", () => {
 describe("getGridZipFileName", () => {
   it("should return grid_split.zip", () => {
     expect(getGridZipFileName()).toBe("grid_split.zip")
+  })
+})
+
+describe("exportBatchAsZip", () => {
+  it("should create flat ZIP for single image batch", async () => {
+    const zipBlob = await exportBatchAsZip({
+      items: [
+        {
+          originalFileName: "photo",
+          results: [createMockResult(1, 1), createMockResult(1, 2)],
+          fileExtension: "png",
+        },
+      ],
+    })
+
+    expect(zipBlob).toBeInstanceOf(Blob)
+    const JSZip = (await import("jszip")).default
+    const zip = await JSZip.loadAsync(zipBlob)
+    const fileNames = Object.keys(zip.files)
+
+    // Single image: flat structure (no subfolder)
+    expect(fileNames).toContain("photo_r1_c1.png")
+    expect(fileNames).toContain("photo_r1_c2.png")
+    expect(fileNames.every((f) => !f.includes("/"))).toBe(true)
+  })
+
+  it("should create subfolders for multi-image batch", async () => {
+    const zipBlob = await exportBatchAsZip({
+      items: [
+        {
+          originalFileName: "img-a",
+          results: [createMockResult(1, 1)],
+          fileExtension: "png",
+        },
+        {
+          originalFileName: "img-b",
+          results: [createMockResult(1, 1)],
+          fileExtension: "jpg",
+        },
+      ],
+    })
+
+    const JSZip = (await import("jszip")).default
+    const zip = await JSZip.loadAsync(zipBlob)
+    const fileNames = Object.keys(zip.files)
+
+    expect(fileNames).toContain("img-a/img-a_r1_c1.png")
+    expect(fileNames).toContain("img-b/img-b_r1_c1.jpg")
+  })
+
+  it("should handle empty items array", async () => {
+    const zipBlob = await exportBatchAsZip({ items: [] })
+    expect(zipBlob).toBeInstanceOf(Blob)
+    const JSZip = (await import("jszip")).default
+    const zip = await JSZip.loadAsync(zipBlob)
+    expect(Object.keys(zip.files)).toHaveLength(0)
+  })
+})
+
+describe("getBatchZipFileName", () => {
+  it("should return batch_split.zip", () => {
+    expect(getBatchZipFileName()).toBe("batch_split.zip")
   })
 })
 

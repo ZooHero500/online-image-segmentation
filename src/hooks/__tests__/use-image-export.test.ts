@@ -74,6 +74,84 @@ async function setupHookWithResults() {
   return result
 }
 
+describe("useImageExport - core", () => {
+  it("should initialize with empty state", () => {
+    const { result } = renderHook(() => useImageExport())
+    expect(result.current.splitResults).toHaveLength(0)
+    expect(result.current.batchResults).toHaveLength(0)
+    expect(result.current.isSplitting).toBe(false)
+    expect(result.current.selectedKeys.size).toBe(0)
+  })
+
+  it("should set isSplitting to true during generation", async () => {
+    const { result } = renderHook(() => useImageExport())
+    const mockImage = {} as HTMLImageElement
+
+    let splittingDuringCall = false
+    const promise = act(async () => {
+      const genPromise = result.current.generateSplit(mockImage, [], "image/png")
+      // isSplitting is set synchronously before the async work
+      splittingDuringCall = result.current.isSplitting
+      await genPromise
+    })
+
+    await promise
+    expect(result.current.isSplitting).toBe(false)
+  })
+
+  it("should store results after generateSplit", async () => {
+    const result = await setupHookWithResults()
+    expect(result.current.splitResults).toHaveLength(4)
+  })
+
+  it("should clear results", async () => {
+    const result = await setupHookWithResults()
+    expect(result.current.splitResults).toHaveLength(4)
+
+    act(() => result.current.clearResults())
+
+    expect(result.current.splitResults).toHaveLength(0)
+    expect(result.current.batchResults).toHaveLength(0)
+    expect(result.current.selectedKeys.size).toBe(0)
+  })
+
+  it("should call downloadAll and trigger browser download", async () => {
+    const result = await setupHookWithResults()
+
+    await act(async () => {
+      await result.current.downloadAll("photo", "png")
+    })
+
+    expect(mockExportAsZip).toHaveBeenCalledTimes(1)
+    expect(mockClick).toHaveBeenCalled()
+    expect(lastAnchorDownload).toBe("photo_split.zip")
+  })
+
+  it("should not download when no results", async () => {
+    const { result } = renderHook(() => useImageExport())
+
+    await act(async () => {
+      await result.current.downloadAll("photo", "png")
+    })
+
+    expect(mockExportAsZip).not.toHaveBeenCalled()
+  })
+
+  it("should call downloadOne via downloadSingle", async () => {
+    const { downloadSingle: mockDownloadSingle } = await import("@/lib/zip-exporter")
+    const result = await setupHookWithResults()
+
+    act(() => {
+      result.current.downloadOne(result.current.splitResults[0], "photo_r1_c1.png")
+    })
+
+    expect(mockDownloadSingle).toHaveBeenCalledWith(
+      result.current.splitResults[0],
+      "photo_r1_c1.png"
+    )
+  })
+})
+
 describe("useImageExport - selection", () => {
   describe("toggleSelect", () => {
     it("should add a key when toggling an unselected item", async () => {

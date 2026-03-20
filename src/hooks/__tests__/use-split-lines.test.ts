@@ -130,4 +130,110 @@ describe("useSplitLines", () => {
     act(() => result.current.redo())
     expect(result.current.lines).toHaveLength(1)
   })
+
+  it("should add line at specific position via addLineAtPosition", () => {
+    const { result } = renderHook(() => useSplitLines(defaultOptions))
+
+    act(() => result.current.addLineAtPosition("horizontal", 75))
+
+    expect(result.current.lines).toHaveLength(1)
+    expect(result.current.lines[0].position).toBe(75)
+    expect(result.current.lines[0].orientation).toBe("horizontal")
+  })
+
+  it("should clamp addLineAtPosition to bounds", () => {
+    const { result } = renderHook(() => useSplitLines(defaultOptions))
+
+    act(() => result.current.addLineAtPosition("horizontal", -50))
+    expect(result.current.lines[0].position).toBe(0)
+
+    act(() => result.current.addLineAtPosition("vertical", 999))
+    expect(result.current.lines[1].position).toBe(400) // workspaceWidth
+  })
+
+  it("should not add line at position when limit reached", () => {
+    const { result } = renderHook(() =>
+      useSplitLines({ ...defaultOptions, maxLinesPerDirection: 2 })
+    )
+
+    act(() => result.current.addLineAtPosition("horizontal", 50))
+    act(() => result.current.addLineAtPosition("horizontal", 100))
+    act(() => result.current.addLineAtPosition("horizontal", 150))
+
+    expect(result.current.lines).toHaveLength(2)
+  })
+
+  it("should limit vertical lines to max 20", () => {
+    const { result } = renderHook(() =>
+      useSplitLines({ ...defaultOptions, maxLinesPerDirection: 20 })
+    )
+
+    for (let i = 0; i < 20; i++) {
+      act(() => result.current.addLine("vertical"))
+    }
+
+    expect(result.current.canAddVertical).toBe(false)
+    expect(result.current.canAddHorizontal).toBe(true)
+
+    // Trying to add one more should have no effect
+    act(() => result.current.addLine("vertical"))
+    expect(result.current.lines.filter((l) => l.orientation === "vertical")).toHaveLength(20)
+  })
+
+  it("should set lines directly via setLines", () => {
+    const { result } = renderHook(() => useSplitLines(defaultOptions))
+
+    const newLines = [
+      { id: "a", orientation: "horizontal" as const, position: 50 },
+      { id: "b", orientation: "vertical" as const, position: 200 },
+    ]
+
+    act(() => result.current.setLines(newLines))
+
+    expect(result.current.lines).toHaveLength(2)
+    expect(result.current.lines[0].id).toBe("a")
+    expect(result.current.lines[1].id).toBe("b")
+  })
+
+  it("should be undoable after setLines", () => {
+    const { result } = renderHook(() => useSplitLines(defaultOptions))
+
+    act(() => result.current.addLine("horizontal"))
+    const beforeLines = result.current.lines
+
+    act(() => result.current.setLines([]))
+    expect(result.current.lines).toHaveLength(0)
+
+    act(() => result.current.undo())
+    expect(result.current.lines).toHaveLength(1)
+  })
+
+  it("should not update non-existent line", () => {
+    const { result } = renderHook(() => useSplitLines(defaultOptions))
+
+    act(() => result.current.addLine("horizontal"))
+    const originalPosition = result.current.lines[0].position
+
+    act(() => result.current.updateLinePosition("non-existent", 999))
+    expect(result.current.lines[0].position).toBe(originalPosition)
+  })
+
+  it("should snap to bottom edge when within threshold", () => {
+    const { result } = renderHook(() =>
+      useSplitLines({ ...defaultOptions, snapThreshold: 8 })
+    )
+
+    // Snap to bottom edge (300)
+    const snapped = result.current.calculateSnap(295, "horizontal")
+    expect(snapped).toBe(300)
+  })
+
+  it("should snap to right edge when within threshold", () => {
+    const { result } = renderHook(() =>
+      useSplitLines({ ...defaultOptions, snapThreshold: 8 })
+    )
+
+    const snapped = result.current.calculateSnap(396, "vertical")
+    expect(snapped).toBe(400)
+  })
 })

@@ -30,14 +30,14 @@ describe("validateFiles", () => {
     const file = makeFile("test.gif", 1024, "image/gif")
     const result = validateFiles([file])
     expect(result.valid).toBe(false)
-    expect(result.error).toContain("不支持")
+    expect(result.error).toEqual({ key: "unsupportedFormat" })
   })
 
   it("should reject file exceeding 20MB", () => {
     const file = makeFile("big.png", MAX_SIZE + 1, "image/png")
     const result = validateFiles([file])
     expect(result.valid).toBe(false)
-    expect(result.error).toContain("过大")
+    expect(result.error).toEqual({ key: "fileTooLarge", params: { name: "big.png" } })
   })
 
   it("should accept multiple valid files", () => {
