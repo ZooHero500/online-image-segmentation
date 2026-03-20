@@ -7,7 +7,9 @@
     "features": "Features",
     "howItWorks": "How It Works",
     "faq": "FAQ",
-    "getStarted": "Get Started"
+    "getStarted": "Get Started",
+    "menu": "Menu",
+    "close": "Close"
   },
   "hero": {
     "overline": "Online Image Splitting Tool",

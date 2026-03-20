@@ -6,6 +6,7 @@ import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { FaqItem } from "../FaqSection"
 import { GridLandingContent } from "./GridLandingContent"
 import { GridLines } from "@/components/GridLines"
+import { MobileNav } from "@/components/MobileNav"
 import {
   Grid3X3,
   ArrowRight,
@@ -23,6 +24,7 @@ export default async function GridPage({
   const t = await getTranslations("grid")
   const tLanding = await getTranslations("grid.landing")
   const tFooter = await getTranslations("footer")
+  const tNav = await getTranslations("nav")
 
   return (
     <main className="min-h-screen bg-background relative">
@@ -84,6 +86,17 @@ export default async function GridPage({
             >
               {tLanding("faq.overline")}
             </a>
+            <MobileNav
+              links={[
+                { href: "#grid-types", label: tLanding("types.overline") },
+                { href: "#how-it-works", label: tLanding("howItWorks.overline") },
+                { href: "#faq", label: tLanding("faq.overline") },
+              ]}
+              ctaLabel={tLanding("hero.ctaPrimary")}
+              ctaHref="#upload"
+              menuLabel={tNav("menu")}
+              closeLabel={tNav("close")}
+            />
             <LocaleSwitcher variant="compact" />
             <a
               href="#upload"

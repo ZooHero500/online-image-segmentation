@@ -6,6 +6,7 @@ import { FaqItem } from "./FaqSection"
 import { JsonLd } from "@/components/JsonLd"
 import { LogoIcon } from "@/components/LogoIcon"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
+import { MobileNav } from "@/components/MobileNav"
 import { GridLines } from "@/components/GridLines"
 import {
   Scissors,
@@ -112,6 +113,17 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             >
               {t("nav.faq")}
             </a>
+            <MobileNav
+              links={[
+                { href: "#features", label: t("nav.features") },
+                { href: "#how-it-works", label: t("nav.howItWorks") },
+                { href: "#faq", label: t("nav.faq") },
+              ]}
+              ctaLabel={t("nav.getStarted")}
+              ctaHref="#upload"
+              menuLabel={t("nav.menu")}
+              closeLabel={t("nav.close")}
+            />
             <LocaleSwitcher variant="compact" />
             <SmartCTA
               label={t("nav.getStarted")}

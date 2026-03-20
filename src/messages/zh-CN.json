@@ -7,7 +7,9 @@
     "features": "功能",
     "howItWorks": "使用说明",
     "faq": "常见问题",
-    "getStarted": "开始使用"
+    "getStarted": "开始使用",
+    "menu": "菜单",
+    "close": "关闭"
   },
   "hero": {
     "overline": "在线图片分割工具",
