@@ -2,6 +2,7 @@
 
 import { useCallback } from "react"
 import { useTranslations, useLocale } from "next-intl"
+import { Scissors, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { LogoIcon } from "@/components/LogoIcon"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
@@ -18,13 +19,18 @@ interface HistorySidebarProps {
     images?: Array<{ blob: Blob; fileName: string; mimeType: string }>
   }) => void
   onNewCanvas: () => void
+  mode: "manual" | "ai"
+  onSwitchMode: (mode: "manual" | "ai") => void
 }
 
 export function HistorySidebar({
   onLoadRecord,
   onNewCanvas,
+  mode,
+  onSwitchMode,
 }: HistorySidebarProps) {
   const t = useTranslations("history")
+  const tAi = useTranslations("aiSegmentation")
   const locale = useLocale()
   const { records, isLoading, deleteRecord } = useHistory()
 
@@ -70,6 +76,27 @@ export function HistorySidebar({
           ImgSplit
         </span>
       </Link>
+
+      <div className="flex gap-1 p-3 border-b">
+        <Button
+          size="sm"
+          variant={mode === "manual" ? "default" : "outline"}
+          onClick={() => onSwitchMode("manual")}
+          className="flex-1 gap-1 text-xs"
+        >
+          <Scissors className="h-3 w-3" />
+          {tAi("backToManual")}
+        </Button>
+        <Button
+          size="sm"
+          variant={mode === "ai" ? "default" : "outline"}
+          onClick={() => onSwitchMode("ai")}
+          className="flex-1 gap-1 text-xs"
+        >
+          <Sparkles className="h-3 w-3" />
+          {tAi("sidebarButton")}
+        </Button>
+      </div>
 
       <div className="flex items-center justify-between p-3 border-b">
         <h2 className="text-sm font-medium">{t("title")}</h2>
