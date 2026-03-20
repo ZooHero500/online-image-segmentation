@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useTranslations } from "next-intl"
-import { X, Download, ZoomIn, Check } from "lucide-react"
+import { X, Download, ZoomIn, Check, ChevronLeft, ChevronRight } from "lucide-react"
 import type { SplitResult, BatchSplitResult } from "@/types"
 
 interface ResultSheetProps {
@@ -48,22 +48,39 @@ function getFileNameWithoutExtension(fileName: string): string {
 }
 
 /* ─── Lightbox ─── */
-function Lightbox({
-  src,
-  alt,
-  onClose,
-}: {
+interface LightboxItem {
   src: string
   alt: string
+}
+
+function Lightbox({
+  items,
+  currentIndex,
+  onClose,
+  onPrev,
+  onNext,
+}: {
+  items: LightboxItem[]
+  currentIndex: number
   onClose: () => void
+  onPrev: () => void
+  onNext: () => void
 }) {
+  const hasPrev = currentIndex > 0
+  const hasNext = currentIndex < items.length - 1
+  const current = items[currentIndex]
+
   useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
+    const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose()
+      if (e.key === "ArrowLeft" && hasPrev) onPrev()
+      if (e.key === "ArrowRight" && hasNext) onNext()
     }
-    window.addEventListener("keydown", handleEsc)
-    return () => window.removeEventListener("keydown", handleEsc)
-  }, [onClose])
+    window.addEventListener("keydown", handleKey)
+    return () => window.removeEventListener("keydown", handleKey)
+  }, [onClose, onPrev, onNext, hasPrev, hasNext])
+
+  if (!current) return null
 
   return (
     <div
@@ -78,19 +95,44 @@ function Lightbox({
         <X className="h-5 w-5" strokeWidth={1.5} />
       </button>
 
+      {/* Prev button */}
+      {hasPrev && (
+        <button
+          onClick={(e) => { e.stopPropagation(); onPrev() }}
+          className="absolute left-6 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center text-primary-foreground/50 hover:text-primary-foreground border border-primary-foreground/20 hover:border-primary-foreground/50 transition-all duration-500 z-10"
+        >
+          <ChevronLeft className="h-5 w-5" strokeWidth={1.5} />
+        </button>
+      )}
+
+      {/* Next button */}
+      {hasNext && (
+        <button
+          onClick={(e) => { e.stopPropagation(); onNext() }}
+          className="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center text-primary-foreground/50 hover:text-primary-foreground border border-primary-foreground/20 hover:border-primary-foreground/50 transition-all duration-500 z-10"
+        >
+          <ChevronRight className="h-5 w-5" strokeWidth={1.5} />
+        </button>
+      )}
+
       {/* Image */}
       <img
-        src={src}
-        alt={alt}
+        src={current.src}
+        alt={current.alt}
         className="max-w-[90vw] max-h-[90vh] object-contain shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
         onClick={(e) => e.stopPropagation()}
       />
 
-      {/* File name label */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
+      {/* File name + counter */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1">
         <span className="text-[10px] uppercase tracking-[0.3em] text-primary-foreground/50">
-          {alt}
+          {current.alt}
         </span>
+        {items.length > 1 && (
+          <span className="text-[10px] tracking-[0.2em] text-primary-foreground/35">
+            {currentIndex + 1} / {items.length}
+          </span>
+        )}
       </div>
     </div>
   )
@@ -103,6 +145,7 @@ function ResultItem({
   fileExtension,
   onDownload,
   onPreview,
+  index,
   selected,
   onToggleSelect,
 }: {
@@ -110,7 +153,8 @@ function ResultItem({
   originalFileName: string
   fileExtension: string
   onDownload: (result: SplitResult, fileName: string) => void
-  onPreview: (src: string, alt: string) => void
+  onPreview: (index: number) => void
+  index: number
   selected: boolean
   onToggleSelect: () => void
 }) {
@@ -136,7 +180,7 @@ function ResultItem({
       {previewUrl && (
         <div
           className="relative aspect-[4/3] overflow-hidden cursor-pointer bg-secondary/30"
-          onClick={() => onPreview(previewUrl, fileName)}
+          onClick={() => onPreview(index)}
         >
           <img
             src={previewUrl}
@@ -205,10 +249,7 @@ export function ResultSheet({
   onDownloadSelected,
 }: ResultSheetProps) {
   const t = useTranslations("results")
-  const [lightbox, setLightbox] = useState<{
-    src: string
-    alt: string
-  } | null>(null)
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const isMultiImage = batchResults && batchResults.length > 1
 
@@ -223,12 +264,69 @@ export function ResultSheet({
 
   const selectedCount = selectedKeys.size
 
-  const handlePreview = useCallback((src: string, alt: string) => {
-    setLightbox({ src, alt })
+  // Build flat list of lightbox items with blob URLs
+  const lightboxItems = useMemo(() => {
+    const items: { blob: Blob; alt: string }[] = []
+    if (isMultiImage) {
+      for (const batch of batchResults) {
+        const name = getFileNameWithoutExtension(batch.fileName)
+        const ext = getFileExtension(batch.mimeType)
+        for (const r of batch.results) {
+          items.push({ blob: r.blob, alt: getFileName(name, r, ext) })
+        }
+      }
+    } else {
+      for (const r of results) {
+        items.push({ blob: r.blob, alt: getFileName(originalFileName, r, fileExtension) })
+      }
+    }
+    return items
+  }, [results, batchResults, isMultiImage, originalFileName, fileExtension])
+
+  // Manage blob URLs for the active lightbox image (and preload neighbors)
+  const [lightboxUrls, setLightboxUrls] = useState<Map<number, string>>(new Map())
+
+  useEffect(() => {
+    if (lightboxIndex === null) {
+      // Revoke all URLs when lightbox closes
+      lightboxUrls.forEach((url) => URL.revokeObjectURL(url))
+      setLightboxUrls(new Map())
+      return
+    }
+    const indices = [lightboxIndex - 1, lightboxIndex, lightboxIndex + 1].filter(
+      (i) => i >= 0 && i < lightboxItems.length
+    )
+    setLightboxUrls((prev) => {
+      const next = new Map(prev)
+      for (const i of indices) {
+        if (!next.has(i)) {
+          next.set(i, URL.createObjectURL(lightboxItems[i].blob))
+        }
+      }
+      return next
+    })
+  }, [lightboxIndex, lightboxItems])
+
+  // Clean up all URLs on unmount
+  useEffect(() => {
+    return () => {
+      lightboxUrls.forEach((url) => URL.revokeObjectURL(url))
+    }
+  }, [])
+
+  const activeLightboxItems: LightboxItem[] = useMemo(() => {
+    return lightboxItems.map((item, i) => ({
+      src: lightboxUrls.get(i) ?? "",
+      alt: item.alt,
+    }))
+  }, [lightboxItems, lightboxUrls])
+
+  const handlePreview = useCallback((index: number) => {
+    setLightboxIndex(index)
   }, [])
 
   const closeLightbox = useCallback(() => {
-    setLightbox(null)
+    setLightboxIndex(null)
   }, [])
 
   return (
@@ -326,45 +424,50 @@ export function ResultSheet({
           {isMultiImage ? (
             // Multi-image: group by source image
             <div className="space-y-6">
-              {batchResults.map((batch, imageIndex) => {
-                const batchFileName = getFileNameWithoutExtension(batch.fileName)
-                const batchExt = getFileExtension(batch.mimeType)
-                const batchMaxCols = Math.max(...batch.results.map((r) => r.col), 1)
-                return (
-                  <div key={`batch-${imageIndex}`}>
-                    <div className="mb-3 pb-2 border-b border-border">
-                      <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                        {batch.fileName}
-                      </span>
-                      <span className="text-[10px] text-muted-foreground/60 ml-2">
-                        {t("imageCount", { count: batch.results.length })}
-                      </span>
+              {(() => {
+                let flatIndex = 0
+                return batchResults.map((batch, imageIndex) => {
+                  const batchFileName = getFileNameWithoutExtension(batch.fileName)
+                  const batchExt = getFileExtension(batch.mimeType)
+                  const batchMaxCols = Math.max(...batch.results.map((r) => r.col), 1)
+                  return (
+                    <div key={`batch-${imageIndex}`}>
+                      <div className="mb-3 pb-2 border-b border-border">
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                          {batch.fileName}
+                        </span>
+                        <span className="text-[10px] text-muted-foreground/60 ml-2">
+                          {t("imageCount", { count: batch.results.length })}
+                        </span>
+                      </div>
+                      <div
+                        className="grid gap-4"
+                        style={{
+                          gridTemplateColumns: `repeat(${Math.min(batchMaxCols, 2)}, minmax(0, 1fr))`,
+                        }}
+                      >
+                        {batch.results.map((result) => {
+                          const key = getResultKey(result, imageIndex)
+                          const idx = flatIndex++
+                          return (
+                            <ResultItem
+                              key={key}
+                              result={result}
+                              originalFileName={batchFileName}
+                              fileExtension={batchExt}
+                              onDownload={onDownloadSingle}
+                              onPreview={handlePreview}
+                              index={idx}
+                              selected={selectedKeys.has(key)}
+                              onToggleSelect={() => onToggleSelect(key)}
+                            />
+                          )
+                        })}
+                      </div>
                     </div>
-                    <div
-                      className="grid gap-4"
-                      style={{
-                        gridTemplateColumns: `repeat(${Math.min(batchMaxCols, 2)}, minmax(0, 1fr))`,
-                      }}
-                    >
-                      {batch.results.map((result) => {
-                        const key = getResultKey(result, imageIndex)
-                        return (
-                          <ResultItem
-                            key={key}
-                            result={result}
-                            originalFileName={batchFileName}
-                            fileExtension={batchExt}
-                            onDownload={onDownloadSingle}
-                            onPreview={handlePreview}
-                            selected={selectedKeys.has(key)}
-                            onToggleSelect={() => onToggleSelect(key)}
-                          />
-                        )
-                      })}
-                    </div>
-                  </div>
-                )
-              })}
+                  )
+                })
+              })()}
             </div>
           ) : (
             // Single image: flat grid (backward compatible)
@@ -374,7 +477,7 @@ export function ResultSheet({
                 gridTemplateColumns: `repeat(${Math.min(maxCols, 2)}, minmax(0, 1fr))`,
               }}
             >
-              {results.map((result) => {
+              {results.map((result, idx) => {
                 const key = getResultKey(result)
                 return (
                   <ResultItem
@@ -384,6 +487,7 @@ export function ResultSheet({
                     fileExtension={fileExtension}
                     onDownload={onDownloadSingle}
                     onPreview={handlePreview}
+                    index={idx}
                     selected={selectedKeys.has(key)}
                     onToggleSelect={() => onToggleSelect(key)}
                   />
@@ -395,11 +499,13 @@ export function ResultSheet({
       </div>
 
       {/* Lightbox */}
-      {lightbox && (
+      {lightboxIndex !== null && (
         <Lightbox
-          src={lightbox.src}
-          alt={lightbox.alt}
+          items={activeLightboxItems}
+          currentIndex={lightboxIndex}
           onClose={closeLightbox}
+          onPrev={() => setLightboxIndex((i) => Math.max(0, (i ?? 0) - 1))}
+          onNext={() => setLightboxIndex((i) => Math.min(lightboxItems.length - 1, (i ?? 0) + 1))}
         />
       )}
     </>
