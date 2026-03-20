@@ -22,15 +22,15 @@ export function GridSteps({ currentStep }: GridStepsProps) {
         <div key={step.key} className="flex items-center gap-4 md:gap-8">
           <div className="flex items-center gap-2">
             {step.key < currentStep ? (
-              <div className="w-6 h-6 bg-[#1A1A1A] flex items-center justify-center">
-                <CheckCircle2 className="h-3.5 w-3.5 text-[#F9F8F6]" strokeWidth={1.5} />
+              <div className="w-6 h-6 bg-primary flex items-center justify-center">
+                <CheckCircle2 className="h-3.5 w-3.5 text-primary-foreground" strokeWidth={1.5} />
               </div>
             ) : (
               <div
                 className={`w-6 h-6 flex items-center justify-center text-[11px] font-medium ${
                   step.key === currentStep
-                    ? "bg-[#D4AF37] text-[#F9F8F6]"
-                    : "bg-[#EBE5DE] text-[#6C6863]"
+                    ? "bg-accent text-primary-foreground"
+                    : "bg-secondary text-muted-foreground"
                 }`}
               >
                 {step.key}
@@ -39,8 +39,8 @@ export function GridSteps({ currentStep }: GridStepsProps) {
             <span
               className={`text-xs uppercase tracking-[0.15em] ${
                 step.key === currentStep
-                  ? "text-[#1A1A1A] font-medium"
-                  : "text-[#6C6863]"
+                  ? "text-foreground font-medium"
+                  : "text-muted-foreground"
               }`}
             >
               {step.label}
@@ -49,7 +49,7 @@ export function GridSteps({ currentStep }: GridStepsProps) {
           {i < steps.length - 1 && (
             <div
               className={`hidden md:block w-8 h-px ${
-                step.key < currentStep ? "bg-[#1A1A1A]" : "bg-[#EBE5DE]"
+                step.key < currentStep ? "bg-primary" : "bg-secondary"
               }`}
             />
           )}

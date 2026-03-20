@@ -848,7 +848,7 @@ export function SplitEditor({
       <div
         ref={containerRef}
         className={`relative w-full bg-muted/30 rounded-lg overflow-hidden flex-1 ${
-          isFileDragOver ? "ring-2 ring-[#D4AF37] bg-[#D4AF37]/5" : ""
+          isFileDragOver ? "ring-2 ring-accent bg-accent/5" : ""
         }`}
         style={{ minHeight: 400 }}
         tabIndex={0}

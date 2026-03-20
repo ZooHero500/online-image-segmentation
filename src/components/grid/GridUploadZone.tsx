@@ -41,8 +41,8 @@ export function GridUploadZone({ onImageLoaded }: GridUploadZoneProps) {
     <div
       className={`flex flex-col items-center justify-center border-t border-b p-16 md:p-24 transition-all duration-700 cursor-pointer ${
         isDragOver
-          ? "border-[#D4AF37] bg-[#D4AF37]/5"
-          : "border-[#1A1A1A]/20 hover:border-[#1A1A1A]/40"
+          ? "border-accent bg-accent/5"
+          : "border-primary/20 hover:border-primary/40"
       }`}
       onDrop={(e) => {
         e.preventDefault()
@@ -64,20 +64,20 @@ export function GridUploadZone({ onImageLoaded }: GridUploadZoneProps) {
         }}
       />
       <div className="text-center">
-        <p className="text-xs uppercase tracking-[0.3em] text-[#6C6863] mb-6">
+        <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6">
           {t("title")}
         </p>
-        <p className="font-serif text-2xl md:text-3xl text-[#1A1A1A] mb-4">
+        <p className="font-serif text-2xl md:text-3xl text-foreground mb-4">
           {t("dragHint")}
         </p>
-        <p className="text-sm text-[#1A1A1A] hover:text-[#D4AF37] transition-colors duration-500">
+        <p className="text-sm text-foreground hover:text-accent transition-colors duration-500">
           {t("clickHint")}
         </p>
-        <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-[#6C6863]/70">
+        <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">
           {t("formatHint")}
         </p>
       </div>
-      {error && <p className="mt-6 text-sm text-red-600">{error}</p>}
+      {error && <p className="mt-6 text-sm text-destructive">{error}</p>}
     </div>
   )
 }

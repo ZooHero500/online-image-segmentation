@@ -50,7 +50,7 @@ export function GridTypeSelector({
   return (
     <div className={isHorizontal ? "flex items-center gap-2 overflow-x-auto" : ""}>
       {!isHorizontal && (
-        <div className="text-[10px] uppercase tracking-[0.2em] text-[#6C6863] mb-3">
+        <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">
           {t("gridType.label")}
         </div>
       )}
@@ -61,8 +61,8 @@ export function GridTypeSelector({
             onClick={() => onChange(opt.type)}
             className={`flex items-center gap-2.5 px-3 py-2.5 transition-colors duration-300 flex-shrink-0 ${
               value === opt.type
-                ? "bg-[#1A1A1A] text-[#F9F8F6]"
-                : "border border-[#EBE5DE] text-[#6C6863] hover:border-[#1A1A1A]/30"
+                ? "bg-primary text-primary-foreground"
+                : "border border-secondary text-muted-foreground hover:border-primary/30"
             }`}
           >
             <GridIcon rows={opt.rows} cols={opt.cols} />
@@ -75,17 +75,17 @@ export function GridTypeSelector({
 
       {!isHorizontal && (
         <>
-          <div className="text-[10px] uppercase tracking-[0.2em] text-[#6C6863] mb-3">
+          <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">
             {t("gap.label")}
           </div>
           <label className="flex items-center justify-between cursor-pointer">
-            <span className="text-xs text-[#1A1A1A]">{t("gap.label")}</span>
+            <span className="text-xs text-foreground">{t("gap.label")}</span>
             <button
               role="switch"
               aria-checked={withGap}
               onClick={() => onGapChange(!withGap)}
               className={`relative w-9 h-5 transition-colors duration-300 ${
-                withGap ? "bg-[#D4AF37]" : "bg-[#EBE5DE]"
+                withGap ? "bg-accent" : "bg-secondary"
               }`}
             >
               <div
@@ -103,8 +103,8 @@ export function GridTypeSelector({
           onClick={() => onGapChange(!withGap)}
           className={`flex items-center gap-2 px-3 py-2.5 flex-shrink-0 transition-colors duration-300 ${
             withGap
-              ? "bg-[#D4AF37] text-[#F9F8F6]"
-              : "border border-[#EBE5DE] text-[#6C6863] hover:border-[#1A1A1A]/30"
+              ? "bg-accent text-primary-foreground"
+              : "border border-secondary text-muted-foreground hover:border-primary/30"
           }`}
         >
           <span className="text-xs tracking-[0.1em]">{t("gap.label")}</span>

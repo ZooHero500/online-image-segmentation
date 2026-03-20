@@ -83,7 +83,7 @@ export function GridPreview({
 
   return (
     <div>
-      <div className="text-[10px] uppercase tracking-[0.2em] text-[#6C6863] mb-3">
+      <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">
         {t("count", { count: rows * cols })}
       </div>
 
@@ -133,7 +133,7 @@ export function GridPreview({
       <button
         onClick={handleGenerate}
         disabled={isGenerating}
-        className="w-full py-3 bg-[#1A1A1A] text-[#F9F8F6] text-xs uppercase tracking-[0.15em] hover:bg-[#D4AF37] transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full py-3 bg-primary text-primary-foreground text-xs uppercase tracking-[0.15em] hover:bg-accent transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isGenerating ? t("generating") : t("generate")}
       </button>

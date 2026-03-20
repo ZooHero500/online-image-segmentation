@@ -91,7 +91,7 @@ export function GridEditor({
   )
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center bg-[#EBE5DE]/50 p-4 md:p-6 min-h-[280px]">
+    <div className="flex-1 flex flex-col items-center justify-center bg-secondary/50 p-4 md:p-6 min-h-[280px]">
       {/* Konva Stage = crop frame */}
       <div className="shadow-[0_2px_12px_rgba(0,0,0,0.15)]">
         <Stage width={frameWidth} height={frameHeight} onWheel={handleWheel}>
@@ -123,7 +123,7 @@ export function GridEditor({
         </Stage>
       </div>
 
-      <p className="mt-3 text-[10px] uppercase tracking-[0.15em] text-[#6C6863]">
+      <p className="mt-3 text-[10px] uppercase tracking-[0.15em] text-muted-foreground">
         {t("dragHint")}
       </p>
     </div>

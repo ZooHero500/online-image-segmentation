@@ -88,8 +88,8 @@ export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
     <div
       className={`group flex flex-col items-center justify-center border-t border-b p-16 md:p-24 transition-all duration-700 ease-luxury cursor-pointer ${
         isDragOver
-          ? "border-[#D4AF37] bg-[#D4AF37]/5"
-          : "border-[#1A1A1A]/20 hover:border-[#1A1A1A]/40"
+          ? "border-accent bg-accent/5"
+          : "border-primary/20 hover:border-primary/40"
       }`}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
@@ -106,21 +106,21 @@ export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
       />
 
       <div className="text-center">
-        <p className="text-xs uppercase tracking-[0.3em] text-[#6C6863] mb-6">
+        <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6">
           {t("title")}
         </p>
-        <p className="font-serif text-2xl md:text-3xl text-[#1A1A1A] mb-4">
+        <p className="font-serif text-2xl md:text-3xl text-foreground mb-4">
           {t("dragHint")}
         </p>
         <div className="flex items-center gap-4 justify-center mb-6">
-          <span className="h-px w-8 bg-[#1A1A1A]/20" />
-          <span className="text-xs uppercase tracking-[0.25em] text-[#6C6863]">{t("or")}</span>
-          <span className="h-px w-8 bg-[#1A1A1A]/20" />
+          <span className="h-px w-8 bg-primary/20" />
+          <span className="text-xs uppercase tracking-[0.25em] text-muted-foreground">{t("or")}</span>
+          <span className="h-px w-8 bg-primary/20" />
         </div>
-        <p className="text-sm text-[#1A1A1A] group-hover:text-[#D4AF37] transition-colors duration-500">
+        <p className="text-sm text-foreground group-hover:text-accent transition-colors duration-500">
           {t("clickHint")}
         </p>
-        <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-[#6C6863]/70">
+        <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">
           {t("formatHint")}
         </p>
       </div>
