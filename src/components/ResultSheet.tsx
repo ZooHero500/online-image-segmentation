@@ -67,13 +67,13 @@ function Lightbox({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#1A1A1A]/90 backdrop-blur-sm cursor-pointer"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-primary/90 backdrop-blur-sm cursor-pointer"
       onClick={onClose}
     >
       {/* Close button */}
       <button
         onClick={onClose}
-        className="absolute top-6 right-6 text-[#F9F8F6]/60 hover:text-[#F9F8F6] transition-colors duration-500 z-10"
+        className="absolute top-6 right-6 text-primary-foreground/60 hover:text-primary-foreground transition-colors duration-500 z-10"
       >
         <X className="h-5 w-5" strokeWidth={1.5} />
       </button>
@@ -88,7 +88,7 @@ function Lightbox({
 
       {/* File name label */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
-        <span className="text-[10px] uppercase tracking-[0.3em] text-[#F9F8F6]/50">
+        <span className="text-[10px] uppercase tracking-[0.3em] text-primary-foreground/50">
           {alt}
         </span>
       </div>
@@ -128,14 +128,14 @@ function ResultItem({
     <div
       className={`group border-t transition-colors duration-300 ${
         selected
-          ? "border-[#D4AF37] ring-1 ring-[#D4AF37]/40"
-          : "border-[#1A1A1A]/10 dark:border-[#F9F8F6]/10"
+          ? "border-accent ring-1 ring-accent/40"
+          : "border-border dark:border-primary-foreground/10"
       }`}
     >
       {/* Image preview */}
       {previewUrl && (
         <div
-          className="relative aspect-[4/3] overflow-hidden cursor-pointer bg-[#EBE5DE]/30"
+          className="relative aspect-[4/3] overflow-hidden cursor-pointer bg-secondary/30"
           onClick={() => onPreview(previewUrl, fileName)}
         >
           <img
@@ -151,16 +151,16 @@ function ResultItem({
             }}
             className={`absolute top-2 left-2 w-5 h-5 flex items-center justify-center border transition-all duration-300 ${
               selected
-                ? "bg-[#D4AF37] border-[#D4AF37] text-white"
-                : "bg-white/80 border-[#1A1A1A]/25 text-transparent hover:border-[#D4AF37]/60"
+                ? "bg-accent border-accent text-accent-foreground"
+                : "bg-background/80 border-primary/25 text-transparent hover:border-accent/60"
             }`}
           >
             <Check className="h-3 w-3" strokeWidth={2} />
           </button>
           {/* Hover overlay */}
-          <div className="absolute inset-0 bg-[#1A1A1A]/0 group-hover:bg-[#1A1A1A]/10 transition-colors duration-700 flex items-center justify-center pointer-events-none">
+          <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-700 flex items-center justify-center pointer-events-none">
             <ZoomIn
-              className="h-5 w-5 text-[#F9F8F6] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              className="h-5 w-5 text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               strokeWidth={1.5}
             />
           </div>
@@ -170,16 +170,16 @@ function ResultItem({
       {/* Info + actions */}
       <div className="p-4 flex items-center justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-[#1A1A1A] truncate font-medium">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-foreground truncate font-medium">
             {fileName}
           </p>
-          <p className="text-[10px] uppercase tracking-[0.25em] text-[#6C6863] mt-1">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mt-1">
             {result.width} &times; {result.height}px
           </p>
         </div>
         <button
           onClick={() => onDownload(result, fileName)}
-          className="shrink-0 w-8 h-8 flex items-center justify-center border border-[#1A1A1A]/15 text-[#6C6863] hover:text-[#D4AF37] hover:border-[#D4AF37] transition-colors duration-500"
+          className="shrink-0 w-8 h-8 flex items-center justify-center border border-primary/15 text-muted-foreground hover:text-accent hover:border-accent transition-colors duration-500"
         >
           <Download className="h-3 w-3" strokeWidth={1.5} />
         </button>
@@ -236,32 +236,32 @@ export function ResultSheet({
       {/* Backdrop */}
       {open && (
         <div
-          className="fixed inset-0 z-40 bg-[#1A1A1A]/20 backdrop-blur-[2px] transition-opacity duration-700"
+          className="fixed inset-0 z-40 bg-primary/20 backdrop-blur-[2px] transition-opacity duration-700"
           onClick={onClose}
         />
       )}
 
       {/* Sheet panel */}
       <div
-        className={`fixed top-0 right-0 z-50 h-full w-full sm:w-[420px] bg-[#F9F8F6] shadow-[-8px_0_32px_rgba(0,0,0,0.08)] transform transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] flex flex-col ${
+        className={`fixed top-0 right-0 z-50 h-full w-full sm:w-[420px] bg-background shadow-[-8px_0_32px_rgba(0,0,0,0.08)] transform transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] flex flex-col ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-[#1A1A1A]/10 shrink-0">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-border shrink-0">
           <div>
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#6C6863] block mb-1">
+            <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground block mb-1">
               {t("title")}
             </span>
-            <span className="text-xs text-[#1A1A1A] font-medium">
+            <span className="text-xs text-foreground font-medium">
               {t("imageCount", { count: totalCount })}
               {isMultiImage && (
-                <span className="text-[#6C6863] ml-1">
+                <span className="text-muted-foreground ml-1">
                   {t("sourceCount", { count: batchResults.length })}
                 </span>
               )}
               {selectedCount > 0 && (
-                <span className="text-[#D4AF37] ml-2">
+                <span className="text-accent ml-2">
                   {t("selectedCount", { selected: selectedCount, total: totalCount })}
                 </span>
               )}
@@ -269,19 +269,19 @@ export function ResultSheet({
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center border border-[#1A1A1A]/15 text-[#6C6863] hover:text-[#1A1A1A] hover:border-[#1A1A1A] transition-colors duration-500"
+            className="w-8 h-8 flex items-center justify-center border border-primary/15 text-muted-foreground hover:text-foreground hover:border-primary transition-colors duration-500"
           >
             <X className="h-3.5 w-3.5" strokeWidth={1.5} />
           </button>
         </div>
 
         {/* Download all button */}
-        <div className="px-6 py-4 border-b border-[#1A1A1A]/10 shrink-0 space-y-3">
+        <div className="px-6 py-4 border-b border-border shrink-0 space-y-3">
           <button
             onClick={onDownloadAll}
-            className="group relative w-full inline-flex items-center justify-center gap-2 bg-[#1A1A1A] text-[#F9F8F6] px-6 py-3 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500"
+            className="group relative w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 py-3 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500"
           >
-            <span className="absolute inset-0 bg-[#D4AF37] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
+            <span className="absolute inset-0 bg-accent -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
             <Download className="relative z-10 h-3.5 w-3.5" strokeWidth={1.5} />
             <span className="relative z-10">{t("downloadAll")}</span>
           </button>
@@ -293,13 +293,13 @@ export function ResultSheet({
               onClick={onSelectAll}
               className={`shrink-0 w-5 h-5 flex items-center justify-center border transition-all duration-300 ${
                 isAllSelected
-                  ? "bg-[#D4AF37] border-[#D4AF37] text-white"
-                  : "bg-white border-[#1A1A1A]/25 text-transparent hover:border-[#D4AF37]/60"
+                  ? "bg-accent border-accent text-accent-foreground"
+                  : "bg-background border-primary/25 text-transparent hover:border-accent/60"
               }`}
             >
               <Check className="h-3 w-3" strokeWidth={2} />
             </button>
-            <span className="text-[10px] uppercase tracking-[0.15em] text-[#6C6863]">
+            <span className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground">
               {t("selectAll")}
             </span>
 
@@ -311,8 +311,8 @@ export function ResultSheet({
               disabled={selectedCount === 0}
               className={`inline-flex items-center gap-1.5 px-4 py-2 text-[10px] uppercase tracking-[0.15em] border transition-all duration-500 ${
                 selectedCount > 0
-                  ? "border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-white"
-                  : "border-[#1A1A1A]/10 text-[#1A1A1A]/25 cursor-not-allowed"
+                  ? "border-accent text-accent hover:bg-accent hover:text-accent-foreground"
+                  : "border-border text-foreground/25 cursor-not-allowed"
               }`}
             >
               <Download className="h-3 w-3" strokeWidth={1.5} />
@@ -332,11 +332,11 @@ export function ResultSheet({
                 const batchMaxCols = Math.max(...batch.results.map((r) => r.col), 1)
                 return (
                   <div key={`batch-${imageIndex}`}>
-                    <div className="mb-3 pb-2 border-b border-[#1A1A1A]/10">
-                      <span className="text-[10px] uppercase tracking-[0.2em] text-[#6C6863]">
+                    <div className="mb-3 pb-2 border-b border-border">
+                      <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
                         {batch.fileName}
                       </span>
-                      <span className="text-[10px] text-[#6C6863]/60 ml-2">
+                      <span className="text-[10px] text-muted-foreground/60 ml-2">
                         {t("imageCount", { count: batch.results.length })}
                       </span>
                     </div>

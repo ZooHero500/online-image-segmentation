@@ -4,6 +4,7 @@ import { useCallback } from "react"
 import { useTranslations, useLocale } from "next-intl"
 import { Scissors, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { LogoIcon } from "@/components/LogoIcon"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { Link } from "@/i18n/navigation"
 import { useHistory } from "@/hooks/use-history"
@@ -70,9 +71,9 @@ export function HistorySidebar({
         className="flex items-center gap-2 px-3 py-3 border-b hover:bg-muted/50 transition-colors"
         title={t("backToHome")}
       >
-        <Scissors className="h-4 w-4 text-foreground" strokeWidth={1.5} />
+        <LogoIcon className="h-4 w-4 text-foreground" />
         <span className="text-xs uppercase tracking-[0.2em] font-medium text-foreground">
-          ImageSplit
+          ImgSplit
         </span>
       </Link>
 

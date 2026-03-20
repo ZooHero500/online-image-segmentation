@@ -44,12 +44,12 @@ export function LocaleSwitcher({
   if (variant === "compact") {
     return (
       <div className={`relative inline-flex items-center ${className ?? ""}`}>
-        <Globe className="absolute left-2 size-3.5 text-[#6C6863] pointer-events-none" />
+        <Globe className="absolute left-2 size-3.5 text-muted-foreground pointer-events-none" />
         <select
           value={locale}
           onChange={(e) => handleChange(e.target.value)}
           disabled={isPending}
-          className="appearance-none bg-transparent border-0 text-xs uppercase tracking-[0.2em] text-[#6C6863] hover:text-[#D4AF37] transition-colors duration-500 cursor-pointer outline-none pl-7 pr-1 py-1"
+          className="appearance-none bg-transparent border-0 text-xs uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-500 cursor-pointer outline-none pl-7 pr-1 py-1"
         >
           {routing.locales.map((loc) => (
             <option key={loc} value={loc}>
