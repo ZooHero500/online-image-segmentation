@@ -67,7 +67,7 @@ export default async function GridPage({
               </span>
             </Link>
           </div>
-          <div className="flex items-center gap-4 md:gap-8 text-xs">
+          <div className="flex items-center gap-2 md:gap-8 text-xs">
             <a
               href="#grid-types"
               className="hidden md:inline uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-500 link-underline"
@@ -111,7 +111,7 @@ export default async function GridPage({
       </nav>
 
       {/* HERO */}
-      <section className="relative py-24 md:py-32 px-8 md:px-16 max-w-[1600px] mx-auto">
+      <section className="relative py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16 max-w-[1600px] mx-auto">
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-8 md:col-start-1">
             <div className="drift-slow">
@@ -124,7 +124,7 @@ export default async function GridPage({
             </div>
 
             <div className="drift-medium">
-              <h1 className="font-serif text-5xl md:text-7xl lg:text-9xl leading-[0.9] tracking-tight mb-8 hero-enter hero-delay-2">
+              <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-9xl leading-[0.9] tracking-tight mb-6 sm:mb-8 hero-enter hero-delay-2">
                 {tLanding("hero.headlinePart1")}
                 <em className="text-accent not-italic font-serif italic">
                   {tLanding("hero.headlineAccent")}
@@ -135,7 +135,7 @@ export default async function GridPage({
             </div>
 
             <div className="drift-fast">
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-md mb-10 hero-enter hero-delay-3">
+              <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-md mb-8 sm:mb-10 hero-enter hero-delay-3">
                 {tLanding("hero.description")}
               </p>
             </div>
@@ -144,7 +144,7 @@ export default async function GridPage({
               <div className="flex flex-col sm:flex-row gap-4 hero-enter hero-delay-4">
                 <a
                   href="#upload"
-                  className="group relative inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-10 py-4 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 press"
+                  className="group relative inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 sm:px-10 py-3 sm:py-4 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 press"
                 >
                   <span className="absolute inset-0 bg-accent -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
                   <span className="relative z-10">{tLanding("hero.ctaPrimary")}</span>
@@ -152,7 +152,7 @@ export default async function GridPage({
                 </a>
                 <a
                   href="#grid-types"
-                  className="inline-flex items-center justify-center gap-2 border border-primary text-foreground px-10 py-4 text-xs uppercase tracking-[0.2em] hover:bg-primary hover:text-primary-foreground transition-all duration-500 press"
+                  className="inline-flex items-center justify-center gap-2 border border-primary text-foreground px-6 sm:px-10 py-3 sm:py-4 text-xs uppercase tracking-[0.2em] hover:bg-primary hover:text-primary-foreground transition-all duration-500 press"
                 >
                   {tLanding("hero.ctaSecondary")}
                 </a>
@@ -170,14 +170,14 @@ export default async function GridPage({
       </section>
 
       {/* GRID TYPES */}
-      <section id="grid-types" className="border-t border-border py-24 md:py-32 px-8 md:px-16">
+      <section id="grid-types" className="border-t border-border py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
           <div className="grid grid-cols-12 gap-4 mb-16 reveal">
             <div className="col-span-12 md:col-span-8 md:col-start-2">
               <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
                 {tLanding("types.overline")}
               </span>
-              <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
                 {tLanding("types.headlinePart1")}
                 <em className="text-accent italic">{tLanding("types.headlineAccent")}</em>
               </h2>
@@ -223,7 +223,7 @@ export default async function GridPage({
       </section>
 
       {/* UPLOAD */}
-      <section id="upload" className="px-8 md:px-16 pb-24 md:pb-32 max-w-[1600px] mx-auto">
+      <section id="upload" className="px-4 sm:px-8 md:px-16 pb-12 sm:pb-24 md:pb-32 max-w-[1600px] mx-auto">
         <div className="mb-8">
           <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
             {tLanding("howItWorks.step1Title")}
@@ -233,13 +233,13 @@ export default async function GridPage({
       </section>
 
       {/* HOW IT WORKS */}
-      <section id="how-it-works" className="border-t border-border py-24 md:py-32 px-8 md:px-16">
+      <section id="how-it-works" className="border-t border-border py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
           <div className="mb-16 reveal">
             <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
               {tLanding("howItWorks.overline")}
             </span>
-            <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
               {tLanding("howItWorks.headlinePart1")}
               <em className="text-accent italic">
                 {tLanding("howItWorks.headlineAccent")}
@@ -286,10 +286,10 @@ export default async function GridPage({
       </section>
 
       {/* CTA */}
-      <section className="bg-primary py-24 md:py-32 px-8 md:px-16">
+      <section className="bg-primary py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-7 md:col-start-2 reveal">
-            <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9] text-primary-foreground mb-6">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9] text-primary-foreground mb-6">
               {tLanding("cta.headlinePart1")}
               <em className="text-accent italic">
                 {tLanding("cta.headlineAccent")}
@@ -300,7 +300,7 @@ export default async function GridPage({
             </p>
             <a
               href="#upload"
-              className="group relative inline-flex items-center gap-2 bg-background text-foreground px-10 py-4 text-xs uppercase tracking-[0.2em] overflow-hidden hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 press"
+              className="group relative inline-flex items-center gap-2 bg-background text-foreground px-6 sm:px-10 py-3 sm:py-4 text-xs uppercase tracking-[0.2em] overflow-hidden hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 press"
             >
               <span className="absolute inset-0 bg-accent -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
               <span className="relative z-10 group-hover:text-primary-foreground">{tLanding("cta.button")}</span>
@@ -311,14 +311,14 @@ export default async function GridPage({
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="border-t border-border py-24 md:py-32 px-8 md:px-16">
+      <section id="faq" className="border-t border-border py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
           <div className="grid grid-cols-12 gap-8 md:gap-16">
             <div className="col-span-12 md:col-span-4 reveal">
               <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
                 {tLanding("faq.overline")}
               </span>
-              <h2 className="font-serif text-4xl md:text-5xl leading-[0.9] mb-4">
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[0.9] mb-4">
                 {tLanding("faq.headlinePart1")}
                 <em className="text-accent italic">
                   {tLanding("faq.headlineAccent")}
@@ -341,7 +341,7 @@ export default async function GridPage({
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-border py-12 md:py-16 px-8 md:px-16">
+      <footer className="border-t border-border py-12 md:py-16 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-3">

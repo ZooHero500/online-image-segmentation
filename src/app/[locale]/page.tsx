@@ -94,7 +94,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               ImgSplit
             </span>
           </div>
-          <div className="flex items-center gap-4 md:gap-8 text-xs">
+          <div className="flex items-center gap-2 md:gap-8 text-xs">
             <a
               href="#features"
               className="hidden md:inline uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-500 link-underline"
@@ -134,7 +134,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </nav>
 
       {/* HERO */}
-      <section className="relative py-24 md:py-32 px-8 md:px-16 max-w-[1600px] mx-auto">
+      <section className="relative py-12 sm:py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16 max-w-[1600px] mx-auto">
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-8 md:col-start-1">
             {/* Overline */}
@@ -149,7 +149,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
             {/* Hero headline with mixed italic */}
             <div className="drift-medium">
-              <h1 className="font-serif text-5xl md:text-7xl lg:text-9xl leading-[0.9] tracking-tight mb-8 hero-enter hero-delay-2">
+              <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-9xl leading-[0.9] tracking-tight mb-6 sm:mb-8 hero-enter hero-delay-2">
                 {t("hero.headlinePart1")}
                 <em className="text-accent not-italic font-serif italic">{t("hero.headlineAccent")}</em>
                 <br />
@@ -158,7 +158,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </div>
 
             <div className="drift-fast">
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-md mb-10 hero-enter hero-delay-3">
+              <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-md mb-8 sm:mb-10 hero-enter hero-delay-3">
                 {t("hero.description")}
               </p>
             </div>
@@ -167,11 +167,11 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <div className="flex flex-col sm:flex-row gap-4 hero-enter hero-delay-4">
                 <SmartCTA
                   label={t("hero.ctaPrimary")}
-                  className="group relative inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-10 py-4 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 cursor-pointer press"
+                  className="group relative inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 sm:px-10 py-3 sm:py-4 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 cursor-pointer press"
                 />
                 <a
                   href="#how-it-works"
-                  className="inline-flex items-center justify-center gap-2 border border-primary text-foreground px-10 py-4 text-xs uppercase tracking-[0.2em] hover:bg-primary hover:text-primary-foreground transition-all duration-500 press"
+                  className="inline-flex items-center justify-center gap-2 border border-primary text-foreground px-6 sm:px-10 py-3 sm:py-4 text-xs uppercase tracking-[0.2em] hover:bg-primary hover:text-primary-foreground transition-all duration-500 press"
                 >
                   {t("hero.ctaSecondary")}
                 </a>
@@ -189,7 +189,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* TRUST INDICATORS */}
-      <section className="border-t border-border py-16 md:py-20 px-8 md:px-16">
+      <section className="border-t border-border py-16 md:py-20 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 reveal-stagger">
           <TrustItem
             icon={<Shield className="h-4 w-4" strokeWidth={1.5} />}
@@ -215,7 +215,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* UPLOAD */}
-      <section id="upload" className="px-8 md:px-16 pb-24 md:pb-32 max-w-[1600px] mx-auto">
+      <section id="upload" className="px-4 sm:px-8 md:px-16 pb-12 sm:pb-24 md:pb-32 max-w-[1600px] mx-auto">
         <div className="mb-8">
           <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
             {t("uploadSection.overline")}
@@ -225,14 +225,14 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* BENEFITS - Dark Section */}
-      <section className="bg-primary py-24 md:py-32 px-8 md:px-16">
+      <section className="bg-primary py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
           <div className="grid grid-cols-12 gap-4 mb-16 reveal">
             <div className="col-span-12 md:col-span-6">
               <span className="text-[10px] uppercase tracking-[0.3em] text-primary-foreground/40 mb-4 block">
                 {t("benefits.overline")}
               </span>
-              <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9] text-primary-foreground">
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9] text-primary-foreground">
                 {t("benefits.headlinePart1")}
                 <em className="text-accent italic">{t("benefits.headlineAccent")}</em>
               </h2>
@@ -270,14 +270,14 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* FEATURES */}
-      <section id="features" className="py-24 md:py-32 px-8 md:px-16">
+      <section id="features" className="py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
           <div className="grid grid-cols-12 gap-4 mb-16 reveal">
             <div className="col-span-12 md:col-span-8 md:col-start-2">
               <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
                 {t("features.overline")}
               </span>
-              <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
                 {t("features.headlinePart1")}
                 <em className="text-accent italic">{t("features.headlineAccent")}</em>
               </h2>
@@ -321,13 +321,13 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* HOW IT WORKS */}
-      <section id="how-it-works" className="border-t border-border py-24 md:py-32 px-8 md:px-16">
+      <section id="how-it-works" className="border-t border-border py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
           <div className="mb-16 reveal">
             <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
               {t("steps.overline")}
             </span>
-            <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
               {t("steps.headlinePart1")}
               <em className="text-accent italic">{t("steps.headlineAccent")}</em>
             </h2>
@@ -359,14 +359,14 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* USE CASES */}
-      <section className="bg-primary py-24 md:py-32 px-8 md:px-16">
+      <section className="bg-primary py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
           <div className="grid grid-cols-12 gap-4 mb-16 reveal">
             <div className="col-span-12 md:col-span-6">
               <span className="text-[10px] uppercase tracking-[0.3em] text-primary-foreground/40 mb-4 block">
                 {t("useCases.overline")}
               </span>
-              <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9] text-primary-foreground">
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9] text-primary-foreground">
                 {t("useCases.headlinePart1")}
                 <em className="text-accent italic">{t("useCases.headlineAccent")}</em>
               </h2>
@@ -395,10 +395,10 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* CTA */}
-      <section className="py-24 md:py-32 px-8 md:px-16 border-t border-border">
+      <section className="py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16 border-t border-border">
         <div className="max-w-[1600px] mx-auto grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-7 md:col-start-2 reveal">
-            <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9] mb-6">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9] mb-6">
               {t("cta.headlinePart1")}
               <em className="text-accent italic">{t("cta.headlineAccent")}</em>
             </h2>
@@ -407,21 +407,21 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </p>
             <SmartCTA
               label={t("cta.button")}
-              className="group relative inline-flex items-center gap-2 bg-primary text-primary-foreground px-10 py-4 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 cursor-pointer press"
+              className="group relative inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 sm:px-10 py-3 sm:py-4 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 cursor-pointer press"
             />
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="border-t border-border py-24 md:py-32 px-8 md:px-16">
+      <section id="faq" className="border-t border-border py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
           <div className="grid grid-cols-12 gap-8 md:gap-16">
             <div className="col-span-12 md:col-span-4 reveal">
               <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
                 {t("faq.overline")}
               </span>
-              <h2 className="font-serif text-4xl md:text-5xl leading-[0.9] mb-4">
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[0.9] mb-4">
                 {t("faq.headlinePart1")}
                 <em className="text-accent italic">{t("faq.headlineAccent")}</em>
               </h2>
@@ -462,7 +462,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-border py-12 md:py-16 px-8 md:px-16">
+      <footer className="border-t border-border py-12 md:py-16 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <LogoIcon className="h-3.5 w-3.5 text-foreground" />
