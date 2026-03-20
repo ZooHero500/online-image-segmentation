@@ -1,8 +1,10 @@
 "use client"
 
 import { useCallback, useState } from "react"
+import { Menu } from "lucide-react"
 import { DynamicSplitEditor } from "@/components/DynamicSplitEditor"
 import { HistorySidebar } from "@/components/HistorySidebar"
+import { LogoIcon } from "@/components/LogoIcon"
 import { useHistory } from "@/hooks/use-history"
 import type { SplitLine } from "@/types"
 
@@ -17,6 +19,7 @@ interface EditorState {
 export default function WorkspacePage() {
   const [editorKey, setEditorKey] = useState(0)
   const [initialState, setInitialState] = useState<EditorState | undefined>()
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const { saveCurrentWork } = useHistory()
 
   const handleLoadRecord = useCallback((record: EditorState) => {
@@ -48,9 +51,21 @@ export default function WorkspacePage() {
       <HistorySidebar
         onLoadRecord={handleLoadRecord}
         onNewCanvas={handleNewCanvas}
+        open={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
       />
       <main className="flex-1 flex flex-col overflow-hidden">
-        <div className="flex-1 flex flex-col overflow-hidden p-4">
+        <div className="flex items-center gap-2 p-2 border-b md:hidden">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="w-8 h-8 flex items-center justify-center border border-border text-muted-foreground"
+          >
+            <Menu className="h-4 w-4" />
+          </button>
+          <LogoIcon className="h-3.5 w-3.5 text-foreground" />
+          <span className="text-xs uppercase tracking-[0.2em] font-medium">ImgSplit</span>
+        </div>
+        <div className="flex-1 flex flex-col overflow-hidden p-2 md:p-4">
           <DynamicSplitEditor
             key={editorKey}
             initialState={initialState}
