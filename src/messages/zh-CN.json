@@ -126,12 +126,6 @@
     "description": "您访问的页面不存在或已被移动。",
     "backHome": "返回首页"
   },
-  "footer": {
-    "tagline": "在线图片分割工具 — 免费 · 安全 · 高效",
-    "navFeatures": "功能",
-    "navHowItWorks": "说明",
-    "navFaq": "问题"
-  },
   "upload": {
     "title": "上传图片",
     "dragHint": "拖拽一张或多张图片到此处",
@@ -227,6 +221,69 @@
     "nav": {
       "grid": "Grid",
       "split": "Split"
+    },
+    "landing": {
+      "hero": {
+        "overline": "九宫格切图工具",
+        "headlinePart1": "九宫格",
+        "headlineAccent": "切图",
+        "headlinePart2": "一键生成",
+        "description": "将图片切割为 3×3、1×3 或 2×2 网格，适用于微信朋友圈、Instagram、小红书等社交平台。免费、隐私安全、纯浏览器处理。",
+        "ctaPrimary": "上传并切图",
+        "ctaSecondary": "查看网格类型"
+      },
+      "types": {
+        "overline": "网格类型",
+        "headlinePart1": "选择",
+        "headlineAccent": "网格",
+        "3x3Title": "3×3 九宫格",
+        "3x3Desc": "经典九宫格布局，适用于 Instagram 和微信朋友圈 — 一张图片变身 9 张精美瓷砖。",
+        "1x3Title": "1×3 三联图",
+        "1x3Desc": "横向三联排列，适合全景照片和宽幅社交动态。",
+        "2x2Title": "2×2 四宫格",
+        "2x2Desc": "简洁四宫格布局 — 完美适用于产品展示和对比图。"
+      },
+      "howItWorks": {
+        "overline": "使用说明",
+        "headlinePart1": "三步",
+        "headlineAccent": "完成",
+        "step1Title": "上传图片",
+        "step1Desc": "拖拽或点击上传您的图片。",
+        "step2Title": "调整与预览",
+        "step2Desc": "选择网格类型，拖拽调整位置，实时预览切图效果。",
+        "step3Title": "下载结果",
+        "step3Desc": "一键打包下载所有网格子图，或单独保存每张。"
+      },
+      "faq": {
+        "overline": "常见问题",
+        "headlinePart1": "疑问",
+        "headlineAccent": "解答",
+        "subtitle": "关于九宫格切图工具的常见疑问",
+        "q1": "支持哪些网格类型？",
+        "a1": "支持三种网格类型：3×3（九宫格）、1×3（横向三联图）和 2×2（四宫格）。每种类型都针对常见社交媒体格式优化。",
+        "q2": "可以调整裁切位置吗？",
+        "a2": "可以。上传图片后，拖拽图片调整在网格框架中的位置，使用滚轮缩放图片大小。",
+        "q3": "可以添加白边间距吗？",
+        "a3": "可以 — 在编辑器中开启「白边间距」选项，即可为网格子图之间添加干净的间隔。",
+        "q4": "我的图片数据安全吗？",
+        "a4": "完全安全。所有图片处理都在您的浏览器本地完成，不会将任何图片数据上传到服务器。"
+      },
+      "cta": {
+        "headlinePart1": "准备好",
+        "headlineAccent": "切图了？",
+        "description": "无需注册，无需安装，上传图片即可在几秒内获得完美的网格子图。",
+        "button": "开始九宫格切图"
+      }
     }
+  },
+  "footer": {
+    "tagline": "在线图片分割工具 — 免费 · 安全 · 高效",
+    "navFeatures": "功能",
+    "navHowItWorks": "说明",
+    "navFaq": "问题",
+    "toolsTitle": "工具",
+    "toolGrid": "九宫格切图",
+    "toolSplit": "图片分割",
+    "navTitle": "导航"
   }
 }

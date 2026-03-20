@@ -13,14 +13,14 @@ export function FaqItem({
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="border-t border-[#1A1A1A]/10">
+    <div className="border-t border-border">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-start justify-between gap-4 py-6 text-left group"
       >
         <h3
           className={`text-sm font-medium transition-colors duration-500 ${
-            isOpen ? "text-[#D4AF37]" : "text-[#1A1A1A] group-hover:text-[#D4AF37]"
+            isOpen ? "text-accent" : "text-foreground group-hover:text-accent"
           }`}
         >
           {question}
@@ -28,18 +28,20 @@ export function FaqItem({
         <div
           className={`shrink-0 w-6 h-6 border flex items-center justify-center transition-all duration-500 ${
             isOpen
-              ? "border-[#D4AF37] rotate-45"
-              : "border-[#1A1A1A]/20 rotate-0 group-hover:border-[#D4AF37]"
+              ? "border-accent rotate-45"
+              : "border-primary/20 rotate-0 group-hover:border-accent"
           }`}
         >
-          <Plus className="h-3 w-3 text-[#1A1A1A]" strokeWidth={1.5} />
+          <Plus className="h-3 w-3 text-foreground" strokeWidth={1.5} />
         </div>
       </button>
-      {isOpen && (
-        <div className="pb-6 animate-fade-in-down">
-          <p className="text-sm text-[#6C6863] leading-relaxed">{answer}</p>
+      <div className="accordion-body" data-open={isOpen}>
+        <div>
+          <div className={`pb-6 transition-opacity duration-500 ${isOpen ? "opacity-100" : "opacity-0"}`}>
+            <p className="text-sm text-muted-foreground leading-relaxed">{answer}</p>
+          </div>
         </div>
-      )}
+      </div>
     </div>
   )
 }

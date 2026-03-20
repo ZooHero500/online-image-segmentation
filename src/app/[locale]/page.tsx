@@ -1,10 +1,12 @@
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
 import { LandingContent } from "./LandingContent"
+import { SmartCTA } from "./SmartCTA"
 import { FaqItem } from "./FaqSection"
 import { JsonLd } from "@/components/JsonLd"
 import { LogoIcon } from "@/components/LogoIcon"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
+import { GridLines } from "@/components/GridLines"
 import {
   Scissors,
   Shield,
@@ -25,7 +27,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const t = await getTranslations()
 
   return (
-    <main className="min-h-screen bg-[#F9F8F6] relative">
+    <main className="min-h-screen bg-background relative">
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -83,54 +85,38 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <GridLines />
 
       {/* NAV */}
-      <nav className="sticky top-0 z-40 bg-[#F9F8F6]/90 backdrop-blur-sm border-b border-[#1A1A1A]/10">
+      <nav className="sticky top-0 z-40 bg-background/90 backdrop-blur-sm border-b border-border">
         <div className="max-w-[1600px] mx-auto px-8 md:px-16 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <LogoIcon className="h-4 w-4 text-[#1A1A1A]" />
-            <span className="text-xs uppercase tracking-[0.3em] font-medium text-[#1A1A1A]">
+            <LogoIcon className="h-4 w-4 text-foreground" />
+            <span className="text-xs uppercase tracking-[0.3em] font-medium text-foreground">
               ImgSplit
             </span>
           </div>
           <div className="flex items-center gap-8 text-xs">
             <a
               href="#features"
-              className="hidden md:inline uppercase tracking-[0.2em] text-[#6C6863] hover:text-[#D4AF37] transition-colors duration-500"
+              className="hidden md:inline uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-500 link-underline"
             >
               {t("nav.features")}
             </a>
             <a
               href="#how-it-works"
-              className="hidden md:inline uppercase tracking-[0.2em] text-[#6C6863] hover:text-[#D4AF37] transition-colors duration-500"
+              className="hidden md:inline uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-500 link-underline"
             >
               {t("nav.howItWorks")}
             </a>
             <a
               href="#faq"
-              className="hidden md:inline uppercase tracking-[0.2em] text-[#6C6863] hover:text-[#D4AF37] transition-colors duration-500"
+              className="hidden md:inline uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-500 link-underline"
             >
               {t("nav.faq")}
             </a>
-            <Link
-              href="/grid"
-              className="hidden md:inline uppercase tracking-[0.2em] text-[#6C6863] hover:text-[#D4AF37] transition-colors duration-500"
-            >
-              Grid
-            </Link>
-            <Link
-              href="/workspace"
-              className="hidden md:inline uppercase tracking-[0.2em] text-[#6C6863] hover:text-[#D4AF37] transition-colors duration-500"
-            >
-              Split
-            </Link>
             <LocaleSwitcher variant="compact" />
-            <a
-              href="#upload"
-              className="group relative inline-flex items-center gap-2 bg-[#1A1A1A] text-[#F9F8F6] px-6 py-2.5 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500"
-            >
-              <span className="absolute inset-0 bg-[#D4AF37] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
-              <span className="relative z-10">{t("nav.getStarted")}</span>
-              <ArrowRight className="relative z-10 h-3 w-3" />
-            </a>
+            <SmartCTA
+              label={t("nav.getStarted")}
+              className="group relative inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-2.5 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 cursor-pointer press"
+            />
           </div>
         </div>
       </nav>
@@ -140,46 +126,50 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-8 md:col-start-1">
             {/* Overline */}
-            <div className="flex items-center gap-4 mb-8">
-              <span className="h-px w-8 md:w-12 bg-[#1A1A1A]" />
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#6C6863]">
-                {t("hero.overline")}
-              </span>
+            <div className="drift-slow">
+              <div className="flex items-center gap-4 mb-8 hero-enter hero-delay-1">
+                <span className="h-px w-8 md:w-12 bg-primary" />
+                <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+                  {t("hero.overline")}
+                </span>
+              </div>
             </div>
 
             {/* Hero headline with mixed italic */}
-            <h1 className="font-serif text-5xl md:text-7xl lg:text-9xl leading-[0.9] tracking-tight mb-8">
-              {t("hero.headlinePart1")}
-              <em className="text-[#D4AF37] not-italic font-serif italic">{t("hero.headlineAccent")}</em>
-              <br />
-              {t("hero.headlinePart2")}
-            </h1>
+            <div className="drift-medium">
+              <h1 className="font-serif text-5xl md:text-7xl lg:text-9xl leading-[0.9] tracking-tight mb-8 hero-enter hero-delay-2">
+                {t("hero.headlinePart1")}
+                <em className="text-accent not-italic font-serif italic">{t("hero.headlineAccent")}</em>
+                <br />
+                {t("hero.headlinePart2")}
+              </h1>
+            </div>
 
-            <p className="text-base md:text-lg text-[#6C6863] leading-relaxed max-w-md mb-10">
-              {t("hero.description")}
-            </p>
+            <div className="drift-fast">
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-md mb-10 hero-enter hero-delay-3">
+                {t("hero.description")}
+              </p>
+            </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a
-                href="#upload"
-                className="group relative inline-flex items-center justify-center gap-2 bg-[#1A1A1A] text-[#F9F8F6] px-10 py-4 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500"
-              >
-                <span className="absolute inset-0 bg-[#D4AF37] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
-                <span className="relative z-10">{t("hero.ctaPrimary")}</span>
-                <ArrowRight className="relative z-10 h-3.5 w-3.5" />
-              </a>
-              <a
-                href="#how-it-works"
-                className="inline-flex items-center justify-center gap-2 border border-[#1A1A1A] text-[#1A1A1A] px-10 py-4 text-xs uppercase tracking-[0.2em] hover:bg-[#1A1A1A] hover:text-[#F9F8F6] transition-all duration-500"
-              >
-                {t("hero.ctaSecondary")}
-              </a>
+            <div className="drift-fast">
+              <div className="flex flex-col sm:flex-row gap-4 hero-enter hero-delay-4">
+                <SmartCTA
+                  label={t("hero.ctaPrimary")}
+                  className="group relative inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-10 py-4 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 cursor-pointer press"
+                />
+                <a
+                  href="#how-it-works"
+                  className="inline-flex items-center justify-center gap-2 border border-primary text-foreground px-10 py-4 text-xs uppercase tracking-[0.2em] hover:bg-primary hover:text-primary-foreground transition-all duration-500 press"
+                >
+                  {t("hero.ctaSecondary")}
+                </a>
+              </div>
             </div>
           </div>
 
           {/* Vertical decorative text */}
-          <div className="hidden lg:flex col-span-2 col-start-11 items-end justify-end pb-4">
-            <span className="writing-vertical text-[10px] uppercase tracking-[0.3em] text-[#6C6863]/50">
+          <div className="hidden lg:flex col-span-2 col-start-11 items-end justify-end pb-4 hero-enter hero-delay-4">
+            <span className="writing-vertical text-[10px] uppercase tracking-[0.3em] text-muted-foreground/50">
               Editorial / Vol. 01
             </span>
           </div>
@@ -187,8 +177,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* TRUST INDICATORS */}
-      <section className="border-t border-[#1A1A1A]/10 py-16 md:py-20 px-8 md:px-16">
-        <div className="max-w-[1600px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+      <section className="border-t border-border py-16 md:py-20 px-8 md:px-16">
+        <div className="max-w-[1600px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 reveal-stagger">
           <TrustItem
             icon={<Shield className="h-4 w-4" strokeWidth={1.5} />}
             label={t("trust.privacyLabel")}
@@ -215,7 +205,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       {/* UPLOAD */}
       <section id="upload" className="px-8 md:px-16 pb-24 md:pb-32 max-w-[1600px] mx-auto">
         <div className="mb-8">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#6C6863]">
+          <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
             {t("uploadSection.overline")}
           </span>
         </div>
@@ -223,26 +213,26 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* BENEFITS - Dark Section */}
-      <section className="bg-[#1A1A1A] py-24 md:py-32 px-8 md:px-16">
+      <section className="bg-primary py-24 md:py-32 px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-12 gap-4 mb-16">
+          <div className="grid grid-cols-12 gap-4 mb-16 reveal">
             <div className="col-span-12 md:col-span-6">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#F9F8F6]/40 mb-4 block">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-primary-foreground/40 mb-4 block">
                 {t("benefits.overline")}
               </span>
-              <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9] text-[#F9F8F6]">
+              <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9] text-primary-foreground">
                 {t("benefits.headlinePart1")}
-                <em className="text-[#D4AF37] italic">{t("benefits.headlineAccent")}</em>
+                <em className="text-accent italic">{t("benefits.headlineAccent")}</em>
               </h2>
             </div>
             <div className="col-span-12 md:col-span-4 md:col-start-8 flex items-end">
-              <p className="text-sm text-[#F9F8F6]/60 leading-relaxed">
+              <p className="text-sm text-primary-foreground/60 leading-relaxed">
                 {t("benefits.subtitle")}
               </p>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-0">
+          <div className="grid md:grid-cols-2 gap-0 reveal-stagger">
             <BenefitCard
               icon={<MousePointerClick className="h-4 w-4" strokeWidth={1.5} />}
               title={t("benefits.noPsTitle")}
@@ -270,19 +260,19 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       {/* FEATURES */}
       <section id="features" className="py-24 md:py-32 px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-12 gap-4 mb-16">
+          <div className="grid grid-cols-12 gap-4 mb-16 reveal">
             <div className="col-span-12 md:col-span-8 md:col-start-2">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#6C6863] mb-4 block">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
                 {t("features.overline")}
               </span>
               <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
                 {t("features.headlinePart1")}
-                <em className="text-[#D4AF37] italic">{t("features.headlineAccent")}</em>
+                <em className="text-accent italic">{t("features.headlineAccent")}</em>
               </h2>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-0">
+          <div className="grid md:grid-cols-3 gap-0 reveal-stagger">
             <FeatureCard
               icon={<Scissors className="h-4 w-4" strokeWidth={1.5} />}
               title={t("features.preciseTitle")}
@@ -319,19 +309,19 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* HOW IT WORKS */}
-      <section id="how-it-works" className="border-t border-[#1A1A1A]/10 py-24 md:py-32 px-8 md:px-16">
+      <section id="how-it-works" className="border-t border-border py-24 md:py-32 px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
-          <div className="mb-16">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#6C6863] mb-4 block">
+          <div className="mb-16 reveal">
+            <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
               {t("steps.overline")}
             </span>
             <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
               {t("steps.headlinePart1")}
-              <em className="text-[#D4AF37] italic">{t("steps.headlineAccent")}</em>
+              <em className="text-accent italic">{t("steps.headlineAccent")}</em>
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-0">
+          <div className="grid md:grid-cols-4 gap-0 reveal-stagger">
             <StepCard
               step={1}
               title={t("steps.step1Title")}
@@ -357,21 +347,21 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* USE CASES */}
-      <section className="bg-[#1A1A1A] py-24 md:py-32 px-8 md:px-16">
+      <section className="bg-primary py-24 md:py-32 px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-12 gap-4 mb-16">
+          <div className="grid grid-cols-12 gap-4 mb-16 reveal">
             <div className="col-span-12 md:col-span-6">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#F9F8F6]/40 mb-4 block">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-primary-foreground/40 mb-4 block">
                 {t("useCases.overline")}
               </span>
-              <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9] text-[#F9F8F6]">
+              <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9] text-primary-foreground">
                 {t("useCases.headlinePart1")}
-                <em className="text-[#D4AF37] italic">{t("useCases.headlineAccent")}</em>
+                <em className="text-accent italic">{t("useCases.headlineAccent")}</em>
               </h2>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-0">
+          <div className="grid md:grid-cols-3 gap-0 reveal-stagger">
             <UseCaseCard
               title={t("useCases.ecommerceTitle")}
               description={t("useCases.ecommerceDesc")}
@@ -393,41 +383,37 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* CTA */}
-      <section className="py-24 md:py-32 px-8 md:px-16 border-t border-[#1A1A1A]/10">
+      <section className="py-24 md:py-32 px-8 md:px-16 border-t border-border">
         <div className="max-w-[1600px] mx-auto grid grid-cols-12 gap-4">
-          <div className="col-span-12 md:col-span-7 md:col-start-2">
+          <div className="col-span-12 md:col-span-7 md:col-start-2 reveal">
             <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[0.9] mb-6">
               {t("cta.headlinePart1")}
-              <em className="text-[#D4AF37] italic">{t("cta.headlineAccent")}</em>
+              <em className="text-accent italic">{t("cta.headlineAccent")}</em>
             </h2>
-            <p className="text-sm text-[#6C6863] leading-relaxed max-w-md mb-10">
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-md mb-10">
               {t("cta.description")}
             </p>
-            <a
-              href="#upload"
-              className="group relative inline-flex items-center gap-2 bg-[#1A1A1A] text-[#F9F8F6] px-10 py-4 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500"
-            >
-              <span className="absolute inset-0 bg-[#D4AF37] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
-              <span className="relative z-10">{t("cta.button")}</span>
-              <ArrowRight className="relative z-10 h-3.5 w-3.5" />
-            </a>
+            <SmartCTA
+              label={t("cta.button")}
+              className="group relative inline-flex items-center gap-2 bg-primary text-primary-foreground px-10 py-4 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 cursor-pointer press"
+            />
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="border-t border-[#1A1A1A]/10 py-24 md:py-32 px-8 md:px-16">
+      <section id="faq" className="border-t border-border py-24 md:py-32 px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
           <div className="grid grid-cols-12 gap-8 md:gap-16">
-            <div className="col-span-12 md:col-span-4">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#6C6863] mb-4 block">
+            <div className="col-span-12 md:col-span-4 reveal">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
                 {t("faq.overline")}
               </span>
               <h2 className="font-serif text-4xl md:text-5xl leading-[0.9] mb-4">
                 {t("faq.headlinePart1")}
-                <em className="text-[#D4AF37] italic">{t("faq.headlineAccent")}</em>
+                <em className="text-accent italic">{t("faq.headlineAccent")}</em>
               </h2>
-              <p className="text-sm text-[#6C6863] leading-relaxed">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 {t("faq.subtitle")}
               </p>
             </div>
@@ -464,54 +450,53 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-[#1A1A1A]/10 py-12 md:py-16 px-8 md:px-16">
+      <footer className="border-t border-border py-12 md:py-16 px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <LogoIcon className="h-3.5 w-3.5 text-[#1A1A1A]" />
+            <LogoIcon className="h-3.5 w-3.5 text-foreground" />
             <span className="text-xs uppercase tracking-[0.3em] font-medium">
               ImgSplit
             </span>
+            <span className="hidden md:inline text-[10px] uppercase tracking-[0.25em] text-muted-foreground ml-4">
+              {t("footer.tagline")}
+            </span>
           </div>
-          <p className="text-[10px] uppercase tracking-[0.25em] text-[#6C6863]">
-            {t("footer.tagline")}
-          </p>
-          <div className="flex gap-6 text-[10px] uppercase tracking-[0.2em] text-[#6C6863]">
-            <a
-              href="#features"
-              className="hover:text-[#D4AF37] transition-colors duration-500"
-            >
-              {t("footer.navFeatures")}
-            </a>
-            <a
-              href="#how-it-works"
-              className="hover:text-[#D4AF37] transition-colors duration-500"
-            >
-              {t("footer.navHowItWorks")}
-            </a>
-            <a
-              href="#faq"
-              className="hover:text-[#D4AF37] transition-colors duration-500"
-            >
-              {t("footer.navFaq")}
-            </a>
+          <div className="flex flex-col md:flex-row gap-6 md:gap-12">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-2">{t("footer.toolsTitle")}</p>
+              <div className="flex gap-6 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                <Link
+                  href="/grid"
+                  className="hover:text-accent transition-colors duration-500"
+                >
+                  {t("footer.toolGrid")}
+                </Link>
+                <a
+                  href="#upload"
+                  className="hover:text-accent transition-colors duration-500"
+                >
+                  {t("footer.toolSplit")}
+                </a>
+              </div>
+            </div>
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-2">{t("footer.navTitle")}</p>
+              <div className="flex gap-6 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                <a href="#features" className="hover:text-accent transition-colors duration-500">
+                  {t("footer.navFeatures")}
+                </a>
+                <a href="#how-it-works" className="hover:text-accent transition-colors duration-500">
+                  {t("footer.navHowItWorks")}
+                </a>
+                <a href="#faq" className="hover:text-accent transition-colors duration-500">
+                  {t("footer.navFaq")}
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
     </main>
-  )
-}
-
-/* ─── Grid Lines ─── */
-function GridLines() {
-  return (
-    <div className="hidden lg:block fixed inset-0 z-30 pointer-events-none">
-      <div className="max-w-[1600px] mx-auto h-full relative px-16">
-        <div className="absolute left-16 top-0 w-px h-full bg-[#1A1A1A]/[0.06]" />
-        <div className="absolute left-[33.33%] top-0 w-px h-full bg-[#1A1A1A]/[0.06]" />
-        <div className="absolute left-[66.66%] top-0 w-px h-full bg-[#1A1A1A]/[0.06]" />
-        <div className="absolute right-16 top-0 w-px h-full bg-[#1A1A1A]/[0.06]" />
-      </div>
-    </div>
   )
 }
 
@@ -526,12 +511,12 @@ function TrustItem({
   desc: string
 }) {
   return (
-    <div className="flex flex-col items-start gap-3 p-6 border-t border-[#1A1A1A]/10">
-      <div className="text-[#6C6863]">{icon}</div>
-      <span className="text-xs uppercase tracking-[0.2em] font-medium text-[#1A1A1A]">
+    <div className="flex flex-col items-start gap-3 p-6 border-t border-border">
+      <div className="text-muted-foreground">{icon}</div>
+      <span className="text-xs uppercase tracking-[0.2em] font-medium text-foreground">
         {label}
       </span>
-      <span className="text-[10px] uppercase tracking-[0.25em] text-[#6C6863]">
+      <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
         {desc}
       </span>
     </div>
@@ -549,14 +534,14 @@ function BenefitCard({
   description: string
 }) {
   return (
-    <div className="group border-t border-[#F9F8F6]/10 p-8 md:p-12 transition-colors duration-700 hover:bg-[#F9F8F6]/[0.03]">
-      <div className="text-[#F9F8F6]/40 mb-6 group-hover:text-[#D4AF37] transition-colors duration-500">
+    <div className="group border-t border-primary-foreground/10 p-8 md:p-12 transition-colors duration-700 hover:bg-background/[0.03]">
+      <div className="text-primary-foreground/40 mb-6 group-hover:text-accent transition-colors duration-500">
         {icon}
       </div>
-      <h3 className="text-sm uppercase tracking-[0.15em] text-[#F9F8F6] mb-3 font-medium">
+      <h3 className="text-sm uppercase tracking-[0.15em] text-primary-foreground mb-3 font-medium">
         {title}
       </h3>
-      <p className="text-sm text-[#F9F8F6]/50 leading-relaxed">{description}</p>
+      <p className="text-sm text-primary-foreground/50 leading-relaxed">{description}</p>
     </div>
   )
 }
@@ -574,14 +559,14 @@ function FeatureCard({
   href?: string
 }) {
   const content = (
-    <div className="group border-t border-[#1A1A1A]/10 p-8 md:p-12 transition-colors duration-700 hover:bg-[#F9F8F6]/50">
-      <div className="text-[#6C6863] mb-6 group-hover:text-[#D4AF37] transition-colors duration-500">
+    <div className="group border-t border-border p-8 md:p-12 transition-colors duration-700 hover:bg-background/50">
+      <div className="text-muted-foreground mb-6 group-hover:text-accent transition-colors duration-500">
         {icon}
       </div>
-      <h3 className="text-sm uppercase tracking-[0.15em] text-[#1A1A1A] mb-3 font-medium">
+      <h3 className="text-sm uppercase tracking-[0.15em] text-foreground mb-3 font-medium">
         {title}
       </h3>
-      <p className="text-sm text-[#6C6863] leading-relaxed">{description}</p>
+      <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
     </div>
   )
   if (href) {
@@ -601,14 +586,14 @@ function StepCard({
   description: string
 }) {
   return (
-    <div className="border-t border-[#1A1A1A]/10 p-8 md:p-12">
-      <span className="font-serif text-5xl md:text-6xl text-[#1A1A1A]/10 leading-none mb-6 block">
+    <div className="border-t border-border p-8 md:p-12">
+      <span className="font-serif text-5xl md:text-6xl text-foreground/10 leading-none mb-6 block">
         {String(step).padStart(2, "0")}
       </span>
-      <h3 className="text-sm uppercase tracking-[0.15em] text-[#1A1A1A] mb-3 font-medium">
+      <h3 className="text-sm uppercase tracking-[0.15em] text-foreground mb-3 font-medium">
         {title}
       </h3>
-      <p className="text-sm text-[#6C6863] leading-relaxed">{description}</p>
+      <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
     </div>
   )
 }
@@ -626,12 +611,12 @@ function UseCaseCard({
   href?: string
 }) {
   const content = (
-    <div className="group border-t border-[#F9F8F6]/10 p-8 md:p-12 transition-colors duration-700 hover:bg-[#F9F8F6]/[0.03]">
-      <h3 className="text-sm uppercase tracking-[0.15em] text-[#F9F8F6] mb-3 font-medium">
+    <div className="group border-t border-primary-foreground/10 p-8 md:p-12 transition-colors duration-700 hover:bg-background/[0.03]">
+      <h3 className="text-sm uppercase tracking-[0.15em] text-primary-foreground mb-3 font-medium">
         {title}
       </h3>
-      <p className="text-sm text-[#F9F8F6]/50 leading-relaxed mb-6">{description}</p>
-      <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.25em] text-[#D4AF37]">
+      <p className="text-sm text-primary-foreground/50 leading-relaxed mb-6">{description}</p>
+      <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.25em] text-accent">
         <CheckCircle2 className="h-3 w-3" strokeWidth={1.5} />
         {result}
       </div>

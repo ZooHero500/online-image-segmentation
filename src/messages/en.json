@@ -126,12 +126,6 @@
     "description": "The page you're looking for doesn't exist or has been moved.",
     "backHome": "Back to Home"
   },
-  "footer": {
-    "tagline": "Online Image Splitting Tool — Free · Secure · Fast",
-    "navFeatures": "Features",
-    "navHowItWorks": "Guide",
-    "navFaq": "FAQ"
-  },
   "upload": {
     "title": "Upload Image",
     "dragHint": "Drag and drop one or more images here",
@@ -227,6 +221,69 @@
     "nav": {
       "grid": "Grid",
       "split": "Split"
+    },
+    "landing": {
+      "hero": {
+        "overline": "Grid Splitting Tool",
+        "headlinePart1": "Grid",
+        "headlineAccent": "Split",
+        "headlinePart2": "Your Images",
+        "description": "Split images into 3×3, 1×3, or 2×2 grids for WeChat Moments, Instagram, Xiaohongshu, and other social platforms. Free, private, browser-based.",
+        "ctaPrimary": "Upload & Split",
+        "ctaSecondary": "See Grid Types"
+      },
+      "types": {
+        "overline": "Grid Types",
+        "headlinePart1": "Choose Your",
+        "headlineAccent": "Grid",
+        "3x3Title": "3×3 Grid",
+        "3x3Desc": "Classic nine-grid layout for Instagram and WeChat Moments — turn one image into 9 stunning tiles.",
+        "1x3Title": "1×3 Grid",
+        "1x3Desc": "Horizontal triptych for panoramic shots and wide-format social posts.",
+        "2x2Title": "2×2 Grid",
+        "2x2Desc": "Clean four-panel layout — perfect for product showcases and comparison grids."
+      },
+      "howItWorks": {
+        "overline": "How It Works",
+        "headlinePart1": "Three Simple",
+        "headlineAccent": "Steps",
+        "step1Title": "Upload Image",
+        "step1Desc": "Drag and drop or click to upload your image.",
+        "step2Title": "Adjust & Preview",
+        "step2Desc": "Choose grid type, drag to reposition, and preview the result in real-time.",
+        "step3Title": "Download",
+        "step3Desc": "Download all grid tiles as a ZIP, or save them individually."
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "Questions",
+        "headlineAccent": "Answered",
+        "subtitle": "Common questions about the grid splitting tool",
+        "q1": "What grid types are available?",
+        "a1": "Three grid types: 3×3 (nine-grid), 1×3 (horizontal triptych), and 2×2 (four-panel). Each is optimized for common social media formats.",
+        "q2": "Can I adjust the crop position?",
+        "a2": "Yes. After uploading, drag the image to reposition it within the grid frame, and use the scroll wheel to zoom in or out.",
+        "q3": "Can I add white borders between tiles?",
+        "a3": "Yes — toggle the \"White Border\" option in the editor to add clean spacing between grid tiles.",
+        "q4": "Is my image data safe?",
+        "a4": "Absolutely. All processing happens locally in your browser. No image data is ever uploaded to a server."
+      },
+      "cta": {
+        "headlinePart1": "Ready to",
+        "headlineAccent": "Split?",
+        "description": "No sign-up. No installation. Upload your image and get perfect grid tiles in seconds.",
+        "button": "Start Grid Split"
+      }
     }
+  },
+  "footer": {
+    "tagline": "Online Image Splitting Tool — Free · Secure · Fast",
+    "navFeatures": "Features",
+    "navHowItWorks": "Guide",
+    "navFaq": "FAQ",
+    "toolsTitle": "Tools",
+    "toolGrid": "Grid Splitter",
+    "toolSplit": "Image Splitter",
+    "navTitle": "Navigation"
   }
 }
