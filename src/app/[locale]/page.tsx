@@ -87,14 +87,14 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
       {/* NAV */}
       <nav className="sticky top-0 z-40 bg-background/90 backdrop-blur-sm border-b border-border">
-        <div className="max-w-[1600px] mx-auto px-8 md:px-16 h-16 flex items-center justify-between">
+        <div className="max-w-[1600px] mx-auto px-4 md:px-16 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <LogoIcon className="h-4 w-4 text-foreground" />
             <span className="text-xs uppercase tracking-[0.3em] font-medium text-foreground">
               ImgSplit
             </span>
           </div>
-          <div className="flex items-center gap-8 text-xs">
+          <div className="flex items-center gap-4 md:gap-8 text-xs">
             <a
               href="#features"
               className="hidden md:inline uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-500 link-underline"
@@ -127,7 +127,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <LocaleSwitcher variant="compact" />
             <SmartCTA
               label={t("nav.getStarted")}
-              className="group relative inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-2.5 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 cursor-pointer press"
+              className="hidden md:inline-flex group relative items-center gap-2 bg-primary text-primary-foreground px-6 py-2.5 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 cursor-pointer press"
             />
           </div>
         </div>

@@ -58,7 +58,7 @@ export default async function GridPage({
 
       {/* NAV */}
       <nav className="sticky top-0 z-40 bg-background/90 backdrop-blur-sm border-b border-border">
-        <div className="max-w-[1600px] mx-auto px-8 md:px-16 h-16 flex items-center justify-between">
+        <div className="max-w-[1600px] mx-auto px-4 md:px-16 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-3">
               <LogoIcon className="h-4 w-4 text-foreground" />
@@ -67,7 +67,7 @@ export default async function GridPage({
               </span>
             </Link>
           </div>
-          <div className="flex items-center gap-8 text-xs">
+          <div className="flex items-center gap-4 md:gap-8 text-xs">
             <a
               href="#grid-types"
               className="hidden md:inline uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-500 link-underline"
@@ -100,7 +100,7 @@ export default async function GridPage({
             <LocaleSwitcher variant="compact" />
             <a
               href="#upload"
-              className="group relative inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-2.5 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 press"
+              className="hidden md:inline-flex group relative items-center gap-2 bg-primary text-primary-foreground px-6 py-2.5 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 press"
             >
               <span className="absolute inset-0 bg-accent -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
               <span className="relative z-10">{tLanding("hero.ctaPrimary")}</span>

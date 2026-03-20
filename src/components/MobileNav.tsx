@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
+import { createPortal } from "react-dom"
 import { Menu, X, ArrowRight } from "lucide-react"
 
 interface NavLink {
@@ -18,34 +19,31 @@ interface MobileNavProps {
 
 export function MobileNav({ links, ctaLabel, ctaHref, menuLabel = "Menu", closeLabel = "Close" }: MobileNavProps) {
   const [open, setOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const handleLinkClick = useCallback(() => {
     setOpen(false)
   }, [])
 
-  return (
-    <div className="md:hidden">
-      {/* Hamburger trigger */}
-      <button
-        onClick={() => setOpen(true)}
-        className="w-8 h-8 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
-        aria-label={menuLabel}
-      >
-        <Menu className="h-4 w-4" strokeWidth={1.5} />
-      </button>
-
+  // Portal content — rendered to document.body to escape nav's backdrop-filter containing block
+  const overlay = (
+    <>
       {/* Backdrop */}
       {open && (
         <div
-          className="fixed inset-0 z-40 bg-primary/20 backdrop-blur-[2px]"
+          className="fixed inset-0 z-40 bg-primary/20 backdrop-blur-[2px] md:hidden"
           onClick={() => setOpen(false)}
         />
       )}
 
       {/* Panel */}
       <div
-        className={`fixed top-0 right-0 z-50 h-full w-72 bg-background shadow-[-8px_0_32px_rgba(0,0,0,0.08)] transform transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] flex flex-col ${
-          open ? "translate-x-0" : "translate-x-full"
+        className={`fixed top-0 right-0 z-50 h-full w-72 bg-background shadow-[-8px_0_32px_rgba(0,0,0,0.08)] transform transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] flex flex-col md:hidden ${
+          open ? "translate-x-0" : "translate-x-full pointer-events-none"
         }`}
       >
         {/* Close button */}
@@ -86,6 +84,22 @@ export function MobileNav({ links, ctaLabel, ctaHref, menuLabel = "Menu", closeL
           </a>
         </div>
       </div>
+    </>
+  )
+
+  return (
+    <div className="md:hidden">
+      {/* Hamburger trigger */}
+      <button
+        onClick={() => setOpen(true)}
+        className="w-8 h-8 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+        aria-label={menuLabel}
+      >
+        <Menu className="h-4 w-4" strokeWidth={1.5} />
+      </button>
+
+      {/* Portal to body — escapes nav's backdrop-filter stacking context */}
+      {mounted && createPortal(overlay, document.body)}
     </div>
   )
 }
