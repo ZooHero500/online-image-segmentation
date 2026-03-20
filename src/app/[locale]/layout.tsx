@@ -53,12 +53,15 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     manifest: "/site.webmanifest",
     alternates: {
       canonical: canonicalUrl,
-      languages: Object.fromEntries(
-        routing.locales.map((l) => [
-          l,
-          l === routing.defaultLocale ? BASE_URL : `${BASE_URL}/${l}`,
-        ])
-      ),
+      languages: {
+        ...Object.fromEntries(
+          routing.locales.map((l) => [
+            l,
+            l === routing.defaultLocale ? BASE_URL : `${BASE_URL}/${l}`,
+          ])
+        ),
+        "x-default": BASE_URL,
+      },
     },
     openGraph: {
       title: t("title"),

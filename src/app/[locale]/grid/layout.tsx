@@ -23,14 +23,17 @@ export async function generateMetadata({
     description: t("description"),
     alternates: {
       canonical: canonicalUrl,
-      languages: Object.fromEntries(
-        routing.locales.map((l) => [
-          l,
-          l === routing.defaultLocale
-            ? `${BASE_URL}${path}`
-            : `${BASE_URL}/${l}${path}`,
-        ])
-      ),
+      languages: {
+        ...Object.fromEntries(
+          routing.locales.map((l) => [
+            l,
+            l === routing.defaultLocale
+              ? `${BASE_URL}${path}`
+              : `${BASE_URL}/${l}${path}`,
+          ])
+        ),
+        "x-default": `${BASE_URL}${path}`,
+      },
     },
     openGraph: {
       title: t("title"),

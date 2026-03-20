@@ -37,10 +37,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           url: "https://imgsplit.com",
           description: t("metadata.description"),
           inLanguage: [locale === "zh-CN" ? "zh-Hans" : "en"],
-          potentialAction: {
-            "@type": "SearchAction",
-            target: "https://imgsplit.com",
-          },
         }}
       />
       <JsonLd

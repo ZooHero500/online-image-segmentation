@@ -14,16 +14,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     entries.push({
       url,
-      lastModified: new Date("2026-03-15"),
+      lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1.0,
       alternates: {
-        languages: Object.fromEntries(
-          routing.locales.map((l) => [
-            l,
-            l === routing.defaultLocale ? BASE_URL : `${BASE_URL}/${l}`,
-          ])
-        ),
+        languages: {
+          ...Object.fromEntries(
+            routing.locales.map((l) => [
+              l,
+              l === routing.defaultLocale ? BASE_URL : `${BASE_URL}/${l}`,
+            ])
+          ),
+          "x-default": BASE_URL,
+        },
       },
     })
   }
@@ -37,18 +40,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     entries.push({
       url,
-      lastModified: new Date("2026-03-15"),
+      lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
       alternates: {
-        languages: Object.fromEntries(
-          routing.locales.map((l) => [
-            l,
-            l === routing.defaultLocale
-              ? `${BASE_URL}/grid`
-              : `${BASE_URL}/${l}/grid`,
-          ])
-        ),
+        languages: {
+          ...Object.fromEntries(
+            routing.locales.map((l) => [
+              l,
+              l === routing.defaultLocale
+                ? `${BASE_URL}/grid`
+                : `${BASE_URL}/${l}/grid`,
+            ])
+          ),
+          "x-default": `${BASE_URL}/grid`,
+        },
       },
     })
   }
