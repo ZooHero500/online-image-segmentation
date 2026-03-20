@@ -79,15 +79,15 @@ export function HistorySidebar({
         className={[
           "flex flex-col h-full w-72 bg-card shadow-lg",
           "fixed inset-y-0 left-0 z-50",
-          "transition-transform duration-300",
+          "transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
           open ? "translate-x-0" : "-translate-x-full",
           "md:static md:z-auto md:w-64 md:translate-x-0 md:shadow-none md:border-r md:transition-none",
         ].join(" ")}
-        style={{ transitionTimingFunction: "cubic-bezier(0.25, 0.46, 0.45, 0.94)" }}
       >
         {/* Mobile close button */}
         <button
           onClick={onClose}
+          aria-label={t("close")}
           className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center text-muted-foreground hover:text-foreground md:hidden"
         >
           <X className="h-4 w-4" />

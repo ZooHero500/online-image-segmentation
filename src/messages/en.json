@@ -177,7 +177,8 @@
     "loading": "Loading...",
     "today": "Today {time}",
     "lineCount": "{count} split lines",
-    "delete": "Delete"
+    "delete": "Delete",
+    "close": "Close"
   },
   "grid": {
     "metadata": {

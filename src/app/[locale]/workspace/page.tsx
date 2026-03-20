@@ -58,6 +58,7 @@ export default function WorkspacePage() {
         <div className="flex items-center gap-2 p-2 border-b md:hidden">
           <button
             onClick={() => setSidebarOpen(true)}
+            aria-label="Menu"
             className="w-8 h-8 flex items-center justify-center border border-border text-muted-foreground"
           >
             <Menu className="h-4 w-4" />
