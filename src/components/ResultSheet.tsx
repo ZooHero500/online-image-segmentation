@@ -90,7 +90,7 @@ function Lightbox({
       {/* Close button */}
       <button
         onClick={onClose}
-        className="absolute top-6 right-6 text-primary-foreground/60 hover:text-primary-foreground transition-colors duration-500 z-10"
+        className="absolute top-3 right-3 sm:top-6 sm:right-6 w-10 h-10 sm:w-auto sm:h-auto text-primary-foreground/60 hover:text-primary-foreground transition-colors duration-500 z-10 flex items-center justify-center"
       >
         <X className="h-5 w-5" strokeWidth={1.5} />
       </button>
@@ -99,9 +99,9 @@ function Lightbox({
       {hasPrev && (
         <button
           onClick={(e) => { e.stopPropagation(); onPrev() }}
-          className="absolute left-6 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center text-primary-foreground/50 hover:text-primary-foreground border border-primary-foreground/20 hover:border-primary-foreground/50 transition-all duration-500 z-10"
+          className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-primary-foreground/50 hover:text-primary-foreground border border-primary-foreground/20 hover:border-primary-foreground/50 transition-all duration-500 z-10"
         >
-          <ChevronLeft className="h-5 w-5" strokeWidth={1.5} />
+          <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.5} />
         </button>
       )}
 
@@ -109,9 +109,9 @@ function Lightbox({
       {hasNext && (
         <button
           onClick={(e) => { e.stopPropagation(); onNext() }}
-          className="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center text-primary-foreground/50 hover:text-primary-foreground border border-primary-foreground/20 hover:border-primary-foreground/50 transition-all duration-500 z-10"
+          className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-primary-foreground/50 hover:text-primary-foreground border border-primary-foreground/20 hover:border-primary-foreground/50 transition-all duration-500 z-10"
         >
-          <ChevronRight className="h-5 w-5" strokeWidth={1.5} />
+          <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.5} />
         </button>
       )}
 
@@ -126,7 +126,7 @@ function Lightbox({
       )}
 
       {/* File name + counter */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1">
+      <div className="absolute bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1">
         <span className="text-[10px] uppercase tracking-[0.3em] text-primary-foreground/50">
           {current.alt}
         </span>
