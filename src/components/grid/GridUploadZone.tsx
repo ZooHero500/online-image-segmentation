@@ -39,7 +39,7 @@ export function GridUploadZone({ onImageLoaded }: GridUploadZoneProps) {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center border-t border-b p-16 md:p-24 transition-all duration-700 cursor-pointer ${
+      className={`flex flex-col items-center justify-center border-t border-b p-8 sm:p-16 md:p-24 transition-all duration-700 cursor-pointer ${
         isDragOver
           ? "border-accent bg-accent/5"
           : "border-primary/20 hover:border-primary/40"
