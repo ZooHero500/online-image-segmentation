@@ -116,12 +116,14 @@ function Lightbox({
       )}
 
       {/* Image */}
-      <img
-        src={current.src}
-        alt={current.alt}
-        className="max-w-[90vw] max-h-[90vh] object-contain shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
-        onClick={(e) => e.stopPropagation()}
-      />
+      {current.src && (
+        <img
+          src={current.src}
+          alt={current.alt}
+          className="max-w-[90vw] max-h-[90vh] object-contain shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
+          onClick={(e) => e.stopPropagation()}
+        />
+      )}
 
       {/* File name + counter */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1">
