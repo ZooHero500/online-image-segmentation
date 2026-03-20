@@ -3,10 +3,12 @@ import OpenAI from "openai"
 
 const MAX_IMAGE_SIZE = 15_000_000 // ~10MB as base64
 
-const client = new OpenAI({
-  apiKey: process.env.XAI_API_KEY,
-  baseURL: "https://api.x.ai/v1",
-})
+function getClient() {
+  return new OpenAI({
+    apiKey: process.env.XAI_API_KEY ?? "",
+    baseURL: "https://api.x.ai/v1",
+  })
+}
 
 const SYSTEM_PROMPT = `You are an image analysis assistant. Analyze the given image and identify all visually distinct, independently segmentable elements.
 
@@ -71,6 +73,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    const client = getClient()
     const response = await client.chat.completions.create({
       model: "grok-2-vision-latest",
       messages: [
