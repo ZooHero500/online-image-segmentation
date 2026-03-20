@@ -753,12 +753,14 @@ export function SplitEditor({
     <div className="flex flex-col gap-4 w-full h-full">
       {/* Toolbar */}
       <TooltipProvider>
-        <div className="flex items-center gap-1.5 flex-shrink-0">
+        <div className="flex flex-wrap items-center gap-1.5 flex-shrink-0">
           <Button size="xs" variant="outline" onClick={() => addLine("horizontal")} disabled={!canAddHorizontal}>
-            {t("addHorizontal")}
+            <span className="hidden sm:inline">{t("addHorizontal")}</span>
+            <span className="sm:hidden">H</span>
           </Button>
           <Button size="xs" variant="outline" onClick={() => addLine("vertical")} disabled={!canAddVertical}>
-            {t("addVertical")}
+            <span className="hidden sm:inline">{t("addVertical")}</span>
+            <span className="sm:hidden">V</span>
           </Button>
           <div className="w-px h-5 bg-border mx-0.5" />
           <Tooltip>
@@ -784,13 +786,13 @@ export function SplitEditor({
           {splitResults.length > 0 && (
             <Button size="xs" variant="secondary" onClick={() => setSheetOpen(true)}>{t("viewResults")}</Button>
           )}
-          <div className="flex-1" />
+          <div className="flex-1 min-w-0" />
           {isMultiImage && (
-            <span className="text-[10px] text-muted-foreground">
+            <span className="text-[10px] text-muted-foreground hidden sm:inline">
               {t("imageCount", { count: images.length })}
             </span>
           )}
-          <div className="w-px h-5 bg-border mx-0.5" />
+          <div className="w-px h-5 bg-border mx-0.5 hidden sm:block" />
           <input
             ref={appendInputRef}
             type="file"
@@ -850,7 +852,7 @@ export function SplitEditor({
         className={`relative w-full bg-muted/30 rounded-lg overflow-hidden flex-1 ${
           isFileDragOver ? "ring-2 ring-accent bg-accent/5" : ""
         }`}
-        style={{ minHeight: 400 }}
+        style={{ minHeight: "min(400px, calc(100vh - 160px))" }}
         tabIndex={0}
         onKeyDown={handleKeyDown}
         onDragOver={(e) => {
