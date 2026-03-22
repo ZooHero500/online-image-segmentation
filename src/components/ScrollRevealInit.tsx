@@ -22,27 +22,33 @@ export function ScrollRevealInit() {
           }
         })
       },
-      { threshold: 0 }
+      { threshold: 0, rootMargin: "0px 0px 100px 0px" }
     )
 
     targets.forEach((el) => observer.observe(el))
 
-    // Safety net: reveal elements that were scrolled past too fast
-    const revealPassed = () => {
+    // Safety net: reveal elements in or above viewport (scrolled past too fast)
+    let rafId = 0
+    const revealVisible = () => {
       targets.forEach((el) => {
         if (el.classList.contains("in-view")) return
         const rect = el.getBoundingClientRect()
-        if (rect.bottom < window.innerHeight) {
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
           el.classList.add("in-view")
           observer.unobserve(el)
         }
       })
     }
+    const onScroll = () => {
+      cancelAnimationFrame(rafId)
+      rafId = requestAnimationFrame(revealVisible)
+    }
 
-    window.addEventListener("scrollend", revealPassed)
+    window.addEventListener("scroll", onScroll, { passive: true })
     return () => {
       observer.disconnect()
-      window.removeEventListener("scrollend", revealPassed)
+      cancelAnimationFrame(rafId)
+      window.removeEventListener("scroll", onScroll)
     }
   }, [])
 
