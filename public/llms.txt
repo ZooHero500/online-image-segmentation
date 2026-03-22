@@ -1,0 +1,44 @@
+# ImgSplit
+
+> Free online image splitter — split, crop, and grid-divide images with pixel-perfect precision. 100% browser-based, no upload needed, privacy-first.
+
+## What is ImgSplit?
+
+ImgSplit is a free online image splitting tool that runs entirely in the browser. Users can drag split lines to divide images into custom segments, create grids for social media, and download results as ZIP — all without uploading to any server.
+
+## Core Features
+
+- Drag-and-drop split lines with snap alignment
+- Grid splitting (3×3, 1×3, 2×2) for social media posts
+- AI-powered image segmentation
+- Pixel-perfect precision with zero quality loss
+- Supports PNG, JPG/JPEG, WebP up to 20MB
+- One-click ZIP download
+- Works on desktop and mobile
+
+## Tools
+
+- [Image Splitter](https://imgsplit.com): Full-featured image splitter with custom split lines
+- [Grid Splitter](https://imgsplit.com/grid): Split images into grid tiles for Instagram and social media
+- [Split in Half](https://imgsplit.com/split-in-half): Divide images into two equal parts
+- [Split Horizontally](https://imgsplit.com/split-horizontally): Cut images into horizontal rows
+- [Split Vertically](https://imgsplit.com/split-vertically): Cut images into vertical columns
+- [Equal Parts Splitter](https://imgsplit.com/split-into-equal-parts): Divide images into equal segments
+- [Long Screenshot Splitter](https://imgsplit.com/split-long-screenshot): Break tall screenshots into pages
+- [Instagram Splitter](https://imgsplit.com/split-for-instagram): Split for carousel and profile grid
+- [Social Media Grid Splitter](https://imgsplit.com/split-for-wechat): Create grid posts for social platforms
+- [Print Splitter](https://imgsplit.com/split-for-print): Tile large images for printing
+- [No-Photoshop Slicer](https://imgsplit.com/no-photoshop-slicer): Free alternative to Photoshop slice tool
+- [All Tools](https://imgsplit.com/tools): Browse all image splitting tools
+
+## Languages
+
+Available in English, 中文 (Chinese), 日本語 (Japanese), 한국어 (Korean), and Español (Spanish).
+
+## Key Facts
+
+- Price: Free (no signup required)
+- Privacy: All processing happens in the browser — no images are uploaded
+- Limits: Up to 20 horizontal + 20 vertical split lines per image
+- File size: Up to 20MB per image
+- Formats: PNG, JPG/JPEG, WebP

@@ -120,6 +120,18 @@ export default async function ToolSlugPage({
 
   return (
     <>
+      {/* BreadcrumbList JSON-LD */}
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "ImgSplit", item: BASE_URL },
+            { "@type": "ListItem", position: 2, name: "Tools", item: `${BASE_URL}/tools` },
+            { "@type": "ListItem", position: 3, name: data.seo.ogTitle },
+          ],
+        }}
+      />
       {/* FAQPage JSON-LD */}
       {data.faqEntries.length > 0 && (
         <JsonLd
@@ -141,6 +153,7 @@ export default async function ToolSlugPage({
           "@type": "HowTo",
           name: data.seo.title,
           description: data.hero.description,
+          dateModified: new Date().toISOString().split("T")[0],
           step: data.howToSteps.map((step) => ({
             "@type": "HowToStep",
             position: step.stepNumber,
@@ -155,6 +168,7 @@ export default async function ToolSlugPage({
           "@context": "https://schema.org",
           "@type": "SoftwareApplication",
           name: "ImgSplit",
+          dateModified: new Date().toISOString().split("T")[0],
           url: locale === routing.defaultLocale ? `${BASE_URL}/${toolSlug}` : `${BASE_URL}/${locale}/${toolSlug}`,
           description: data.seo.description,
           applicationCategory: "DesignApplication",

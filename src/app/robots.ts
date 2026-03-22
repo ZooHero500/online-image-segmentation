@@ -10,6 +10,15 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         disallow: ["/workspace", "/grid/workspace"],
       },
+      // Explicitly welcome AI search bots
+      { userAgent: "GPTBot", allow: "/" },
+      { userAgent: "ChatGPT-User", allow: "/" },
+      { userAgent: "Google-Extended", allow: "/" },
+      { userAgent: "PerplexityBot", allow: "/" },
+      { userAgent: "ClaudeBot", allow: "/" },
+      { userAgent: "anthropic-ai", allow: "/" },
+      // Block training-only crawlers (not search)
+      { userAgent: "CCBot", disallow: "/" },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,
   }

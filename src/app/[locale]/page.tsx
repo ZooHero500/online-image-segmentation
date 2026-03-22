@@ -46,6 +46,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           name: "ImgSplit",
           url: "https://imgsplit.com",
           description: t("hero.description"),
+          dateModified: new Date().toISOString().split("T")[0],
           applicationCategory: "DesignApplication",
           operatingSystem: "Any",
           offers: {
@@ -84,6 +85,21 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           name: "ImgSplit",
           url: "https://imgsplit.com",
           logo: "https://imgsplit.com/favicon.svg",
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "HowTo",
+          name: t("steps.overline"),
+          description: t("metadata.description"),
+          dateModified: new Date().toISOString().split("T")[0],
+          step: [
+            { "@type": "HowToStep", position: 1, name: t("steps.step1Title"), text: t("steps.step1Desc") },
+            { "@type": "HowToStep", position: 2, name: t("steps.step2Title"), text: t("steps.step2Desc") },
+            { "@type": "HowToStep", position: 3, name: t("steps.step3Title"), text: t("steps.step3Desc") },
+            { "@type": "HowToStep", position: 4, name: t("steps.step4Title"), text: t("steps.step4Desc") },
+          ],
         }}
       />
 

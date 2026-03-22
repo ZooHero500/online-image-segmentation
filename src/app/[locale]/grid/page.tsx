@@ -31,8 +31,19 @@ export default async function GridPage({
       <JsonLd
         data={{
           "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "ImgSplit", item: "https://imgsplit.com" },
+            { "@type": "ListItem", position: 2, name: t("metadata.title") },
+          ],
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "ImgSplit Grid",
+          dateModified: new Date().toISOString().split("T")[0],
           url: locale === "en" ? "https://imgsplit.com/grid" : `https://imgsplit.com/${locale}/grid`,
           description: t("metadata.description"),
           applicationCategory: "DesignApplication",
@@ -47,6 +58,7 @@ export default async function GridPage({
           "@type": "HowTo",
           name: t("metadata.title"),
           description: t("metadata.description"),
+          dateModified: new Date().toISOString().split("T")[0],
           step: [
             { "@type": "HowToStep", position: 1, name: tLanding("howItWorks.step1Title"), text: tLanding("howItWorks.step1Desc") },
             { "@type": "HowToStep", position: 2, name: tLanding("howItWorks.step2Title"), text: tLanding("howItWorks.step2Desc") },
