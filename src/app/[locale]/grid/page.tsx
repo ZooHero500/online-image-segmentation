@@ -33,11 +33,25 @@ export default async function GridPage({
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "ImgSplit Grid",
-          url: "https://imgsplit.com/grid",
+          url: locale === "en" ? "https://imgsplit.com/grid" : `https://imgsplit.com/${locale}/grid`,
           description: t("metadata.description"),
           applicationCategory: "DesignApplication",
           operatingSystem: "Any",
+          inLanguage: ({ en: "en", "zh-CN": "zh-Hans", ja: "ja", ko: "ko", es: "es" }[locale] ?? "en"),
           offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "HowTo",
+          name: t("metadata.title"),
+          description: t("metadata.description"),
+          step: [
+            { "@type": "HowToStep", position: 1, name: tLanding("howItWorks.step1Title"), text: tLanding("howItWorks.step1Desc") },
+            { "@type": "HowToStep", position: 2, name: tLanding("howItWorks.step2Title"), text: tLanding("howItWorks.step2Desc") },
+            { "@type": "HowToStep", position: 3, name: tLanding("howItWorks.step3Title"), text: tLanding("howItWorks.step3Desc") },
+          ],
         }}
       />
       <JsonLd

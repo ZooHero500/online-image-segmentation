@@ -53,7 +53,7 @@ export async function generateMetadata({
       url: canonicalUrl,
       siteName: "ImgSplit",
       type: "website",
-      locale: locale === "zh-CN" ? "zh_CN" : "en_US",
+      locale: ({ en: "en_US", "zh-CN": "zh_CN", ja: "ja_JP", ko: "ko_KR", es: "es_ES" }[locale] ?? "en_US"),
     },
     twitter: {
       card: "summary_large_image",

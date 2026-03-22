@@ -36,7 +36,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           name: "ImgSplit",
           url: "https://imgsplit.com",
           description: t("metadata.description"),
-          inLanguage: [locale === "zh-CN" ? "zh-Hans" : "en"],
+          inLanguage: ({ en: "en", "zh-CN": "zh-Hans", ja: "ja", ko: "ko", es: "es" }[locale] ?? "en"),
         }}
       />
       <JsonLd
@@ -75,6 +75,15 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             { "@type": "Question", name: t("faq.q5"), acceptedAnswer: { "@type": "Answer", text: t("faq.a5") } },
             { "@type": "Question", name: t("faq.q6"), acceptedAnswer: { "@type": "Answer", text: t("faq.a6") } },
           ],
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "ImgSplit",
+          url: "https://imgsplit.com",
+          logo: "https://imgsplit.com/favicon.svg",
         }}
       />
 
