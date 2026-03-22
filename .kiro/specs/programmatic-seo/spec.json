@@ -1,0 +1,22 @@
+{
+  "feature_name": "programmatic-seo",
+  "created_at": "2026-03-20T18:05:00.000Z",
+  "updated_at": "2026-03-22T14:00:00.000Z",
+  "language": "zh",
+  "phase": "implementation-complete",
+  "approvals": {
+    "requirements": {
+      "generated": true,
+      "approved": true
+    },
+    "design": {
+      "generated": true,
+      "approved": true
+    },
+    "tasks": {
+      "generated": true,
+      "approved": true
+    }
+  },
+  "ready_for_implementation": true
+}

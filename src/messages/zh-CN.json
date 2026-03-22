@@ -287,7 +287,36 @@
     "toolsTitle": "工具",
     "toolGrid": "九宫格切图",
     "toolSplit": "图片分割",
+    "toolAll": "全部工具",
     "navTitle": "导航"
+  },
+  "pseoChrome": {
+    "scenariosTitle": "使用场景",
+    "howItWorksTitle": "使用说明",
+    "howItWorksHeadlinePart1": "简单",
+    "howItWorksHeadlineAccent": "步骤",
+    "faqTitle": "常见问题",
+    "relatedToolsTitle": "相关工具",
+    "ctaButton": "立即免费使用"
+  },
+  "toolsHub": {
+    "metadata": {
+      "title": "全部图片分割工具 — 免费在线 | ImgSplit",
+      "description": "浏览所有免费图片分割工具：对半切割、横向切割、纵向切割、Instagram 切图、朋友圈切图、打印切割等。纯浏览器处理。"
+    },
+    "hero": {
+      "overline": "全部工具",
+      "headlinePart1": "图片分割",
+      "headlineAccent": "工具集",
+      "description": "浏览我们所有的免费图片分割工具——找到最适合您场景的工具。"
+    },
+    "categoryDirection": "按方向切割",
+    "categoryUseCase": "按场景切割",
+    "categoryExisting": "核心工具",
+    "existingToolSplit": "图片分割",
+    "existingToolSplitDesc": "支持拖拽分割线、磁吸对齐、像素级精准裁切的全功能图片分割工具。",
+    "existingToolGrid": "九宫格切图",
+    "existingToolGridDesc": "将图片切割为 3×3、1×3 或 2×2 网格，适用于社交媒体平台。"
   },
   "aiSegmentation": {
     "title": "AI 智能分割",

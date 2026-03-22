@@ -287,7 +287,36 @@
     "toolsTitle": "Tools",
     "toolGrid": "Grid Splitter",
     "toolSplit": "Image Splitter",
+    "toolAll": "All Tools",
     "navTitle": "Navigation"
+  },
+  "pseoChrome": {
+    "scenariosTitle": "Use Cases",
+    "howItWorksTitle": "How It Works",
+    "howItWorksHeadlinePart1": "Simple ",
+    "howItWorksHeadlineAccent": "Steps",
+    "faqTitle": "FAQ",
+    "relatedToolsTitle": "Related Tools",
+    "ctaButton": "Start Free Now"
+  },
+  "toolsHub": {
+    "metadata": {
+      "title": "All Image Splitting Tools — Free Online | ImgSplit",
+      "description": "Browse all free image splitting tools: split in half, horizontally, vertically, for Instagram, WeChat, printing, and more. 100% browser-based."
+    },
+    "hero": {
+      "overline": "All Tools",
+      "headlinePart1": "Image Splitting",
+      "headlineAccent": "Tools",
+      "description": "Browse all our free image splitting tools — find the perfect tool for your specific use case."
+    },
+    "categoryDirection": "Split by Direction",
+    "categoryUseCase": "Split by Use Case",
+    "categoryExisting": "Core Tools",
+    "existingToolSplit": "Image Splitter",
+    "existingToolSplitDesc": "Full-featured image splitter with drag-and-drop split lines, snap alignment, and pixel-perfect precision.",
+    "existingToolGrid": "Grid Splitter",
+    "existingToolGridDesc": "Split images into 3×3, 1×3, or 2×2 grids for social media platforms."
   },
   "aiSegmentation": {
     "title": "AI Segmentation",

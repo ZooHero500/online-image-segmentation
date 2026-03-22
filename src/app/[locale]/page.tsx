@@ -285,16 +285,19 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               icon={<Scissors className="h-4 w-4" strokeWidth={1.5} />}
               title={t("features.preciseTitle")}
               description={t("features.preciseDesc")}
+              href="/split-in-half"
             />
             <FeatureCard
               icon={<Shield className="h-4 w-4" strokeWidth={1.5} />}
               title={t("features.privacyTitle")}
               description={t("features.privacyDesc")}
+              href="/no-photoshop-slicer"
             />
             <FeatureCard
               icon={<Download className="h-4 w-4" strokeWidth={1.5} />}
               title={t("features.downloadTitle")}
               description={t("features.downloadDesc")}
+              href="/split-into-equal-parts"
             />
             <FeatureCard
               icon={<Grid3X3 className="h-4 w-4" strokeWidth={1.5} />}
@@ -306,11 +309,13 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               icon={<Image className="h-4 w-4" strokeWidth={1.5} />}
               title={t("features.formatTitle")}
               description={t("features.formatDesc")}
+              href="/split-horizontally"
             />
             <FeatureCard
               icon={<Zap className="h-4 w-4" strokeWidth={1.5} />}
               title={t("features.previewTitle")}
               description={t("features.previewDesc")}
+              href="/split-vertically"
             />
           </div>
         </div>
@@ -374,17 +379,19 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               title={t("useCases.ecommerceTitle")}
               description={t("useCases.ecommerceDesc")}
               result={t("useCases.ecommerceResult")}
+              href="/split-long-screenshot"
             />
             <UseCaseCard
               title={t("useCases.designerTitle")}
               description={t("useCases.designerDesc")}
               result={t("useCases.designerResult")}
+              href="/no-photoshop-slicer"
             />
             <UseCaseCard
               title={t("useCases.socialTitle")}
               description={t("useCases.socialDesc")}
               result={t("useCases.socialResult")}
-              href="/grid"
+              href="/split-for-instagram"
             />
           </div>
         </div>
@@ -485,6 +492,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 >
                   {t("footer.toolSplit")}
                 </a>
+                <Link href="/tools" className="hover:text-accent transition-colors duration-500">{t("footer.toolAll")}</Link>
               </div>
             </div>
             <div>
@@ -578,7 +586,7 @@ function FeatureCard({
     </div>
   )
   if (href) {
-    return <a href={href}>{content}</a>
+    return <Link href={href}>{content}</Link>
   }
   return content
 }
@@ -631,7 +639,7 @@ function UseCaseCard({
     </div>
   )
   if (href) {
-    return <a href={href}>{content}</a>
+    return <Link href={href}>{content}</Link>
   }
   return content
 }
