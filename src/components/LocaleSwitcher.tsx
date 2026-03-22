@@ -16,11 +16,17 @@ import {
 const localeLabels: Record<string, string> = {
   en: "English",
   "zh-CN": "中文",
+  ja: "日本語",
+  ko: "한국어",
+  es: "Español",
 }
 
 const localeShortLabels: Record<string, string> = {
   en: "EN",
   "zh-CN": "中文",
+  ja: "日本語",
+  ko: "한국어",
+  es: "ES",
 }
 
 export function LocaleSwitcher({

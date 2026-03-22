@@ -1,0 +1,352 @@
+{
+  "metadata": {
+    "title": "無料オンライン画像分割ツール — 写真を簡単にカット＆分割 | ImgSplit",
+    "description": "無料のオンライン画像分割ツール。分割線をドラッグ、グリッドにスナップ、すべてのピースを一括ダウンロード。アップロード不要、100%ブラウザ上で動作する画像カッターです。PC・スマホ対応。"
+  },
+  "nav": {
+    "features": "機能",
+    "howItWorks": "使い方",
+    "faq": "よくある質問",
+    "getStarted": "今すぐ始める",
+    "menu": "メニュー",
+    "close": "閉じる"
+  },
+  "hero": {
+    "overline": "無料オンライン画像分割ツール",
+    "headlinePart1": "オンライン",
+    "headlineAccent": "画像分割ツール",
+    "headlinePart2": "— 無料＆高精度",
+    "description": "ドラッグ＆ドロップの分割線、スナップ整列、ピクセル精度を備えた無料オンライン画像分割ツール。アップロード不要 — すべてブラウザ内で完結します。",
+    "ctaPrimary": "無料で始める",
+    "ctaSecondary": "使い方を見る"
+  },
+  "trust": {
+    "privacyLabel": "プライバシーリスクゼロ",
+    "privacyDesc": "データはブラウザ内に留まります",
+    "speedLabel": "即時処理",
+    "speedDesc": "ブラウザ内で高速処理",
+    "qualityLabel": "劣化なしの高品質",
+    "qualityDesc": "ピクセル単位で品質を維持",
+    "freeLabel": "完全無料",
+    "freeDesc": "制限なし"
+  },
+  "uploadSection": {
+    "overline": "今すぐ始める"
+  },
+  "benefits": {
+    "overline": "選ばれる理由",
+    "headlinePart1": "面倒な操作は",
+    "headlineAccent": "もう不要",
+    "subtitle": "重たい画像エディタは不要 — もっとシンプルに画像を分割しましょう。",
+    "noPsTitle": "Photoshop は不要",
+    "noPsDesc": "Photoshop のインストールも、複雑なスライスツールの習得も不要。分割線をドラッグしてカットするだけ — 誰でも簡単にできます。",
+    "privacyTitle": "機密画像も安心",
+    "privacyDesc": "契約書、身分証明書、デザインファイルなど — サードパーティのサーバーへのアップロード不要。すべての処理がブラウザ内で完結します。",
+    "batchTitle": "一括分割で効率2倍",
+    "batchDesc": "横・縦の分割線を一度にまとめて追加し、グリッドを自動生成、すべてのピースをまとめてダウンロード。",
+    "crossPlatformTitle": "どのデバイスでも使える",
+    "crossPlatformDesc": "インストール不要。ブラウザを開くだけ — スマホ、タブレット、PCに対応。"
+  },
+  "features": {
+    "overline": "機能紹介",
+    "headlinePart1": "プロ仕様の",
+    "headlineAccent": "ツール",
+    "preciseTitle": "ピクセル精度の分割",
+    "preciseDesc": "分割線を自由にドラッグ。スナップ整列でピクセル精度を実現。",
+    "privacyTitle": "プライバシー最優先",
+    "privacyDesc": "すべての処理がブラウザ内で完結。画像がサーバーにアップロードされることは一切ありません。",
+    "downloadTitle": "ワンクリックダウンロード",
+    "downloadDesc": "分割した画像をZIPでまとめてダウンロード、または個別に保存も可能。",
+    "gridTitle": "グリッド分割",
+    "gridDesc": "横・縦の分割線を同時に追加し、規則的なグリッドを素早く作成。効率的な一括トリミングが可能。",
+    "formatTitle": "マルチフォーマット対応",
+    "formatDesc": "PNG、JPG/JPEG、WebPに対応。1ファイル最大20MBまで。",
+    "previewTitle": "リアルタイムプレビュー",
+    "previewDesc": "分割線の位置を調整しながら、分割結果をリアルタイムで確認できます。"
+  },
+  "steps": {
+    "overline": "使い方",
+    "headlinePart1": "簡単",
+    "headlineAccent": "4ステップ",
+    "step1Title": "画像をアップロード",
+    "step1Desc": "ドラッグ＆ドロップまたはクリックで画像をアップロード。PNG、JPG、WebPに対応。",
+    "step2Title": "分割線を追加",
+    "step2Desc": "横・縦の分割線を追加し、ドラッグで位置を調整。スナップ整列対応。",
+    "step3Title": "結果をプレビュー",
+    "step3Desc": "各分割エリアをリアルタイムで確認し、結果が期待通りか確認できます。",
+    "step4Title": "ダウンロード",
+    "step4Desc": "すべてのピースをZIPでまとめてダウンロード、または個別に保存。"
+  },
+  "useCases": {
+    "overline": "活用シーン",
+    "headlinePart1": "広がる",
+    "headlineAccent": "活用シーン",
+    "ecommerceTitle": "ECサイト",
+    "ecommerceDesc": "長い商品画像をセクションごとに分割し、表示エリアに最適化 — ページ読み込み速度の向上とUX改善に。",
+    "ecommerceResult": "ページ読み込み速度40%以上向上",
+    "designerTitle": "UIデザイナー",
+    "designerDesc": "Photoshop を開かずにデザインスライスを素早くエクスポート — ブラウザ上でアセット納品が完結。",
+    "designerResult": "アセット書き出し速度3倍",
+    "socialTitle": "SNS投稿",
+    "socialDesc": "パノラマや長い画像を複数のタイルに分割し、グリッド投稿でプロフェッショナルな仕上がりに。",
+    "socialResult": "よりプロフェッショナルな投稿に"
+  },
+  "cta": {
+    "headlinePart1": "今すぐ",
+    "headlineAccent": "始めよう",
+    "description": "登録不要。インストール不要。ブラウザを開くだけ。画像データは常に安全に保護されます。",
+    "button": "無料で始める"
+  },
+  "faq": {
+    "overline": "よくある質問",
+    "headlinePart1": "疑問に",
+    "headlineAccent": "お答えします",
+    "subtitle": "画像分割ツールに関するよくある質問",
+    "q1": "対応している画像形式は？",
+    "a1": "PNG、JPG/JPEG、WebP形式に対応しています。ファイルサイズの上限は20MBです。",
+    "q2": "分割後の画質は劣化しますか？",
+    "a2": "いいえ。元の解像度でトリミングするため、圧縮・縮小は行わず、画質の劣化は一切ありません。",
+    "q3": "画像データは安全ですか？",
+    "a3": "はい、完全に安全です。すべての処理がブラウザ内で行われ、画像データがサーバーにアップロードされることは一切ありません。ページを閉じるとすべてのデータが消去されます。",
+    "q4": "分割線は何本まで追加できますか？",
+    "a4": "横方向・縦方向それぞれ最大20本まで追加でき、非常に細かいグリッド分割が可能です。",
+    "q5": "アカウント登録は必要ですか？",
+    "a5": "不要です。登録もログインも必要ありません。ページを開いてすぐにご利用いただけます — 完全無料です。",
+    "q6": "スマートフォンでも使えますか？",
+    "a6": "はい。スマートフォンやタブレットでも快適にご利用いただけます。"
+  },
+  "jsonLd": {
+    "feature1": "ドラッグ＆ドロップの分割線",
+    "feature2": "スナップ整列",
+    "feature3": "グリッド分割",
+    "feature4": "ワンクリックZIPダウンロード",
+    "feature5": "ブラウザ内処理",
+    "feature6": "プライバシー最優先設計"
+  },
+  "notFound": {
+    "title": "ページが見つかりません",
+    "description": "お探しのページは存在しないか、移動された可能性があります。",
+    "backHome": "ホームに戻る"
+  },
+  "upload": {
+    "title": "画像をアップロード",
+    "dragHint": "1枚以上の画像をここにドラッグ＆ドロップ",
+    "or": "または",
+    "clickHint": "クリックしてファイルを選択（複数選択可）",
+    "formatHint": "PNG / JPG / WebP · 1ファイル最大20MB",
+    "unsupportedFormat": "非対応の形式です。PNG、JPG、またはWebP画像をアップロードしてください。",
+    "loadFailed": "画像の読み込みに失敗しました。もう一度お試しください。",
+    "fileTooLarge": "ファイル「{name}」が20MBを超えています。圧縮してからお試しください。",
+    "totalSizeWarning": "合計ファイルサイズ {size}MB が50MBを超えており、ブラウザの動作が遅くなる場合があります。"
+  },
+  "workspace": {
+    "addHorizontal": "+ 横分割線",
+    "addVertical": "+ 縦分割線",
+    "undo": "元に戻す",
+    "redo": "やり直し",
+    "generate": "生成",
+    "generating": "生成中...",
+    "batchGenerate": "一括生成（{count}枚）",
+    "viewResults": "結果を見る",
+    "imageCount": "{count}枚の画像 · ドラッグで移動",
+    "appendImages": "画像を追加",
+    "imagesAdded": "{count}枚の画像を追加しました",
+    "appendFailed": "画像の読み込みに失敗しました。もう一度お試しください。",
+    "reupload": "再アップロード",
+    "addLinesFirst": "先に分割線を追加してください",
+    "linesNotCrossing": "分割線が画像の範囲内にありません",
+    "splitFailed": "分割に失敗しました。もう一度お試しください。",
+    "horizontalLimitReached": "横分割線の上限に達しました（最大20本）",
+    "verticalLimitReached": "縦分割線の上限に達しました（最大20本）",
+    "loadingEditor": "エディターを読み込み中...",
+    "shortcutHints": "ショートカット: Ctrl+Z 元に戻す | Ctrl+Shift+Z やり直し | Delete 選択した分割線を削除 | ルーラーからドラッグで作成 | ルーラーに戻して削除 | スクロールでズーム | Space+ドラッグで移動 | Cmd+0 全体表示 | Cmd+1 100%"
+  },
+  "results": {
+    "title": "分割結果",
+    "imageCount": "{count}枚の画像",
+    "sourceCount": "（元画像{count}枚）",
+    "selectedCount": "· {selected}/{total}枚 選択中",
+    "downloadAll": "すべてダウンロード（ZIP）",
+    "selectAll": "すべて選択",
+    "downloadSelected": "選択分をダウンロード",
+    "downloadSelectedCount": "選択分をダウンロード（{count}）"
+  },
+  "history": {
+    "title": "履歴",
+    "new": "新規",
+    "backToHome": "ホームに戻る",
+    "empty": "履歴はまだありません",
+    "loading": "読み込み中...",
+    "today": "今日 {time}",
+    "lineCount": "分割線 {count}本",
+    "delete": "削除",
+    "close": "閉じる"
+  },
+  "grid": {
+    "metadata": {
+      "title": "ImgSplit - 無料オンライン グリッド分割ツール",
+      "description": "画像を3×3、1×3、2×2のグリッドに分割。Instagram、LINE、SNS投稿に最適。無料・プライバシーも安心・ブラウザ内処理。"
+    },
+    "steps": {
+      "upload": "アップロード",
+      "adjust": "調整",
+      "download": "ダウンロード"
+    },
+    "gridType": {
+      "3x3": "3×3",
+      "1x3": "1×3",
+      "2x2": "2×2",
+      "label": "グリッドタイプ"
+    },
+    "gap": {
+      "label": "白枠"
+    },
+    "editor": {
+      "dragHint": "ドラッグで移動 · スライダーでズーム",
+      "pinchHint": "ドラッグで移動 · ピンチでリサイズ"
+    },
+    "download": {
+      "generate": "生成",
+      "zip": "すべてダウンロード（ZIP）",
+      "readjust": "再調整",
+      "count": "{count}枚の画像",
+      "tapToSave": "画像をタップして個別に保存",
+      "failed": "ダウンロードに失敗しました。もう一度お試しください。",
+      "generating": "生成中...",
+      "reupload": "再アップロード"
+    },
+    "upload": {
+      "title": "画像をアップロード",
+      "dragHint": "画像をここにドラッグ",
+      "clickHint": "またはクリックして選択",
+      "formatHint": "PNG / JPG / WebP · 最大20MB"
+    },
+    "nav": {
+      "grid": "グリッド",
+      "split": "分割"
+    },
+    "landing": {
+      "hero": {
+        "overline": "グリッド分割ツール",
+        "headlinePart1": "画像を",
+        "headlineAccent": "グリッド分割",
+        "headlinePart2": "しよう",
+        "description": "画像を3×3、1×3、2×2のグリッドに分割。Instagram、LINE、各種SNSへの投稿に最適。無料・プライバシーも安心・ブラウザ内で完結。",
+        "ctaPrimary": "アップロードして分割",
+        "ctaSecondary": "グリッドタイプを見る"
+      },
+      "types": {
+        "overline": "グリッドタイプ",
+        "headlinePart1": "グリッドを",
+        "headlineAccent": "選ぶ",
+        "3x3Title": "3×3 グリッド",
+        "3x3Desc": "Instagramや各種SNSに最適な定番の9分割レイアウト — 1枚の画像を9つの美しいタイルに。",
+        "1x3Title": "1×3 グリッド",
+        "1x3Desc": "パノラマ写真やワイドフォーマットのSNS投稿に最適な横3連レイアウト。",
+        "2x2Title": "2×2 グリッド",
+        "2x2Desc": "すっきりとした4分割レイアウト — 商品紹介や比較画像に最適。"
+      },
+      "howItWorks": {
+        "overline": "使い方",
+        "headlinePart1": "簡単",
+        "headlineAccent": "3ステップ",
+        "step1Title": "画像をアップロード",
+        "step1Desc": "ドラッグ＆ドロップまたはクリックで画像をアップロード。",
+        "step2Title": "調整＆プレビュー",
+        "step2Desc": "グリッドタイプを選択し、ドラッグで位置を調整、リアルタイムで結果をプレビュー。",
+        "step3Title": "ダウンロード",
+        "step3Desc": "すべてのグリッドタイルをZIPでまとめてダウンロード、または個別に保存。"
+      },
+      "faq": {
+        "overline": "よくある質問",
+        "headlinePart1": "疑問に",
+        "headlineAccent": "お答えします",
+        "subtitle": "グリッド分割ツールに関するよくある質問",
+        "q1": "どのグリッドタイプが利用できますか？",
+        "a1": "3種類のグリッドタイプ：3×3（9分割）、1×3（横3連）、2×2（4分割）をご用意。それぞれ主要なSNSのフォーマットに最適化されています。",
+        "q2": "トリミング位置は調整できますか？",
+        "a2": "はい。アップロード後、画像をドラッグしてグリッド枠内での位置を調整し、スクロールホイールでズームイン・アウトができます。",
+        "q3": "タイル間に白枠を追加できますか？",
+        "a3": "はい — エディターで「白枠」オプションをオンにすると、グリッドタイル間にきれいな余白が追加されます。",
+        "q4": "画像データは安全ですか？",
+        "a4": "はい、完全に安全です。すべての処理がブラウザ内で行われ、画像データがサーバーにアップロードされることは一切ありません。"
+      },
+      "cta": {
+        "headlinePart1": "今すぐ",
+        "headlineAccent": "グリッド分割",
+        "description": "登録不要。インストール不要。画像をアップロードするだけで、数秒で完璧なグリッドタイルが完成します。",
+        "button": "グリッド分割を始める"
+      }
+    }
+  },
+  "footer": {
+    "tagline": "オンライン画像分割ツール — 無料 · 安全 · 高速",
+    "navFeatures": "機能",
+    "navHowItWorks": "使い方",
+    "navFaq": "よくある質問",
+    "toolsTitle": "ツール",
+    "toolGrid": "グリッド分割",
+    "toolSplit": "画像分割",
+    "toolAll": "すべてのツール",
+    "navTitle": "ナビゲーション"
+  },
+  "pseoChrome": {
+    "scenariosTitle": "活用シーン",
+    "howItWorksTitle": "使い方",
+    "howItWorksHeadlinePart1": "簡単 ",
+    "howItWorksHeadlineAccent": "ステップ",
+    "faqTitle": "よくある質問",
+    "relatedToolsTitle": "関連ツール",
+    "ctaButton": "無料で始める"
+  },
+  "toolsHub": {
+    "metadata": {
+      "title": "すべての画像分割ツール — 無料オンライン | ImgSplit",
+      "description": "無料の画像分割ツールを一覧で紹介：半分に分割、横分割、縦分割、Instagram向け、SNS向け、印刷向けなど。100%ブラウザ内処理。"
+    },
+    "hero": {
+      "overline": "すべてのツール",
+      "headlinePart1": "画像分割",
+      "headlineAccent": "ツール一覧",
+      "description": "すべての無料画像分割ツールをご覧ください — あなたの用途に最適なツールが見つかります。"
+    },
+    "categoryDirection": "方向で分割",
+    "categoryUseCase": "用途で分割",
+    "categoryExisting": "基本ツール",
+    "existingToolSplit": "画像分割",
+    "existingToolSplitDesc": "ドラッグ＆ドロップの分割線、スナップ整列、ピクセル精度を備えた多機能画像分割ツール。",
+    "existingToolGrid": "グリッド分割",
+    "existingToolGridDesc": "画像を3×3、1×3、2×2のグリッドに分割。各種SNSプラットフォームに対応。"
+  },
+  "aiSegmentation": {
+    "title": "AI自動分割",
+    "sidebarButton": "AI分割",
+    "backToManual": "手動分割",
+    "stepAnalyze": "分析",
+    "stepSelect": "選択",
+    "stepSegment": "分割",
+    "analyzing": "画像を分析中...",
+    "analyzeFailed": "画像の分析に失敗しました。もう一度お試しください。",
+    "elementsFound": "{count}個の要素を検出",
+    "selectElements": "分割する要素を選択してください：",
+    "customLabel": "カスタムキーワード...",
+    "addCustom": "追加",
+    "reanalyze": "再分析",
+    "startSegment": "分割を開始",
+    "segmenting": "分割中... ({current}/{total})",
+    "segmentFailed": "分割に失敗しました。もう一度お試しください。",
+    "layers": "レイヤー",
+    "displayMode": "表示モード：",
+    "maskOverlay": "オーバーレイ",
+    "isolatedPreview": "切り抜き表示",
+    "exportOne": "エクスポート",
+    "exportAllZip": "すべてエクスポート（ZIP）",
+    "backToSelect": "選択に戻る",
+    "noImage": "先に画像をアップロードまたは選択してください",
+    "selectAtLeastOne": "1つ以上の要素を選択してください",
+    "hideLayer": "レイヤーを非表示",
+    "showLayer": "レイヤーを表示",
+    "segmentComplete": "分割完了",
+    "exportFailed": "エクスポートに失敗しました。もう一度お試しください。"
+  }
+}

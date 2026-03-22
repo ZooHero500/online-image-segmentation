@@ -1,0 +1,352 @@
+{
+  "metadata": {
+    "title": "Divisor de Imágenes Online Gratis — Corta Fotos al Instante | ImgSplit",
+    "description": "Divisor de imágenes online gratis — arrastra líneas de corte, ajusta a cuadrícula y descarga todas las piezas al instante. Sin necesidad de subir archivos, 100% en el navegador. Funciona en escritorio y móvil."
+  },
+  "nav": {
+    "features": "Funciones",
+    "howItWorks": "Cómo funciona",
+    "faq": "Preguntas frecuentes",
+    "getStarted": "Comenzar",
+    "menu": "Menú",
+    "close": "Cerrar"
+  },
+  "hero": {
+    "overline": "Divisor de Imágenes Online Gratis",
+    "headlinePart1": "Divisor de",
+    "headlineAccent": "Imágenes Online",
+    "headlinePart2": "— Gratis y preciso",
+    "description": "Divisor de imágenes online gratis con líneas de corte arrastrables, alineación automática y precisión de píxeles. Sin necesidad de subir archivos — todo se ejecuta en tu navegador.",
+    "ctaPrimary": "Comenzar gratis",
+    "ctaSecondary": "Ver cómo funciona"
+  },
+  "trust": {
+    "privacyLabel": "Sin riesgos de privacidad",
+    "privacyDesc": "Los datos permanecen en tu navegador",
+    "speedLabel": "Procesamiento instantáneo",
+    "speedDesc": "Se procesa directamente en tu navegador",
+    "qualityLabel": "Calidad sin pérdida",
+    "qualityDesc": "Calidad píxel por píxel",
+    "freeLabel": "Totalmente gratis",
+    "freeDesc": "Sin límites"
+  },
+  "uploadSection": {
+    "overline": "Comenzar"
+  },
+  "benefits": {
+    "overline": "Por qué elegirnos",
+    "headlinePart1": "Di adiós a la",
+    "headlineAccent": "Complejidad",
+    "subtitle": "Olvídate de los editores de imagen complicados — divide imágenes de forma sencilla.",
+    "noPsTitle": "Sin necesidad de Photoshop",
+    "noPsDesc": "No necesitas instalar Photoshop ni aprender herramientas complicadas. Solo arrastra las líneas de corte y divide — cualquiera puede hacerlo.",
+    "privacyTitle": "Seguro para imágenes confidenciales",
+    "privacyDesc": "Contratos, documentos de identidad, archivos de diseño — no necesitas subirlos a servidores externos. Todo se procesa localmente en tu navegador.",
+    "batchTitle": "División por lotes, el doble de rápido",
+    "batchDesc": "Añade múltiples líneas de corte horizontales y verticales a la vez, genera cuadrículas automáticamente y descarga todas las piezas de una sola vez.",
+    "crossPlatformTitle": "Funciona en cualquier dispositivo",
+    "crossPlatformDesc": "Sin necesidad de instalación. Abre tu navegador y listo — móvil, tableta o escritorio."
+  },
+  "features": {
+    "overline": "Capacidades",
+    "headlinePart1": "Herramientas",
+    "headlineAccent": "Profesionales",
+    "preciseTitle": "División con precisión de píxeles",
+    "preciseDesc": "Arrastra las líneas de corte libremente con alineación automática para una precisión de píxeles.",
+    "privacyTitle": "Privacidad ante todo",
+    "privacyDesc": "Todo el procesamiento ocurre en tu navegador. Las imágenes nunca se suben a ningún servidor.",
+    "downloadTitle": "Descarga con un clic",
+    "downloadDesc": "Descarga todas las imágenes divididas como ZIP, o guarda las piezas individuales una por una.",
+    "gridTitle": "División en cuadrícula",
+    "gridDesc": "Añade líneas horizontales y verticales simultáneamente para crear cuadrículas regulares rápidamente y recortar por lotes de forma eficiente.",
+    "formatTitle": "Soporte multiformato",
+    "formatDesc": "Compatible con PNG, JPG/JPEG y WebP. Hasta 20MB por archivo.",
+    "previewTitle": "Vista previa en tiempo real",
+    "previewDesc": "Visualiza los resultados de la división en tiempo real mientras ajustas la posición de las líneas."
+  },
+  "steps": {
+    "overline": "Cómo funciona",
+    "headlinePart1": "Cuatro",
+    "headlineAccent": "Pasos Sencillos",
+    "step1Title": "Sube tu imagen",
+    "step1Desc": "Arrastra y suelta o haz clic para subir tu imagen. Compatible con PNG, JPG y WebP.",
+    "step2Title": "Añade líneas de corte",
+    "step2Desc": "Añade líneas de corte horizontales o verticales y arrástralas a la posición deseada con alineación automática.",
+    "step3Title": "Vista previa de resultados",
+    "step3Desc": "Visualiza cada región dividida en tiempo real y confirma que los resultados cumplen tus necesidades.",
+    "step4Title": "Descargar",
+    "step4Desc": "Descarga todas las piezas como ZIP, o guarda regiones específicas individualmente."
+  },
+  "useCases": {
+    "overline": "Casos de uso",
+    "headlinePart1": "Infinitas",
+    "headlineAccent": "Posibilidades",
+    "ecommerceTitle": "Comercio electrónico",
+    "ecommerceDesc": "Divide imágenes largas de productos en secciones para diferentes áreas de visualización — carga de página más rápida y mejor experiencia de usuario.",
+    "ecommerceResult": "Carga de página un 40% más rápida",
+    "designerTitle": "Diseñadores UI",
+    "designerDesc": "Exporta recortes de diseño rápidamente sin abrir Photoshop — entrega recursos directamente desde tu navegador.",
+    "designerResult": "Exportación de recursos 3 veces más rápida",
+    "socialTitle": "Redes sociales",
+    "socialDesc": "Divide panorámicas o imágenes largas en múltiples mosaicos para publicaciones en cuadrícula con un aspecto profesional.",
+    "socialResult": "Publicaciones más atractivas"
+  },
+  "cta": {
+    "headlinePart1": "Comienza",
+    "headlineAccent": "Ahora",
+    "description": "Sin registro. Sin instalación. Solo abre tu navegador y listo. Tus datos de imagen siempre están protegidos.",
+    "button": "Comenzar gratis"
+  },
+  "faq": {
+    "overline": "Preguntas frecuentes",
+    "headlinePart1": "Preguntas",
+    "headlineAccent": "Respondidas",
+    "subtitle": "Preguntas frecuentes sobre la herramienta de división de imágenes",
+    "q1": "¿Qué formatos de imagen son compatibles?",
+    "a1": "Se admiten imágenes PNG, JPG/JPEG y WebP, con un tamaño máximo de archivo de 20MB.",
+    "q2": "¿Se reduce la calidad de la imagen después de dividirla?",
+    "a2": "No. La herramienta recorta en la resolución original — sin compresión, sin escalado, sin pérdida de calidad.",
+    "q3": "¿Mis datos de imagen están seguros?",
+    "a3": "Totalmente. Todo el procesamiento ocurre localmente en tu navegador. Ningún dato de imagen se sube a un servidor. Todo se elimina cuando cierras la página.",
+    "q4": "¿Cuántas líneas de corte puedo añadir?",
+    "a4": "Hasta 20 líneas horizontales y 20 verticales, lo que permite divisiones en cuadrícula muy detalladas.",
+    "q5": "¿Necesito crear una cuenta?",
+    "a5": "No. Sin registro ni inicio de sesión. Abre la página y empieza a usarla — completamente gratis.",
+    "q6": "¿Funciona en dispositivos móviles?",
+    "a6": "Sí — funciona perfectamente en teléfonos y tabletas también."
+  },
+  "jsonLd": {
+    "feature1": "Líneas de corte arrastrables",
+    "feature2": "Alineación automática",
+    "feature3": "División en cuadrícula",
+    "feature4": "Descarga ZIP con un clic",
+    "feature5": "Procesamiento en el navegador",
+    "feature6": "Diseño centrado en la privacidad"
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "description": "La página que buscas no existe o ya no está disponible.",
+    "backHome": "Volver al inicio"
+  },
+  "upload": {
+    "title": "Subir imagen",
+    "dragHint": "Arrastra y suelta una o más imágenes aquí",
+    "or": "o",
+    "clickHint": "Haz clic para seleccionar archivos (se permiten varios)",
+    "formatHint": "PNG / JPG / WebP · Máx. 20MB por archivo",
+    "unsupportedFormat": "Formato no compatible. Por favor, sube imágenes PNG, JPG o WebP.",
+    "loadFailed": "Error al cargar la imagen. Inténtalo de nuevo.",
+    "fileTooLarge": "El archivo \"{name}\" supera los 20MB. Considera comprimirlo primero.",
+    "totalSizeWarning": "El tamaño total de archivos {size}MB supera los 50MB y puede ralentizar el navegador."
+  },
+  "workspace": {
+    "addHorizontal": "+ Línea horizontal",
+    "addVertical": "+ Línea vertical",
+    "undo": "Deshacer",
+    "redo": "Rehacer",
+    "generate": "Generar",
+    "generating": "Generando...",
+    "batchGenerate": "Generar por lotes ({count} imágenes)",
+    "viewResults": "Ver resultados",
+    "imageCount": "{count} imágenes · arrastra para reposicionar",
+    "appendImages": "Añadir imágenes",
+    "imagesAdded": "{count} imágenes añadidas",
+    "appendFailed": "Error al cargar las imágenes. Inténtalo de nuevo.",
+    "reupload": "Volver a subir",
+    "addLinesFirst": "Añade líneas de corte primero",
+    "linesNotCrossing": "Las líneas de corte no alcanzan la imagen",
+    "splitFailed": "Error al dividir. Inténtalo de nuevo.",
+    "horizontalLimitReached": "Límite de líneas horizontales alcanzado (máx. 20)",
+    "verticalLimitReached": "Límite de líneas verticales alcanzado (máx. 20)",
+    "loadingEditor": "Cargando editor...",
+    "shortcutHints": "Atajos: Ctrl+Z Deshacer | Ctrl+Shift+Z Rehacer | Supr/Delete Eliminar línea seleccionada | Arrastra desde la regla para crear | Arrastra hacia la regla para eliminar | Desplázate para hacer zoom | Espacio+arrastrar para desplazar | Cmd+0 Ajustar | Cmd+1 100%"
+  },
+  "results": {
+    "title": "Resultados de la división",
+    "imageCount": "{count} imágenes",
+    "sourceCount": "({count} imágenes de origen)",
+    "selectedCount": "· {selected}/{total} seleccionadas",
+    "downloadAll": "Descargar todo (ZIP)",
+    "selectAll": "Seleccionar todo",
+    "downloadSelected": "Descargar selección",
+    "downloadSelectedCount": "Descargar selección ({count})"
+  },
+  "history": {
+    "title": "Historial",
+    "new": "Nuevo",
+    "backToHome": "Volver al inicio",
+    "empty": "Aún no hay historial",
+    "loading": "Cargando...",
+    "today": "Hoy {time}",
+    "lineCount": "{count} líneas de corte",
+    "delete": "Eliminar",
+    "close": "Cerrar"
+  },
+  "grid": {
+    "metadata": {
+      "title": "ImgSplit - Divisor de Imágenes en Cuadrícula Online Gratis",
+      "description": "Divide imágenes en cuadrículas de 3×3, 1×3 o 2×2 para Instagram, redes sociales y más. Gratis, privada, basada en el navegador."
+    },
+    "steps": {
+      "upload": "Subir",
+      "adjust": "Ajustar",
+      "download": "Descargar"
+    },
+    "gridType": {
+      "3x3": "3×3",
+      "1x3": "1×3",
+      "2x2": "2×2",
+      "label": "Tipo de cuadrícula"
+    },
+    "gap": {
+      "label": "Borde blanco"
+    },
+    "editor": {
+      "dragHint": "Arrastra para mover · Deslizador para ampliar",
+      "pinchHint": "Arrastra para mover · Pellizca para redimensionar"
+    },
+    "download": {
+      "generate": "Generar",
+      "zip": "Descargar todo (ZIP)",
+      "readjust": "Reajustar",
+      "count": "{count} imágenes",
+      "tapToSave": "Toca una imagen para guardarla individualmente",
+      "failed": "Error en la descarga. Inténtalo de nuevo.",
+      "generating": "Generando...",
+      "reupload": "Volver a subir"
+    },
+    "upload": {
+      "title": "Subir imagen",
+      "dragHint": "Arrastra una imagen aquí",
+      "clickHint": "o haz clic para seleccionar",
+      "formatHint": "PNG / JPG / WebP · Máx. 20MB"
+    },
+    "nav": {
+      "grid": "Cuadrícula",
+      "split": "Dividir"
+    },
+    "landing": {
+      "hero": {
+        "overline": "Herramienta de división en cuadrícula",
+        "headlinePart1": "Divide en",
+        "headlineAccent": "Cuadrícula",
+        "headlinePart2": "tus imágenes",
+        "description": "Divide imágenes en cuadrículas de 3×3, 1×3 o 2×2 para Instagram, redes sociales y otras plataformas. Gratis, privada, basada en el navegador.",
+        "ctaPrimary": "Subir y dividir",
+        "ctaSecondary": "Ver tipos de cuadrícula"
+      },
+      "types": {
+        "overline": "Tipos de cuadrícula",
+        "headlinePart1": "Elige tu",
+        "headlineAccent": "Cuadrícula",
+        "3x3Title": "Cuadrícula 3×3",
+        "3x3Desc": "Diseño clásico de nueve paneles para Instagram y redes sociales — convierte una imagen en 9 impresionantes mosaicos.",
+        "1x3Title": "Cuadrícula 1×3",
+        "1x3Desc": "Tríptico horizontal para fotografías panorámicas y publicaciones de formato ancho en redes sociales.",
+        "2x2Title": "Cuadrícula 2×2",
+        "2x2Desc": "Diseño limpio de cuatro paneles — perfecto para presentar productos y comparativas en cuadrícula."
+      },
+      "howItWorks": {
+        "overline": "Cómo funciona",
+        "headlinePart1": "Tres",
+        "headlineAccent": "Pasos Sencillos",
+        "step1Title": "Sube tu imagen",
+        "step1Desc": "Arrastra y suelta o haz clic para subir tu imagen.",
+        "step2Title": "Ajusta y previsualiza",
+        "step2Desc": "Elige el tipo de cuadrícula, arrastra para reposicionar y previsualiza el resultado en tiempo real.",
+        "step3Title": "Descargar",
+        "step3Desc": "Descarga todos los mosaicos de la cuadrícula como ZIP, o guárdalos individualmente."
+      },
+      "faq": {
+        "overline": "Preguntas frecuentes",
+        "headlinePart1": "Preguntas",
+        "headlineAccent": "Respondidas",
+        "subtitle": "Preguntas frecuentes sobre la herramienta de división en cuadrícula",
+        "q1": "¿Qué tipos de cuadrícula están disponibles?",
+        "a1": "Tres tipos de cuadrícula: 3×3 (nueve paneles), 1×3 (tríptico horizontal) y 2×2 (cuatro paneles). Cada uno está optimizado para los formatos más comunes de redes sociales.",
+        "q2": "¿Puedo ajustar la posición del recorte?",
+        "a2": "Sí. Después de subir la imagen, arrástrala para reposicionarla dentro del marco de la cuadrícula, y usa la rueda del ratón para ampliar o reducir.",
+        "q3": "¿Puedo añadir bordes blancos entre los mosaicos?",
+        "a3": "Sí — activa la opción \"Borde blanco\" en el editor para añadir un espaciado limpio entre los mosaicos de la cuadrícula.",
+        "q4": "¿Mis datos de imagen están seguros?",
+        "a4": "Totalmente. Todo el procesamiento ocurre localmente en tu navegador. Ningún dato de imagen se sube a un servidor."
+      },
+      "cta": {
+        "headlinePart1": "¿Todo listo para",
+        "headlineAccent": "Dividir?",
+        "description": "Sin registro. Sin instalación. Sube tu imagen y obtén mosaicos perfectos en segundos.",
+        "button": "Dividir en cuadrícula"
+      }
+    }
+  },
+  "footer": {
+    "tagline": "Herramienta de división de imágenes online — Gratis · Segura · Rápida",
+    "navFeatures": "Funciones",
+    "navHowItWorks": "Guía",
+    "navFaq": "Preguntas frecuentes",
+    "toolsTitle": "Herramientas",
+    "toolGrid": "Divisor en cuadrícula",
+    "toolSplit": "Divisor de imágenes",
+    "toolAll": "Todas las herramientas",
+    "navTitle": "Navegación"
+  },
+  "pseoChrome": {
+    "scenariosTitle": "Casos de uso",
+    "howItWorksTitle": "Cómo funciona",
+    "howItWorksHeadlinePart1": "Pasos ",
+    "howItWorksHeadlineAccent": "Sencillos",
+    "faqTitle": "Preguntas frecuentes",
+    "relatedToolsTitle": "Herramientas relacionadas",
+    "ctaButton": "Comenzar gratis"
+  },
+  "toolsHub": {
+    "metadata": {
+      "title": "Todas las herramientas de división de imágenes — Online y gratis | ImgSplit",
+      "description": "Explora todas las herramientas gratuitas de división de imágenes: divide por la mitad, horizontal, vertical, para Instagram, impresión y más. 100% en el navegador."
+    },
+    "hero": {
+      "overline": "Todas las herramientas",
+      "headlinePart1": "Herramientas de",
+      "headlineAccent": "División de Imágenes",
+      "description": "Explora todas nuestras herramientas gratuitas de división de imágenes — encuentra la herramienta perfecta para tu caso de uso específico."
+    },
+    "categoryDirection": "Dividir por dirección",
+    "categoryUseCase": "Dividir por caso de uso",
+    "categoryExisting": "Herramientas principales",
+    "existingToolSplit": "Divisor de imágenes",
+    "existingToolSplitDesc": "Divisor de imágenes completo con líneas de corte arrastrables, alineación automática y precisión de píxeles.",
+    "existingToolGrid": "Divisor en cuadrícula",
+    "existingToolGridDesc": "Divide imágenes en cuadrículas de 3×3, 1×3 o 2×2 para plataformas de redes sociales."
+  },
+  "aiSegmentation": {
+    "title": "Segmentación IA",
+    "sidebarButton": "División IA",
+    "backToManual": "División manual",
+    "stepAnalyze": "Analizar",
+    "stepSelect": "Seleccionar",
+    "stepSegment": "Segmentar",
+    "analyzing": "Analizando imagen...",
+    "analyzeFailed": "Error al analizar la imagen. Inténtalo de nuevo.",
+    "elementsFound": "{count} elementos encontrados",
+    "selectElements": "Selecciona los elementos a segmentar:",
+    "customLabel": "Palabra clave personalizada...",
+    "addCustom": "Añadir",
+    "reanalyze": "Reanalizar",
+    "startSegment": "Iniciar segmentación",
+    "segmenting": "Segmentando... ({current}/{total})",
+    "segmentFailed": "Error en la segmentación. Inténtalo de nuevo.",
+    "layers": "Capas",
+    "displayMode": "Modo de visualización:",
+    "maskOverlay": "Superpuesto",
+    "isolatedPreview": "Aislado",
+    "exportOne": "Exportar",
+    "exportAllZip": "Exportar todo (ZIP)",
+    "backToSelect": "Volver a seleccionar",
+    "noImage": "Sube o selecciona una imagen primero",
+    "selectAtLeastOne": "Selecciona al menos un elemento",
+    "hideLayer": "Ocultar capa",
+    "showLayer": "Mostrar capa",
+    "segmentComplete": "Segmentación completada",
+    "exportFailed": "Error en la exportación. Inténtalo de nuevo."
+  }
+}

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next"
 import { routing } from "@/i18n/routing"
-import { getAllToolSlugs } from "@/lib/pseo-data"
+import { getAllToolSlugs } from "@/lib/pseo"
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imgsplit.com"
 

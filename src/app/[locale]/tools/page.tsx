@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { routing } from "@/i18n/routing"
-import { getToolPagesByCategory, getToolPageData } from "@/lib/pseo-data"
+import { getToolPagesByCategory, getToolPageData } from "@/lib/pseo"
 import { ToolCard } from "@/components/pseo/ToolCard"
 import { Link } from "@/i18n/navigation"
 import { LogoIcon } from "@/components/LogoIcon"

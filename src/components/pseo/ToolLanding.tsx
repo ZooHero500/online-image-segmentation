@@ -7,7 +7,7 @@ import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { MobileNav } from "@/components/MobileNav"
 import { GridLines } from "@/components/GridLines"
 import { RelatedTools } from "@/components/pseo/RelatedTools"
-import type { ToolPageData } from "@/lib/pseo-data"
+import type { ToolPageData } from "@/lib/pseo"
 import {
   Columns2,
   LayoutList,

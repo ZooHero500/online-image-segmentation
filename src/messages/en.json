@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "title": "Free Online Image Splitter — Split & Cut Photos Instantly | ImgSplit",
-    "description": "Free online image splitter — drag split lines, snap to grid, and download all pieces instantly. No upload needed, 100% browser-based image cutter. Works on desktop & mobile."
+    "title": "Online Image Splitter — Free, Instant & Precise | ImgSplit",
+    "description": "Free online image splitter — drag split lines, snap to grid, and download pieces instantly. No upload needed, 100% browser-based. Desktop & mobile."
   },
   "nav": {
     "features": "Features",
@@ -26,9 +26,9 @@
     "speedLabel": "Instant Processing",
     "speedDesc": "Processed right in your browser",
     "qualityLabel": "Lossless Quality",
-    "qualityDesc": "Pixel-for-pixel quality",
+    "qualityDesc": "Zero quality loss",
     "freeLabel": "Completely Free",
-    "freeDesc": "No limits"
+    "freeDesc": "No signup, no fees"
   },
   "uploadSection": {
     "overline": "Get Started"
@@ -42,7 +42,7 @@
     "noPsDesc": "No need to install Photoshop or learn complicated slicing tools. Just drag split lines and cut — anyone can do it.",
     "privacyTitle": "Safe for Sensitive Images",
     "privacyDesc": "Contracts, IDs, design files — no need to upload to third-party servers. All processing happens locally in your browser.",
-    "batchTitle": "Batch Split, Twice as Fast",
+    "batchTitle": "Batch Split, Save Time",
     "batchDesc": "Add multiple horizontal and vertical split lines at once, auto-generate grids, and download all pieces in one go.",
     "crossPlatformTitle": "Works on Any Device",
     "crossPlatformDesc": "No installation needed. Open your browser and go — phone, tablet, or desktop."
@@ -58,7 +58,7 @@
     "downloadTitle": "One-Click Download",
     "downloadDesc": "Download all split images as a ZIP, or save individual pieces one by one.",
     "gridTitle": "Grid Splitting",
-    "gridDesc": "Add horizontal and vertical lines simultaneously to quickly create regular grids for efficient batch cropping.",
+    "gridDesc": "Add horizontal and vertical lines at once to create even grids for batch cropping.",
     "formatTitle": "Multi-Format Support",
     "formatDesc": "Supports PNG, JPG/JPEG, and WebP. Up to 20MB per file.",
     "previewTitle": "Live Preview",
@@ -73,7 +73,7 @@
     "step2Title": "Add Split Lines",
     "step2Desc": "Add horizontal or vertical split lines and drag them into position with snap alignment.",
     "step3Title": "Preview Results",
-    "step3Desc": "See each split region in real-time and confirm the results meet your needs.",
+    "step3Desc": "See each split region in real-time and verify the results.",
     "step4Title": "Download",
     "step4Desc": "Download all pieces as a ZIP, or save specific regions individually."
   },
@@ -83,10 +83,10 @@
     "headlineAccent": "Possibilities",
     "ecommerceTitle": "E-Commerce",
     "ecommerceDesc": "Split long product images into sections for different display areas — faster page loads, better user experience.",
-    "ecommerceResult": "40%+ faster page loads",
+    "ecommerceResult": "Faster page loads",
     "designerTitle": "UI Designers",
     "designerDesc": "Quickly export design slices without opening Photoshop — deliver assets right in your browser.",
-    "designerResult": "3x faster asset export",
+    "designerResult": "Export in seconds",
     "socialTitle": "Social Media",
     "socialDesc": "Split panoramas or long images into multiple tiles for grid-style posts that look professional.",
     "socialResult": "More polished posts"
@@ -159,7 +159,7 @@
     "horizontalLimitReached": "Horizontal split line limit reached (max 20)",
     "verticalLimitReached": "Vertical split line limit reached (max 20)",
     "loadingEditor": "Loading editor...",
-    "shortcutHints": "Shortcuts: Ctrl+Z Undo | Ctrl+Shift+Z Redo | Delete Remove selected line | Drag from ruler to create | Drag back to ruler to delete | Scroll to zoom | Space+drag to pan | Cmd+0 Fit | Cmd+1 100%"
+    "shortcutHints": "Shortcuts: Ctrl+Z Undo | Ctrl+Shift+Z Redo | Delete Remove selected line | Drag from ruler to create | Drag back to ruler to delete | Scroll to zoom | Space+drag to pan | Cmd/Ctrl+0 Fit | Cmd/Ctrl+1 100%"
   },
   "results": {
     "title": "Split Results",
@@ -184,8 +184,8 @@
   },
   "grid": {
     "metadata": {
-      "title": "ImgSplit - Free Online Image Grid Splitter",
-      "description": "Split images into 3×3, 1×3, or 2×2 grids for WeChat Moments, Instagram, and social media. Free, private, browser-based."
+      "title": "Free Online Image Grid Splitter | ImgSplit",
+      "description": "Split images into 3×3, 1×3, or 2×2 grids for Instagram, Facebook, and social media. Free, private, browser-based."
     },
     "steps": {
       "upload": "Upload",
@@ -203,7 +203,7 @@
     },
     "editor": {
       "dragHint": "Drag to move · Slider to zoom",
-      "pinchHint": "Drag to move · Pinch to resize"
+      "pinchHint": "Drag to move · Pinch to zoom"
     },
     "download": {
       "generate": "Generate",
@@ -231,7 +231,7 @@
         "headlinePart1": "Grid",
         "headlineAccent": "Split",
         "headlinePart2": "Your Images",
-        "description": "Split images into 3×3, 1×3, or 2×2 grids for WeChat Moments, Instagram, Xiaohongshu, and other social platforms. Free, private, browser-based.",
+        "description": "Split images into 3×3, 1×3, or 2×2 grids for Instagram, Facebook, and other social platforms. Free, private, browser-based.",
         "ctaPrimary": "Upload & Split",
         "ctaSecondary": "See Grid Types"
       },
@@ -240,7 +240,7 @@
         "headlinePart1": "Choose Your",
         "headlineAccent": "Grid",
         "3x3Title": "3×3 Grid",
-        "3x3Desc": "Classic nine-grid layout for Instagram and WeChat Moments — turn one image into 9 stunning tiles.",
+        "3x3Desc": "Classic nine-grid layout for Instagram and social media profiles — turn one image into 9 stunning tiles.",
         "1x3Title": "1×3 Grid",
         "1x3Desc": "Horizontal triptych for panoramic shots and wide-format social posts.",
         "2x2Title": "2×2 Grid",
@@ -293,7 +293,7 @@
   "pseoChrome": {
     "scenariosTitle": "Use Cases",
     "howItWorksTitle": "How It Works",
-    "howItWorksHeadlinePart1": "Simple ",
+    "howItWorksHeadlinePart1": "Simple",
     "howItWorksHeadlineAccent": "Steps",
     "faqTitle": "FAQ",
     "relatedToolsTitle": "Related Tools",
@@ -302,7 +302,7 @@
   "toolsHub": {
     "metadata": {
       "title": "All Image Splitting Tools — Free Online | ImgSplit",
-      "description": "Browse all free image splitting tools: split in half, horizontally, vertically, for Instagram, WeChat, printing, and more. 100% browser-based."
+      "description": "Browse all free image splitting tools: split in half, horizontally, vertically, for Instagram, social media, printing, and more. 100% browser-based."
     },
     "hero": {
       "overline": "All Tools",
