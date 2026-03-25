@@ -279,6 +279,150 @@
       }
     }
   },
+  "about": {
+    "metadata": {
+      "title": "ImgSplit について — 無料オンライン画像分割ツール",
+      "description": "ImgSplit について — ZooHero が開発した無料・オープンソース・ブラウザベースの画像分割ツール。プライバシー最優先、アップロード不要。"
+    },
+    "hero": {
+      "overline": "私たちについて",
+      "headlinePart1": "ImgSplit",
+      "headlineAccent": "について"
+    },
+    "mission": {
+      "title": "私たちの使命",
+      "description": "ImgSplit はシンプルな問題を解決するために作られました：画像の分割に高額なソフトウェアや、見知らぬサーバーへのファイルアップロードは不要であるべきです。画像編集ツールは無料で、プライバシーが守られ、誰でもアクセスできるべきだと私たちは考えています。",
+      "highlight": "処理するすべての画像は、常にあなたのデバイスに留まります。"
+    },
+    "creator": {
+      "title": "開発者",
+      "name": "ZooHero",
+      "bio": "無料でプライバシー最優先の Web ツールを構築することに情熱を注ぐフルスタック開発者。ImgSplit はオープンソースで、Next.js、React、Canvas API で構築されています。",
+      "github": "GitHub",
+      "twitter": "Twitter"
+    },
+    "tech": {
+      "title": "仕組み",
+      "description": "ImgSplit は HTML5 Canvas API を使用して、完全にブラウザ内で動作します。画像を分割する際、処理はデバイス上でローカルに行われます——サーバーとの通信なし、アップロードなし、データ収集なし。このアーキテクチャにより、ゼロレイテンシー、完全なプライバシー、初回ページ読み込み後のオフライン動作を実現しています。",
+      "items": {
+        "browser": "100% ブラウザベース",
+        "browserDesc": "すべての画像処理は HTML5 Canvas API を使用。画像がデバイスから外に出ることは一切ありません。",
+        "opensource": "オープンソース",
+        "opensourceDesc": "ソースコード全体が GitHub で公開されています。閲覧、貢献、フォーク——すべて透明です。",
+        "privacy": "プライバシー・バイ・デザイン",
+        "privacyDesc": "追跡 Cookie なし、画像分析なし、サーバーサイド処理なし。それだけです。",
+        "free": "永久無料",
+        "freeDesc": "有料プランなし、プレミアム機能なし、登録不要。ImgSplit は常に無料です。"
+      }
+    },
+    "contact": {
+      "title": "お問い合わせ",
+      "description": "ご質問、フィードバック、機能リクエストがありますか？",
+      "email": "メールでお問い合わせ"
+    }
+  },
+  "privacy": {
+    "metadata": {
+      "title": "プライバシーポリシー — ImgSplit",
+      "description": "ImgSplit のプライバシーポリシー。すべての画像処理はブラウザ内で行われます。画像がサーバーにアップロードまたは保存されることはありません。"
+    },
+    "hero": {
+      "overline": "法的情報",
+      "headlinePart1": "プライバシー",
+      "headlineAccent": "ポリシー"
+    },
+    "lastUpdated": "最終更新：2026年3月",
+    "intro": "ImgSplit はお客様のプライバシー保護に取り組んでいます。このポリシーでは、データの取り扱い方法を説明します——要約すると、お客様の画像を収集することはなく、今後も収集しません。",
+    "sections": {
+      "processing": {
+        "title": "画像処理",
+        "content": "すべての画像処理は、HTML5 Canvas API を使用してブラウザ内で完全に行われます。お客様の画像が当社のサーバーや第三者サービスにアップロードされることはありません。ブラウザのタブを閉じると、すべての画像データがメモリから消去されます。"
+      },
+      "collection": {
+        "title": "収集するデータ",
+        "content": "ツールの改善のため、最小限の匿名利用分析データを収集しています：",
+        "items": {
+          "analytics": "Vercel Analytics によるページビューと一般的な利用パターン（個人データなし）",
+          "errors": "バグ修正のための Sentry による匿名エラーレポート（画像データを含まない）",
+          "locale": "Cookie にローカル保存される言語設定"
+        },
+        "noCollect": "以下のデータは収集しません：",
+        "noItems": {
+          "images": "お客様の画像や画像データ",
+          "personal": "個人情報（氏名、メール、住所）",
+          "accounts": "アカウントデータ（アカウントシステムは存在しません）",
+          "tracking": "クロスサイトトラッキングや広告データ"
+        }
+      },
+      "cookies": {
+        "title": "Cookie",
+        "content": "言語設定を記憶するための機能的な Cookie（NEXT_LOCALE）を1つだけ使用しています。トラッキング Cookie、広告 Cookie、サードパーティ Cookie は使用していません。"
+      },
+      "thirdParty": {
+        "title": "サードパーティサービス",
+        "content": "以下のサービスを使用しています：",
+        "items": {
+          "vercel": "Vercel — ホスティングと匿名ページビュー分析",
+          "sentry": "Sentry — 匿名エラー監視（画像データを含まない）"
+        }
+      },
+      "children": {
+        "title": "お子様のプライバシー",
+        "content": "ImgSplit は、13歳未満のお子様を含め、いかなる方からも個人データを故意に収集することはありません。"
+      },
+      "changes": {
+        "title": "ポリシーの変更",
+        "content": "本ポリシーは随時更新される場合があります。変更はこのページに更新日とともに掲載されます。"
+      },
+      "contact": {
+        "title": "お問い合わせ",
+        "content": "このプライバシーポリシーについてご質問がありますか？メールでお問い合わせください"
+      }
+    }
+  },
+  "terms": {
+    "metadata": {
+      "title": "利用規約 — ImgSplit",
+      "description": "ImgSplit の利用規約。無料で利用可能、保証なし、お客様の画像はお客様のものです。"
+    },
+    "hero": {
+      "overline": "法的情報",
+      "headlinePart1": "利用",
+      "headlineAccent": "規約"
+    },
+    "lastUpdated": "最終更新：2026年3月",
+    "intro": "ImgSplit をご利用いただくことで、これらの規約に同意したものとみなされます。規約はシンプルかつ公正です——ツールを自由に安全にご利用いただきたいと考えています。",
+    "sections": {
+      "use": {
+        "title": "サービスの利用",
+        "content": "ImgSplit は無料のオンライン画像分割ツールです。個人、商用、教育目的など、あらゆる合法的な目的にご利用いただけます。アカウントや登録は不要です。"
+      },
+      "ip": {
+        "title": "お客様のコンテンツ",
+        "content": "お客様の画像はお客様のものです。すべての処理がブラウザ内で行われるため、当社がお客様の画像にアクセスすることはありません。ImgSplit を使用して処理されたコンテンツに対して、当社はいかなる権利も主張しません。"
+      },
+      "disclaimer": {
+        "title": "免責事項",
+        "content": "ImgSplit は「現状のまま」提供され、いかなる種類の保証もありません。ツールが正しく動作するよう最善を尽くしていますが、中断やエラーのない運用を保証することはできません。"
+      },
+      "liability": {
+        "title": "責任の制限",
+        "content": "法律で認められる最大限の範囲において、ImgSplit およびその開発者は、本サービスの使用または使用不能から生じるいかなる損害についても責任を負いません。"
+      },
+      "opensource": {
+        "title": "オープンソース",
+        "content": "ImgSplit は MIT ライセンスの下で提供されるオープンソースソフトウェアです。ソースコードは GitHub で公開されています。"
+      },
+      "changes": {
+        "title": "規約の変更",
+        "content": "これらの規約は随時更新される場合があります。変更後も ImgSplit を継続してご利用いただくことで、新しい規約に同意したものとみなされます。"
+      },
+      "contact": {
+        "title": "お問い合わせ",
+        "content": "これらの規約についてご質問がありますか？メールでお問い合わせください"
+      }
+    }
+  },
   "footer": {
     "tagline": "オンライン画像分割ツール — 無料 · 安全 · 高速",
     "navFeatures": "機能",
@@ -288,7 +432,16 @@
     "toolGrid": "グリッド分割",
     "toolSplit": "画像分割",
     "toolAll": "すべてのツール",
-    "navTitle": "ナビゲーション"
+    "navTitle": "ナビゲーション",
+    "legalTitle": "法的情報",
+    "about": "私たちについて",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "contact": "お問い合わせ",
+    "email": "zoohero.dev@gmail.com",
+    "socialTitle": "ソーシャル",
+    "github": "GitHub",
+    "twitter": "Twitter"
   },
   "pseoChrome": {
     "scenariosTitle": "活用シーン",

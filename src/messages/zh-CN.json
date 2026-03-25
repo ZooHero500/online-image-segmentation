@@ -279,6 +279,150 @@
       }
     }
   },
+  "about": {
+    "metadata": {
+      "title": "关于 ImgSplit — 免费在线图片分割工具",
+      "description": "了解 ImgSplit — 由 ZooHero 打造的免费、开源、基于浏览器的图片分割工具。隐私优先，无需上传。"
+    },
+    "hero": {
+      "overline": "关于我们",
+      "headlinePart1": "关于",
+      "headlineAccent": "ImgSplit"
+    },
+    "mission": {
+      "title": "我们的使命",
+      "description": "ImgSplit 的诞生源于一个简单的问题：分割图片不应该需要昂贵的软件或将文件上传到不知名的服务器。我们相信图片编辑工具应该是免费的、私密的、人人可用的。",
+      "highlight": "您处理的每一张图片都始终留在您的设备上。"
+    },
+    "creator": {
+      "title": "开发者",
+      "name": "ZooHero",
+      "bio": "全栈开发者，热衷于构建免费、隐私优先的 Web 工具。ImgSplit 是开源项目，使用 Next.js、React 和 Canvas API 构建。",
+      "github": "GitHub",
+      "twitter": "Twitter"
+    },
+    "tech": {
+      "title": "工作原理",
+      "description": "ImgSplit 完全在您的浏览器中运行，使用 HTML5 Canvas API。当您分割图片时，处理过程在您的设备上本地完成——没有服务器往返、没有上传、没有数据收集。这种架构确保了零延迟、完全的隐私保护，并在首次加载页面后支持离线使用。",
+      "items": {
+        "browser": "100% 基于浏览器",
+        "browserDesc": "所有图片处理都使用 HTML5 Canvas API。您的图片永远不会离开您的设备。",
+        "opensource": "开源",
+        "opensourceDesc": "完整源代码在 GitHub 上公开。查看、贡献或 Fork——一切透明公开。",
+        "privacy": "隐私优先设计",
+        "privacyDesc": "没有 Cookie 追踪您，没有对您图片的分析，没有服务器端处理。就是这样。",
+        "free": "永久免费",
+        "freeDesc": "没有付费墙，没有高级版，无需注册。ImgSplit 将永远免费。"
+      }
+    },
+    "contact": {
+      "title": "联系我们",
+      "description": "有问题、反馈或功能建议？",
+      "email": "发送邮件至"
+    }
+  },
+  "privacy": {
+    "metadata": {
+      "title": "隐私政策 — ImgSplit",
+      "description": "ImgSplit 隐私政策。所有图片处理都在您的浏览器中完成。没有图片会被上传或存储到任何服务器。"
+    },
+    "hero": {
+      "overline": "法律条款",
+      "headlinePart1": "隐私",
+      "headlineAccent": "政策"
+    },
+    "lastUpdated": "最后更新：2026 年 3 月",
+    "intro": "ImgSplit 致力于保护您的隐私。本政策说明了我们如何处理您的数据——简而言之：我们不收集您的图片，也永远不会。",
+    "sections": {
+      "processing": {
+        "title": "图片处理",
+        "content": "所有图片处理完全在您的浏览器中使用 HTML5 Canvas API 完成。您的图片永远不会被上传到我们的服务器或任何第三方服务。当您关闭浏览器标签页时，所有图片数据都会从内存中清除。"
+      },
+      "collection": {
+        "title": "我们收集的数据",
+        "content": "我们收集少量匿名使用分析数据以改进工具：",
+        "items": {
+          "analytics": "通过 Vercel Analytics 收集页面浏览量和一般使用模式（不含个人数据）",
+          "errors": "通过 Sentry 收集匿名错误报告以修复 Bug（不含图片数据）",
+          "locale": "您的语言偏好通过 Cookie 存储在本地"
+        },
+        "noCollect": "我们不会收集：",
+        "noItems": {
+          "images": "您的图片或任何图片数据",
+          "personal": "个人信息（姓名、邮箱、地址）",
+          "accounts": "账户数据（不存在账户系统）",
+          "tracking": "跨站追踪或广告数据"
+        }
+      },
+      "cookies": {
+        "title": "Cookie",
+        "content": "我们仅使用一个功能性 Cookie（NEXT_LOCALE）来记住您的语言偏好。没有追踪 Cookie，没有广告 Cookie，没有第三方 Cookie。"
+      },
+      "thirdParty": {
+        "title": "第三方服务",
+        "content": "我们使用以下服务：",
+        "items": {
+          "vercel": "Vercel — 托管和匿名页面浏览分析",
+          "sentry": "Sentry — 匿名错误监控（不含图片数据）"
+        }
+      },
+      "children": {
+        "title": "儿童隐私",
+        "content": "ImgSplit 不会故意收集任何人的个人数据，包括 13 岁以下的儿童。"
+      },
+      "changes": {
+        "title": "政策变更",
+        "content": "我们可能会不时更新本政策。变更将在本页面发布并注明更新日期。"
+      },
+      "contact": {
+        "title": "联系我们",
+        "content": "对本隐私政策有疑问？请发送邮件至"
+      }
+    }
+  },
+  "terms": {
+    "metadata": {
+      "title": "服务条款 — ImgSplit",
+      "description": "ImgSplit 服务条款。免费使用，不提供保证，您的图片归您所有。"
+    },
+    "hero": {
+      "overline": "法律条款",
+      "headlinePart1": "服务",
+      "headlineAccent": "条款"
+    },
+    "lastUpdated": "最后更新：2026 年 3 月",
+    "intro": "使用 ImgSplit 即表示您同意以下条款。条款简单公平——我们希望您能自由、安全地使用本工具。",
+    "sections": {
+      "use": {
+        "title": "服务使用",
+        "content": "ImgSplit 是一款免费的在线图片分割工具。您可以将其用于任何合法目的——个人、商业或教育用途。无需创建账户或注册。"
+      },
+      "ip": {
+        "title": "您的内容",
+        "content": "您的图片归您所有。由于所有处理都在您的浏览器中进行，我们永远无法访问您的图片。我们不对您使用 ImgSplit 处理的任何内容主张权利。"
+      },
+      "disclaimer": {
+        "title": "免责声明",
+        "content": "ImgSplit 按「现状」提供，不提供任何形式的保证。我们尽最大努力确保工具正常运行，但无法保证服务不中断或无错误。"
+      },
+      "liability": {
+        "title": "责任限制",
+        "content": "在法律允许的最大范围内，ImgSplit 及其创建者不对因使用或无法使用本服务而产生的任何损害承担责任。"
+      },
+      "opensource": {
+        "title": "开源",
+        "content": "ImgSplit 是基于 MIT 许可证的开源软件。源代码可在 GitHub 上获取。"
+      },
+      "changes": {
+        "title": "条款变更",
+        "content": "我们可能会不时更新这些条款。在变更后继续使用 ImgSplit 即表示接受新条款。"
+      },
+      "contact": {
+        "title": "联系我们",
+        "content": "对这些条款有疑问？请发送邮件至"
+      }
+    }
+  },
   "footer": {
     "tagline": "在线图片分割工具 — 免费 · 安全 · 高效",
     "navFeatures": "功能",
@@ -288,7 +432,16 @@
     "toolGrid": "九宫格切图",
     "toolSplit": "图片分割",
     "toolAll": "全部工具",
-    "navTitle": "导航"
+    "navTitle": "导航",
+    "legalTitle": "法律条款",
+    "about": "关于我们",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "contact": "联系我们",
+    "email": "zoohero.dev@gmail.com",
+    "socialTitle": "社交媒体",
+    "github": "GitHub",
+    "twitter": "Twitter"
   },
   "pseoChrome": {
     "scenariosTitle": "使用场景",

@@ -279,6 +279,150 @@
       }
     }
   },
+  "about": {
+    "metadata": {
+      "title": "Acerca de ImgSplit — Herramienta gratuita de división de imágenes online",
+      "description": "Conoce ImgSplit — una herramienta gratuita, de código abierto y basada en el navegador para dividir imágenes, creada por ZooHero. Privacidad ante todo, sin necesidad de subir archivos."
+    },
+    "hero": {
+      "overline": "Acerca de",
+      "headlinePart1": "Acerca de",
+      "headlineAccent": "ImgSplit"
+    },
+    "mission": {
+      "title": "Nuestra misión",
+      "description": "ImgSplit fue creado para resolver un problema sencillo: dividir imágenes no debería requerir software costoso ni subir archivos a servidores desconocidos. Creemos que las herramientas de edición de imágenes deben ser gratuitas, privadas y accesibles para todos.",
+      "highlight": "Cada imagen que procesas permanece en tu dispositivo — siempre."
+    },
+    "creator": {
+      "title": "Creado por",
+      "name": "ZooHero",
+      "bio": "Desarrollador full-stack apasionado por crear herramientas web gratuitas con enfoque en la privacidad. ImgSplit es de código abierto y está construido con Next.js, React y la API Canvas.",
+      "github": "GitHub",
+      "twitter": "Twitter"
+    },
+    "tech": {
+      "title": "Cómo funciona",
+      "description": "ImgSplit se ejecuta completamente en tu navegador usando la API Canvas de HTML5. Cuando divides una imagen, el procesamiento ocurre localmente en tu dispositivo — sin viajes al servidor, sin subidas, sin recolección de datos. Esta arquitectura garantiza latencia cero, privacidad total y funciona sin conexión después de la carga inicial de la página.",
+      "items": {
+        "browser": "100% basado en el navegador",
+        "browserDesc": "Todo el procesamiento de imágenes usa la API Canvas de HTML5. Tus imágenes nunca salen de tu dispositivo.",
+        "opensource": "Código abierto",
+        "opensourceDesc": "Código fuente completo disponible en GitHub. Inspecciona, contribuye o haz fork — todo es transparente.",
+        "privacy": "Privacidad por diseño",
+        "privacyDesc": "Sin cookies de rastreo, sin análisis de tus imágenes, sin procesamiento del lado del servidor. Punto.",
+        "free": "Gratis para siempre",
+        "freeDesc": "Sin muros de pago, sin niveles premium, sin registro necesario. ImgSplit siempre será gratuito."
+      }
+    },
+    "contact": {
+      "title": "Contacto",
+      "description": "¿Tienes preguntas, comentarios o solicitudes de funciones?",
+      "email": "Envíanos un correo a"
+    }
+  },
+  "privacy": {
+    "metadata": {
+      "title": "Política de privacidad — ImgSplit",
+      "description": "Política de privacidad de ImgSplit. Todo el procesamiento de imágenes ocurre en tu navegador. No se suben ni almacenan imágenes en ningún servidor."
+    },
+    "hero": {
+      "overline": "Legal",
+      "headlinePart1": "Política de",
+      "headlineAccent": "Privacidad"
+    },
+    "lastUpdated": "Última actualización: marzo de 2026",
+    "intro": "ImgSplit se compromete a proteger tu privacidad. Esta política explica cómo manejamos tus datos — en resumen: no recopilamos tus imágenes y nunca lo haremos.",
+    "sections": {
+      "processing": {
+        "title": "Procesamiento de imágenes",
+        "content": "Todo el procesamiento de imágenes ocurre completamente en tu navegador usando la API Canvas de HTML5. Tus imágenes nunca se suben a nuestros servidores ni a ningún servicio de terceros. Cuando cierras la pestaña del navegador, todos los datos de imagen se eliminan de la memoria."
+      },
+      "collection": {
+        "title": "Datos que recopilamos",
+        "content": "Recopilamos análisis de uso mínimos y anónimos para mejorar la herramienta:",
+        "items": {
+          "analytics": "Vistas de página y patrones de uso generales a través de Vercel Analytics (sin datos personales)",
+          "errors": "Informes de errores anónimos a través de Sentry para corregir fallos (sin datos de imagen)",
+          "locale": "Tu preferencia de idioma almacenada localmente en una cookie"
+        },
+        "noCollect": "NO recopilamos:",
+        "noItems": {
+          "images": "Tus imágenes ni ningún dato de imagen",
+          "personal": "Información personal (nombre, correo electrónico, dirección)",
+          "accounts": "Datos de cuenta (no existen cuentas)",
+          "tracking": "Rastreo entre sitios ni datos publicitarios"
+        }
+      },
+      "cookies": {
+        "title": "Cookies",
+        "content": "Usamos una única cookie funcional (NEXT_LOCALE) para recordar tu preferencia de idioma. Sin cookies de rastreo, sin cookies publicitarias, sin cookies de terceros."
+      },
+      "thirdParty": {
+        "title": "Servicios de terceros",
+        "content": "Utilizamos los siguientes servicios:",
+        "items": {
+          "vercel": "Vercel — alojamiento y análisis anónimo de vistas de página",
+          "sentry": "Sentry — monitoreo anónimo de errores (sin datos de imagen)"
+        }
+      },
+      "children": {
+        "title": "Privacidad infantil",
+        "content": "ImgSplit no recopila intencionalmente datos personales de nadie, incluidos los menores de 13 años."
+      },
+      "changes": {
+        "title": "Cambios en esta política",
+        "content": "Podemos actualizar esta política ocasionalmente. Los cambios se publicarán en esta página con una fecha actualizada."
+      },
+      "contact": {
+        "title": "Contacto",
+        "content": "¿Preguntas sobre esta política de privacidad? Envíanos un correo a"
+      }
+    }
+  },
+  "terms": {
+    "metadata": {
+      "title": "Términos de servicio — ImgSplit",
+      "description": "Términos de servicio de ImgSplit. Uso gratuito, sin garantía, tus imágenes son tuyas."
+    },
+    "hero": {
+      "overline": "Legal",
+      "headlinePart1": "Términos de",
+      "headlineAccent": "Servicio"
+    },
+    "lastUpdated": "Última actualización: marzo de 2026",
+    "intro": "Al usar ImgSplit, aceptas estos términos. Son simples y justos — queremos que uses la herramienta libremente y de forma segura.",
+    "sections": {
+      "use": {
+        "title": "Uso del servicio",
+        "content": "ImgSplit es una herramienta gratuita de división de imágenes en línea. Puedes usarla para cualquier propósito legal — personal, comercial o educativo. No se requiere cuenta ni registro."
+      },
+      "ip": {
+        "title": "Tu contenido",
+        "content": "Tus imágenes son tuyas. Como todo el procesamiento ocurre en tu navegador, nunca tenemos acceso a tus imágenes. No reclamamos ningún derecho sobre el contenido que proceses con ImgSplit."
+      },
+      "disclaimer": {
+        "title": "Descargo de responsabilidad",
+        "content": "ImgSplit se proporciona «tal cual» sin garantía de ningún tipo. Hacemos todo lo posible para asegurar que la herramienta funcione correctamente, pero no podemos garantizar un funcionamiento ininterrumpido o libre de errores."
+      },
+      "liability": {
+        "title": "Limitación de responsabilidad",
+        "content": "En la medida máxima permitida por la ley, ImgSplit y sus creadores no serán responsables de ningún daño derivado del uso o la imposibilidad de uso de este servicio."
+      },
+      "opensource": {
+        "title": "Código abierto",
+        "content": "ImgSplit es software de código abierto con licencia MIT. El código fuente está disponible en GitHub."
+      },
+      "changes": {
+        "title": "Cambios en los términos",
+        "content": "Podemos actualizar estos términos ocasionalmente. El uso continuado de ImgSplit después de los cambios constituye la aceptación de los nuevos términos."
+      },
+      "contact": {
+        "title": "Contacto",
+        "content": "¿Preguntas sobre estos términos? Envíanos un correo a"
+      }
+    }
+  },
   "footer": {
     "tagline": "Herramienta de división de imágenes online — Gratis · Segura · Rápida",
     "navFeatures": "Funciones",
@@ -288,7 +432,16 @@
     "toolGrid": "Divisor en cuadrícula",
     "toolSplit": "Divisor de imágenes",
     "toolAll": "Todas las herramientas",
-    "navTitle": "Navegación"
+    "navTitle": "Navegación",
+    "legalTitle": "Legal",
+    "about": "Acerca de",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "contact": "Contacto",
+    "email": "zoohero.dev@gmail.com",
+    "socialTitle": "Redes sociales",
+    "github": "GitHub",
+    "twitter": "Twitter"
   },
   "pseoChrome": {
     "scenariosTitle": "Casos de uso",

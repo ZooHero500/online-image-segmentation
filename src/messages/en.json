@@ -279,6 +279,150 @@
       }
     }
   },
+  "about": {
+    "metadata": {
+      "title": "About ImgSplit — Free Online Image Splitting Tool",
+      "description": "Learn about ImgSplit — a free, open-source, browser-based image splitting tool built by ZooHero. Privacy-first, no upload needed."
+    },
+    "hero": {
+      "overline": "About",
+      "headlinePart1": "About",
+      "headlineAccent": "ImgSplit"
+    },
+    "mission": {
+      "title": "Our Mission",
+      "description": "ImgSplit was built to solve a simple problem: splitting images shouldn't require expensive software or uploading files to unknown servers. We believe image editing tools should be free, private, and accessible to everyone.",
+      "highlight": "Every image you process stays on your device — always."
+    },
+    "creator": {
+      "title": "Built by",
+      "name": "ZooHero",
+      "bio": "Full-stack developer passionate about building free, privacy-first web tools. ImgSplit is open source and built with Next.js, React, and the Canvas API.",
+      "github": "GitHub",
+      "twitter": "Twitter"
+    },
+    "tech": {
+      "title": "How It Works",
+      "description": "ImgSplit runs entirely in your browser using the HTML5 Canvas API. When you split an image, the processing happens locally on your device — no server round-trips, no uploads, no data collection. This architecture ensures zero latency, complete privacy, and works offline after the initial page load.",
+      "items": {
+        "browser": "100% Browser-Based",
+        "browserDesc": "All image processing uses the HTML5 Canvas API. Your images never leave your device.",
+        "opensource": "Open Source",
+        "opensourceDesc": "Full source code available on GitHub. Inspect, contribute, or fork — it's all transparent.",
+        "privacy": "Privacy by Design",
+        "privacyDesc": "No cookies tracking you, no analytics on your images, no server-side processing. Period.",
+        "free": "Free Forever",
+        "freeDesc": "No paywalls, no premium tiers, no signup required. ImgSplit will always be free."
+      }
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Have questions, feedback, or feature requests?",
+      "email": "Email us at"
+    }
+  },
+  "privacy": {
+    "metadata": {
+      "title": "Privacy Policy — ImgSplit",
+      "description": "ImgSplit privacy policy. All image processing happens in your browser. No images are uploaded or stored on any server."
+    },
+    "hero": {
+      "overline": "Legal",
+      "headlinePart1": "Privacy",
+      "headlineAccent": "Policy"
+    },
+    "lastUpdated": "Last updated: March 2026",
+    "intro": "ImgSplit is committed to protecting your privacy. This policy explains how we handle your data — the short version is: we don't collect your images, and we never will.",
+    "sections": {
+      "processing": {
+        "title": "Image Processing",
+        "content": "All image processing happens entirely in your browser using the HTML5 Canvas API. Your images are never uploaded to our servers or any third-party service. When you close the browser tab, all image data is cleared from memory."
+      },
+      "collection": {
+        "title": "Data We Collect",
+        "content": "We collect minimal, anonymous usage analytics to improve the tool:",
+        "items": {
+          "analytics": "Page views and general usage patterns via Vercel Analytics (no personal data)",
+          "errors": "Anonymous error reports via Sentry to fix bugs (no image data included)",
+          "locale": "Your language preference stored locally in a cookie"
+        },
+        "noCollect": "We do NOT collect:",
+        "noItems": {
+          "images": "Your images or any image data",
+          "personal": "Personal information (name, email, address)",
+          "accounts": "Account data (no accounts exist)",
+          "tracking": "Cross-site tracking or advertising data"
+        }
+      },
+      "cookies": {
+        "title": "Cookies",
+        "content": "We use a single functional cookie (NEXT_LOCALE) to remember your language preference. No tracking cookies, no advertising cookies, no third-party cookies."
+      },
+      "thirdParty": {
+        "title": "Third-Party Services",
+        "content": "We use the following services:",
+        "items": {
+          "vercel": "Vercel — hosting and anonymous page view analytics",
+          "sentry": "Sentry — anonymous error monitoring (no image data)"
+        }
+      },
+      "children": {
+        "title": "Children's Privacy",
+        "content": "ImgSplit does not knowingly collect any personal data from anyone, including children under 13."
+      },
+      "changes": {
+        "title": "Changes to This Policy",
+        "content": "We may update this policy occasionally. Changes will be posted on this page with an updated date."
+      },
+      "contact": {
+        "title": "Contact",
+        "content": "Questions about this privacy policy? Email us at"
+      }
+    }
+  },
+  "terms": {
+    "metadata": {
+      "title": "Terms of Service — ImgSplit",
+      "description": "ImgSplit terms of service. Free to use, no warranty, your images stay yours."
+    },
+    "hero": {
+      "overline": "Legal",
+      "headlinePart1": "Terms of",
+      "headlineAccent": "Service"
+    },
+    "lastUpdated": "Last updated: March 2026",
+    "intro": "By using ImgSplit, you agree to these terms. They're simple and fair — we want you to use the tool freely and safely.",
+    "sections": {
+      "use": {
+        "title": "Use of Service",
+        "content": "ImgSplit is a free online image splitting tool. You may use it for any lawful purpose — personal, commercial, or educational. No account or registration is required."
+      },
+      "ip": {
+        "title": "Your Content",
+        "content": "Your images are yours. Since all processing happens in your browser, we never have access to your images. We claim no rights over any content you process using ImgSplit."
+      },
+      "disclaimer": {
+        "title": "Disclaimer",
+        "content": "ImgSplit is provided \"as is\" without warranty of any kind. We do our best to ensure the tool works correctly, but we cannot guarantee uninterrupted or error-free operation."
+      },
+      "liability": {
+        "title": "Limitation of Liability",
+        "content": "To the maximum extent permitted by law, ImgSplit and its creators shall not be liable for any damages arising from the use or inability to use this service."
+      },
+      "opensource": {
+        "title": "Open Source",
+        "content": "ImgSplit is open-source software licensed under the MIT License. The source code is available on GitHub."
+      },
+      "changes": {
+        "title": "Changes to Terms",
+        "content": "We may update these terms occasionally. Continued use of ImgSplit after changes constitutes acceptance of the new terms."
+      },
+      "contact": {
+        "title": "Contact",
+        "content": "Questions about these terms? Email us at"
+      }
+    }
+  },
   "footer": {
     "tagline": "Online Image Splitting Tool — Free · Secure · Fast",
     "navFeatures": "Features",
@@ -288,7 +432,16 @@
     "toolGrid": "Grid Splitter",
     "toolSplit": "Image Splitter",
     "toolAll": "All Tools",
-    "navTitle": "Navigation"
+    "navTitle": "Navigation",
+    "legalTitle": "Legal",
+    "about": "About",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "contact": "Contact",
+    "email": "zoohero.dev@gmail.com",
+    "socialTitle": "Social",
+    "github": "GitHub",
+    "twitter": "Twitter"
   },
   "pseoChrome": {
     "scenariosTitle": "Use Cases",

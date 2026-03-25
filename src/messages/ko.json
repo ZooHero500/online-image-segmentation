@@ -279,6 +279,150 @@
       }
     }
   },
+  "about": {
+    "metadata": {
+      "title": "ImgSplit 소개 — 무료 온라인 이미지 분할 도구",
+      "description": "ImgSplit에 대해 알아보세요 — ZooHero가 만든 무료, 오픈소스, 브라우저 기반 이미지 분할 도구. 개인정보 보호 우선, 업로드 불필요."
+    },
+    "hero": {
+      "overline": "소개",
+      "headlinePart1": "ImgSplit",
+      "headlineAccent": "소개"
+    },
+    "mission": {
+      "title": "우리의 미션",
+      "description": "ImgSplit은 간단한 문제를 해결하기 위해 만들어졌습니다: 이미지 분할에 비싼 소프트웨어나 알 수 없는 서버에 파일을 업로드할 필요가 없어야 합니다. 우리는 이미지 편집 도구가 무료이고, 프라이버시가 보호되며, 누구나 접근할 수 있어야 한다고 믿습니다.",
+      "highlight": "처리하는 모든 이미지는 항상 사용자의 기기에 남습니다."
+    },
+    "creator": {
+      "title": "개발자",
+      "name": "ZooHero",
+      "bio": "무료, 개인정보 보호 우선 웹 도구를 만드는 데 열정을 가진 풀스택 개발자. ImgSplit은 오픈소스이며 Next.js, React, Canvas API로 구축되었습니다.",
+      "github": "GitHub",
+      "twitter": "Twitter"
+    },
+    "tech": {
+      "title": "작동 방식",
+      "description": "ImgSplit은 HTML5 Canvas API를 사용하여 완전히 브라우저에서 실행됩니다. 이미지를 분할할 때 처리는 사용자의 기기에서 로컬로 수행됩니다 — 서버 왕복 없음, 업로드 없음, 데이터 수집 없음. 이 아키텍처는 지연 시간 제로, 완전한 프라이버시를 보장하며, 첫 페이지 로드 후 오프라인에서도 작동합니다.",
+      "items": {
+        "browser": "100% 브라우저 기반",
+        "browserDesc": "모든 이미지 처리는 HTML5 Canvas API를 사용합니다. 이미지가 기기 밖으로 나가는 일은 없습니다.",
+        "opensource": "오픈소스",
+        "opensourceDesc": "전체 소스코드가 GitHub에 공개되어 있습니다. 검토, 기여, 포크 — 모든 것이 투명합니다.",
+        "privacy": "프라이버시 바이 디자인",
+        "privacyDesc": "추적 쿠키 없음, 이미지 분석 없음, 서버 측 처리 없음. 그것이 전부입니다.",
+        "free": "영원히 무료",
+        "freeDesc": "유료 장벽 없음, 프리미엄 등급 없음, 가입 불필요. ImgSplit은 항상 무료입니다."
+      }
+    },
+    "contact": {
+      "title": "문의하기",
+      "description": "질문, 피드백 또는 기능 요청이 있으신가요?",
+      "email": "이메일 문의"
+    }
+  },
+  "privacy": {
+    "metadata": {
+      "title": "개인정보처리방침 — ImgSplit",
+      "description": "ImgSplit 개인정보처리방침. 모든 이미지 처리는 브라우저에서 이루어집니다. 이미지가 서버에 업로드되거나 저장되지 않습니다."
+    },
+    "hero": {
+      "overline": "법적 고지",
+      "headlinePart1": "개인정보",
+      "headlineAccent": "처리방침"
+    },
+    "lastUpdated": "최종 업데이트: 2026년 3월",
+    "intro": "ImgSplit은 사용자의 개인정보 보호에 최선을 다하고 있습니다. 이 방침은 데이터 처리 방식을 설명합니다 — 요약하면, 사용자의 이미지를 수집하지 않으며 앞으로도 수집하지 않을 것입니다.",
+    "sections": {
+      "processing": {
+        "title": "이미지 처리",
+        "content": "모든 이미지 처리는 HTML5 Canvas API를 사용하여 브라우저 내에서 완전히 이루어집니다. 사용자의 이미지는 당사 서버나 타사 서비스에 업로드되지 않습니다. 브라우저 탭을 닫으면 모든 이미지 데이터가 메모리에서 삭제됩니다."
+      },
+      "collection": {
+        "title": "수집하는 데이터",
+        "content": "도구 개선을 위해 최소한의 익명 사용 분석 데이터를 수집합니다:",
+        "items": {
+          "analytics": "Vercel Analytics를 통한 페이지 조회수 및 일반 사용 패턴 (개인 데이터 없음)",
+          "errors": "버그 수정을 위한 Sentry를 통한 익명 오류 보고 (이미지 데이터 미포함)",
+          "locale": "쿠키에 로컬 저장되는 언어 기본 설정"
+        },
+        "noCollect": "다음 데이터는 수집하지 않습니다:",
+        "noItems": {
+          "images": "사용자의 이미지 또는 이미지 데이터",
+          "personal": "개인 정보 (이름, 이메일, 주소)",
+          "accounts": "계정 데이터 (계정 시스템 없음)",
+          "tracking": "크로스 사이트 추적 또는 광고 데이터"
+        }
+      },
+      "cookies": {
+        "title": "쿠키",
+        "content": "언어 기본 설정을 기억하기 위한 기능적 쿠키(NEXT_LOCALE) 하나만 사용합니다. 추적 쿠키, 광고 쿠키, 타사 쿠키는 사용하지 않습니다."
+      },
+      "thirdParty": {
+        "title": "타사 서비스",
+        "content": "다음 서비스를 사용합니다:",
+        "items": {
+          "vercel": "Vercel — 호스팅 및 익명 페이지 조회 분석",
+          "sentry": "Sentry — 익명 오류 모니터링 (이미지 데이터 미포함)"
+        }
+      },
+      "children": {
+        "title": "아동 개인정보 보호",
+        "content": "ImgSplit은 13세 미만 아동을 포함하여 누구로부터도 개인 데이터를 의도적으로 수집하지 않습니다."
+      },
+      "changes": {
+        "title": "방침 변경",
+        "content": "본 방침은 수시로 업데이트될 수 있습니다. 변경 사항은 업데이트 날짜와 함께 이 페이지에 게시됩니다."
+      },
+      "contact": {
+        "title": "문의하기",
+        "content": "이 개인정보처리방침에 대해 궁금한 점이 있으신가요? 이메일로 문의해 주세요"
+      }
+    }
+  },
+  "terms": {
+    "metadata": {
+      "title": "이용약관 — ImgSplit",
+      "description": "ImgSplit 이용약관. 무료 사용, 보증 없음, 이미지는 사용자의 소유입니다."
+    },
+    "hero": {
+      "overline": "법적 고지",
+      "headlinePart1": "이용",
+      "headlineAccent": "약관"
+    },
+    "lastUpdated": "최종 업데이트: 2026년 3월",
+    "intro": "ImgSplit을 사용함으로써 이 약관에 동의하게 됩니다. 약관은 간단하고 공정합니다 — 도구를 자유롭고 안전하게 사용하시기를 바랍니다.",
+    "sections": {
+      "use": {
+        "title": "서비스 이용",
+        "content": "ImgSplit은 무료 온라인 이미지 분할 도구입니다. 개인, 상업, 교육 목적 등 모든 합법적인 목적으로 사용할 수 있습니다. 계정이나 등록이 필요하지 않습니다."
+      },
+      "ip": {
+        "title": "사용자 콘텐츠",
+        "content": "사용자의 이미지는 사용자의 것입니다. 모든 처리가 브라우저에서 이루어지므로 당사는 사용자의 이미지에 접근할 수 없습니다. ImgSplit을 사용하여 처리한 콘텐츠에 대해 어떠한 권리도 주장하지 않습니다."
+      },
+      "disclaimer": {
+        "title": "면책 조항",
+        "content": "ImgSplit은 어떠한 종류의 보증도 없이 「있는 그대로」 제공됩니다. 도구가 올바르게 작동하도록 최선을 다하고 있지만, 중단 없는 또는 오류 없는 운영을 보장할 수 없습니다."
+      },
+      "liability": {
+        "title": "책임 제한",
+        "content": "법률이 허용하는 최대 범위 내에서, ImgSplit 및 그 개발자는 본 서비스의 사용 또는 사용 불가로 인해 발생하는 어떠한 손해에 대해서도 책임을 지지 않습니다."
+      },
+      "opensource": {
+        "title": "오픈소스",
+        "content": "ImgSplit은 MIT 라이선스로 제공되는 오픈소스 소프트웨어입니다. 소스코드는 GitHub에서 확인할 수 있습니다."
+      },
+      "changes": {
+        "title": "약관 변경",
+        "content": "이 약관은 수시로 업데이트될 수 있습니다. 변경 후에도 ImgSplit을 계속 사용하면 새로운 약관에 동의한 것으로 간주됩니다."
+      },
+      "contact": {
+        "title": "문의하기",
+        "content": "이 약관에 대해 궁금한 점이 있으신가요? 이메일로 문의해 주세요"
+      }
+    }
+  },
   "footer": {
     "tagline": "온라인 이미지 분할 도구 — 무료 · 안전 · 빠름",
     "navFeatures": "기능",
@@ -288,7 +432,16 @@
     "toolGrid": "그리드 분할",
     "toolSplit": "이미지 분할",
     "toolAll": "전체 도구",
-    "navTitle": "메뉴"
+    "navTitle": "메뉴",
+    "legalTitle": "법적 고지",
+    "about": "소개",
+    "privacy": "개인정보처리방침",
+    "terms": "이용약관",
+    "contact": "문의하기",
+    "email": "zoohero.dev@gmail.com",
+    "socialTitle": "소셜",
+    "github": "GitHub",
+    "twitter": "Twitter"
   },
   "pseoChrome": {
     "scenariosTitle": "활용 사례",
