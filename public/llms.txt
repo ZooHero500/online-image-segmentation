@@ -35,6 +35,15 @@ ImgSplit is a free online image splitting tool that runs entirely in the browser
 
 Available in English, 中文 (Chinese), 日本語 (Japanese), 한국어 (Korean), and Español (Spanish).
 
+## About
+
+Built by ZooHero. Open source under MIT License.
+
+- GitHub: https://github.com/ZooHero500/online-image-segmentation
+- Twitter: https://x.com/zooheroes
+- Contact: zoohero.dev@gmail.com
+- Full reference: https://imgsplit.com/llms-full.txt
+
 ## Key Facts
 
 - Price: Free (no signup required)

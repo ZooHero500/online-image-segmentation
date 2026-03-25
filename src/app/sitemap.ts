@@ -88,6 +88,90 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   }
 
+  // Add /about page
+  for (const locale of routing.locales) {
+    const url =
+      locale === routing.defaultLocale
+        ? `${BASE_URL}/about`
+        : `${BASE_URL}/${locale}/about`
+
+    entries.push({
+      url,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.5,
+      alternates: {
+        languages: {
+          ...Object.fromEntries(
+            routing.locales.map((l) => [
+              l,
+              l === routing.defaultLocale
+                ? `${BASE_URL}/about`
+                : `${BASE_URL}/${l}/about`,
+            ])
+          ),
+          "x-default": `${BASE_URL}/about`,
+        },
+      },
+    })
+  }
+
+  // Add /privacy page
+  for (const locale of routing.locales) {
+    const url =
+      locale === routing.defaultLocale
+        ? `${BASE_URL}/privacy`
+        : `${BASE_URL}/${locale}/privacy`
+
+    entries.push({
+      url,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.3,
+      alternates: {
+        languages: {
+          ...Object.fromEntries(
+            routing.locales.map((l) => [
+              l,
+              l === routing.defaultLocale
+                ? `${BASE_URL}/privacy`
+                : `${BASE_URL}/${l}/privacy`,
+            ])
+          ),
+          "x-default": `${BASE_URL}/privacy`,
+        },
+      },
+    })
+  }
+
+  // Add /terms page
+  for (const locale of routing.locales) {
+    const url =
+      locale === routing.defaultLocale
+        ? `${BASE_URL}/terms`
+        : `${BASE_URL}/${locale}/terms`
+
+    entries.push({
+      url,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.3,
+      alternates: {
+        languages: {
+          ...Object.fromEntries(
+            routing.locales.map((l) => [
+              l,
+              l === routing.defaultLocale
+                ? `${BASE_URL}/terms`
+                : `${BASE_URL}/${l}/terms`,
+            ])
+          ),
+          "x-default": `${BASE_URL}/terms`,
+        },
+      },
+    })
+  }
+
   // Add pSEO tool pages
   const toolSlugs = getAllToolSlugs()
   for (const slug of toolSlugs) {

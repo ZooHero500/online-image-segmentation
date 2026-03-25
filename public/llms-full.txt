@@ -1,0 +1,136 @@
+# ImgSplit — Complete Reference
+
+> Free online image splitter — split, crop, and grid-divide images with pixel-perfect precision. 100% browser-based, no upload needed, privacy-first.
+
+## What is ImgSplit?
+
+ImgSplit is a free, open-source online image splitting tool that runs entirely in the browser. It allows users to divide images into custom segments using drag-and-drop split lines, create social media grids, and download results as ZIP files — all without uploading images to any server.
+
+ImgSplit uses the HTML5 Canvas API for all image processing, ensuring complete privacy and zero-latency operations. No account is required, and the tool works on desktop and mobile browsers.
+
+## Who Built ImgSplit?
+
+ImgSplit was created by ZooHero, a full-stack developer focused on building free, privacy-first web tools.
+
+- Website: https://imgsplit.com
+- GitHub: https://github.com/ZooHero500/online-image-segmentation
+- Twitter: https://x.com/zooheroes
+
+## Core Features
+
+- **Drag-and-drop split lines**: Add up to 20 horizontal and 20 vertical split lines, drag them to exact positions
+- **Snap alignment**: Lines snap to common positions for precise, even splits
+- **Grid splitting**: Pre-configured grid layouts (3×3, 1×3, 2×2) for social media posts
+- **AI-powered segmentation**: Automatically detect and segment image elements
+- **Pixel-perfect precision**: Crops at original resolution with zero quality loss — no compression, no scaling
+- **Multi-format support**: PNG, JPG/JPEG, and WebP, up to 20MB per file
+- **One-click ZIP download**: Download all split pieces as a ZIP archive, or save individually
+- **Live preview**: See split results in real-time as you adjust line positions
+- **Cross-device**: Works on desktop, tablet, and mobile browsers
+- **Privacy-first**: All processing in-browser, images never uploaded to any server
+
+## Tools
+
+### Image Splitter (Main Tool)
+- URL: https://imgsplit.com
+- Full-featured image splitter with custom horizontal and vertical split lines
+- Supports drag-and-drop upload, snap alignment, and batch processing
+- Use for: general image splitting, custom crop regions, batch operations
+
+### Grid Splitter
+- URL: https://imgsplit.com/grid
+- Split images into pre-configured grid tiles for social media
+- Grid types: 3×3 (nine-grid for Instagram profiles), 1×3 (horizontal triptych), 2×2 (four-panel)
+- Features: drag to reposition within grid frame, optional white borders, zoom control
+- Use for: Instagram grid posts, Facebook multi-image posts, social media profiles
+
+### Split in Half
+- URL: https://imgsplit.com/split-in-half
+- Divide images into two equal parts, horizontally or vertically
+- Use for: before/after comparisons, simple two-part layouts
+
+### Split Horizontally
+- URL: https://imgsplit.com/split-horizontally
+- Cut images into horizontal rows (top-to-bottom slices)
+- Use for: website banners, email header slicing, horizontal layouts
+
+### Split Vertically
+- URL: https://imgsplit.com/split-vertically
+- Cut images into vertical columns (left-to-right slices)
+- Use for: side-by-side comparisons, vertical panel layouts
+
+### Equal Parts Splitter
+- URL: https://imgsplit.com/split-into-equal-parts
+- Divide images into any number of equal segments
+- Use for: uniform grids, tile creation, pattern slicing
+
+### Long Screenshot Splitter
+- URL: https://imgsplit.com/split-long-screenshot
+- Break tall screenshots into page-sized segments
+- Use for: scrolling screenshots, long chat logs, tall infographics
+
+### Instagram Splitter
+- URL: https://imgsplit.com/split-for-instagram
+- Optimized for Instagram's 1080×1080px format
+- Grid types for profile grids and carousel posts
+- Use for: Instagram profile mosaics, carousel content
+
+### Social Media Grid Splitter
+- URL: https://imgsplit.com/split-for-wechat
+- Create grid posts optimized for social media platforms
+- Use for: WeChat moments, Facebook posts, Twitter/X media grids
+
+### Print Splitter
+- URL: https://imgsplit.com/split-for-print
+- Tile large images across multiple print pages
+- Use for: posters, banners, large-format printing
+
+### No-Photoshop Slicer
+- URL: https://imgsplit.com/no-photoshop-slicer
+- Free alternative to Photoshop's slice tool
+- Use for: web design asset export, UI slicing without Photoshop
+
+### All Tools Directory
+- URL: https://imgsplit.com/tools
+- Browse all image splitting tools with descriptions
+
+## Frequently Asked Questions
+
+### What image formats does ImgSplit support?
+ImgSplit supports PNG, JPG/JPEG, and WebP images, with a maximum file size of 20MB per image.
+
+### Does splitting reduce image quality?
+No. ImgSplit crops at the original resolution using the Canvas API — no compression, no scaling, no quality loss.
+
+### Is my image data safe?
+Yes. All processing happens locally in your browser using the HTML5 Canvas API. No image data is ever uploaded to any server. Everything is cleared when you close the page.
+
+### How many split lines can I add?
+Up to 20 horizontal and 20 vertical split lines per image, allowing for very fine grid splits.
+
+### Do I need to create an account?
+No. No registration, no login required. Open the page and start using it — completely free.
+
+### Does it work on mobile?
+Yes. ImgSplit is fully responsive and works on phones, tablets, and desktop browsers.
+
+### Is ImgSplit open source?
+Yes. The full source code is available at https://github.com/ZooHero500/online-image-segmentation under the MIT License.
+
+## Technical Architecture
+
+- **Framework**: Next.js 16 with App Router
+- **Image Processing**: HTML5 Canvas API (client-side only)
+- **Languages**: Available in English, Chinese (zh-CN), Japanese (ja), Korean (ko), and Spanish (es)
+- **Hosting**: Vercel
+- **License**: MIT (open source)
+
+## Key Facts
+
+- Price: Free (no signup required, no premium tiers)
+- Privacy: All processing in-browser — no images uploaded, no server-side processing
+- Limits: Up to 20 horizontal + 20 vertical split lines per image
+- File size: Up to 20MB per image
+- Formats: PNG, JPG/JPEG, WebP
+- Open source: https://github.com/ZooHero500/online-image-segmentation
+- Contact: zoohero.dev@gmail.com

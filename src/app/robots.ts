@@ -13,6 +13,7 @@ export default function robots(): MetadataRoute.Robots {
       // Explicitly welcome AI search bots
       { userAgent: "GPTBot", allow: "/" },
       { userAgent: "ChatGPT-User", allow: "/" },
+      { userAgent: "OAI-SearchBot", allow: "/" },
       { userAgent: "Google-Extended", allow: "/" },
       { userAgent: "PerplexityBot", allow: "/" },
       { userAgent: "ClaudeBot", allow: "/" },
