@@ -42,14 +42,16 @@ export default async function GridPage({
         data={{
           "@context": "https://schema.org",
           "@type": "WebApplication",
+          "@id": "https://imgsplit.com/grid#app",
           name: "ImgSplit Grid",
-          dateModified: new Date().toISOString().split("T")[0],
+          dateModified: "2026-03-24",
           url: locale === "en" ? "https://imgsplit.com/grid" : `https://imgsplit.com/${locale}/grid`,
           description: t("metadata.description"),
           applicationCategory: "DesignApplication",
           operatingSystem: "Any",
           inLanguage: ({ en: "en", "zh-CN": "zh-Hans", ja: "ja", ko: "ko", es: "es" }[locale] ?? "en"),
           offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+          publisher: { "@id": "https://imgsplit.com/#organization" },
         }}
       />
       <JsonLd
@@ -58,7 +60,7 @@ export default async function GridPage({
           "@type": "HowTo",
           name: t("metadata.title"),
           description: t("metadata.description"),
-          dateModified: new Date().toISOString().split("T")[0],
+          dateModified: "2026-03-24",
           step: [
             { "@type": "HowToStep", position: 1, name: tLanding("howItWorks.step1Title"), text: tLanding("howItWorks.step1Desc") },
             { "@type": "HowToStep", position: 2, name: tLanding("howItWorks.step2Title"), text: tLanding("howItWorks.step2Desc") },
@@ -75,6 +77,25 @@ export default async function GridPage({
             { "@type": "Question", name: tLanding("faq.q2"), acceptedAnswer: { "@type": "Answer", text: tLanding("faq.a2") } },
             { "@type": "Question", name: tLanding("faq.q3"), acceptedAnswer: { "@type": "Answer", text: tLanding("faq.a3") } },
             { "@type": "Question", name: tLanding("faq.q4"), acceptedAnswer: { "@type": "Answer", text: tLanding("faq.a4") } },
+          ],
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": "https://imgsplit.com/#organization",
+          name: "ImgSplit",
+          url: "https://imgsplit.com",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://imgsplit.com/og-image.png",
+            width: 1200,
+            height: 630,
+          },
+          sameAs: [
+            "https://github.com/ZooHero500/online-image-segmentation",
+            "https://x.com/zooheroes",
           ],
         }}
       />
@@ -401,6 +422,23 @@ export default async function GridPage({
                 </a>
               </div>
             </div>
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-2">{tFooter("legalTitle")}</p>
+              <div className="flex gap-6 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                <Link href="/about" className="hover:text-accent transition-colors duration-500">
+                  {tFooter("about")}
+                </Link>
+                <Link href="/privacy" className="hover:text-accent transition-colors duration-500">
+                  {tFooter("privacy")}
+                </Link>
+                <Link href="/terms" className="hover:text-accent transition-colors duration-500">
+                  {tFooter("terms")}
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="mt-6 md:mt-0 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            zoohero.dev@gmail.com
           </div>
         </div>
       </footer>

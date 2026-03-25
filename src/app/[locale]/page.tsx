@@ -32,23 +32,36 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <JsonLd
         data={{
           "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "ImgSplit", item: "https://imgsplit.com" },
+          ],
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
           "@type": "WebSite",
+          "@id": "https://imgsplit.com/#website",
           name: "ImgSplit",
           url: "https://imgsplit.com",
           description: t("metadata.description"),
           inLanguage: ({ en: "en", "zh-CN": "zh-Hans", ja: "ja", ko: "ko", es: "es" }[locale] ?? "en"),
+          publisher: { "@id": "https://imgsplit.com/#organization" },
         }}
       />
       <JsonLd
         data={{
           "@context": "https://schema.org",
           "@type": "WebApplication",
+          "@id": "https://imgsplit.com/#app",
           name: "ImgSplit",
           url: "https://imgsplit.com",
           description: t("hero.description"),
-          dateModified: new Date().toISOString().split("T")[0],
+          dateModified: "2026-03-24",
           applicationCategory: "DesignApplication",
           operatingSystem: "Any",
+          browserRequirements: "Requires JavaScript. Works in Chrome, Firefox, Safari, Edge.",
           offers: {
             "@type": "Offer",
             price: "0",
@@ -62,6 +75,13 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             t("jsonLd.feature5"),
             t("jsonLd.feature6"),
           ],
+          image: "https://imgsplit.com/og-image.png",
+          publisher: { "@id": "https://imgsplit.com/#organization" },
+          isPartOf: { "@id": "https://imgsplit.com/#website" },
+          speakable: {
+            "@type": "SpeakableSpecification",
+            cssSelector: ["h1", "#features h2", "#faq"],
+          },
         }}
       />
       <JsonLd
@@ -82,9 +102,34 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         data={{
           "@context": "https://schema.org",
           "@type": "Organization",
+          "@id": "https://imgsplit.com/#organization",
           name: "ImgSplit",
           url: "https://imgsplit.com",
-          logo: "https://imgsplit.com/favicon.svg",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://imgsplit.com/og-image.png",
+            width: 1200,
+            height: 630,
+          },
+          description: t("metadata.description"),
+          sameAs: [
+            "https://github.com/ZooHero500/online-image-segmentation",
+            "https://x.com/zooheroes",
+          ],
+          founder: {
+            "@type": "Person",
+            name: "ZooHero",
+            url: "https://github.com/ZooHero500",
+            sameAs: [
+              "https://github.com/ZooHero500",
+              "https://x.com/zooheroes",
+            ],
+          },
+          contactPoint: {
+            "@type": "ContactPoint",
+            email: "zoohero.dev@gmail.com",
+            contactType: "customer support",
+          },
         }}
       />
       <JsonLd
@@ -93,7 +138,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           "@type": "HowTo",
           name: t("steps.overline"),
           description: t("metadata.description"),
-          dateModified: new Date().toISOString().split("T")[0],
+          dateModified: "2026-03-24",
           step: [
             { "@type": "HowToStep", position: 1, name: t("steps.step1Title"), text: t("steps.step1Desc") },
             { "@type": "HowToStep", position: 2, name: t("steps.step2Title"), text: t("steps.step2Desc") },
@@ -534,6 +579,23 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 </a>
               </div>
             </div>
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-2">{t("footer.legalTitle")}</p>
+              <div className="flex gap-6 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                <Link href="/about" className="hover:text-accent transition-colors duration-500">
+                  {t("footer.about")}
+                </Link>
+                <Link href="/privacy" className="hover:text-accent transition-colors duration-500">
+                  {t("footer.privacy")}
+                </Link>
+                <Link href="/terms" className="hover:text-accent transition-colors duration-500">
+                  {t("footer.terms")}
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="mt-6 md:mt-0 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            zoohero.dev@gmail.com
           </div>
         </div>
       </footer>

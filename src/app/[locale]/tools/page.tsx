@@ -77,9 +77,56 @@ export default async function ToolsPage({
         data={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
+          "@id": "https://imgsplit.com/tools",
           name: t("metadata.title"),
           description: t("metadata.description"),
           url: `${BASE_URL}/tools`,
+          isPartOf: { "@id": "https://imgsplit.com/#website" },
+          mainEntity: {
+            "@type": "ItemList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Split Image in Half", url: `${BASE_URL}/split-in-half` },
+              { "@type": "ListItem", position: 2, name: "Split Image Horizontally", url: `${BASE_URL}/split-horizontally` },
+              { "@type": "ListItem", position: 3, name: "Split Image Vertically", url: `${BASE_URL}/split-vertically` },
+              { "@type": "ListItem", position: 4, name: "Split into Equal Parts", url: `${BASE_URL}/split-into-equal-parts` },
+              { "@type": "ListItem", position: 5, name: "Long Screenshot Splitter", url: `${BASE_URL}/split-long-screenshot` },
+              { "@type": "ListItem", position: 6, name: "Instagram Splitter", url: `${BASE_URL}/split-for-instagram` },
+              { "@type": "ListItem", position: 7, name: "Social Media Grid Splitter", url: `${BASE_URL}/split-for-wechat` },
+              { "@type": "ListItem", position: 8, name: "Print Splitter", url: `${BASE_URL}/split-for-print` },
+              { "@type": "ListItem", position: 9, name: "No-Photoshop Slicer", url: `${BASE_URL}/no-photoshop-slicer` },
+              { "@type": "ListItem", position: 10, name: "Grid Splitter", url: `${BASE_URL}/grid` },
+              { "@type": "ListItem", position: 11, name: "Image Splitter", url: BASE_URL },
+            ],
+          },
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "ImgSplit", item: "https://imgsplit.com" },
+            { "@type": "ListItem", position: 2, name: t("metadata.title") },
+          ],
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": "https://imgsplit.com/#organization",
+          name: "ImgSplit",
+          url: "https://imgsplit.com",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://imgsplit.com/og-image.png",
+            width: 1200,
+            height: 630,
+          },
+          sameAs: [
+            "https://github.com/ZooHero500/online-image-segmentation",
+            "https://x.com/zooheroes",
+          ],
         }}
       />
 
@@ -272,6 +319,25 @@ export default async function ToolsPage({
                 </Link>
               </div>
             </div>
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-2">
+                {tFooter("legalTitle")}
+              </p>
+              <div className="flex gap-6 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                <Link href="/about" className="hover:text-accent transition-colors duration-500">
+                  {tFooter("about")}
+                </Link>
+                <Link href="/privacy" className="hover:text-accent transition-colors duration-500">
+                  {tFooter("privacy")}
+                </Link>
+                <Link href="/terms" className="hover:text-accent transition-colors duration-500">
+                  {tFooter("terms")}
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="mt-6 md:mt-0 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            zoohero.dev@gmail.com
           </div>
         </div>
       </footer>
