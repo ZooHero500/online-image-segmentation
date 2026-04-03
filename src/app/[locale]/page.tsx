@@ -467,6 +467,76 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
       </section>
 
+      {/* WHY IMGSPLIT */}
+      <section className="py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16 border-t border-border">
+        <div className="max-w-[1600px] mx-auto">
+          <div className="grid grid-cols-12 gap-4 mb-16 reveal">
+            <div className="col-span-12 md:col-span-8 md:col-start-2">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
+                {t("comparison.overline")}
+              </span>
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9] mb-4">
+                {t("comparison.headlinePart1")}{" "}
+                <em className="text-accent italic">{t("comparison.headlineAccent")}</em>
+              </h2>
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-lg">
+                {t("comparison.subtitle")}
+              </p>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-0 reveal-stagger">
+            <ComparisonCard
+              title={t("comparison.feature1")}
+              description={t("comparison.feature1Desc")}
+            />
+            <ComparisonCard
+              title={t("comparison.feature2")}
+              description={t("comparison.feature2Desc")}
+            />
+            <ComparisonCard
+              title={t("comparison.feature3")}
+              description={t("comparison.feature3Desc")}
+            />
+            <ComparisonCard
+              title={t("comparison.feature4")}
+              description={t("comparison.feature4Desc")}
+            />
+            <ComparisonCard
+              title={t("comparison.feature5")}
+              description={t("comparison.feature5Desc")}
+            />
+            <ComparisonCard
+              title={t("comparison.feature6")}
+              description={t("comparison.feature6Desc")}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* STATS */}
+      <section className="bg-primary py-12 sm:py-16 md:py-20 px-4 sm:px-8 md:px-16">
+        <div className="max-w-[1600px] mx-auto">
+          <div className="mb-12 reveal">
+            <span className="text-[10px] uppercase tracking-[0.3em] text-primary-foreground/40 mb-4 block">
+              {t("stats.overline")}
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[0.9] text-primary-foreground">
+              {t("stats.headlinePart1")}{" "}
+              <em className="text-accent italic">{t("stats.headlineAccent")}</em>
+            </h2>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-0 reveal-stagger">
+            <StatCard value={t("stats.stat1Value")} label={t("stats.stat1Label")} />
+            <StatCard value={t("stats.stat2Value")} label={t("stats.stat2Label")} />
+            <StatCard value={t("stats.stat3Value")} label={t("stats.stat3Label")} />
+            <StatCard value={t("stats.stat4Value")} label={t("stats.stat4Label")} />
+            <StatCard value={t("stats.stat5Value")} label={t("stats.stat5Label")} />
+            <StatCard value={t("stats.stat6Value")} label={t("stats.stat6Label")} />
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16 border-t border-border">
         <div className="max-w-[1600px] mx-auto grid grid-cols-12 gap-4">
@@ -729,4 +799,42 @@ function UseCaseCard({
     return <Link href={href}>{content}</Link>
   }
   return content
+}
+
+/* ─── Comparison Card ─── */
+function ComparisonCard({
+  title,
+  description,
+}: {
+  title: string
+  description: string
+}) {
+  return (
+    <div className="border-t border-border p-8 md:p-12">
+      <h3 className="text-sm uppercase tracking-[0.15em] text-foreground mb-3 font-medium">
+        {title}
+      </h3>
+      <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
+    </div>
+  )
+}
+
+/* ─── Stat Card ─── */
+function StatCard({
+  value,
+  label,
+}: {
+  value: string
+  label: string
+}) {
+  return (
+    <div className="border-t border-primary-foreground/10 p-6 md:p-8 text-center">
+      <span className="font-serif text-3xl md:text-4xl text-primary-foreground leading-none block mb-2">
+        {value}
+      </span>
+      <span className="text-[10px] uppercase tracking-[0.25em] text-primary-foreground/50">
+        {label}
+      </span>
+    </div>
+  )
 }

@@ -422,6 +422,164 @@ const data: Record<string, ToolPageData> = {
         ],
       },
 
+  "photo-splitter": {
+    slug: "photo-splitter",
+    category: "use-case",
+    seo: {
+      title: "在线照片分割器 — 免费图片切割工具 | ImgSplit",
+      description: "免费在线照片分割工具——将任意照片拖拽切割为多个部分，像素级精准，无需上传至服务器，100% 浏览器本地处理。",
+      ogTitle: "照片分割器 — 免费在线工具",
+      ogDescription: "一键将照片分割成多个部分，免费、隐私安全、浏览器端处理。",
+    },
+    hero: {
+      overline: "照片分割工具",
+      headlinePart1: "照片",
+      headlineAccent: "分割器",
+      headlinePart2: "免费即用",
+      description: "将任何照片分割为多个部分，拖拽分割线、智能对齐、即时下载——全部在浏览器中完成，无需安装任何软件。",
+    },
+    scenarios: [
+      {
+        icon: "Camera",
+        title: "摄影后期处理",
+        description: "将合影、全景照片或合成图片拆分为独立区域，方便单独编辑、分享或打印。",
+      },
+      {
+        icon: "Smartphone",
+        title: "手机照片管理",
+        description: "将手机拍摄的照片分割为多个区域——提取人脸、裁剪细节或分离前景与背景。",
+      },
+      {
+        icon: "ShoppingBag",
+        title: "商品图片制作",
+        description: "将商品照片分割为细节图，用于电商商品详情页——从一张原图展示不同角度和特写。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传照片", description: "拖放或点击上传照片——支持 PNG、JPG、WebP，最大 20 MB。" },
+      { stepNumber: 2, title: "放置分割线", description: "添加水平或垂直分割线，拖动到你想要切割的位置。" },
+      { stepNumber: 3, title: "预览与调整", description: "实时查看每个分割区域，通过智能对齐微调分割线位置。" },
+      { stepNumber: 4, title: "下载分割结果", description: "将所有部分打包下载为 ZIP，或逐个保存。" },
+    ],
+    faqEntries: [
+      { question: "支持哪些照片格式？", answer: "支持 PNG、JPG/JPEG 和 WebP 格式，每张照片最大 20 MB。" },
+      { question: "分割会降低照片质量吗？", answer: "不会。每个分割区域保留原始分辨率和像素数据，无压缩、无缩放、零质量损失。" },
+      { question: "可以不等分地分割照片吗？", answer: "可以。分割线可拖至任意位置，自由定义每个区域的大小。" },
+      { question: "最多能分割成多少块？", answer: "最多可添加 20 条水平线和 20 条垂直线，从一张照片生成数百个区域。" },
+      { question: "手机上能用吗？", answer: "可以。本工具在手机浏览器中也能流畅运行，支持直接在手机上分割照片。" },
+    ],
+    relatedTools: [
+      { slug: "/split-in-half", title: "对半切割", description: "最简单的分割——将图片一分为二。" },
+      { slug: "/split-into-equal-parts", title: "等分分割", description: "将图片分割为完全等大的区域。" },
+      { slug: "/split-for-instagram", title: "Instagram 分割", description: "为 Instagram 轮播和九宫格分割照片。" },
+      { slug: "/", title: "图片分割器", description: "全功能图片分割工具，支持拖拽分割线。" },
+    ],
+  },
+
+  "image-cutter": {
+    slug: "image-cutter",
+    category: "use-case",
+    seo: {
+      title: "在线图片裁切器 — 免费精准切图工具 | ImgSplit",
+      description: "免费在线图片裁切工具——精准切割任意图片，拖拽裁切线、智能对齐、即时下载，无需上传，100% 浏览器端处理。",
+      ogTitle: "在线图片裁切器 — 免费工具",
+      ogDescription: "精准切割任意图片，拖拽式操作，免费且保护隐私。",
+    },
+    hero: {
+      overline: "图片裁切工具",
+      headlinePart1: "图片",
+      headlineAccent: "裁切器",
+      headlinePart2: "精准切割",
+      description: "将任意图片精准切割为多个区域——拖拽裁切线、像素级对齐、即时下载，无需安装任何软件。",
+    },
+    scenarios: [
+      {
+        icon: "Scissors",
+        title: "网页设计切图",
+        description: "将设计稿切割为独立素材——页头、按钮、图标、内容区域——直接用于 HTML/CSS 开发。",
+      },
+      {
+        icon: "Mail",
+        title: "邮件模板切图",
+        description: "将邮件设计稿切割为优化的图片区域，确保 HTML 邮件在所有客户端中完美显示。",
+      },
+      {
+        icon: "FileImage",
+        title: "文档区域提取",
+        description: "从扫描文档、证书或截图中精准提取特定区域——只取你需要的部分。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传图片", description: "上传任意图片——PNG、JPG 或 WebP，拖放或点击选择。" },
+      { stepNumber: 2, title: "放置裁切线", description: "添加水平和垂直裁切线，拖动到精确位置定义切割区域。" },
+      { stepNumber: 3, title: "下载切割结果", description: "预览每个区域，然后一键打包下载 ZIP 或逐个保存。" },
+    ],
+    faqEntries: [
+      { question: "裁切和裁剪有什么区别？", answer: "裁剪（crop）是去掉图片边缘只保留一个区域；裁切（cut）是将整张图片分割为多个区域——每个像素都被保留在某个输出区域中，没有任何丢弃。" },
+      { question: "可以裁切出不规则形状吗？", answer: "本工具使用直线水平和垂直裁切线，生成矩形区域。如需非矩形形状，建议使用专门的蒙版工具。" },
+      { question: "裁切线精度如何？", answer: "裁切线对齐到像素边界，支持精细拖拽，可以达到单像素级别的定位精度。" },
+      { question: "有图片大小限制吗？", answer: "支持最大 20 MB 的文件。无像素尺寸限制，但超大图片可能需要稍长的处理时间。" },
+    ],
+    relatedTools: [
+      { slug: "/no-photoshop-slicer", title: "免 PS 切图", description: "Photoshop 切片工具的免费替代方案。" },
+      { slug: "/split-horizontally", title: "水平分割", description: "将图片切割为水平行和条带。" },
+      { slug: "/split-vertically", title: "垂直分割", description: "将图片切割为垂直列。" },
+      { slug: "/", title: "图片分割器", description: "全功能拖拽式图片分割工具。" },
+    ],
+  },
+
+  "grid-maker": {
+    slug: "grid-maker",
+    category: "use-case",
+    seo: {
+      title: "图片网格生成器 — 免费在线网格分割 | ImgSplit",
+      description: "免费在线图片网格生成器——创建 2x2、3x3、4x4 或自定义网格，适用于社交媒体、灵感板和拼图布局，浏览器端处理。",
+      ogTitle: "图片网格生成器 — 免费在线工具",
+      ogDescription: "创建任意网格布局，适用于社交媒体、灵感板等场景，免费且保护隐私。",
+    },
+    hero: {
+      overline: "网格生成工具",
+      headlinePart1: "图片",
+      headlineAccent: "网格生成器",
+      headlinePart2: "任意布局",
+      description: "创建完美的图片网格——2x2、3x3、4x4 或任何自定义布局，适用于社交媒体主页、灵感板和视觉叙事。",
+    },
+    scenarios: [
+      {
+        icon: "LayoutGrid",
+        title: "社交媒体网格主页",
+        description: "创建令人惊艳的网格布局，将社交媒体主页变成一幅完整的视觉画廊——每个方块都是大图的一部分。",
+      },
+      {
+        icon: "Palette",
+        title: "灵感板与色板",
+        description: "将参考图片分割成有序的网格方块，用于设计灵感板、色彩探索或视觉头脑风暴。",
+      },
+      {
+        icon: "Presentation",
+        title: "演示文稿视觉素材",
+        description: "为演示文稿创建网格式视觉素材——将信息图、对比图表或数据可视化切割为整齐的网格布局。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传图片", description: "上传要分割成网格的图片，支持 PNG、JPG、WebP。" },
+      { stepNumber: 2, title: "定义网格", description: "添加等距的水平和垂直分割线，创建 2x2、3x3 或任何自定义网格布局。" },
+      { stepNumber: 3, title: "下载网格方块", description: "预览所有网格方块，然后下载 ZIP 打包文件。方块按序编号，方便排列。" },
+    ],
+    faqEntries: [
+      { question: "可以创建多大的网格？", answer: "任意大小——从 2x2 到 10x10 甚至更大。每个方向最多可添加 20 条分割线。" },
+      { question: "网格方块大小完全一致吗？", answer: "使用智能对齐功能可将分割线自动吸附到等距位置，确保每个方块大小完全一致。" },
+      { question: "可以创建非正方形网格吗？", answer: "可以。添加不同数量的水平和垂直分割线即可创建任意矩形网格布局，如 2x3、3x4。" },
+      { question: "Instagram 用什么网格最好？", answer: "1x3 网格（3 个垂直方块）适合轮播帖；3x3 网格（9 个方块）可在个人主页创建震撼的拼图效果。" },
+    ],
+    relatedTools: [
+      { slug: "/grid", title: "网格分割器", description: "快速预设网格：3×3、1×3、2×2——针对社交媒体优化。" },
+      { slug: "/split-for-instagram", title: "Instagram 分割", description: "专为 Instagram 轮播和九宫格分割图片。" },
+      { slug: "/split-into-equal-parts", title: "等分分割", description: "将图片分割为完全等大的区域。" },
+      { slug: "/split-for-wechat", title: "社交媒体九宫格", description: "将图片分割为社交平台的网格方块。" },
+    ],
+  },
+
 }
 
 export default data

@@ -417,6 +417,124 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
+  "photo-splitter": {
+    slug: "photo-splitter",
+    category: "use-case",
+    seo: {
+      title: "온라인 사진 분할기 — 무료 이미지 분할 도구 | ImgSplit",
+      description: "무료 온라인 사진 분할 도구 — 드래그 앤 드롭으로 사진을 정밀하게 여러 조각으로 분할. 서버 업로드 불필요, 100% 브라우저 처리.",
+      ogTitle: "사진 분할기 — 무료 온라인 도구",
+      ogDescription: "사진을 여러 조각으로 즉시 분할. 무료, 안전, 브라우저 기반.",
+    },
+    hero: {
+      overline: "사진 분할 도구",
+      headlinePart1: "사진",
+      headlineAccent: "분할기",
+      headlinePart2: "— 무료 & 즉시",
+      description: "모든 사진을 픽셀 단위 정밀도로 여러 조각으로 분할. 드래그 앤 드롭 분할선, 스냅 정렬, 즉시 다운로드 — 모두 브라우저에서 처리.",
+    },
+    scenarios: [
+      { icon: "Camera", title: "사진 후처리", description: "단체 사진, 파노라마, 합성 이미지를 개별 섹션으로 분할하여 편집, 공유, 인쇄에 활용." },
+      { icon: "Smartphone", title: "모바일 사진 관리", description: "휴대폰 사진을 분할하여 얼굴 추출, 세부 사항 크롭, 전경과 배경 분리." },
+      { icon: "ShoppingBag", title: "상품 사진 제작", description: "상품 사진을 세부 샷으로 분할하여 이커머스 상세 페이지에서 다양한 각도와 클로즈업 표시." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "사진 업로드", description: "드래그 앤 드롭 또는 클릭으로 업로드 — PNG, JPG, WebP 지원, 최대 20MB." },
+      { stepNumber: 2, title: "분할선 배치", description: "수평 또는 수직 분할선을 추가하고 원하는 위치로 드래그." },
+      { stepNumber: 3, title: "미리보기 & 조정", description: "각 분할 영역을 실시간으로 확인. 스냅 정렬로 분할선 미세 조정." },
+      { stepNumber: 4, title: "다운로드", description: "모든 조각을 ZIP으로 다운로드하거나 개별 저장." },
+    ],
+    faqEntries: [
+      { question: "지원되는 사진 형식은?", answer: "PNG, JPG/JPEG, WebP 형식 지원. 파일당 최대 20MB." },
+      { question: "분할하면 화질이 떨어지나요?", answer: "아닙니다. 각 조각은 원본 해상도와 픽셀 데이터를 유지합니다. 압축이나 리샘플링 없이 화질 손실 제로." },
+      { question: "모바일에서도 사용할 수 있나요?", answer: "네. 모바일 브라우저에서도 원활하게 작동하며, 스마트폰에서 직접 사진을 분할할 수 있습니다." },
+    ],
+    relatedTools: [
+      { slug: "/split-in-half", title: "반으로 분할", description: "가장 간단한 분할 — 이미지를 2등분." },
+      { slug: "/split-into-equal-parts", title: "균등 분할", description: "이미지를 완전히 동일한 크기로 분할." },
+      { slug: "/split-for-instagram", title: "인스타그램 분할", description: "인스타그램 캐러셀과 그리드 포스트용 사진 분할." },
+      { slug: "/", title: "이미지 분할기", description: "드래그 앤 드롭 분할선으로 자유롭게 분할." },
+    ],
+  },
+
+  "image-cutter": {
+    slug: "image-cutter",
+    category: "use-case",
+    seo: {
+      title: "온라인 이미지 커터 — 무료 정밀 절단 도구 | ImgSplit",
+      description: "무료 온라인 이미지 커터 — 드래그 앤 드롭으로 이미지를 정밀하게 절단. 업로드 불필요, 100% 브라우저 처리.",
+      ogTitle: "온라인 이미지 커터 — 무료 도구",
+      ogDescription: "이미지를 드래그 앤 드롭으로 정밀하게 절단. 무료, 브라우저 기반.",
+    },
+    hero: {
+      overline: "이미지 절단 도구",
+      headlinePart1: "이미지",
+      headlineAccent: "커터",
+      headlinePart2: "— 정밀하게 절단",
+      description: "드래그 앤 드롭 절단선으로 모든 이미지를 정밀하게 분할. 픽셀 단위 정밀도, 스냅 정렬, 즉시 다운로드.",
+    },
+    scenarios: [
+      { icon: "Scissors", title: "웹 디자인 에셋 절단", description: "디자인 목업을 헤더, 버튼, 아이콘 등 개별 에셋으로 절단하여 HTML/CSS 구현에 활용." },
+      { icon: "Mail", title: "이메일 템플릿 슬라이싱", description: "이메일 디자인을 최적화된 이미지 섹션으로 분할하여 모든 이메일 클라이언트에서 완벽하게 렌더링." },
+      { icon: "FileImage", title: "문서 영역 추출", description: "스캔 문서나 스크린샷에서 특정 영역을 정확하게 추출." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "이미지 업로드", description: "PNG, JPG, WebP 이미지를 드래그 앤 드롭 또는 클릭으로 업로드." },
+      { stepNumber: 2, title: "절단선 배치", description: "수평 및 수직 절단선을 추가하고 정확한 절단 위치를 정의." },
+      { stepNumber: 3, title: "절단 결과 다운로드", description: "각 조각을 미리 보고 ZIP으로 일괄 다운로드 또는 개별 저장." },
+    ],
+    faqEntries: [
+      { question: "절단과 크롭의 차이는?", answer: "크롭은 이미지 가장자리를 제거하여 하나의 영역만 남기는 것. 절단은 이미지 전체를 여러 조각으로 나누는 것으로 — 모든 픽셀이 보존됩니다." },
+      { question: "절단선의 정밀도는?", answer: "절단선은 픽셀 경계에 스냅되며, 단일 픽셀 정밀도로 배치할 수 있습니다." },
+      { question: "이미지 크기 제한이 있나요?", answer: "20MB까지의 파일을 지원합니다. 픽셀 크기 제한은 없습니다." },
+    ],
+    relatedTools: [
+      { slug: "/no-photoshop-slicer", title: "포토샵 없이 슬라이스", description: "포토샵 슬라이스 도구의 무료 대안." },
+      { slug: "/split-horizontally", title: "수평 분할", description: "이미지를 수평 행과 스트립으로 분할." },
+      { slug: "/split-vertically", title: "수직 분할", description: "이미지를 수직 열로 분할." },
+      { slug: "/", title: "이미지 분할기", description: "드래그 앤 드롭 분할선으로 자유롭게 절단." },
+    ],
+  },
+
+  "grid-maker": {
+    slug: "grid-maker",
+    category: "use-case",
+    seo: {
+      title: "이미지 그리드 메이커 — 무료 온라인 그리드 생성 | ImgSplit",
+      description: "무료 온라인 이미지 그리드 메이커 — 2x2, 3x3, 4x4 또는 커스텀 그리드 생성. SNS, 무드보드에 최적. 브라우저 기반.",
+      ogTitle: "이미지 그리드 메이커 — 무료 온라인 도구",
+      ogDescription: "SNS, 무드보드 등에 최적인 이미지 그리드 생성. 무료, 브라우저 기반.",
+    },
+    hero: {
+      overline: "그리드 생성 도구",
+      headlinePart1: "이미지",
+      headlineAccent: "그리드 메이커",
+      headlinePart2: "— 자유로운 레이아웃",
+      description: "2x2, 3x3, 4x4 또는 커스텀 레이아웃으로 완벽한 이미지 그리드 생성. SNS 프로필, 무드보드, 비주얼 스토리텔링에 최적.",
+    },
+    scenarios: [
+      { icon: "LayoutGrid", title: "SNS 그리드 프로필", description: "SNS 프로필을 통일감 있는 비주얼 갤러리로 변환하는 멋진 그리드 레이아웃을 제작." },
+      { icon: "Palette", title: "무드보드 & 영감 보드", description: "참조 이미지를 체계적인 그리드 타일로 분할하여 디자인 무드보드와 컬러 팔레트 탐색에 활용." },
+      { icon: "Presentation", title: "프레젠테이션 비주얼", description: "인포그래픽이나 데이터 시각화를 깔끔한 그리드 레이아웃으로 분할." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "이미지 업로드", description: "그리드로 분할할 이미지를 업로드. PNG, JPG, WebP 지원." },
+      { stepNumber: 2, title: "그리드 정의", description: "균등한 수평·수직 분할선을 추가하여 2x2, 3x3 등 원하는 레이아웃 생성." },
+      { stepNumber: 3, title: "그리드 타일 다운로드", description: "모든 타일을 미리 보고 ZIP으로 다운로드. 타일은 순서대로 번호 매김." },
+    ],
+    faqEntries: [
+      { question: "어떤 크기의 그리드를 만들 수 있나요?", answer: "2x2부터 10x10 이상까지 자유롭게 생성 가능. 각 방향 최대 20개의 분할선." },
+      { question: "타일 크기가 완전히 동일한가요?", answer: "스냅 정렬 기능으로 분할선을 균등한 간격에 자동 배치하여 완전히 동일한 타일을 생성합니다." },
+      { question: "인스타그램에 가장 좋은 그리드는?", answer: "1x3 그리드는 캐러셀 포스트에 최적. 3x3 그리드는 프로필 페이지에서 놀라운 모자이크 효과를 연출." },
+    ],
+    relatedTools: [
+      { slug: "/grid", title: "그리드 분할", description: "프리셋 그리드: 3×3, 1×3, 2×2 — SNS에 최적화." },
+      { slug: "/split-for-instagram", title: "인스타그램 분할", description: "인스타그램 캐러셀 및 그리드 포스트 전용." },
+      { slug: "/split-into-equal-parts", title: "균등 분할", description: "이미지를 완전히 동일한 크기로 분할." },
+      { slug: "/split-for-wechat", title: "SNS 그리드", description: "SNS 프로필용 그리드 타일 분할." },
+    ],
+  },
+
 }
 
 export default data

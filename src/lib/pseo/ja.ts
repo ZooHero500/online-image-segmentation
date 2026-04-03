@@ -413,6 +413,125 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
+  "photo-splitter": {
+    slug: "photo-splitter",
+    category: "use-case",
+    seo: {
+      title: "オンライン写真分割ツール — 無料画像カッター | ImgSplit",
+      description: "無料のオンライン写真分割ツール — 写真をドラッグ＆ドロップで正確に分割。サーバーへのアップロード不要、100%ブラウザ処理。",
+      ogTitle: "写真分割ツール — 無料オンラインツール",
+      ogDescription: "写真を複数のパーツに即座に分割。無料・プライバシー安全・ブラウザベース。",
+    },
+    hero: {
+      overline: "写真分割ツール",
+      headlinePart1: "写真",
+      headlineAccent: "分割ツール",
+      headlinePart2: "— 無料＆即座に",
+      description: "あらゆる写真をピクセルレベルの精度で複数のパーツに分割。ドラッグ＆ドロップの分割線、スナップ整列、即時ダウンロード — すべてブラウザ内で完結。",
+    },
+    scenarios: [
+      { icon: "Camera", title: "写真の後処理", description: "集合写真、パノラマ、合成画像を個別セクションに分割し、編集・共有・印刷に活用。" },
+      { icon: "Smartphone", title: "スマホ写真の管理", description: "スマホで撮影した写真を分割 — 顔の切り出し、細部のトリミング、前景と背景の分離。" },
+      { icon: "ShoppingBag", title: "商品写真の作成", description: "商品写真を詳細ショットに分割し、ECサイトの商品ページで異なる角度やクローズアップを表示。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "写真をアップロード", description: "ドラッグ＆ドロップまたはクリックでアップロード — PNG、JPG、WebP対応、最大20MB。" },
+      { stepNumber: 2, title: "分割線を配置", description: "水平または垂直の分割線を追加し、ドラッグで正確な位置に配置。" },
+      { stepNumber: 3, title: "プレビュー＆調整", description: "各パーツをリアルタイムで確認。スナップ整列で分割線を微調整。" },
+      { stepNumber: 4, title: "ダウンロード", description: "全パーツをZIPでダウンロード、または個別に保存。" },
+    ],
+    faqEntries: [
+      { question: "対応する写真形式は？", answer: "PNG、JPG/JPEG、WebP形式に対応。1ファイルあたり最大20MB。" },
+      { question: "分割で画質は劣化しますか？", answer: "いいえ。各パーツは元の解像度とピクセルデータを保持します。圧縮やリサンプリングなし — 画質劣化ゼロ。" },
+      { question: "不均等に分割できますか？", answer: "はい。分割線を任意の位置にドラッグして、カスタムサイズのパーツを作成できます。" },
+      { question: "スマホでも使えますか？", answer: "はい。モバイルブラウザでも快適に動作し、スマホから直接写真を分割できます。" },
+    ],
+    relatedTools: [
+      { slug: "/split-in-half", title: "半分に分割", description: "最もシンプルな分割 — 画像を2等分。" },
+      { slug: "/split-into-equal-parts", title: "等分分割", description: "画像を均等なセグメントに分割。" },
+      { slug: "/split-for-instagram", title: "Instagram分割", description: "Instagramカルーセルやグリッド投稿用に写真を分割。" },
+      { slug: "/", title: "画像分割ツール", description: "ドラッグ＆ドロップの分割線で自由に分割。" },
+    ],
+  },
+
+  "image-cutter": {
+    slug: "image-cutter",
+    category: "use-case",
+    seo: {
+      title: "オンライン画像カッター — 無料カッティングツール | ImgSplit",
+      description: "無料のオンライン画像カッター — ドラッグ＆ドロップでカット線を配置し、即座にダウンロード。アップロード不要、100%ブラウザ処理。",
+      ogTitle: "オンライン画像カッター — 無料ツール",
+      ogDescription: "画像を正確にカット。ドラッグ＆ドロップ操作、無料・ブラウザベース。",
+    },
+    hero: {
+      overline: "画像カッティングツール",
+      headlinePart1: "画像",
+      headlineAccent: "カッター",
+      headlinePart2: "— 正確にカット",
+      description: "ドラッグ＆ドロップのカット線で任意の画像を精確に分割。ピクセルレベルの精度、スナップ整列、即時ダウンロード。",
+    },
+    scenarios: [
+      { icon: "Scissors", title: "Webデザインのアセット切り出し", description: "デザインモックアップをヘッダー、ボタン、アイコンなどの個別アセットに切り出し。" },
+      { icon: "Mail", title: "メールテンプレートのスライス", description: "メールデザインを最適化された画像セクションに分割し、HTMLメールを完璧に表示。" },
+      { icon: "FileImage", title: "ドキュメント領域の抽出", description: "スキャン文書やスクリーンショットから特定の領域を正確に抽出。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "画像をアップロード", description: "PNG、JPG、WebP画像をドラッグ＆ドロップまたはクリックでアップロード。" },
+      { stepNumber: 2, title: "カット線を配置", description: "水平・垂直のカット線を追加し、カット位置を正確に定義。" },
+      { stepNumber: 3, title: "カット結果をダウンロード", description: "各パーツをプレビューし、ZIPで一括ダウンロードまたは個別保存。" },
+    ],
+    faqEntries: [
+      { question: "カットとクロップの違いは？", answer: "クロップは画像の一部だけ残す操作。カットは画像全体を複数パーツに分割 — すべてのピクセルがいずれかのパーツに保存されます。" },
+      { question: "カット線の精度は？", answer: "カット線はピクセル境界にスナップし、単一ピクセル精度での配置が可能です。" },
+      { question: "画像サイズの上限は？", answer: "20MBまでのファイルに対応。ピクセル数の制限はありません。" },
+    ],
+    relatedTools: [
+      { slug: "/no-photoshop-slicer", title: "Photoshop不要スライサー", description: "Photoshopのスライスツールの無料代替。" },
+      { slug: "/split-horizontally", title: "水平分割", description: "画像を水平方向の行やストリップに分割。" },
+      { slug: "/split-vertically", title: "垂直分割", description: "画像を垂直方向の列に分割。" },
+      { slug: "/", title: "画像分割ツール", description: "ドラッグ＆ドロップの分割線で自由にカット。" },
+    ],
+  },
+
+  "grid-maker": {
+    slug: "grid-maker",
+    category: "use-case",
+    seo: {
+      title: "画像グリッドメーカー — 無料オンライングリッド生成 | ImgSplit",
+      description: "無料のオンライン画像グリッドメーカー — 2x2、3x3、4x4またはカスタムグリッドを作成。SNS、ムードボードに最適。ブラウザベース。",
+      ogTitle: "画像グリッドメーカー — 無料オンラインツール",
+      ogDescription: "SNS、ムードボードなどに最適な画像グリッドを作成。無料・ブラウザベース。",
+    },
+    hero: {
+      overline: "グリッド作成ツール",
+      headlinePart1: "画像",
+      headlineAccent: "グリッドメーカー",
+      headlinePart2: "— 自由なレイアウト",
+      description: "2x2、3x3、4x4 または任意のカスタムレイアウトで完璧なグリッドを作成。SNSプロフィール、ムードボード、ビジュアルストーリーテリングに最適。",
+    },
+    scenarios: [
+      { icon: "LayoutGrid", title: "SNSグリッドプロフィール", description: "SNSプロフィールを統一感のあるビジュアルギャラリーに変える、美しいグリッドレイアウトを作成。" },
+      { icon: "Palette", title: "ムードボード＆インスピレーション", description: "リファレンス画像をグリッドに分割し、デザインムードボードやカラーパレットの探索に活用。" },
+      { icon: "Presentation", title: "プレゼンテーション素材", description: "インフォグラフィックやデータ可視化をグリッドベースのビジュアルに分割。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "画像をアップロード", description: "グリッドに分割したい画像をアップロード。PNG、JPG、WebP対応。" },
+      { stepNumber: 2, title: "グリッドを定義", description: "等間隔の水平・垂直線を追加し、2x2、3x3などの希望するレイアウトを作成。" },
+      { stepNumber: 3, title: "グリッドタイルをダウンロード", description: "すべてのタイルをプレビューし、ZIPでダウンロード。タイルは順番に番号付け。" },
+    ],
+    faqEntries: [
+      { question: "どんなサイズのグリッドが作れますか？", answer: "2x2から10x10以上まで、自由なサイズで作成可能。各方向最大20本の分割線。" },
+      { question: "タイルは完全に均等ですか？", answer: "スナップ整列機能で分割線を等間隔に自動配置し、完全に均等なタイルを作成できます。" },
+      { question: "Instagramに最適なグリッドは？", answer: "1x3グリッドはカルーセル投稿に最適。3x3グリッドはプロフィールページで圧巻のモザイク効果を演出。" },
+    ],
+    relatedTools: [
+      { slug: "/grid", title: "グリッド分割", description: "プリセットグリッド：3×3、1×3、2×2 — SNS向けに最適化。" },
+      { slug: "/split-for-instagram", title: "Instagram分割", description: "Instagramカルーセルやグリッド投稿専用。" },
+      { slug: "/split-into-equal-parts", title: "等分分割", description: "画像を完全に均等なセグメントに分割。" },
+      { slug: "/split-for-wechat", title: "SNSグリッド", description: "SNSプロフィール用のグリッドタイルに分割。" },
+    ],
+  },
+
 }
 
 export default data

@@ -416,6 +416,164 @@ const data: Record<string, ToolPageData> = {
         ],
       },
 
+  "photo-splitter": {
+    slug: "photo-splitter",
+    category: "use-case",
+    seo: {
+      title: "Photo Splitter Online — Free Image Divider | ImgSplit",
+      description: "Free online photo splitter — divide any photo into multiple pieces with drag-and-drop precision. No upload to servers, 100% browser-based, works on any device.",
+      ogTitle: "Photo Splitter — Free Online Tool",
+      ogDescription: "Split any photo into multiple pieces instantly. Free, private, browser-based.",
+    },
+    hero: {
+      overline: "Photo Splitting Tool",
+      headlinePart1: "Photo",
+      headlineAccent: "Splitter",
+      headlinePart2: "— Free & Instant",
+      description: "Divide any photo into multiple pieces with pixel-perfect precision. Drag-and-drop split lines, snap alignment, and instant download — all in your browser.",
+    },
+    scenarios: [
+      {
+        icon: "Camera",
+        title: "Photography Post-Processing",
+        description: "Split group photos, panoramic shots, or composite images into individual sections for separate editing, sharing, or printing.",
+      },
+      {
+        icon: "Smartphone",
+        title: "Mobile Photo Management",
+        description: "Divide photos taken on your phone into sections — extract faces, crop details, or separate foreground from background areas.",
+      },
+      {
+        icon: "ShoppingBag",
+        title: "Product Photo Preparation",
+        description: "Split product photos into detail shots for e-commerce listings — show different angles, features, or close-ups from a single original photo.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Upload Your Photo", description: "Drag and drop or click to upload any photo — PNG, JPG, or WebP up to 20 MB." },
+      { stepNumber: 2, title: "Place Split Lines", description: "Add horizontal or vertical split lines and drag them to divide the photo exactly where you want." },
+      { stepNumber: 3, title: "Preview & Adjust", description: "See each split piece in real-time. Fine-tune line positions with snap alignment for precision." },
+      { stepNumber: 4, title: "Download Pieces", description: "Download all pieces as a ZIP archive, or save individual sections one by one." },
+    ],
+    faqEntries: [
+      { question: "What photo formats are supported?", answer: "PNG, JPG/JPEG, and WebP photos are supported, with a maximum file size of 20 MB per photo." },
+      { question: "Will splitting reduce my photo quality?", answer: "No. Each piece retains the original resolution and pixel data. There is no compression or resampling — zero quality loss guaranteed." },
+      { question: "Can I split a photo into unequal pieces?", answer: "Yes. Drag split lines to any position for custom-sized pieces. You're not limited to equal divisions." },
+      { question: "Is there a limit to how many pieces I can create?", answer: "You can add up to 20 horizontal and 20 vertical lines, creating hundreds of pieces from a single photo." },
+      { question: "Does this work with phone photos?", answer: "Yes — works with any photo from any device. The tool runs in your mobile browser too, so you can split photos directly on your phone." },
+    ],
+    relatedTools: [
+      { slug: "/split-in-half", title: "Split in Half", description: "The simplest split — divide any image into two equal halves." },
+      { slug: "/split-into-equal-parts", title: "Equal Parts Splitter", description: "Divide images into perfectly equal segments." },
+      { slug: "/split-for-instagram", title: "Instagram Splitter", description: "Split photos for Instagram carousel and grid posts." },
+      { slug: "/", title: "Image Splitter", description: "Full-featured image splitting with custom drag-and-drop lines." },
+    ],
+  },
+
+  "image-cutter": {
+    slug: "image-cutter",
+    category: "use-case",
+    seo: {
+      title: "Image Cutter Online — Free Cutting Tool | ImgSplit",
+      description: "Free online image cutter — cut any image into pieces with precise control. Drag cut lines, snap to grid, and download instantly. No upload, 100% browser-based.",
+      ogTitle: "Image Cutter Online — Free Tool",
+      ogDescription: "Cut any image into pieces with drag-and-drop precision. Free and browser-based.",
+    },
+    hero: {
+      overline: "Image Cutting Tool",
+      headlinePart1: "Image",
+      headlineAccent: "Cutter",
+      headlinePart2: "— Cut with Precision",
+      description: "Cut any image into multiple pieces with drag-and-drop cut lines. Pixel-perfect precision, snap alignment, and instant download — no software installation needed.",
+    },
+    scenarios: [
+      {
+        icon: "Scissors",
+        title: "Web Design Asset Cutting",
+        description: "Cut design mockups into individual assets — headers, buttons, icons, and content sections — ready for HTML/CSS implementation.",
+      },
+      {
+        icon: "Mail",
+        title: "Email Template Slicing",
+        description: "Cut email designs into optimized image sections for HTML email templates that render perfectly across all email clients.",
+      },
+      {
+        icon: "FileImage",
+        title: "Document Region Extraction",
+        description: "Cut specific regions from scanned documents, certificates, or screenshots — extract exactly the section you need without cropping the rest.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Upload Your Image", description: "Upload any image — PNG, JPG, or WebP. Drag and drop or click to select." },
+      { stepNumber: 2, title: "Place Cut Lines", description: "Add horizontal and vertical cut lines. Drag them to define exactly where the image should be divided." },
+      { stepNumber: 3, title: "Download Cut Pieces", description: "Preview every piece, then download all at once as a ZIP or pick individual sections." },
+    ],
+    faqEntries: [
+      { question: "What is the difference between cutting and cropping?", answer: "Cropping removes the outer edges of an image to keep one region. Cutting divides the entire image into multiple pieces — nothing is discarded, every pixel is preserved in one of the output pieces." },
+      { question: "Can I cut an image into irregular shapes?", answer: "The tool uses straight horizontal and vertical cut lines, producing rectangular pieces. For non-rectangular shapes, consider using a dedicated masking tool." },
+      { question: "How precise are the cut lines?", answer: "Cut lines snap to pixel boundaries and support fine-grained dragging. You can position them with single-pixel accuracy." },
+      { question: "Is there a maximum image size?", answer: "Files up to 20 MB are supported. There is no pixel dimension limit, though very large images may take a moment to process." },
+    ],
+    relatedTools: [
+      { slug: "/no-photoshop-slicer", title: "No-Photoshop Slicer", description: "A free alternative to Photoshop's slice tool for quick image dividing." },
+      { slug: "/split-horizontally", title: "Horizontal Splitter", description: "Cut images into horizontal rows and strips." },
+      { slug: "/split-vertically", title: "Vertical Splitter", description: "Cut images into vertical columns." },
+      { slug: "/", title: "Image Splitter", description: "Full-featured image splitting with drag-and-drop lines." },
+    ],
+  },
+
+  "grid-maker": {
+    slug: "grid-maker",
+    category: "use-case",
+    seo: {
+      title: "Image Grid Maker — Free Online Grid Generator | ImgSplit",
+      description: "Free online image grid maker — create 2x2, 3x3, 4x4, or custom grids from any image. Perfect for social media, moodboards, and collage layouts. Browser-based.",
+      ogTitle: "Image Grid Maker — Free Online Tool",
+      ogDescription: "Create image grids for social media, moodboards, and more. Free and browser-based.",
+    },
+    hero: {
+      overline: "Grid Creation Tool",
+      headlinePart1: "Image",
+      headlineAccent: "Grid Maker",
+      headlinePart2: "— Any Layout",
+      description: "Create perfect image grids — 2x2, 3x3, 4x4, or any custom layout. Ideal for social media profiles, moodboards, and visual storytelling.",
+    },
+    scenarios: [
+      {
+        icon: "LayoutGrid",
+        title: "Social Media Grid Profiles",
+        description: "Create stunning grid layouts that transform your social media profile into a cohesive visual gallery — each tile is part of a bigger picture.",
+      },
+      {
+        icon: "Palette",
+        title: "Moodboards & Inspiration Boards",
+        description: "Split reference images into organized grid tiles for design moodboards, color palette exploration, or visual brainstorming sessions.",
+      },
+      {
+        icon: "Presentation",
+        title: "Presentation Visuals",
+        description: "Create grid-based visuals for presentations — split infographics, comparison charts, or data visualizations into clean, organized tiles.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Upload Your Image", description: "Upload the image you want to split into a grid. Supports PNG, JPG, and WebP." },
+      { stepNumber: 2, title: "Define Your Grid", description: "Add evenly spaced horizontal and vertical lines to create your desired grid layout — 2x2, 3x3, or any custom configuration." },
+      { stepNumber: 3, title: "Download Grid Tiles", description: "Preview all grid tiles, then download them as a ZIP. Tiles are numbered for easy ordering." },
+    ],
+    faqEntries: [
+      { question: "What grid sizes can I create?", answer: "Any grid size you want — from 2x2 to 10x10 and beyond. Add as many horizontal and vertical lines as needed (up to 20 each)." },
+      { question: "Are the grid tiles perfectly equal?", answer: "Use the snap alignment feature to distribute lines evenly. Lines automatically snap to equal-interval positions for perfectly uniform tiles." },
+      { question: "Can I create non-square grids like 2x3 or 3x4?", answer: "Yes. Add different numbers of horizontal and vertical lines to create any rectangular grid layout." },
+      { question: "What is the best grid for Instagram?", answer: "A 1x3 grid (3 vertical tiles) works great for carousel posts. A 3x3 grid (9 tiles) creates a stunning mosaic effect on your profile page." },
+    ],
+    relatedTools: [
+      { slug: "/grid", title: "Grid Splitter", description: "Quick preset grid splits: 3×3, 1×3, 2×2 — optimized for social media." },
+      { slug: "/split-for-instagram", title: "Instagram Splitter", description: "Split images specifically for Instagram carousel and grid posts." },
+      { slug: "/split-into-equal-parts", title: "Equal Parts Splitter", description: "Divide images into perfectly equal segments." },
+      { slug: "/split-for-wechat", title: "Social Media Grid", description: "Split images into grid tiles for social media profiles." },
+    ],
+  },
+
 }
 
 export default data

@@ -27,6 +27,9 @@ const slugMeta: { slug: string; category: ToolCategory }[] = [
   { slug: "split-for-wechat", category: "use-case" },
   { slug: "split-for-print", category: "use-case" },
   { slug: "no-photoshop-slicer", category: "use-case" },
+  { slug: "photo-splitter", category: "use-case" },
+  { slug: "image-cutter", category: "use-case" },
+  { slug: "grid-maker", category: "use-case" },
 ]
 
 const toolPages: ToolPageConfig[] = slugMeta.map(({ slug, category }) => ({

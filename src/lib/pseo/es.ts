@@ -413,6 +413,124 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
+  "photo-splitter": {
+    slug: "photo-splitter",
+    category: "use-case",
+    seo: {
+      title: "Divisor de Fotos Online — Herramienta Gratuita | ImgSplit",
+      description: "Divisor de fotos online gratuito — divide cualquier foto en múltiples piezas con precisión. Sin subida a servidores, 100% basado en navegador.",
+      ogTitle: "Divisor de Fotos — Herramienta Online Gratuita",
+      ogDescription: "Divide cualquier foto en múltiples piezas al instante. Gratis, privado, basado en navegador.",
+    },
+    hero: {
+      overline: "Herramienta de División de Fotos",
+      headlinePart1: "Divisor de",
+      headlineAccent: "Fotos",
+      headlinePart2: "— Gratis e Instantáneo",
+      description: "Divide cualquier foto en múltiples piezas con precisión de píxel. Líneas de división arrastrables, alineación automática y descarga instantánea — todo en tu navegador.",
+    },
+    scenarios: [
+      { icon: "Camera", title: "Procesamiento Fotográfico", description: "Divide fotos grupales, panorámicas o imágenes compuestas en secciones individuales para edición, compartir o impresión." },
+      { icon: "Smartphone", title: "Gestión de Fotos Móviles", description: "Divide fotos del teléfono en secciones — extrae rostros, recorta detalles o separa primer plano del fondo." },
+      { icon: "ShoppingBag", title: "Preparación de Fotos de Producto", description: "Divide fotos de productos en tomas de detalle para listados de e-commerce — muestra diferentes ángulos desde una sola foto original." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Sube tu Foto", description: "Arrastra y suelta o haz clic para subir — PNG, JPG, WebP hasta 20 MB." },
+      { stepNumber: 2, title: "Coloca Líneas de División", description: "Agrega líneas horizontales o verticales y arrástralas a la posición exacta." },
+      { stepNumber: 3, title: "Vista Previa y Ajuste", description: "Ve cada pieza en tiempo real. Ajusta con alineación automática para máxima precisión." },
+      { stepNumber: 4, title: "Descarga las Piezas", description: "Descarga todo como ZIP o guarda piezas individuales." },
+    ],
+    faqEntries: [
+      { question: "¿Qué formatos de foto se admiten?", answer: "PNG, JPG/JPEG y WebP, con un tamaño máximo de 20 MB por archivo." },
+      { question: "¿La división reduce la calidad?", answer: "No. Cada pieza conserva la resolución y datos de píxel originales. Sin compresión ni remuestreo — cero pérdida de calidad." },
+      { question: "¿Funciona en móviles?", answer: "Sí. Funciona perfectamente en navegadores móviles — puedes dividir fotos directamente desde tu teléfono." },
+    ],
+    relatedTools: [
+      { slug: "/split-in-half", title: "Dividir a la Mitad", description: "La división más simple — divide cualquier imagen en dos mitades iguales." },
+      { slug: "/split-into-equal-parts", title: "Partes Iguales", description: "Divide imágenes en segmentos perfectamente iguales." },
+      { slug: "/split-for-instagram", title: "División Instagram", description: "Divide fotos para carruseles y cuadrículas de Instagram." },
+      { slug: "/", title: "Divisor de Imágenes", description: "División de imágenes con líneas arrastrables." },
+    ],
+  },
+
+  "image-cutter": {
+    slug: "image-cutter",
+    category: "use-case",
+    seo: {
+      title: "Cortador de Imágenes Online — Herramienta Gratuita | ImgSplit",
+      description: "Cortador de imágenes online gratuito — corta imágenes con precisión mediante líneas arrastrables. Sin subida, 100% basado en navegador.",
+      ogTitle: "Cortador de Imágenes Online — Herramienta Gratuita",
+      ogDescription: "Corta cualquier imagen con precisión de arrastrar y soltar. Gratis y basado en navegador.",
+    },
+    hero: {
+      overline: "Herramienta de Corte",
+      headlinePart1: "Cortador de",
+      headlineAccent: "Imágenes",
+      headlinePart2: "— Corte Preciso",
+      description: "Corta cualquier imagen en piezas con líneas de corte arrastrables. Precisión de píxel, alineación automática y descarga instantánea.",
+    },
+    scenarios: [
+      { icon: "Scissors", title: "Corte de Recursos Web", description: "Corta mockups de diseño en recursos individuales — encabezados, botones, iconos — listos para HTML/CSS." },
+      { icon: "Mail", title: "Slicing de Plantillas de Email", description: "Corta diseños de email en secciones optimizadas para renderizado perfecto en todos los clientes." },
+      { icon: "FileImage", title: "Extracción de Regiones", description: "Extrae regiones específicas de documentos escaneados, certificados o capturas de pantalla." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Sube tu Imagen", description: "Sube cualquier imagen — PNG, JPG o WebP. Arrastra y suelta o haz clic." },
+      { stepNumber: 2, title: "Coloca Líneas de Corte", description: "Agrega líneas de corte horizontales y verticales para definir las divisiones." },
+      { stepNumber: 3, title: "Descarga las Piezas", description: "Previsualiza cada pieza y descarga todo como ZIP o individualmente." },
+    ],
+    faqEntries: [
+      { question: "¿Cuál es la diferencia entre cortar y recortar?", answer: "Recortar elimina los bordes para quedarse con una región. Cortar divide la imagen completa en múltiples piezas — cada píxel se conserva." },
+      { question: "¿Qué tan preciso es el corte?", answer: "Las líneas de corte se alinean a los límites de píxel con precisión de un solo píxel." },
+      { question: "¿Hay límite de tamaño?", answer: "Archivos de hasta 20 MB. Sin límite de dimensiones en píxeles." },
+    ],
+    relatedTools: [
+      { slug: "/no-photoshop-slicer", title: "Sin Photoshop", description: "Alternativa gratuita a la herramienta de rebanado de Photoshop." },
+      { slug: "/split-horizontally", title: "División Horizontal", description: "Corta imágenes en filas horizontales." },
+      { slug: "/split-vertically", title: "División Vertical", description: "Corta imágenes en columnas verticales." },
+      { slug: "/", title: "Divisor de Imágenes", description: "División de imágenes con líneas arrastrables." },
+    ],
+  },
+
+  "grid-maker": {
+    slug: "grid-maker",
+    category: "use-case",
+    seo: {
+      title: "Generador de Cuadrícula — Herramienta Gratuita | ImgSplit",
+      description: "Generador de cuadrícula de imágenes online gratuito — crea cuadrículas 2x2, 3x3, 4x4 o personalizadas. Ideal para redes sociales y moodboards.",
+      ogTitle: "Generador de Cuadrícula — Herramienta Online Gratuita",
+      ogDescription: "Crea cuadrículas de imágenes para redes sociales, moodboards y más. Gratis y basado en navegador.",
+    },
+    hero: {
+      overline: "Herramienta de Cuadrícula",
+      headlinePart1: "Generador de",
+      headlineAccent: "Cuadrícula",
+      headlinePart2: "— Cualquier Layout",
+      description: "Crea cuadrículas de imágenes perfectas — 2x2, 3x3, 4x4 o cualquier layout personalizado. Ideal para perfiles de redes sociales y moodboards.",
+    },
+    scenarios: [
+      { icon: "LayoutGrid", title: "Perfiles de Cuadrícula Social", description: "Crea impresionantes layouts de cuadrícula que transforman tu perfil en una galería visual cohesiva." },
+      { icon: "Palette", title: "Moodboards e Inspiración", description: "Divide imágenes de referencia en tiles organizados para moodboards de diseño y exploración de paletas de color." },
+      { icon: "Presentation", title: "Visuales para Presentaciones", description: "Divide infografías o visualizaciones de datos en layouts de cuadrícula limpios para presentaciones." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Sube tu Imagen", description: "Sube la imagen que deseas dividir en cuadrícula. PNG, JPG, WebP." },
+      { stepNumber: 2, title: "Define la Cuadrícula", description: "Agrega líneas horizontales y verticales equidistantes para crear el layout deseado." },
+      { stepNumber: 3, title: "Descarga los Tiles", description: "Previsualiza todos los tiles y descárgalos como ZIP. Numerados en orden." },
+    ],
+    faqEntries: [
+      { question: "¿Qué tamaños de cuadrícula puedo crear?", answer: "Cualquier tamaño — desde 2x2 hasta 10x10 y más. Hasta 20 líneas por dirección." },
+      { question: "¿Los tiles son perfectamente iguales?", answer: "Con la alineación automática, las líneas se colocan a intervalos iguales para tiles perfectamente uniformes." },
+      { question: "¿Cuál es la mejor cuadrícula para Instagram?", answer: "1x3 para carruseles. 3x3 para un efecto mosaico impresionante en tu perfil." },
+    ],
+    relatedTools: [
+      { slug: "/grid", title: "División en Cuadrícula", description: "Cuadrículas preestablecidas: 3×3, 1×3, 2×2 — optimizadas para redes sociales." },
+      { slug: "/split-for-instagram", title: "División Instagram", description: "División de imágenes para carruseles y cuadrículas de Instagram." },
+      { slug: "/split-into-equal-parts", title: "Partes Iguales", description: "Divide imágenes en segmentos perfectamente iguales." },
+      { slug: "/split-for-wechat", title: "Cuadrícula Social", description: "Divide imágenes en tiles para perfiles de redes sociales." },
+    ],
+  },
+
 }
 
 export default data
