@@ -91,10 +91,24 @@ async function enforceLimit(): Promise<void> {
   }
 }
 
+export type SaveError = "quota_exceeded" | "blob_storage_failed" | "unknown"
+
+interface SaveSuccess {
+  success: true
+  record: HistoryRecord
+}
+
+interface SaveFailure {
+  success: false
+  error: SaveError
+}
+
+export type SaveResult = SaveSuccess | SaveFailure
+
 export const storageService = {
   async saveRecord(
     data: Omit<HistoryRecord, "id" | "createdAt">
-  ): Promise<HistoryRecord> {
+  ): Promise<SaveResult> {
     const externalId = generateId()
     const createdAt = Date.now()
 
@@ -118,17 +132,47 @@ export const storageService = {
       )
     }
 
-    await db.history.add(dbRecord)
+    try {
+      await db.history.add(dbRecord)
+    } catch (err: unknown) {
+      const name = err instanceof DOMException ? err.name : ""
+      const msg = err instanceof Error ? err.message : String(err)
+
+      if (name === "QuotaExceededError") {
+        // Auto-cleanup oldest records and retry once
+        try {
+          const oldest = await db.history
+            .orderBy("createdAt")
+            .limit(5)
+            .toArray()
+          for (const record of oldest) {
+            clearRecordLocalData(record.externalId)
+            await db.history.delete(record.id!)
+          }
+          await db.history.add(dbRecord)
+        } catch {
+          return { success: false, error: "quota_exceeded" }
+        }
+      } else if (msg.toLowerCase().includes("blob") || msg.toLowerCase().includes("object store")) {
+        return { success: false, error: "blob_storage_failed" }
+      } else {
+        return { success: false, error: "unknown" }
+      }
+    }
+
     await enforceLimit()
 
     return {
-      id: externalId,
-      originalFileName: data.originalFileName,
-      originalMimeType: data.originalMimeType,
-      lines: data.lines,
-      createdAt,
-      thumbnailDataUrl: data.thumbnailDataUrl,
-      imageBlob: data.imageBlob,
+      success: true,
+      record: {
+        id: externalId,
+        originalFileName: data.originalFileName,
+        originalMimeType: data.originalMimeType,
+        lines: data.lines,
+        createdAt,
+        thumbnailDataUrl: data.thumbnailDataUrl,
+        imageBlob: data.imageBlob,
+      },
     }
   },
 

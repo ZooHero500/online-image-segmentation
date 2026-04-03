@@ -215,7 +215,12 @@
     "today": "今天 {time}",
     "lineCount": "{count} 条分割线",
     "delete": "删除",
-    "close": "关闭"
+    "close": "关闭",
+    "saveFailed": {
+      "quotaExceeded": "存储空间已满，已自动清理旧记录，请重试",
+      "blobFailed": "浏览器无法保存图片数据，请尝试使用其他浏览器",
+      "unknown": "保存历史记录失败，请重试"
+    }
   },
   "grid": {
     "metadata": {

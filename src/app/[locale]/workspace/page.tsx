@@ -2,6 +2,8 @@
 
 import { useCallback, useState } from "react"
 import { Menu } from "lucide-react"
+import { toast } from "sonner"
+import { useTranslations } from "next-intl"
 import { DynamicSplitEditor } from "@/components/DynamicSplitEditor"
 import { HistorySidebar } from "@/components/HistorySidebar"
 import { LogoIcon } from "@/components/LogoIcon"
@@ -21,6 +23,7 @@ export default function WorkspacePage() {
   const [initialState, setInitialState] = useState<EditorState | undefined>()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { saveCurrentWork } = useHistory()
+  const t = useTranslations("history")
 
   const handleLoadRecord = useCallback((record: EditorState) => {
     setInitialState(record)
@@ -41,9 +44,18 @@ export default function WorkspacePage() {
       thumbnailDataUrl: string
       images?: Array<{ blob: Blob; fileName: string; mimeType: string }>
     }) => {
-      await saveCurrentWork(data)
+      const result = await saveCurrentWork(data)
+      if (!result.success) {
+        if (result.error === "quota_exceeded") {
+          toast.error(t("saveFailed.quotaExceeded"))
+        } else if (result.error === "blob_storage_failed") {
+          toast.error(t("saveFailed.blobFailed"))
+        } else {
+          toast.error(t("saveFailed.unknown"))
+        }
+      }
     },
-    [saveCurrentWork]
+    [saveCurrentWork, t]
   )
 
   return (

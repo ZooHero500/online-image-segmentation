@@ -215,7 +215,12 @@
     "today": "今日 {time}",
     "lineCount": "分割線 {count}本",
     "delete": "削除",
-    "close": "閉じる"
+    "close": "閉じる",
+    "saveFailed": {
+      "quotaExceeded": "ストレージが満杯です。古い記録を削除しました。もう一度お試しください。",
+      "blobFailed": "ブラウザが画像データの保存に失敗しました。別のブラウザをお試しください。",
+      "unknown": "履歴の保存に失敗しました。もう一度お試しください。"
+    }
   },
   "grid": {
     "metadata": {

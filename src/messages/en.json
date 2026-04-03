@@ -215,7 +215,12 @@
     "today": "Today {time}",
     "lineCount": "{count} split lines",
     "delete": "Delete",
-    "close": "Close"
+    "close": "Close",
+    "saveFailed": {
+      "quotaExceeded": "Storage full. Old records were cleared, please try again.",
+      "blobFailed": "Your browser failed to save image data. Try using a different browser.",
+      "unknown": "Failed to save history. Please try again."
+    }
   },
   "grid": {
     "metadata": {

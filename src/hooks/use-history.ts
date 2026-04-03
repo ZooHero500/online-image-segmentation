@@ -2,7 +2,7 @@
 
 import { useCallback, useState, useEffect } from "react"
 import { useLiveQuery } from "dexie-react-hooks"
-import { storageService, db } from "@/lib/storage-service"
+import { storageService, db, type SaveResult } from "@/lib/storage-service"
 import type { HistoryRecord } from "@/types"
 
 interface UseHistoryReturn {
@@ -10,7 +10,7 @@ interface UseHistoryReturn {
   isLoading: boolean
   saveCurrentWork: (
     record: Omit<HistoryRecord, "id" | "createdAt">
-  ) => Promise<void>
+  ) => Promise<SaveResult>
   loadRecord: (id: string) => Promise<HistoryRecord | undefined>
   deleteRecord: (id: string) => Promise<void>
   storageInfo: { used: number; quota: number }
@@ -59,8 +59,8 @@ export function useHistory(): UseHistoryReturn {
   }, [rawRecords?.length])
 
   const saveCurrentWork = useCallback(
-    async (data: Omit<HistoryRecord, "id" | "createdAt">) => {
-      await storageService.saveRecord(data)
+    async (data: Omit<HistoryRecord, "id" | "createdAt">): Promise<SaveResult> => {
+      return storageService.saveRecord(data)
     },
     []
   )

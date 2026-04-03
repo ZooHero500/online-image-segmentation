@@ -215,7 +215,12 @@
     "today": "Hoy {time}",
     "lineCount": "{count} líneas de corte",
     "delete": "Eliminar",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "saveFailed": {
+      "quotaExceeded": "Almacenamiento lleno. Se limpiaron registros antiguos, inténtelo de nuevo.",
+      "blobFailed": "El navegador no pudo guardar los datos de imagen. Pruebe con otro navegador.",
+      "unknown": "No se pudo guardar el historial. Inténtelo de nuevo."
+    }
   },
   "grid": {
     "metadata": {
