@@ -664,8 +664,13 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               </div>
             </div>
           </div>
-          <div className="mt-6 md:mt-0 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-            zoohero.dev@gmail.com
+          <div className="mt-6 md:mt-0 flex flex-col items-start md:items-end gap-4">
+            <a href="https://www.producthunt.com/products/imgsplit?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-imgsplit" target="_blank" rel="noopener noreferrer">
+              <img alt="ImgSplit - Split images with precision — free, private, no upload | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1114907&theme=light&t=1775379733917" />
+            </a>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+              zoohero.dev@gmail.com
+            </span>
           </div>
         </div>
       </footer>
