@@ -134,3 +134,25 @@ export interface SegmentResultItem {
 export interface SegmentResponse {
   segments: SegmentResultItem[]
 }
+
+/** Resize editor — image transform state on artboard */
+export interface ResizeImageTransform {
+  /** Image position on artboard (artboard coordinates) */
+  x: number
+  y: number
+  /** Uniform scale factor */
+  scale: number
+  /** Source crop region (image pixel coordinates). null = full image */
+  crop: CropRect | null
+}
+
+/** Crop rectangle in image source pixel coordinates */
+export interface CropRect {
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
+/** Resize editor interaction mode */
+export type ResizeEditorMode = "idle" | "selected" | "crop"
