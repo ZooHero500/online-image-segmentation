@@ -325,11 +325,12 @@ export function ResizeCanvas({
         <Layer>
           <Rect name="artboard-shadow" x={artboardX} y={artboardY} width={artboardDisplayW} height={artboardDisplayH} shadowColor="rgba(0,0,0,0.12)" shadowBlur={12} shadowOffsetY={3} listening={false} />
 
-          {checkerboardImage && (
-            <Rect name="checkerboard" x={artboardX} y={artboardY} width={artboardDisplayW} height={artboardDisplayH} fillPatternImage={checkerboardImage} fillPatternScaleX={1} fillPatternScaleY={1} fillPatternRepeat="repeat" />
+          {/* Artboard background: checkerboard if available, solid white fallback */}
+          {checkerboardImage ? (
+            <Rect name="artboard" x={artboardX} y={artboardY} width={artboardDisplayW} height={artboardDisplayH} fillPatternImage={checkerboardImage} fillPatternScaleX={1} fillPatternScaleY={1} fillPatternRepeat="repeat" />
+          ) : (
+            <Rect name="artboard" x={artboardX} y={artboardY} width={artboardDisplayW} height={artboardDisplayH} fill="#ffffff" />
           )}
-
-          <Rect name="artboard" x={artboardX} y={artboardY} width={artboardDisplayW} height={artboardDisplayH} fill="#ffffff" />
 
           {image && (
             <Group clipX={artboardX} clipY={artboardY} clipWidth={artboardDisplayW} clipHeight={artboardDisplayH}>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 import { Download, RotateCcw, ImagePlus, Check, X, Undo2, Redo2 } from "lucide-react"
@@ -39,10 +39,28 @@ export function ResizeEditor() {
     canRedo,
   } = useResizeEditor()
 
+  // Track container size reactively
+  const [containerSize, setContainerSize] = useState({ width: 800, height: 600 })
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0]
+      if (entry) {
+        setContainerSize({
+          width: entry.contentRect.width,
+          height: entry.contentRect.height,
+        })
+      }
+    })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   // Viewport zoom/pan — treats the artboard as the "image" for the viewport hook
   const viewport = useCanvasViewport({
-    containerWidth: containerRef.current?.clientWidth ?? 800,
-    containerHeight: containerRef.current?.clientHeight ?? 600,
+    containerWidth: containerSize.width,
+    containerHeight: containerSize.height,
     imageWidth: canvasSize.width,
     imageHeight: canvasSize.height,
   })
@@ -71,15 +89,15 @@ export function ResizeEditor() {
       // Zoom shortcuts
       if (isCmd && (e.key === "=" || e.key === "+")) {
         e.preventDefault()
-        const cx = (containerRef.current?.clientWidth ?? 800) / 2
-        const cy = (containerRef.current?.clientHeight ?? 600) / 2
+        const cx = (containerSize.width) / 2
+        const cy = (containerSize.height) / 2
         viewport.zoomAtPoint(cx, cy, 1.15)
         return
       }
       if (isCmd && e.key === "-") {
         e.preventDefault()
-        const cx = (containerRef.current?.clientWidth ?? 800) / 2
-        const cy = (containerRef.current?.clientHeight ?? 600) / 2
+        const cx = (containerSize.width) / 2
+        const cy = (containerSize.height) / 2
         viewport.zoomAtPoint(cx, cy, 1 / 1.15)
         return
       }
@@ -151,8 +169,8 @@ export function ResizeEditor() {
 
   const handleZoomChange = useCallback(
     (percent: number) => {
-      const cx = (containerRef.current?.clientWidth ?? 800) / 2
-      const cy = (containerRef.current?.clientHeight ?? 600) / 2
+      const cx = (containerSize.width) / 2
+      const cy = (containerSize.height) / 2
       const targetScale = percent / 100
       const factor = targetScale / viewport.scale
       viewport.zoomAtPoint(cx, cy, factor)
