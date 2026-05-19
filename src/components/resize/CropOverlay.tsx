@@ -18,7 +18,7 @@ interface CropOverlayProps {
   onCropChange: (rect: CropRect) => void
 }
 
-const HANDLE_SIZE = 10
+const HANDLE_SIZE = 12
 const HANDLE_COLOR = "#ffffff"
 const HANDLE_STROKE = "#0066ff"
 const DIM_COLOR = "rgba(0, 0, 0, 0.5)"
@@ -186,6 +186,10 @@ export function CropOverlay({
             fill={HANDLE_COLOR}
             stroke={HANDLE_STROKE}
             strokeWidth={1.5}
+            cornerRadius={2}
+            shadowColor="rgba(0,0,0,0.2)"
+            shadowBlur={3}
+            shadowOffsetY={1}
             draggable
             onDragMove={(e) => handleCornerDrag(corner, e)}
             dragBoundFunc={(pos) => ({
