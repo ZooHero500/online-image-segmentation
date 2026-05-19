@@ -6,7 +6,7 @@ import { routing } from "@/i18n/routing"
 import type { Metadata } from "next"
 import { DynamicResizeEditor } from "@/components/resize/DynamicResizeEditor"
 
-const BASE_URL = "https://imgsplit.com"
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imgsplit.com"
 
 export async function generateMetadata({
   params,
@@ -39,6 +39,10 @@ export async function generateMetadata({
       },
     },
   }
+}
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }))
 }
 
 export default async function ResizePage({

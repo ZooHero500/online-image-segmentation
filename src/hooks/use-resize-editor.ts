@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback, useRef } from "react"
+import { useState, useCallback, useRef, useEffect } from "react"
 import type { ResizeImageTransform, CropRect, ResizeEditorMode } from "@/types"
 import { calculateFillTransform } from "@/lib/resize-utils"
 
@@ -48,6 +48,15 @@ export function useResizeEditor(
   const [fileName, setFileName] = useState("")
   const [mimeType, setMimeType] = useState("image/png")
   const imageUrlRef = useRef<string | null>(null)
+
+  // Cleanup object URL on unmount
+  useEffect(() => {
+    return () => {
+      if (imageUrlRef.current) {
+        URL.revokeObjectURL(imageUrlRef.current)
+      }
+    }
+  }, [])
 
   const fitImageToArtboard = useCallback(
     (img: HTMLImageElement, size: CanvasSize, currentCrop: CropRect | null) => {

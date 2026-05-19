@@ -45,8 +45,8 @@ export function ResizeEditor() {
         }
       } else if (e.key === "Escape" && mode === "selected") {
         setMode("idle")
-      } else if (e.key === "Delete" || e.key === "Backspace") {
-        if (mode === "selected") {
+      } else if (e.key === "Delete") {
+        if (mode === "selected" && document.activeElement === document.body) {
           clearImage()
         }
       }
@@ -60,7 +60,7 @@ export function ResizeEditor() {
       try {
         await loadImage(file)
       } catch {
-        toast.error(t("uploadHint"))
+        toast.error(t("invalidSize"))
       }
     },
     [loadImage, t]
@@ -94,7 +94,7 @@ export function ResizeEditor() {
         a.click()
         URL.revokeObjectURL(url)
       } catch {
-        toast.error("Export failed")
+        toast.error("Export failed. Please try again.")
       }
     },
     [image, transform, canvasSize, fileName]
