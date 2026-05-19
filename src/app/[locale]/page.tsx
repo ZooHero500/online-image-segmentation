@@ -626,6 +626,12 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 >
                   {t("footer.toolGrid")}
                 </Link>
+                <Link
+                  href="/resize"
+                  className="hover:text-accent transition-colors duration-500"
+                >
+                  {t("footer.toolResize")}
+                </Link>
                 <a
                   href="#upload"
                   className="hover:text-accent transition-colors duration-500"
