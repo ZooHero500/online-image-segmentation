@@ -541,5 +541,36 @@
     "showLayer": "Mostrar capa",
     "segmentComplete": "Segmentación completada",
     "exportFailed": "Error en la exportación. Inténtalo de nuevo."
+  },
+  "resize": {
+    "metadata": {
+      "title": "Redimensionar Imagen — Recortar y Ajustar | ImgSplit",
+      "description": "Herramienta gratuita para redimensionar imágenes — dimensiones personalizadas, arrastrar para posicionar, recortar y descargar. Sin subir archivos, 100% en el navegador."
+    },
+    "loadingEditor": "Cargando editor...",
+    "uploadTitle": "Subir imagen",
+    "uploadHint": "Arrastra una imagen aquí o haz clic para subir",
+    "uploadFormats": "PNG, JPEG, WebP",
+    "canvasSize": "Tamaño del lienzo",
+    "width": "Ancho",
+    "height": "Alto",
+    "swap": "Intercambiar",
+    "presets": "Preajustes",
+    "preset_1_1": "1:1 Cuadrado",
+    "preset_4_3": "4:3 Horizontal",
+    "preset_3_4": "3:4 Vertical",
+    "preset_16_9": "16:9 Panorámico",
+    "preset_9_16": "9:16 Móvil",
+    "preset_custom": "Personalizado",
+    "download": "Descargar",
+    "downloadAs": "Descargar como {format}",
+    "reset": "Restablecer",
+    "replaceImage": "Reemplazar imagen",
+    "cropMode": "Modo recorte",
+    "cropHint": "Arrastra las esquinas para recortar. Enter para aplicar, Esc para cancelar.",
+    "applyCrop": "Aplicar recorte",
+    "cancelCrop": "Cancelar",
+    "invalidSize": "Las dimensiones deben ser enteros entre 1 y 4096",
+    "px": "px"
   }
 }
