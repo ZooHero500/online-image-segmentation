@@ -572,6 +572,9 @@
     "applyCrop": "Aplicar recorte",
     "cancelCrop": "Cancelar",
     "invalidSize": "Las dimensiones deben ser enteros entre 1 y 4096",
-    "px": "px"
+    "px": "px",
+    "statusImage": "Imagen",
+    "statusCanvas": "Lienzo",
+    "statusCrop": "Recorte"
   }
 }

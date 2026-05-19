@@ -572,6 +572,9 @@
     "applyCrop": "应用裁剪",
     "cancelCrop": "取消",
     "invalidSize": "尺寸必须为 1 到 4096 之间的整数",
-    "px": "px"
+    "px": "px",
+    "statusImage": "图片",
+    "statusCanvas": "画布",
+    "statusCrop": "裁剪"
   }
 }

@@ -572,6 +572,9 @@
     "applyCrop": "トリミング適用",
     "cancelCrop": "キャンセル",
     "invalidSize": "サイズは1から4096の整数にしてください",
-    "px": "px"
+    "px": "px",
+    "statusImage": "画像",
+    "statusCanvas": "キャンバス",
+    "statusCrop": "トリミング"
   }
 }

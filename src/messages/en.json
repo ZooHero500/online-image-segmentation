@@ -572,6 +572,9 @@
     "applyCrop": "Apply Crop",
     "cancelCrop": "Cancel",
     "invalidSize": "Dimensions must be integers between 1 and 4096",
-    "px": "px"
+    "px": "px",
+    "statusImage": "Image",
+    "statusCanvas": "Canvas",
+    "statusCrop": "Crop"
   }
 }

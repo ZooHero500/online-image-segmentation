@@ -572,6 +572,9 @@
     "applyCrop": "자르기 적용",
     "cancelCrop": "취소",
     "invalidSize": "크기는 1에서 4096 사이의 정수여야 합니다",
-    "px": "px"
+    "px": "px",
+    "statusImage": "이미지",
+    "statusCanvas": "캔버스",
+    "statusCrop": "자르기"
   }
 }
