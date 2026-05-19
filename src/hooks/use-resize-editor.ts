@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from "react"
 import type { ResizeImageTransform, CropRect, ResizeEditorMode } from "@/types"
 import { calculateFillTransform } from "@/lib/resize-utils"
+import { useUndoRedo } from "@/hooks/use-undo-redo"
 
 interface CanvasSize {
   width: number
@@ -26,6 +27,10 @@ interface UseResizeEditorReturn {
   clearImage: () => void
   fileName: string
   mimeType: string
+  undo: () => void
+  redo: () => void
+  canUndo: boolean
+  canRedo: boolean
 }
 
 export function useResizeEditor(
@@ -37,11 +42,15 @@ export function useResizeEditor(
     height: initialHeight,
   })
   const [image, setImage] = useState<HTMLImageElement | null>(null)
-  const [transform, setTransform] = useState<ResizeImageTransform>({
-    x: 0,
-    y: 0,
-    scale: 1,
-    crop: null,
+  const {
+    state: transform,
+    setState: setTransform,
+    undo,
+    redo,
+    canUndo,
+    canRedo,
+  } = useUndoRedo<ResizeImageTransform>({
+    initialState: { x: 0, y: 0, scale: 1, crop: null },
   })
   const [mode, setMode] = useState<ResizeEditorMode>("idle")
   const [cropRect, setCropRect] = useState<CropRect | null>(null)
@@ -176,5 +185,9 @@ export function useResizeEditor(
     clearImage,
     fileName,
     mimeType,
+    undo,
+    redo,
+    canUndo,
+    canRedo,
   }
 }
