@@ -332,6 +332,7 @@ export function ResizeEditor() {
             cropRect={cropRect}
             onCropRectChange={setCropRect}
             onImageFile={handleImageFile}
+            onApplyCrop={applyCrop}
             viewportScale={viewport.scale}
             viewportPosition={viewport.position}
             onZoomAtPoint={viewport.zoomAtPoint}

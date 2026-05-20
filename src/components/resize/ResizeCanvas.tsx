@@ -21,6 +21,7 @@ interface ResizeCanvasProps {
   cropRect: CropRect | null
   onCropRectChange: (r: CropRect | null) => void
   onImageFile: (file: File) => void
+  onApplyCrop?: () => void
   viewportScale: number
   viewportPosition: { x: number; y: number }
   onZoomAtPoint: (screenX: number, screenY: number, factor: number) => void
@@ -45,6 +46,7 @@ export function ResizeCanvas({
   cropRect,
   onCropRectChange,
   onImageFile,
+  onApplyCrop,
   viewportScale,
   viewportPosition,
   onZoomAtPoint,
@@ -207,6 +209,12 @@ export function ResizeCanvas({
 
   const handleImageDblClick = useCallback(() => {
     if (!image || isPanningRef.current) return
+
+    // If already in crop mode, double-click = confirm crop
+    if (mode === "crop") {
+      onApplyCrop?.()
+      return
+    }
 
     // Crop rect = intersection of image display area and artboard
     const imgLeft = transform.x
