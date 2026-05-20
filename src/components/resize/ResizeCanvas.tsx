@@ -327,9 +327,9 @@ export function ResizeCanvas({
 
           {/* Artboard background: checkerboard if available, solid white fallback */}
           {checkerboardImage ? (
-            <Rect name="artboard" x={artboardX} y={artboardY} width={artboardDisplayW} height={artboardDisplayH} fillPatternImage={checkerboardImage} fillPatternScaleX={1} fillPatternScaleY={1} fillPatternRepeat="repeat" />
+            <Rect name="artboard" x={artboardX} y={artboardY} width={artboardDisplayW} height={artboardDisplayH} fillPatternImage={checkerboardImage} fillPatternScaleX={1} fillPatternScaleY={1} fillPatternRepeat="repeat" stroke="#d4d4d4" strokeWidth={1} />
           ) : (
-            <Rect name="artboard" x={artboardX} y={artboardY} width={artboardDisplayW} height={artboardDisplayH} fill="#ffffff" />
+            <Rect name="artboard" x={artboardX} y={artboardY} width={artboardDisplayW} height={artboardDisplayH} fill="#ffffff" stroke="#d4d4d4" strokeWidth={1} />
           )}
 
           {image && (
@@ -379,10 +379,11 @@ export function ResizeCanvas({
             />
           )}
 
-          {snapGuides.x.map((guide, i) => (
+          {/* Snap guides — only visible while dragging */}
+          {isDraggingImage && snapGuides.x.map((guide, i) => (
             <Line key={`sx-${i}`} points={[artboardX + guide.pos * viewportScale, artboardY, artboardX + guide.pos * viewportScale, artboardY + artboardDisplayH]} stroke={SNAP_LINE_COLOR} strokeWidth={1} dash={guide.type === "center" ? [4, 4] : undefined} listening={false} />
           ))}
-          {snapGuides.y.map((guide, i) => (
+          {isDraggingImage && snapGuides.y.map((guide, i) => (
             <Line key={`sy-${i}`} points={[artboardX, artboardY + guide.pos * viewportScale, artboardX + artboardDisplayW, artboardY + guide.pos * viewportScale]} stroke={SNAP_LINE_COLOR} strokeWidth={1} dash={guide.type === "center" ? [4, 4] : undefined} listening={false} />
           ))}
 
