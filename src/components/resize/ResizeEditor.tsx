@@ -1,9 +1,9 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState, Fragment } from "react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
-import { Download, RotateCcw, ImagePlus, Check, X, Undo2, Redo2 } from "lucide-react"
+import { Download, RotateCcw, ImagePlus, Check, X, Undo2, Redo2, ChevronDown } from "lucide-react"
 import { useResizeEditor } from "@/hooks/use-resize-editor"
 import { useCanvasViewport } from "@/hooks/use-canvas-viewport"
 import { exportArtboard } from "@/lib/resize-export"
@@ -12,6 +12,55 @@ import { CanvasSizeControl } from "./CanvasSizeControl"
 import { ResizeCanvas } from "./ResizeCanvas"
 import { ResizeStatusBar } from "./ResizeStatusBar"
 import { ZoomIndicator } from "@/components/ZoomIndicator"
+
+const DOWNLOAD_FORMATS = [
+  { label: "PNG", mime: "image/png" as const, desc: "Lossless, transparent" },
+  { label: "JPEG", mime: "image/jpeg" as const, desc: "Smaller size, no transparency" },
+  { label: "WebP", mime: "image/webp" as const, desc: "Best compression, modern" },
+]
+
+function DownloadDropdown({ onDownload }: { onDownload: (format: "image/png" | "image/jpeg" | "image/webp") => void }) {
+  const [open, setOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [open])
+
+  return (
+    <div ref={dropdownRef} className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider bg-foreground text-background rounded cursor-pointer hover:bg-foreground/90 transition-colors"
+      >
+        <Download className="h-3.5 w-3.5" />
+        Download
+        <ChevronDown className={`h-3 w-3 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+      {open && (
+        <div className="absolute right-0 top-full mt-1 w-52 bg-background border border-border rounded-md shadow-lg z-50 py-1">
+          {DOWNLOAD_FORMATS.map((fmt) => (
+            <button
+              key={fmt.label}
+              onClick={() => { onDownload(fmt.mime); setOpen(false) }}
+              className="flex items-center justify-between w-full px-3 py-2 text-left cursor-pointer hover:bg-muted transition-colors"
+            >
+              <span className="text-xs font-medium text-foreground">{fmt.label}</span>
+              <span className="text-[10px] text-muted-foreground">{fmt.desc}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 export function ResizeEditor() {
   const t = useTranslations("resize")
@@ -128,14 +177,14 @@ export function ResizeEditor() {
   )
 
   const handleDownload = useCallback(
-    async (format: "image/png" | "image/jpeg") => {
+    async (format: "image/png" | "image/jpeg" | "image/webp") => {
       if (!image) return
       try {
-        const quality = format === "image/jpeg" ? 0.92 : undefined
+        const quality = format === "image/png" ? undefined : 0.92
         const blob = await exportArtboard(
           image, transform, canvasSize.width, canvasSize.height, format, quality
         )
-        const ext = format === "image/jpeg" ? ".jpg" : ".png"
+        const ext = format === "image/jpeg" ? ".jpg" : format === "image/webp" ? ".webp" : ".png"
         const baseName = fileName ? fileName.replace(/\.[^.]+$/, "") : "resized"
         const downloadName = `${baseName}_${canvasSize.width}x${canvasSize.height}${ext}`
         const url = URL.createObjectURL(blob)
@@ -264,23 +313,7 @@ export function ResizeEditor() {
               {canvasSize.width} × {canvasSize.height} {t("px")}
             </span>
             {image && mode !== "crop" && (
-              <>
-                <div className="w-px h-4 bg-border" />
-                <button
-                  onClick={() => handleDownload("image/png")}
-                  className="flex items-center gap-1 px-2.5 py-1 text-xs uppercase tracking-wider bg-foreground text-background rounded cursor-pointer hover:bg-foreground/90 transition-colors"
-                >
-                  <Download className="h-3 w-3" />
-                  PNG
-                </button>
-                <button
-                  onClick={() => handleDownload("image/jpeg")}
-                  className="flex items-center gap-1 px-2.5 py-1 text-xs uppercase tracking-wider bg-foreground text-background rounded cursor-pointer hover:bg-foreground/90 transition-colors"
-                >
-                  <Download className="h-3 w-3" />
-                  JPG
-                </button>
-              </>
+              <DownloadDropdown onDownload={handleDownload} />
             )}
           </div>
         </div>
