@@ -221,7 +221,12 @@ export function ResizeEditor() {
   return (
     <div className="flex h-full">
       {/* Left Sidebar */}
-      <div className="w-60 shrink-0 border-r border-border bg-background flex flex-col">
+      <div className="w-60 shrink-0 border-r border-border bg-background flex flex-col relative">
+        {/* Sidebar mask during crop mode */}
+        {mode === "crop" && (
+          <div className="absolute inset-0 bg-background/80 z-10" />
+        )}
+
         <div className="flex-1 overflow-y-auto px-4 py-4">
           <CanvasSizeControl
             width={canvasSize.width}
@@ -230,9 +235,9 @@ export function ResizeEditor() {
           />
         </div>
 
-        {/* Sidebar bottom: replace image */}
+        {/* Sidebar bottom: replace image + restore */}
         {image && (
-          <div className="border-t border-border px-4 py-3">
+          <div className="border-t border-border px-4 py-3 flex flex-col gap-2">
             <button
               onClick={() => replaceInputRef.current?.click()}
               className="flex items-center justify-center gap-1.5 w-full py-2 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
@@ -240,6 +245,15 @@ export function ResizeEditor() {
               <ImagePlus className="h-3.5 w-3.5" />
               {t("replaceImage")}
             </button>
+            {transform.crop && (
+              <button
+                onClick={resetImage}
+                className="flex items-center justify-center gap-1.5 w-full py-2 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
+              >
+                <RotateCcw className="h-3.5 w-3.5" />
+                {t("reset")}
+              </button>
+            )}
           </div>
         )}
       </div>
@@ -280,25 +294,9 @@ export function ResizeEditor() {
             )}
 
             {mode === "crop" && (
-              <>
-                <p className="text-[10px] text-muted-foreground mr-2">
-                  {t("cropHint")}
-                </p>
-                <button
-                  onClick={applyCrop}
-                  className="flex items-center gap-1 px-2.5 py-1 text-xs uppercase tracking-wider bg-accent text-accent-foreground rounded cursor-pointer hover:bg-accent/90 transition-colors"
-                >
-                  <Check className="h-3.5 w-3.5" />
-                  {t("applyCrop")}
-                </button>
-                <button
-                  onClick={cancelCrop}
-                  className="flex items-center gap-1 px-2.5 py-1 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
-                >
-                  <X className="h-3.5 w-3.5" />
-                  {t("cancelCrop")}
-                </button>
-              </>
+              <p className="text-[10px] text-muted-foreground">
+                {t("cropHint")}
+              </p>
             )}
           </div>
 
@@ -339,6 +337,35 @@ export function ResizeEditor() {
             onZoomAtPoint={viewport.zoomAtPoint}
             onPan={viewport.panBy}
           />
+
+          {/* Floating crop actions */}
+          {mode === "crop" && (
+            <div className="absolute top-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-background/90 backdrop-blur-sm border border-border rounded-lg shadow-lg px-3 py-2">
+              <button
+                onClick={applyCrop}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider bg-accent text-accent-foreground rounded cursor-pointer hover:bg-accent/90 transition-colors"
+              >
+                <Check className="h-3.5 w-3.5" />
+                {t("applyCrop")}
+              </button>
+              <button
+                onClick={cancelCrop}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
+              >
+                <X className="h-3.5 w-3.5" />
+                {t("cancelCrop")}
+              </button>
+              {transform.crop && (
+                <button
+                  onClick={resetImage}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                  {t("reset")}
+                </button>
+              )}
+            </div>
+          )}
 
           <ZoomIndicator
             zoomPercent={viewport.zoomPercent}
