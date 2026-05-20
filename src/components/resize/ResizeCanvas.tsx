@@ -311,7 +311,16 @@ export function ResizeCanvas({
         </div>
       )}
       {!image && (
-        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center cursor-pointer" onClick={() => inputRef.current?.click()}>
+        <div
+          className="absolute z-10 flex flex-col items-center justify-center cursor-pointer"
+          style={{
+            left: artboardX,
+            top: artboardY,
+            width: artboardDisplayW,
+            height: artboardDisplayH,
+          }}
+          onClick={() => inputRef.current?.click()}
+        >
           <Upload className="h-8 w-8 text-muted-foreground mb-4" />
           <p className="text-sm text-muted-foreground mb-1">{t("uploadHint")}</p>
           <p className="text-[10px] uppercase tracking-wider text-muted-foreground/60">{t("uploadFormats")}</p>
