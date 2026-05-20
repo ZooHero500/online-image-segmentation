@@ -216,25 +216,31 @@ export function ResizeCanvas({
       return
     }
 
-    // Crop rect = intersection of image display area and artboard
+    // Compute display dimensions fresh from current transform (avoid stale closure)
+    const curSrcW = transform.crop ? transform.crop.width : image.naturalWidth
+    const curSrcH = transform.crop ? transform.crop.height : image.naturalHeight
+    const curDisplayW = curSrcW * transform.scale
+    const curDisplayH = curSrcH * transform.scale
+
+    // Crop rect = intersection of image rect and artboard rect
     const imgLeft = transform.x
     const imgTop = transform.y
-    const imgRight = transform.x + displayW
-    const imgBottom = transform.y + displayH
+    const imgRight = transform.x + curDisplayW
+    const imgBottom = transform.y + curDisplayH
 
-    const cropX = Math.max(0, imgLeft)
-    const cropY = Math.max(0, imgTop)
-    const cropRight = Math.min(Math.min(canvasWidth, imgRight), imgRight)
-    const cropBottom = Math.min(Math.min(canvasHeight, imgBottom), imgBottom)
+    const x1 = Math.max(0, imgLeft)
+    const y1 = Math.max(0, imgTop)
+    const x2 = Math.min(canvasWidth, imgRight)
+    const y2 = Math.min(canvasHeight, imgBottom)
 
     onCropRectChange({
-      x: cropX,
-      y: cropY,
-      width: Math.max(20, cropRight - cropX),
-      height: Math.max(20, cropBottom - cropY),
+      x: x1,
+      y: y1,
+      width: Math.max(20, x2 - x1),
+      height: Math.max(20, y2 - y1),
     })
     onModeChange("crop")
-  }, [image, transform, displayW, displayH, canvasWidth, canvasHeight, onCropRectChange, onModeChange])
+  }, [image, transform, mode, canvasWidth, canvasHeight, onCropRectChange, onModeChange, onApplyCrop])
 
   const handleImageDragStart = useCallback(() => {
     setIsDraggingImage(true)
