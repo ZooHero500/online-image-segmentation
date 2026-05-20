@@ -12,11 +12,11 @@ interface CanvasSizeControlProps {
 }
 
 const PRESETS = [
-  { key: "preset_1_1", w: 1080, h: 1080 },
-  { key: "preset_4_3", w: 1200, h: 900 },
-  { key: "preset_3_4", w: 900, h: 1200 },
-  { key: "preset_16_9", w: 1920, h: 1080 },
-  { key: "preset_9_16", w: 1080, h: 1920 },
+  { key: "preset_1_1", w: 1080, h: 1080, label: "1080 × 1080" },
+  { key: "preset_4_3", w: 1200, h: 900, label: "1200 × 900" },
+  { key: "preset_3_4", w: 900, h: 1200, label: "900 × 1200" },
+  { key: "preset_16_9", w: 1920, h: 1080, label: "1920 × 1080" },
+  { key: "preset_9_16", w: 1080, h: 1920, label: "1080 × 1920" },
 ] as const
 
 export function CanvasSizeControl({
@@ -86,71 +86,77 @@ export function CanvasSizeControl({
   )?.key
 
   return (
-    <div className="flex flex-col gap-3">
-      <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-        {t("canvasSize")}
-      </p>
+    <div className="flex flex-col gap-5">
+      {/* Section: Canvas Size */}
+      <div>
+        <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
+          {t("canvasSize")}
+        </p>
+        <div className="flex items-center gap-1.5">
+          <div className="flex-1">
+            <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">
+              {t("width")}
+            </label>
+            <input
+              type="number"
+              value={inputW}
+              onChange={(e) => setInputW(e.target.value)}
+              onBlur={handleBlurW}
+              onKeyDown={handleKeyDown}
+              min={1}
+              max={4096}
+              className="w-full h-8 px-2 text-sm bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
+            />
+          </div>
 
-      <div className="flex items-center gap-2">
-        <div className="flex items-center gap-1">
-          <label className="text-[10px] uppercase tracking-wider text-muted-foreground">
-            {t("width")}
-          </label>
-          <input
-            type="number"
-            value={inputW}
-            onChange={(e) => setInputW(e.target.value)}
-            onBlur={handleBlurW}
-            onKeyDown={handleKeyDown}
-            min={1}
-            max={4096}
-            className="w-20 h-8 px-2 text-sm bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
-          />
+          <button
+            onClick={handleSwap}
+            className="w-7 h-7 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors mt-4"
+            title={t("swap")}
+          >
+            <ArrowLeftRight className="h-3 w-3" />
+          </button>
+
+          <div className="flex-1">
+            <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">
+              {t("height")}
+            </label>
+            <input
+              type="number"
+              value={inputH}
+              onChange={(e) => setInputH(e.target.value)}
+              onBlur={handleBlurH}
+              onKeyDown={handleKeyDown}
+              min={1}
+              max={4096}
+              className="w-full h-8 px-2 text-sm bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
+            />
+          </div>
         </div>
-
-        <button
-          onClick={handleSwap}
-          className="w-8 h-8 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
-          title={t("swap")}
-        >
-          <ArrowLeftRight className="h-3.5 w-3.5" />
-        </button>
-
-        <div className="flex items-center gap-1">
-          <label className="text-[10px] uppercase tracking-wider text-muted-foreground">
-            {t("height")}
-          </label>
-          <input
-            type="number"
-            value={inputH}
-            onChange={(e) => setInputH(e.target.value)}
-            onBlur={handleBlurH}
-            onKeyDown={handleKeyDown}
-            min={1}
-            max={4096}
-            className="w-20 h-8 px-2 text-sm bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
-          />
-        </div>
-
-        <span className="text-[10px] text-muted-foreground">{t("px")}</span>
+        {error && <p className="text-xs text-destructive mt-1.5">{error}</p>}
       </div>
 
-      {error && <p className="text-xs text-destructive">{error}</p>}
-
-      <div className="flex flex-wrap gap-1.5">
-        {PRESETS.map((preset) => (
-          <button
-            key={preset.key}
-            onClick={() => handlePreset(preset.w, preset.h)}
-            className={`px-2.5 py-1 text-[10px] uppercase tracking-wider border rounded transition-colors ${
-              activePreset === preset.key
-                ? "border-accent text-accent bg-accent/5"
-                : "border-border text-muted-foreground hover:border-foreground/30 hover:text-foreground"
-            }`}
-          >
-            {t(preset.key)}
-          </button>
-        ))}
+      {/* Section: Presets */}
+      <div>
+        <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
+          {t("presets")}
+        </p>
+        <div className="flex flex-col gap-1">
+          {PRESETS.map((preset) => (
+            <button
+              key={preset.key}
+              onClick={() => handlePreset(preset.w, preset.h)}
+              className={`flex items-center justify-between px-3 py-2 text-xs rounded transition-colors ${
+                activePreset === preset.key
+                  ? "bg-accent/10 text-accent"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              }`}
+            >
+              <span className="uppercase tracking-wider">{t(preset.key)}</span>
+              <span className="text-[10px] text-muted-foreground/70">{preset.label}</span>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   )

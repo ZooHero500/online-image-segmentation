@@ -57,7 +57,6 @@ export function ResizeEditor() {
     return () => observer.disconnect()
   }, [])
 
-  // Viewport zoom/pan — treats the artboard as the "image" for the viewport hook
   const viewport = useCanvasViewport({
     containerWidth: containerSize.width,
     containerHeight: containerSize.height,
@@ -86,19 +85,14 @@ export function ResizeEditor() {
         return
       }
 
-      // Zoom shortcuts
       if (isCmd && (e.key === "=" || e.key === "+")) {
         e.preventDefault()
-        const cx = (containerSize.width) / 2
-        const cy = (containerSize.height) / 2
-        viewport.zoomAtPoint(cx, cy, 1.15)
+        viewport.zoomAtPoint(containerSize.width / 2, containerSize.height / 2, 1.15)
         return
       }
       if (isCmd && e.key === "-") {
         e.preventDefault()
-        const cx = (containerSize.width) / 2
-        const cy = (containerSize.height) / 2
-        viewport.zoomAtPoint(cx, cy, 1 / 1.15)
+        viewport.zoomAtPoint(containerSize.width / 2, containerSize.height / 2, 1 / 1.15)
         return
       }
       if (isCmd && e.key === "0") {
@@ -107,7 +101,6 @@ export function ResizeEditor() {
         return
       }
 
-      // Undo/Redo
       if (isCmd && !e.shiftKey && e.key === "z") {
         e.preventDefault()
         undo()
@@ -121,7 +114,7 @@ export function ResizeEditor() {
     }
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [mode, applyCrop, cancelCrop, setMode, clearImage, viewport, undo, redo])
+  }, [mode, applyCrop, cancelCrop, setMode, clearImage, containerSize, viewport, undo, redo])
 
   const handleImageFile = useCallback(
     async (file: File) => {
@@ -169,147 +162,171 @@ export function ResizeEditor() {
 
   const handleZoomChange = useCallback(
     (percent: number) => {
-      const cx = (containerSize.width) / 2
-      const cy = (containerSize.height) / 2
       const targetScale = percent / 100
       const factor = targetScale / viewport.scale
-      viewport.zoomAtPoint(cx, cy, factor)
+      viewport.zoomAtPoint(containerSize.width / 2, containerSize.height / 2, factor)
     },
-    [viewport]
+    [viewport, containerSize]
   )
 
   return (
-    <div className="flex flex-col h-full">
-      {/* Toolbar */}
-      <div className="flex items-center justify-between gap-4 px-4 py-3 border-b border-border">
-        <CanvasSizeControl
-          width={canvasSize.width}
-          height={canvasSize.height}
-          onChange={setCanvasSize}
-        />
+    <div className="flex h-full">
+      {/* Left Sidebar */}
+      <div className="w-60 shrink-0 border-r border-border bg-background flex flex-col">
+        <div className="flex-1 overflow-y-auto px-4 py-4">
+          <CanvasSizeControl
+            width={canvasSize.width}
+            height={canvasSize.height}
+            onChange={setCanvasSize}
+          />
+        </div>
 
-        <div className="flex items-center gap-2 shrink-0">
-          {mode === "crop" && (
+        {/* Sidebar bottom: export buttons */}
+        <div className="border-t border-border px-4 py-3 flex flex-col gap-2">
+          {image && (
             <>
-              <p className="text-[10px] text-muted-foreground mr-2 hidden sm:block">
-                {t("cropHint")}
-              </p>
-              <button
-                onClick={applyCrop}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider bg-accent text-accent-foreground rounded hover:bg-accent/90 transition-colors"
-              >
-                <Check className="h-3.5 w-3.5" />
-                {t("applyCrop")}
-              </button>
-              <button
-                onClick={cancelCrop}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded hover:text-foreground transition-colors"
-              >
-                <X className="h-3.5 w-3.5" />
-                {t("cancelCrop")}
-              </button>
-            </>
-          )}
-
-          {mode !== "crop" && image && (
-            <>
-              <button
-                onClick={undo}
-                disabled={!canUndo}
-                className="w-8 h-8 flex items-center justify-center border border-border text-muted-foreground rounded hover:text-foreground transition-colors disabled:opacity-30 disabled:pointer-events-none"
-                title="Undo (Cmd+Z)"
-              >
-                <Undo2 className="h-3.5 w-3.5" />
-              </button>
-              <button
-                onClick={redo}
-                disabled={!canRedo}
-                className="w-8 h-8 flex items-center justify-center border border-border text-muted-foreground rounded hover:text-foreground transition-colors disabled:opacity-30 disabled:pointer-events-none"
-                title="Redo (Cmd+Shift+Z)"
-              >
-                <Redo2 className="h-3.5 w-3.5" />
-              </button>
-              <div className="w-px h-6 bg-border mx-1" />
               <button
                 onClick={() => replaceInputRef.current?.click()}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded hover:text-foreground transition-colors"
-                title={t("replaceImage")}
+                className="flex items-center justify-center gap-1.5 w-full py-2 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded hover:text-foreground transition-colors"
               >
                 <ImagePlus className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">{t("replaceImage")}</span>
+                {t("replaceImage")}
               </button>
-              <button
-                onClick={resetImage}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded hover:text-foreground transition-colors"
-                title={t("reset")}
-              >
-                <RotateCcw className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">{t("reset")}</span>
-              </button>
-              <button
-                onClick={() => handleDownload("image/png")}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider bg-foreground text-background rounded hover:bg-foreground/90 transition-colors"
-              >
-                <Download className="h-3.5 w-3.5" />
-                PNG
-              </button>
-              <button
-                onClick={() => handleDownload("image/jpeg")}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider bg-foreground text-background rounded hover:bg-foreground/90 transition-colors"
-              >
-                <Download className="h-3.5 w-3.5" />
-                JPG
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleDownload("image/png")}
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs uppercase tracking-wider bg-foreground text-background rounded hover:bg-foreground/90 transition-colors"
+                >
+                  <Download className="h-3.5 w-3.5" />
+                  PNG
+                </button>
+                <button
+                  onClick={() => handleDownload("image/jpeg")}
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs uppercase tracking-wider bg-foreground text-background rounded hover:bg-foreground/90 transition-colors"
+                >
+                  <Download className="h-3.5 w-3.5" />
+                  JPG
+                </button>
+              </div>
             </>
           )}
-
-          <input
-            ref={replaceInputRef}
-            type="file"
-            accept={ACCEPTED_TYPES.join(",")}
-            className="hidden"
-            onChange={handleReplaceFile}
-          />
         </div>
       </div>
 
-      {/* Canvas area */}
-      <div ref={containerRef} className="flex-1 relative overflow-hidden">
-        <ResizeCanvas
+      {/* Main area */}
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Top bar — compact */}
+        <div className="flex items-center justify-between h-11 px-3 border-b border-border bg-background">
+          {/* Left: undo/redo + mode actions */}
+          <div className="flex items-center gap-1.5">
+            {image && mode !== "crop" && (
+              <>
+                <button
+                  onClick={undo}
+                  disabled={!canUndo}
+                  className="w-7 h-7 flex items-center justify-center text-muted-foreground rounded hover:bg-muted hover:text-foreground transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                  title="Undo (Cmd+Z)"
+                >
+                  <Undo2 className="h-3.5 w-3.5" />
+                </button>
+                <button
+                  onClick={redo}
+                  disabled={!canRedo}
+                  className="w-7 h-7 flex items-center justify-center text-muted-foreground rounded hover:bg-muted hover:text-foreground transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                  title="Redo (Cmd+Shift+Z)"
+                >
+                  <Redo2 className="h-3.5 w-3.5" />
+                </button>
+                <div className="w-px h-4 bg-border mx-1" />
+                <button
+                  onClick={resetImage}
+                  className="w-7 h-7 flex items-center justify-center text-muted-foreground rounded hover:bg-muted hover:text-foreground transition-colors"
+                  title={t("reset")}
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                </button>
+              </>
+            )}
+
+            {mode === "crop" && (
+              <>
+                <p className="text-[10px] text-muted-foreground mr-2">
+                  {t("cropHint")}
+                </p>
+                <button
+                  onClick={applyCrop}
+                  className="flex items-center gap-1 px-2.5 py-1 text-xs uppercase tracking-wider bg-accent text-accent-foreground rounded hover:bg-accent/90 transition-colors"
+                >
+                  <Check className="h-3.5 w-3.5" />
+                  {t("applyCrop")}
+                </button>
+                <button
+                  onClick={cancelCrop}
+                  className="flex items-center gap-1 px-2.5 py-1 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded hover:text-foreground transition-colors"
+                >
+                  <X className="h-3.5 w-3.5" />
+                  {t("cancelCrop")}
+                </button>
+              </>
+            )}
+          </div>
+
+          {/* Center: title */}
+          <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+            Image Resize
+          </span>
+
+          {/* Right: canvas dimensions display */}
+          <span className="text-[10px] text-muted-foreground tabular-nums">
+            {canvasSize.width} × {canvasSize.height} {t("px")}
+          </span>
+        </div>
+
+        {/* Canvas area */}
+        <div ref={containerRef} className="flex-1 relative overflow-hidden">
+          <ResizeCanvas
+            canvasWidth={canvasSize.width}
+            canvasHeight={canvasSize.height}
+            image={image}
+            transform={transform}
+            onTransformChange={setTransform}
+            mode={mode}
+            onModeChange={setMode}
+            cropRect={cropRect}
+            onCropRectChange={setCropRect}
+            onImageFile={handleImageFile}
+            viewportScale={viewport.scale}
+            viewportPosition={viewport.position}
+            onZoomAtPoint={viewport.zoomAtPoint}
+            onPan={viewport.panBy}
+          />
+
+          <ZoomIndicator
+            zoomPercent={viewport.zoomPercent}
+            onFitToView={viewport.fitToView}
+            onResetTo100={viewport.resetTo100}
+            onZoomChange={handleZoomChange}
+          />
+        </div>
+
+        {/* Status bar */}
+        <ResizeStatusBar
+          imageWidth={image?.naturalWidth ?? null}
+          imageHeight={image?.naturalHeight ?? null}
           canvasWidth={canvasSize.width}
           canvasHeight={canvasSize.height}
-          image={image}
-          transform={transform}
-          onTransformChange={setTransform}
-          mode={mode}
-          onModeChange={setMode}
-          cropRect={cropRect}
-          onCropRectChange={setCropRect}
-          onImageFile={handleImageFile}
-          viewportScale={viewport.scale}
-          viewportPosition={viewport.position}
-          onZoomAtPoint={viewport.zoomAtPoint}
-          onPan={viewport.panBy}
-        />
-
-        {/* Zoom controls */}
-        <ZoomIndicator
           zoomPercent={viewport.zoomPercent}
-          onFitToView={viewport.fitToView}
-          onResetTo100={viewport.resetTo100}
-          onZoomChange={handleZoomChange}
+          mode={mode}
+          cropRect={cropRect}
         />
       </div>
 
-      {/* Status bar */}
-      <ResizeStatusBar
-        imageWidth={image?.naturalWidth ?? null}
-        imageHeight={image?.naturalHeight ?? null}
-        canvasWidth={canvasSize.width}
-        canvasHeight={canvasSize.height}
-        zoomPercent={viewport.zoomPercent}
-        mode={mode}
-        cropRect={cropRect}
+      <input
+        ref={replaceInputRef}
+        type="file"
+        accept={ACCEPTED_TYPES.join(",")}
+        className="hidden"
+        onChange={handleReplaceFile}
       />
     </div>
   )
