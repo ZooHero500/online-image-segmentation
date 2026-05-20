@@ -197,7 +197,7 @@ export function ResizeCanvas({
 
   const handleImageClick = useCallback(() => {
     if (isPanningRef.current) return
-    if (mode === "idle") onModeChange("selected")
+    if (mode !== "selected") onModeChange("selected")
   }, [mode, onModeChange])
 
   const handleImageDblClick = useCallback(() => {
@@ -218,8 +218,10 @@ export function ResizeCanvas({
 
   const handleImageDragStart = useCallback(() => {
     setIsDraggingImage(true)
+    // Auto-select on drag start (Canva behavior)
+    if (mode !== "selected") onModeChange("selected")
     if (containerRef.current) containerRef.current.style.cursor = "grabbing"
-  }, [])
+  }, [mode, onModeChange])
 
   const handleImageDragMove = useCallback(
     (e: Konva.KonvaEventObject<DragEvent>) => {
@@ -241,7 +243,7 @@ export function ResizeCanvas({
     (e: Konva.KonvaEventObject<DragEvent>) => {
       setIsDraggingImage(false)
       setSnapGuides({ x: [], y: [] })
-      if (containerRef.current) containerRef.current.style.cursor = ""
+      if (containerRef.current) containerRef.current.style.cursor = "default"
       const newX = (e.target.x() - artboardX) / viewportScale
       const newY = (e.target.y() - artboardY) / viewportScale
       onTransformChange({ ...transform, x: newX, y: newY })
@@ -268,7 +270,7 @@ export function ResizeCanvas({
 
   const handleImageMouseLeave = useCallback(() => {
     if (isPanningRef.current || isDraggingImage) return
-    if (containerRef.current) containerRef.current.style.cursor = ""
+    if (containerRef.current) containerRef.current.style.cursor = "default"
   }, [isDraggingImage])
 
   const handleDrop = useCallback(
@@ -293,7 +295,7 @@ export function ResizeCanvas({
   return (
     <div
       ref={containerRef}
-      className="flex-1 relative bg-muted/30 overflow-hidden"
+      className="absolute inset-0 bg-muted/30 overflow-hidden"
       onDrop={handleDrop}
       onDragOver={(e) => { e.preventDefault(); setIsDragOver(true) }}
       onDragLeave={(e) => { e.preventDefault(); setIsDragOver(false) }}
@@ -363,14 +365,14 @@ export function ResizeCanvas({
               rotateEnabled={false}
               enabledAnchors={["top-left", "top-right", "bottom-left", "bottom-right"]}
               keepRatio={true}
-              anchorSize={8}
-              anchorCornerRadius={2}
-              anchorFill="#ffffff"
-              anchorStroke="#3b82f6"
-              anchorStrokeWidth={1.5}
-              borderStroke="#3b82f6"
-              borderStrokeWidth={1}
-              borderDash={[4, 4]}
+              anchorSize={10}
+              anchorCornerRadius={1}
+              anchorFill="#0d99ff"
+              anchorStroke="#0d99ff"
+              anchorStrokeWidth={0}
+              borderStroke="#0d99ff"
+              borderStrokeWidth={1.5}
+              borderDash={[]}
               boundBoxFunc={(oldBox, newBox) => {
                 if (newBox.width < 20 || newBox.height < 20) return oldBox
                 return newBox
