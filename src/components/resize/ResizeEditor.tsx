@@ -45,12 +45,12 @@ function DownloadDropdown({ onDownload }: { onDownload: (format: "image/png" | "
         <ChevronDown className={`h-3 w-3 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
       {open && (
-        <div className="absolute right-0 top-full mt-1 w-52 bg-background border border-border rounded-md shadow-lg z-50 py-1">
+        <div className="absolute right-0 top-full mt-1 w-48 bg-background border border-border rounded-md shadow-lg z-50 py-1">
           {DOWNLOAD_FORMATS.map((fmt) => (
             <button
               key={fmt.label}
               onClick={() => { onDownload(fmt.mime); setOpen(false) }}
-              className="flex items-center justify-between w-full px-3 py-2 text-left cursor-pointer hover:bg-muted transition-colors"
+              className="flex flex-col w-full px-3 py-2 text-left cursor-pointer hover:bg-muted transition-colors"
             >
               <span className="text-xs font-medium text-foreground">{fmt.label}</span>
               <span className="text-[10px] text-muted-foreground">{fmt.desc}</span>
