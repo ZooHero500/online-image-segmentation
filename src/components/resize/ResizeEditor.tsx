@@ -181,36 +181,18 @@ export function ResizeEditor() {
           />
         </div>
 
-        {/* Sidebar bottom: export buttons */}
-        <div className="border-t border-border px-4 py-3 flex flex-col gap-2">
-          {image && (
-            <>
-              <button
-                onClick={() => replaceInputRef.current?.click()}
-                className="flex items-center justify-center gap-1.5 w-full py-2 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded hover:text-foreground transition-colors"
-              >
-                <ImagePlus className="h-3.5 w-3.5" />
-                {t("replaceImage")}
-              </button>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => handleDownload("image/png")}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs uppercase tracking-wider bg-foreground text-background rounded hover:bg-foreground/90 transition-colors"
-                >
-                  <Download className="h-3.5 w-3.5" />
-                  PNG
-                </button>
-                <button
-                  onClick={() => handleDownload("image/jpeg")}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs uppercase tracking-wider bg-foreground text-background rounded hover:bg-foreground/90 transition-colors"
-                >
-                  <Download className="h-3.5 w-3.5" />
-                  JPG
-                </button>
-              </div>
-            </>
-          )}
-        </div>
+        {/* Sidebar bottom: replace image */}
+        {image && (
+          <div className="border-t border-border px-4 py-3">
+            <button
+              onClick={() => replaceInputRef.current?.click()}
+              className="flex items-center justify-center gap-1.5 w-full py-2 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
+            >
+              <ImagePlus className="h-3.5 w-3.5" />
+              {t("replaceImage")}
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Main area */}
@@ -224,7 +206,7 @@ export function ResizeEditor() {
                 <button
                   onClick={undo}
                   disabled={!canUndo}
-                  className="w-7 h-7 flex items-center justify-center text-muted-foreground rounded hover:bg-muted hover:text-foreground transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                  className="w-7 h-7 flex items-center justify-center text-muted-foreground rounded cursor-pointer hover:bg-muted hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none"
                   title="Undo (Cmd+Z)"
                 >
                   <Undo2 className="h-3.5 w-3.5" />
@@ -232,7 +214,7 @@ export function ResizeEditor() {
                 <button
                   onClick={redo}
                   disabled={!canRedo}
-                  className="w-7 h-7 flex items-center justify-center text-muted-foreground rounded hover:bg-muted hover:text-foreground transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                  className="w-7 h-7 flex items-center justify-center text-muted-foreground rounded cursor-pointer hover:bg-muted hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none"
                   title="Redo (Cmd+Shift+Z)"
                 >
                   <Redo2 className="h-3.5 w-3.5" />
@@ -240,7 +222,7 @@ export function ResizeEditor() {
                 <div className="w-px h-4 bg-border mx-1" />
                 <button
                   onClick={resetImage}
-                  className="w-7 h-7 flex items-center justify-center text-muted-foreground rounded hover:bg-muted hover:text-foreground transition-colors"
+                  className="w-7 h-7 flex items-center justify-center text-muted-foreground rounded cursor-pointer hover:bg-muted hover:text-foreground transition-colors"
                   title={t("reset")}
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
@@ -255,14 +237,14 @@ export function ResizeEditor() {
                 </p>
                 <button
                   onClick={applyCrop}
-                  className="flex items-center gap-1 px-2.5 py-1 text-xs uppercase tracking-wider bg-accent text-accent-foreground rounded hover:bg-accent/90 transition-colors"
+                  className="flex items-center gap-1 px-2.5 py-1 text-xs uppercase tracking-wider bg-accent text-accent-foreground rounded cursor-pointer hover:bg-accent/90 transition-colors"
                 >
                   <Check className="h-3.5 w-3.5" />
                   {t("applyCrop")}
                 </button>
                 <button
                   onClick={cancelCrop}
-                  className="flex items-center gap-1 px-2.5 py-1 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded hover:text-foreground transition-colors"
+                  className="flex items-center gap-1 px-2.5 py-1 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
                 >
                   <X className="h-3.5 w-3.5" />
                   {t("cancelCrop")}
@@ -276,10 +258,31 @@ export function ResizeEditor() {
             Image Resize
           </span>
 
-          {/* Right: canvas dimensions display */}
-          <span className="text-[10px] text-muted-foreground tabular-nums">
-            {canvasSize.width} × {canvasSize.height} {t("px")}
-          </span>
+          {/* Right: dimensions + download */}
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] text-muted-foreground tabular-nums">
+              {canvasSize.width} × {canvasSize.height} {t("px")}
+            </span>
+            {image && mode !== "crop" && (
+              <>
+                <div className="w-px h-4 bg-border" />
+                <button
+                  onClick={() => handleDownload("image/png")}
+                  className="flex items-center gap-1 px-2.5 py-1 text-xs uppercase tracking-wider bg-foreground text-background rounded cursor-pointer hover:bg-foreground/90 transition-colors"
+                >
+                  <Download className="h-3 w-3" />
+                  PNG
+                </button>
+                <button
+                  onClick={() => handleDownload("image/jpeg")}
+                  className="flex items-center gap-1 px-2.5 py-1 text-xs uppercase tracking-wider bg-foreground text-background rounded cursor-pointer hover:bg-foreground/90 transition-colors"
+                >
+                  <Download className="h-3 w-3" />
+                  JPG
+                </button>
+              </>
+            )}
+          </div>
         </div>
 
         {/* Canvas area */}

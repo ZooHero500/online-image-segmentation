@@ -111,7 +111,7 @@ export function CanvasSizeControl({
 
           <button
             onClick={handleSwap}
-            className="w-7 h-7 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors mt-4"
+            className="w-7 h-7 flex items-center justify-center text-muted-foreground cursor-pointer hover:text-foreground transition-colors mt-4"
             title={t("swap")}
           >
             <ArrowLeftRight className="h-3 w-3" />
@@ -146,7 +146,7 @@ export function CanvasSizeControl({
             <button
               key={preset.key}
               onClick={() => handlePreset(preset.w, preset.h)}
-              className={`flex items-center justify-between px-3 py-2 text-xs rounded transition-colors ${
+              className={`flex items-center justify-between px-3 py-2 text-xs rounded cursor-pointer transition-colors ${
                 activePreset === preset.key
                   ? "bg-accent/10 text-accent"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
