@@ -92,10 +92,8 @@ export function ResizeCanvas({
     }
   }, [mode])
 
-  // In crop mode, always show the full uncropped image
-  const isShowingFullInCrop = mode === "crop"
-  const srcW = (transform.crop && !isShowingFullInCrop) ? transform.crop.width : image?.naturalWidth ?? 0
-  const srcH = (transform.crop && !isShowingFullInCrop) ? transform.crop.height : image?.naturalHeight ?? 0
+  const srcW = transform.crop ? transform.crop.width : image?.naturalWidth ?? 0
+  const srcH = transform.crop ? transform.crop.height : image?.naturalHeight ?? 0
   const displayW = srcW * transform.scale
   const displayH = srcH * transform.scale
 
@@ -210,44 +208,23 @@ export function ResizeCanvas({
   const handleImageDblClick = useCallback(() => {
     if (!image || isPanningRef.current) return
 
-    if (transform.crop) {
-      // Re-entering crop: show previous crop area on the full image
-      // The crop rect is in artboard coordinates — map the existing source crop
-      // back to display position
-      const fullW = image.naturalWidth * transform.scale
-      const fullH = image.naturalHeight * transform.scale
-      const cropRatioX = transform.crop.x / image.naturalWidth
-      const cropRatioY = transform.crop.y / image.naturalHeight
-      const cropRatioW = transform.crop.width / image.naturalWidth
-      const cropRatioH = transform.crop.height / image.naturalHeight
-      onCropRectChange({
-        x: transform.x + cropRatioX * fullW,
-        y: transform.y + cropRatioY * fullH,
-        width: cropRatioW * fullW,
-        height: cropRatioH * fullH,
-      })
-    } else {
-      // First crop: crop rect = visible part of image (clamped to BOTH artboard AND image bounds)
-      const imgLeft = transform.x
-      const imgTop = transform.y
-      const imgRight = transform.x + displayW
-      const imgBottom = transform.y + displayH
-      // Intersection of image rect and artboard rect
-      const cropX = Math.max(0, imgLeft)
-      const cropY = Math.max(0, imgTop)
-      const cropRight = Math.min(canvasWidth, imgRight)
-      const cropBottom = Math.min(canvasHeight, imgBottom)
-      // Ensure crop rect is within image bounds (strict)
-      const finalX = Math.max(imgLeft, cropX)
-      const finalY = Math.max(imgTop, cropY)
-      const finalRight = Math.min(imgRight, cropRight)
-      const finalBottom = Math.min(imgBottom, cropBottom)
-      onCropRectChange({
-        x: finalX, y: finalY,
-        width: Math.max(20, finalRight - finalX),
-        height: Math.max(20, finalBottom - finalY),
-      })
-    }
+    // Crop rect = intersection of image display area and artboard
+    const imgLeft = transform.x
+    const imgTop = transform.y
+    const imgRight = transform.x + displayW
+    const imgBottom = transform.y + displayH
+
+    const cropX = Math.max(0, imgLeft)
+    const cropY = Math.max(0, imgTop)
+    const cropRight = Math.min(Math.min(canvasWidth, imgRight), imgRight)
+    const cropBottom = Math.min(Math.min(canvasHeight, imgBottom), imgBottom)
+
+    onCropRectChange({
+      x: cropX,
+      y: cropY,
+      width: Math.max(20, cropRight - cropX),
+      height: Math.max(20, cropBottom - cropY),
+    })
     onModeChange("crop")
   }, [image, transform, displayW, displayH, canvasWidth, canvasHeight, onCropRectChange, onModeChange])
 
@@ -387,7 +364,7 @@ export function ResizeCanvas({
                 y={artboardY + transform.y * viewportScale}
                 width={displayW * viewportScale}
                 height={displayH * viewportScale}
-                crop={(transform.crop && !isShowingFullInCrop) ? { x: transform.crop.x, y: transform.crop.y, width: transform.crop.width, height: transform.crop.height } : undefined}
+                crop={transform.crop ? { x: transform.crop.x, y: transform.crop.y, width: transform.crop.width, height: transform.crop.height } : undefined}
                 draggable={mode !== "crop" && !isPanning}
                 onClick={handleImageClick}
                 onDblClick={handleImageDblClick}

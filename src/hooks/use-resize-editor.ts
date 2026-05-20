@@ -107,21 +107,28 @@ export function useResizeEditor(
   const applyCrop = useCallback(() => {
     if (!cropRect || !image) return
 
-    // In crop mode, the canvas always shows the FULL uncropped image
-    // so crop rect is always relative to the full image display
-    const fullW = image.naturalWidth * transform.scale
-    const fullH = image.naturalHeight * transform.scale
+    // Current source dimensions (respects existing crop)
+    const currentCrop = transform.crop
+    const srcW = currentCrop ? currentCrop.width : image.naturalWidth
+    const srcH = currentCrop ? currentCrop.height : image.naturalHeight
+    const displayW = srcW * transform.scale
+    const displayH = srcH * transform.scale
 
-    const relX = (cropRect.x - transform.x) / fullW
-    const relY = (cropRect.y - transform.y) / fullH
-    const relW = cropRect.width / fullW
-    const relH = cropRect.height / fullH
+    // Convert crop rect from artboard coords to relative ratios
+    const relX = (cropRect.x - transform.x) / displayW
+    const relY = (cropRect.y - transform.y) / displayH
+    const relW = cropRect.width / displayW
+    const relH = cropRect.height / displayH
+
+    // Map to source pixel coordinates
+    const srcBaseX = currentCrop ? currentCrop.x : 0
+    const srcBaseY = currentCrop ? currentCrop.y : 0
 
     const newCrop: CropRect = {
-      x: relX * image.naturalWidth,
-      y: relY * image.naturalHeight,
-      width: relW * image.naturalWidth,
-      height: relH * image.naturalHeight,
+      x: srcBaseX + relX * srcW,
+      y: srcBaseY + relY * srcH,
+      width: relW * srcW,
+      height: relH * srcH,
     }
 
     setCropRect(null)
