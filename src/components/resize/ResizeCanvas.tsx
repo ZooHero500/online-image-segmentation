@@ -92,8 +92,8 @@ export function ResizeCanvas({
     }
   }, [mode])
 
-  // In crop mode, show the full uncropped image so user can see previous crop area
-  const isShowingFullInCrop = mode === "crop" && transform.crop !== null
+  // In crop mode, always show the full uncropped image
+  const isShowingFullInCrop = mode === "crop"
   const srcW = (transform.crop && !isShowingFullInCrop) ? transform.crop.width : image?.naturalWidth ?? 0
   const srcH = (transform.crop && !isShowingFullInCrop) ? transform.crop.height : image?.naturalHeight ?? 0
   const displayW = srcW * transform.scale
@@ -227,17 +227,25 @@ export function ResizeCanvas({
         height: cropRatioH * fullH,
       })
     } else {
-      // First crop: crop rect = visible area intersection
+      // First crop: crop rect = visible part of image (clamped to BOTH artboard AND image bounds)
+      const imgLeft = transform.x
+      const imgTop = transform.y
       const imgRight = transform.x + displayW
       const imgBottom = transform.y + displayH
-      const cropX = Math.max(0, transform.x)
-      const cropY = Math.max(0, transform.y)
+      // Intersection of image rect and artboard rect
+      const cropX = Math.max(0, imgLeft)
+      const cropY = Math.max(0, imgTop)
       const cropRight = Math.min(canvasWidth, imgRight)
       const cropBottom = Math.min(canvasHeight, imgBottom)
+      // Ensure crop rect is within image bounds (strict)
+      const finalX = Math.max(imgLeft, cropX)
+      const finalY = Math.max(imgTop, cropY)
+      const finalRight = Math.min(imgRight, cropRight)
+      const finalBottom = Math.min(imgBottom, cropBottom)
       onCropRectChange({
-        x: cropX, y: cropY,
-        width: Math.max(20, cropRight - cropX),
-        height: Math.max(20, cropBottom - cropY),
+        x: finalX, y: finalY,
+        width: Math.max(20, finalRight - finalX),
+        height: Math.max(20, finalBottom - finalY),
       })
     }
     onModeChange("crop")
