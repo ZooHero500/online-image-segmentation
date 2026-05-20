@@ -308,12 +308,15 @@ export function ResizeEditor() {
           </span>
 
           {/* Right: dimensions + download */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <span className="text-[10px] text-muted-foreground tabular-nums">
               {canvasSize.width} × {canvasSize.height} {t("px")}
             </span>
             {image && mode !== "crop" && (
-              <DownloadDropdown onDownload={handleDownload} />
+              <>
+                <div className="w-px h-4 bg-border" />
+                <DownloadDropdown onDownload={handleDownload} />
+              </>
             )}
           </div>
         </div>
