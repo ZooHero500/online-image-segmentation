@@ -157,9 +157,15 @@ export function ResizeCanvas({
     [onZoomAtPoint, onPan]
   )
 
+  // Track whether a stage-level pan is in progress (click on empty area or Space+drag)
+  const isStagePanningRef = useRef(false)
+
   const handleStageMouseDown = useCallback(
     (e: Konva.KonvaEventObject<MouseEvent>) => {
-      if (isPanningRef.current) {
+      // Space+drag OR click on stage/artboard background → start panning
+      const isBackground = e.target === e.target.getStage() || e.target.name() === "artboard" || e.target.name() === "artboard-shadow"
+      if (isPanningRef.current || isBackground) {
+        isStagePanningRef.current = true
         panStartRef.current = { x: e.evt.clientX, y: e.evt.clientY }
         if (containerRef.current) containerRef.current.style.cursor = "grabbing"
       }
@@ -169,7 +175,7 @@ export function ResizeCanvas({
 
   const handleStageMouseMove = useCallback(
     (e: Konva.KonvaEventObject<MouseEvent>) => {
-      if (isPanningRef.current && e.evt.buttons === 1) {
+      if (isStagePanningRef.current && e.evt.buttons === 1) {
         const dx = e.evt.clientX - panStartRef.current.x
         const dy = e.evt.clientY - panStartRef.current.y
         panStartRef.current = { x: e.evt.clientX, y: e.evt.clientY }
@@ -180,9 +186,8 @@ export function ResizeCanvas({
   )
 
   const handleStageMouseUp = useCallback(() => {
-    if (isPanningRef.current && containerRef.current) {
-      containerRef.current.style.cursor = "grab"
-    }
+    isStagePanningRef.current = false
+    if (containerRef.current) containerRef.current.style.cursor = "grab"
   }, [])
 
   const handleStageClick = useCallback(
@@ -243,7 +248,7 @@ export function ResizeCanvas({
     (e: Konva.KonvaEventObject<DragEvent>) => {
       setIsDraggingImage(false)
       setSnapGuides({ x: [], y: [] })
-      if (containerRef.current) containerRef.current.style.cursor = "default"
+      if (containerRef.current) containerRef.current.style.cursor = "grab"
       const newX = (e.target.x() - artboardX) / viewportScale
       const newY = (e.target.y() - artboardY) / viewportScale
       onTransformChange({ ...transform, x: newX, y: newY })
@@ -270,7 +275,7 @@ export function ResizeCanvas({
 
   const handleImageMouseLeave = useCallback(() => {
     if (isPanningRef.current || isDraggingImage) return
-    if (containerRef.current) containerRef.current.style.cursor = "default"
+    if (containerRef.current) containerRef.current.style.cursor = "grab"
   }, [isDraggingImage])
 
   const handleDrop = useCallback(
@@ -295,7 +300,7 @@ export function ResizeCanvas({
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 bg-muted/30 overflow-hidden"
+      className="absolute inset-0 bg-muted/30 overflow-hidden cursor-grab"
       onDrop={handleDrop}
       onDragOver={(e) => { e.preventDefault(); setIsDragOver(true) }}
       onDragLeave={(e) => { e.preventDefault(); setIsDragOver(false) }}
