@@ -233,12 +233,13 @@ export function ResizeCanvas({
     const x2 = Math.min(canvasWidth, imgRight)
     const y2 = Math.min(canvasHeight, imgBottom)
 
-    onCropRectChange({
+    const newCropRect = {
       x: x1,
       y: y1,
       width: Math.max(20, x2 - x1),
       height: Math.max(20, y2 - y1),
-    })
+    }
+    onCropRectChange(newCropRect)
     onModeChange("crop")
   }, [image, transform, mode, canvasWidth, canvasHeight, onCropRectChange, onModeChange, onApplyCrop])
 
