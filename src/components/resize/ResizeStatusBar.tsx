@@ -25,23 +25,23 @@ export function ResizeStatusBar({
   const t = useTranslations("resize")
 
   return (
-    <div className="flex items-center justify-between px-4 py-1.5 border-t border-border bg-background text-[10px] uppercase tracking-wider text-muted-foreground">
-      <div className="flex items-center gap-4">
+    <div className="flex items-center justify-between px-3 md:px-4 py-1.5 border-t border-border bg-background text-[10px] uppercase tracking-wider text-muted-foreground">
+      <div className="flex items-center gap-3 md:gap-4 min-w-0 overflow-hidden">
         {imageWidth && imageHeight && (
-          <span>
+          <span className="hidden sm:inline shrink-0">
             {t("statusImage")}: {imageWidth} × {imageHeight} {t("px")}
           </span>
         )}
-        <span>
-          {t("statusCanvas")}: {canvasWidth} × {canvasHeight} {t("px")}
+        <span className="shrink-0">
+          {t("statusCanvas")}: {canvasWidth} × {canvasHeight}
         </span>
         {mode === "crop" && cropRect && (
-          <span>
-            {t("statusCrop")}: {Math.round(cropRect.width)} × {Math.round(cropRect.height)} {t("px")}
+          <span className="shrink-0">
+            {t("statusCrop")}: {Math.round(cropRect.width)} × {Math.round(cropRect.height)}
           </span>
         )}
       </div>
-      <span>{zoomPercent}%</span>
+      <span className="shrink-0 ml-2">{zoomPercent}%</span>
     </div>
   )
 }
