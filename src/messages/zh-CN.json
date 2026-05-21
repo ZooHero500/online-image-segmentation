@@ -548,6 +548,8 @@
       "title": "图片调整尺寸 — 自定义裁剪和缩放 | ImgSplit",
       "description": "免费在线图片调整工具 — 设置自定义尺寸，拖拽定位，裁剪适配，一键下载。无需上传，100% 浏览器处理。"
     },
+    "navHome": "首页",
+    "navTools": "工具",
     "loadingEditor": "加载编辑器中...",
     "uploadTitle": "上传图片",
     "uploadHint": "拖放图片到此处或点击上传",

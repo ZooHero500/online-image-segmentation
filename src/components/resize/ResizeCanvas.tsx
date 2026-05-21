@@ -66,6 +66,7 @@ export function ResizeCanvas({
   const panStartRef = useRef({ x: 0, y: 0 })
   const [snapGuides, setSnapGuides] = useState<{ x: SnapGuide[]; y: SnapGuide[] }>({ x: [], y: [] })
   const [isDraggingImage, setIsDraggingImage] = useState(false)
+  const isTouchDevice = typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0)
 
   useEffect(() => {
     const el = containerRef.current
@@ -115,7 +116,7 @@ export function ResizeCanvas({
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === "dark"
 
-  const checkerboardImage = useMemo(() => {
+  const checkerboardPattern = useMemo(() => {
     if (typeof document === "undefined") return undefined
     const color1 = isDark ? "#2a2a2a" : "#f0f0f0"
     const color2 = isDark ? "#333333" : "#ffffff"
@@ -130,9 +131,7 @@ export function ResizeCanvas({
     ctx.fillStyle = color1
     ctx.fillRect(0, 0, CHECKER_SIZE, CHECKER_SIZE)
     ctx.fillRect(CHECKER_SIZE, CHECKER_SIZE, CHECKER_SIZE, CHECKER_SIZE)
-    const img = new window.Image()
-    img.src = canvas.toDataURL()
-    return img
+    return canvas
   }, [isDark])
 
   useEffect(() => {
@@ -176,6 +175,70 @@ export function ResizeCanvas({
     },
     [onZoomAtPoint, onPan]
   )
+
+  // --- Touch: pinch zoom + single-finger pan ---
+  const lastTouchRef = useRef<{ x: number; y: number } | null>(null)
+  const lastPinchDistRef = useRef<number | null>(null)
+
+  const handleTouchStart = useCallback((e: Konva.KonvaEventObject<TouchEvent>) => {
+    const touches = e.evt.touches
+    if (touches.length === 1) {
+      // Single finger — pan the viewport (on background)
+      const isBackground = e.target === e.target.getStage() || e.target.name() === "artboard" || e.target.name() === "artboard-shadow"
+      if (isBackground) {
+        lastTouchRef.current = { x: touches[0].clientX, y: touches[0].clientY }
+      }
+    } else if (touches.length === 2) {
+      // Two fingers — prepare pinch
+      e.evt.preventDefault()
+      const dx = touches[0].clientX - touches[1].clientX
+      const dy = touches[0].clientY - touches[1].clientY
+      lastPinchDistRef.current = Math.sqrt(dx * dx + dy * dy)
+      const cx = (touches[0].clientX + touches[1].clientX) / 2
+      const cy = (touches[0].clientY + touches[1].clientY) / 2
+      lastTouchRef.current = { x: cx, y: cy }
+    }
+  }, [])
+
+  const handleTouchMove = useCallback((e: Konva.KonvaEventObject<TouchEvent>) => {
+    const touches = e.evt.touches
+    if (touches.length === 1 && lastTouchRef.current) {
+      // Single finger pan
+      const dx = touches[0].clientX - lastTouchRef.current.x
+      const dy = touches[0].clientY - lastTouchRef.current.y
+      lastTouchRef.current = { x: touches[0].clientX, y: touches[0].clientY }
+      onPan(dx, dy)
+    } else if (touches.length === 2 && lastPinchDistRef.current !== null) {
+      e.evt.preventDefault()
+      const dx = touches[0].clientX - touches[1].clientX
+      const dy = touches[0].clientY - touches[1].clientY
+      const dist = Math.sqrt(dx * dx + dy * dy)
+      const factor = dist / lastPinchDistRef.current
+      lastPinchDistRef.current = dist
+
+      // Pinch center
+      const cx = (touches[0].clientX + touches[1].clientX) / 2
+      const cy = (touches[0].clientY + touches[1].clientY) / 2
+
+      // Also pan while pinching
+      if (lastTouchRef.current) {
+        onPan(cx - lastTouchRef.current.x, cy - lastTouchRef.current.y)
+      }
+      lastTouchRef.current = { x: cx, y: cy }
+
+      // Get center relative to stage
+      const stage = stageRef.current
+      if (stage) {
+        const rect = stage.container().getBoundingClientRect()
+        onZoomAtPoint(cx - rect.left, cy - rect.top, factor)
+      }
+    }
+  }, [onPan, onZoomAtPoint])
+
+  const handleTouchEnd = useCallback(() => {
+    lastTouchRef.current = null
+    lastPinchDistRef.current = null
+  }, [])
 
   // Track whether a stage-level pan is in progress (click on empty area or Space+drag)
   const isStagePanningRef = useRef(false)
@@ -396,13 +459,16 @@ export function ResizeCanvas({
         onMouseDown={handleStageMouseDown}
         onMouseMove={handleStageMouseMove}
         onMouseUp={handleStageMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         <Layer>
           <Rect name="artboard-shadow" x={artboardX} y={artboardY} width={artboardDisplayW} height={artboardDisplayH} shadowColor="rgba(0,0,0,0.12)" shadowBlur={12} shadowOffsetY={3} listening={false} />
 
           {/* Artboard background: checkerboard if available, solid white fallback */}
-          {checkerboardImage ? (
-            <Rect name="artboard" x={artboardX} y={artboardY} width={artboardDisplayW} height={artboardDisplayH} fillPatternImage={checkerboardImage} fillPatternScaleX={1} fillPatternScaleY={1} fillPatternRepeat="repeat" stroke="#d4d4d4" strokeWidth={1} />
+          {checkerboardPattern ? (
+            <Rect name="artboard" x={artboardX} y={artboardY} width={artboardDisplayW} height={artboardDisplayH} fillPatternImage={checkerboardPattern as unknown as HTMLImageElement} fillPatternScaleX={1} fillPatternScaleY={1} fillPatternRepeat="repeat" stroke="#d4d4d4" strokeWidth={1} />
           ) : (
             <Rect name="artboard" x={artboardX} y={artboardY} width={artboardDisplayW} height={artboardDisplayH} fill="#ffffff" stroke="#d4d4d4" strokeWidth={1} />
           )}
@@ -473,6 +539,7 @@ export function ResizeCanvas({
               imageBounds={{ x: artboardX + transform.x * viewportScale, y: artboardY + transform.y * viewportScale, width: displayW * viewportScale, height: displayH * viewportScale }}
               artboardBounds={{ x: artboardX, y: artboardY, width: artboardDisplayW, height: artboardDisplayH }}
               aspectRatio={cropAspectRatio}
+              touchDevice={isTouchDevice}
               onCursorChange={(cursor) => {
                 if (containerRef.current) containerRef.current.style.cursor = cursor
               }}

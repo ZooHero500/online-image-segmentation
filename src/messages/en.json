@@ -548,6 +548,8 @@
       "title": "Image Resizer — Resize & Crop to Any Dimension | ImgSplit",
       "description": "Free online image resizer — set custom dimensions, drag to position, crop to fit, and download. No upload needed, 100% browser-based."
     },
+    "navHome": "Home",
+    "navTools": "Tools",
     "loadingEditor": "Loading editor...",
     "uploadTitle": "Upload Image",
     "uploadHint": "Drop image here or click to upload",

@@ -8,7 +8,9 @@ import {
   RotateCw, FlipHorizontal2, FlipVertical2,
   AlignCenterHorizontal, AlignCenterVertical, AlignStartHorizontal,
   AlignEndHorizontal, AlignStartVertical, AlignEndVertical, Maximize2,
+  PanelLeftOpen, PanelLeftClose, Settings2,
 } from "lucide-react"
+import { Link } from "@/i18n/navigation"
 import { useResizeEditor } from "@/hooks/use-resize-editor"
 import { useCanvasViewport } from "@/hooks/use-canvas-viewport"
 import { exportArtboard } from "@/lib/resize-export"
@@ -17,6 +19,8 @@ import { CanvasSizeControl } from "./CanvasSizeControl"
 import { ResizeCanvas } from "./ResizeCanvas"
 import { ResizeStatusBar } from "./ResizeStatusBar"
 import { ZoomIndicator } from "@/components/ZoomIndicator"
+import { LogoIcon } from "@/components/LogoIcon"
+import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 
 const DOWNLOAD_FORMATS = [
   { label: "PNG", mime: "image/png" as const, desc: "Lossless, transparent" },
@@ -54,7 +58,7 @@ function DownloadDropdown({ onDownload }: { onDownload: (format: "image/png" | "
         className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider bg-foreground text-background rounded cursor-pointer hover:bg-foreground/90 transition-colors"
       >
         <Download className="h-3.5 w-3.5" />
-        Download
+        <span className="hidden sm:inline">Download</span>
         <ChevronDown className={`h-3 w-3 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
       {open && (
@@ -75,17 +79,18 @@ function DownloadDropdown({ onDownload }: { onDownload: (format: "image/png" | "
   )
 }
 
-function ToolbarButton({ onClick, disabled, title, children }: {
+function ToolbarButton({ onClick, disabled, title, children, className = "" }: {
   onClick: () => void
   disabled?: boolean
   title: string
   children: React.ReactNode
+  className?: string
 }) {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className="w-7 h-7 flex items-center justify-center text-muted-foreground rounded cursor-pointer hover:bg-muted hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none"
+      className={`w-8 h-8 md:w-7 md:h-7 flex items-center justify-center text-muted-foreground rounded cursor-pointer hover:bg-muted hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none ${className}`}
       title={title}
     >
       {children}
@@ -93,10 +98,161 @@ function ToolbarButton({ onClick, disabled, title, children }: {
   )
 }
 
+/* ─── Sidebar Content (shared between desktop sidebar & mobile drawer) ─── */
+function SidebarContent({
+  t,
+  canvasSize,
+  setCanvasSize,
+  image,
+  transform,
+  fitMode,
+  setFitMode,
+  handlePositionChange,
+  handleScaleChange,
+  mode,
+  cropAspectRatio,
+  setCropAspectRatio,
+  resetImage,
+  replaceInputRef,
+}: {
+  t: ReturnType<typeof useTranslations<"resize">>
+  canvasSize: { width: number; height: number }
+  setCanvasSize: (s: { width: number; height: number }) => void
+  image: HTMLImageElement | null
+  transform: { x: number; y: number; scale: number; crop: { x: number; y: number; width: number; height: number } | null }
+  fitMode: "fill" | "fit"
+  setFitMode: (m: "fill" | "fit") => void
+  handlePositionChange: (axis: "x" | "y", value: string) => void
+  handleScaleChange: (value: string) => void
+  mode: string
+  cropAspectRatio: number | null
+  setCropAspectRatio: (r: number | null) => void
+  resetImage: () => void
+  replaceInputRef: React.RefObject<HTMLInputElement | null>
+}) {
+  return (
+    <>
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
+        <CanvasSizeControl
+          width={canvasSize.width}
+          height={canvasSize.height}
+          onChange={setCanvasSize}
+        />
+
+        {/* Fit Mode */}
+        {image && (
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
+              {t("fitMode")}
+            </p>
+            <div className="flex gap-1">
+              {(["fill", "fit"] as const).map((m) => (
+                <button
+                  key={m}
+                  onClick={() => setFitMode(m)}
+                  className={`flex-1 py-2 text-xs uppercase tracking-wider rounded cursor-pointer transition-colors ${
+                    fitMode === m ? "bg-accent/10 text-accent" : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                >
+                  {t(m === "fill" ? "fitModeFill" : "fitModeFit")}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Position & Scale */}
+        {image && (
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
+              {t("position")}
+            </p>
+            <div className="grid grid-cols-3 gap-1.5">
+              <div>
+                <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">X</label>
+                <input
+                  type="number"
+                  value={Math.round(transform.x)}
+                  onChange={(e) => handlePositionChange("x", e.target.value)}
+                  className="w-full h-9 md:h-7 px-1.5 text-sm md:text-xs bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Y</label>
+                <input
+                  type="number"
+                  value={Math.round(transform.y)}
+                  onChange={(e) => handlePositionChange("y", e.target.value)}
+                  className="w-full h-9 md:h-7 px-1.5 text-sm md:text-xs bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">{t("scale")}</label>
+                <input
+                  type="number"
+                  value={Math.round(transform.scale * 100)}
+                  onChange={(e) => handleScaleChange(e.target.value)}
+                  min={1}
+                  className="w-full h-9 md:h-7 px-1.5 text-sm md:text-xs bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Crop Ratio */}
+        {mode === "crop" && (
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
+              {t("cropRatio")}
+            </p>
+            <div className="flex flex-wrap gap-1">
+              {CROP_RATIOS.map((ratio) => (
+                <button
+                  key={ratio.key}
+                  onClick={() => setCropAspectRatio(ratio.value)}
+                  className={`px-3 py-1.5 text-xs uppercase tracking-wider rounded cursor-pointer transition-colors ${
+                    cropAspectRatio === ratio.value ? "bg-accent/10 text-accent" : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                >
+                  {t(ratio.key)}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Bottom: replace + restore */}
+      {image && (
+        <div className="border-t border-border px-4 py-3 flex flex-col gap-2">
+          <button
+            onClick={() => replaceInputRef.current?.click()}
+            className="flex items-center justify-center gap-1.5 w-full py-2.5 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
+          >
+            <ImagePlus className="h-3.5 w-3.5" />
+            {t("replaceImage")}
+          </button>
+          {transform.crop && (
+            <button
+              onClick={resetImage}
+              className="flex items-center justify-center gap-1.5 w-full py-2.5 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
+            >
+              <RotateCcw className="h-3.5 w-3.5" />
+              {t("reset")}
+            </button>
+          )}
+        </div>
+      )}
+    </>
+  )
+}
+
 export function ResizeEditor() {
   const t = useTranslations("resize")
   const replaceInputRef = useRef<HTMLInputElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const {
     canvasSize,
     setCanvasSize,
@@ -258,7 +414,6 @@ export function ResizeEditor() {
     [viewport, containerSize]
   )
 
-  // Position input handlers
   const handlePositionChange = useCallback(
     (axis: "x" | "y", value: string) => {
       const num = parseFloat(value)
@@ -277,280 +432,247 @@ export function ResizeEditor() {
     [transform, setTransform]
   )
 
+  const sidebarProps = {
+    t,
+    canvasSize,
+    setCanvasSize,
+    image,
+    transform,
+    fitMode,
+    setFitMode,
+    handlePositionChange,
+    handleScaleChange,
+    mode,
+    cropAspectRatio,
+    setCropAspectRatio,
+    resetImage,
+    replaceInputRef,
+  }
+
   return (
-    <div className="flex h-full">
-      {/* Left Sidebar */}
-      <div className="w-60 shrink-0 border-r border-border bg-background flex flex-col relative">
-        {/* Sidebar mask during crop mode */}
-        {mode === "crop" && (
-          <div className="absolute inset-0 bg-background/80 z-10" />
-        )}
+    <div className="flex flex-col h-full">
+      {/* Site Nav */}
+      <nav className="shrink-0 h-11 flex items-center justify-between px-3 md:px-4 border-b border-border bg-background/90 backdrop-blur-sm">
+        <div className="flex items-center gap-2 md:gap-3 min-w-0">
+          {/* Mobile sidebar toggle */}
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="md:hidden w-8 h-8 flex items-center justify-center text-muted-foreground rounded hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
+          >
+            {sidebarOpen ? <PanelLeftClose className="h-4 w-4" /> : <PanelLeftOpen className="h-4 w-4" />}
+          </button>
 
-        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
-          <CanvasSizeControl
-            width={canvasSize.width}
-            height={canvasSize.height}
-            onChange={setCanvasSize}
-          />
-
-          {/* Fit Mode */}
-          {image && (
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
-                {t("fitMode")}
-              </p>
-              <div className="flex gap-1">
-                {(["fill", "fit"] as const).map((m) => (
-                  <button
-                    key={m}
-                    onClick={() => setFitMode(m)}
-                    className={`flex-1 py-1.5 text-xs uppercase tracking-wider rounded cursor-pointer transition-colors ${
-                      fitMode === m ? "bg-accent/10 text-accent" : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                    }`}
-                  >
-                    {t(m === "fill" ? "fitModeFill" : "fitModeFit")}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Position & Scale */}
-          {image && (
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
-                {t("position")}
-              </p>
-              <div className="grid grid-cols-3 gap-1.5">
-                <div>
-                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">X</label>
-                  <input
-                    type="number"
-                    value={Math.round(transform.x)}
-                    onChange={(e) => handlePositionChange("x", e.target.value)}
-                    className="w-full h-7 px-1.5 text-xs bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
-                  />
-                </div>
-                <div>
-                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Y</label>
-                  <input
-                    type="number"
-                    value={Math.round(transform.y)}
-                    onChange={(e) => handlePositionChange("y", e.target.value)}
-                    className="w-full h-7 px-1.5 text-xs bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
-                  />
-                </div>
-                <div>
-                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">{t("scale")}</label>
-                  <input
-                    type="number"
-                    value={Math.round(transform.scale * 100)}
-                    onChange={(e) => handleScaleChange(e.target.value)}
-                    min={1}
-                    className="w-full h-7 px-1.5 text-xs bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Crop Ratio (shown during crop mode) */}
-          {mode === "crop" && (
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
-                {t("cropRatio")}
-              </p>
-              <div className="flex flex-wrap gap-1">
-                {CROP_RATIOS.map((ratio) => (
-                  <button
-                    key={ratio.key}
-                    onClick={() => setCropAspectRatio(ratio.value)}
-                    className={`px-2 py-1 text-[10px] uppercase tracking-wider rounded cursor-pointer transition-colors ${
-                      cropAspectRatio === ratio.value ? "bg-accent/10 text-accent" : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                    }`}
-                  >
-                    {t(ratio.key)}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Sidebar bottom: replace image + restore */}
-        {image && (
-          <div className="border-t border-border px-4 py-3 flex flex-col gap-2">
-            <button
-              onClick={() => replaceInputRef.current?.click()}
-              className="flex items-center justify-center gap-1.5 w-full py-2 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
-            >
-              <ImagePlus className="h-3.5 w-3.5" />
-              {t("replaceImage")}
-            </button>
-            {transform.crop && (
-              <button
-                onClick={resetImage}
-                className="flex items-center justify-center gap-1.5 w-full py-2 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
-              >
-                <RotateCcw className="h-3.5 w-3.5" />
-                {t("reset")}
-              </button>
-            )}
-          </div>
-        )}
-      </div>
-
-      {/* Main area */}
-      <div className="flex-1 flex flex-col min-w-0">
-        {/* Top bar — compact */}
-        <div className="flex items-center justify-between h-11 px-3 border-b border-border bg-background">
-          {/* Left: undo/redo + transform tools */}
-          <div className="flex items-center gap-1">
-            {image && mode !== "crop" && (
-              <>
-                <ToolbarButton onClick={undo} disabled={!canUndo} title="Undo (Cmd+Z)">
-                  <Undo2 className="h-3.5 w-3.5" />
-                </ToolbarButton>
-                <ToolbarButton onClick={redo} disabled={!canRedo} title="Redo (Cmd+Shift+Z)">
-                  <Redo2 className="h-3.5 w-3.5" />
-                </ToolbarButton>
-
-                <div className="w-px h-4 bg-border mx-1" />
-
-                <ToolbarButton onClick={rotateLeft} title={t("rotateLeft")}>
-                  <RotateCcw className="h-3.5 w-3.5" />
-                </ToolbarButton>
-                <ToolbarButton onClick={rotateRight} title={t("rotateRight")}>
-                  <RotateCw className="h-3.5 w-3.5" />
-                </ToolbarButton>
-                <ToolbarButton onClick={flipHorizontal} title={t("flipH")}>
-                  <FlipHorizontal2 className="h-3.5 w-3.5" />
-                </ToolbarButton>
-                <ToolbarButton onClick={flipVertical} title={t("flipV")}>
-                  <FlipVertical2 className="h-3.5 w-3.5" />
-                </ToolbarButton>
-
-                <div className="w-px h-4 bg-border mx-1" />
-
-                <ToolbarButton onClick={() => alignImage("left")} title={t("alignLeft")}>
-                  <AlignStartHorizontal className="h-3.5 w-3.5" />
-                </ToolbarButton>
-                <ToolbarButton onClick={() => alignImage("center")} title={t("alignCenter")}>
-                  <AlignCenterHorizontal className="h-3.5 w-3.5" />
-                </ToolbarButton>
-                <ToolbarButton onClick={() => alignImage("right")} title={t("alignRight")}>
-                  <AlignEndHorizontal className="h-3.5 w-3.5" />
-                </ToolbarButton>
-                <ToolbarButton onClick={() => alignImage("top")} title={t("alignTop")}>
-                  <AlignStartVertical className="h-3.5 w-3.5" />
-                </ToolbarButton>
-                <ToolbarButton onClick={() => alignImage("center")} title={t("alignCenter")}>
-                  <AlignCenterVertical className="h-3.5 w-3.5" />
-                </ToolbarButton>
-                <ToolbarButton onClick={() => alignImage("bottom")} title={t("alignBottom")}>
-                  <AlignEndVertical className="h-3.5 w-3.5" />
-                </ToolbarButton>
-                <ToolbarButton onClick={() => alignImage("fill")} title={t("alignFill")}>
-                  <Maximize2 className="h-3.5 w-3.5" />
-                </ToolbarButton>
-              </>
-            )}
-
-            {mode === "crop" && (
-              <p className="text-[10px] text-muted-foreground">
-                {t("cropHint")}
-              </p>
-            )}
-          </div>
-
-          {/* Center: title */}
-          <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-            Image Resize
-          </span>
-
-          {/* Right: dimensions + download */}
-          <div className="flex items-center gap-3">
-            <span className="text-[10px] text-muted-foreground tabular-nums">
-              {canvasSize.width} × {canvasSize.height} {t("px")}
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity shrink-0">
+            <LogoIcon className="h-3.5 w-3.5 text-foreground" />
+            <span className="hidden sm:inline text-xs uppercase tracking-[0.3em] font-medium text-foreground">
+              ImgSplit
             </span>
-            {image && mode !== "crop" && (
-              <>
-                <div className="w-px h-4 bg-border" />
-                <DownloadDropdown onDownload={handleDownload} />
-              </>
-            )}
-          </div>
+          </Link>
+          <span className="hidden md:inline text-[10px] text-muted-foreground/40 mx-1">/</span>
+          <span className="hidden md:inline text-[10px] uppercase tracking-[0.2em] text-muted-foreground truncate">
+            {t("metadata.title").split("—")[0]?.trim() || "Image Resize"}
+          </span>
+        </div>
+        <div className="flex items-center gap-2 md:gap-4 text-[10px] uppercase tracking-[0.2em]">
+          <Link href="/" className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
+            {t("navHome")}
+          </Link>
+          <Link href="/tools" className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
+            {t("navTools")}
+          </Link>
+          <LocaleSwitcher variant="compact" />
+        </div>
+      </nav>
+
+      <div className="flex flex-1 min-h-0">
+        {/* Desktop Sidebar */}
+        <div className="hidden md:flex w-60 shrink-0 border-r border-border bg-background flex-col relative">
+          {mode === "crop" && (
+            <div className="absolute inset-0 bg-background/80 z-10" />
+          )}
+          <SidebarContent {...sidebarProps} />
         </div>
 
-        {/* Canvas area */}
-        <div ref={containerRef} className="flex-1 relative overflow-hidden">
-          <ResizeCanvas
-            canvasWidth={canvasSize.width}
-            canvasHeight={canvasSize.height}
-            image={image}
-            transform={transform}
-            onTransformChange={setTransform}
-            mode={mode}
-            onModeChange={setMode}
-            cropRect={cropRect}
-            onCropRectChange={setCropRect}
-            onImageFile={handleImageFile}
-            onApplyCrop={applyCrop}
-            viewportScale={viewport.scale}
-            viewportPosition={viewport.position}
-            onZoomAtPoint={viewport.zoomAtPoint}
-            onPan={viewport.panBy}
-            cropAspectRatio={cropAspectRatio}
-          />
-
-          {/* Floating crop actions */}
-          {mode === "crop" && (
-            <div className="absolute top-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-background/90 backdrop-blur-sm border border-border rounded-lg shadow-lg px-3 py-2">
-              <button
-                onClick={applyCrop}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider bg-accent text-accent-foreground rounded cursor-pointer hover:bg-accent/90 transition-colors"
-              >
-                <Check className="h-3.5 w-3.5" />
-                {t("applyCrop")}
-              </button>
-              <button
-                onClick={cancelCrop}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
-              >
-                <X className="h-3.5 w-3.5" />
-                {t("cancelCrop")}
-              </button>
-              {transform.crop && (
+        {/* Mobile Sidebar Drawer */}
+        {sidebarOpen && (
+          <>
+            <div
+              className="md:hidden fixed inset-0 bg-black/40 z-40"
+              onClick={() => setSidebarOpen(false)}
+            />
+            <div className="md:hidden fixed left-0 top-0 bottom-0 w-72 bg-background border-r border-border z-50 flex flex-col shadow-xl">
+              <div className="h-11 flex items-center justify-between px-4 border-b border-border shrink-0">
+                <span className="text-xs uppercase tracking-[0.2em] font-medium">{t("canvasSize")}</span>
                 <button
-                  onClick={resetImage}
-                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
+                  onClick={() => setSidebarOpen(false)}
+                  className="w-8 h-8 flex items-center justify-center text-muted-foreground rounded hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
                 >
-                  <RotateCcw className="h-3.5 w-3.5" />
-                  {t("reset")}
+                  <X className="h-4 w-4" />
                 </button>
+              </div>
+              <SidebarContent {...sidebarProps} />
+            </div>
+          </>
+        )}
+
+        {/* Main area */}
+        <div className="flex-1 flex flex-col min-w-0">
+          {/* Toolbar */}
+          <div className="flex items-center justify-between h-11 px-2 md:px-3 border-b border-border bg-background">
+            {/* Left: tools */}
+            <div className="flex items-center gap-0.5 md:gap-1 overflow-x-auto">
+              {image && mode !== "crop" && (
+                <>
+                  <ToolbarButton onClick={undo} disabled={!canUndo} title="Undo (Cmd+Z)">
+                    <Undo2 className="h-3.5 w-3.5" />
+                  </ToolbarButton>
+                  <ToolbarButton onClick={redo} disabled={!canRedo} title="Redo (Cmd+Shift+Z)">
+                    <Redo2 className="h-3.5 w-3.5" />
+                  </ToolbarButton>
+
+                  <div className="w-px h-4 bg-border mx-0.5 md:mx-1 shrink-0" />
+
+                  <ToolbarButton onClick={rotateLeft} title={t("rotateLeft")}>
+                    <RotateCcw className="h-3.5 w-3.5" />
+                  </ToolbarButton>
+                  <ToolbarButton onClick={rotateRight} title={t("rotateRight")}>
+                    <RotateCw className="h-3.5 w-3.5" />
+                  </ToolbarButton>
+                  <ToolbarButton onClick={flipHorizontal} title={t("flipH")} className="hidden sm:flex">
+                    <FlipHorizontal2 className="h-3.5 w-3.5" />
+                  </ToolbarButton>
+                  <ToolbarButton onClick={flipVertical} title={t("flipV")} className="hidden sm:flex">
+                    <FlipVertical2 className="h-3.5 w-3.5" />
+                  </ToolbarButton>
+
+                  {/* Align buttons — desktop only */}
+                  <div className="hidden lg:contents">
+                    <div className="w-px h-4 bg-border mx-1 shrink-0" />
+                    <ToolbarButton onClick={() => alignImage("left")} title={t("alignLeft")}>
+                      <AlignStartHorizontal className="h-3.5 w-3.5" />
+                    </ToolbarButton>
+                    <ToolbarButton onClick={() => alignImage("center")} title={t("alignCenter")}>
+                      <AlignCenterHorizontal className="h-3.5 w-3.5" />
+                    </ToolbarButton>
+                    <ToolbarButton onClick={() => alignImage("right")} title={t("alignRight")}>
+                      <AlignEndHorizontal className="h-3.5 w-3.5" />
+                    </ToolbarButton>
+                    <ToolbarButton onClick={() => alignImage("top")} title={t("alignTop")}>
+                      <AlignStartVertical className="h-3.5 w-3.5" />
+                    </ToolbarButton>
+                    <ToolbarButton onClick={() => alignImage("center")} title={t("alignCenter")}>
+                      <AlignCenterVertical className="h-3.5 w-3.5" />
+                    </ToolbarButton>
+                    <ToolbarButton onClick={() => alignImage("bottom")} title={t("alignBottom")}>
+                      <AlignEndVertical className="h-3.5 w-3.5" />
+                    </ToolbarButton>
+                    <ToolbarButton onClick={() => alignImage("fill")} title={t("alignFill")}>
+                      <Maximize2 className="h-3.5 w-3.5" />
+                    </ToolbarButton>
+                  </div>
+
+                  {/* Mobile: settings button to open sidebar */}
+                  <button
+                    onClick={() => setSidebarOpen(true)}
+                    className="md:hidden w-8 h-8 flex items-center justify-center text-muted-foreground rounded cursor-pointer hover:bg-muted hover:text-foreground transition-colors ml-0.5"
+                    title="Settings"
+                  >
+                    <Settings2 className="h-3.5 w-3.5" />
+                  </button>
+                </>
+              )}
+
+              {mode === "crop" && (
+                <p className="text-[10px] md:text-[10px] text-muted-foreground truncate">
+                  {t("cropHint")}
+                </p>
               )}
             </div>
-          )}
 
-          <ZoomIndicator
+            {/* Right: dimensions + download */}
+            <div className="flex items-center gap-2 md:gap-3 shrink-0">
+              <span className="hidden sm:inline text-[10px] text-muted-foreground tabular-nums">
+                {canvasSize.width} × {canvasSize.height} {t("px")}
+              </span>
+              {image && mode !== "crop" && (
+                <>
+                  <div className="hidden sm:block w-px h-4 bg-border" />
+                  <DownloadDropdown onDownload={handleDownload} />
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Canvas area */}
+          <div ref={containerRef} className="flex-1 relative overflow-hidden">
+            <ResizeCanvas
+              canvasWidth={canvasSize.width}
+              canvasHeight={canvasSize.height}
+              image={image}
+              transform={transform}
+              onTransformChange={setTransform}
+              mode={mode}
+              onModeChange={setMode}
+              cropRect={cropRect}
+              onCropRectChange={setCropRect}
+              onImageFile={handleImageFile}
+              onApplyCrop={applyCrop}
+              viewportScale={viewport.scale}
+              viewportPosition={viewport.position}
+              onZoomAtPoint={viewport.zoomAtPoint}
+              onPan={viewport.panBy}
+              cropAspectRatio={cropAspectRatio}
+            />
+
+            {/* Floating crop actions */}
+            {mode === "crop" && (
+              <div className="absolute top-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-background/90 backdrop-blur-sm border border-border rounded-lg shadow-lg px-2 md:px-3 py-2">
+                <button
+                  onClick={applyCrop}
+                  className="flex items-center gap-1.5 px-3 py-2 md:py-1.5 text-xs uppercase tracking-wider bg-accent text-accent-foreground rounded cursor-pointer hover:bg-accent/90 transition-colors"
+                >
+                  <Check className="h-3.5 w-3.5" />
+                  <span className="hidden sm:inline">{t("applyCrop")}</span>
+                </button>
+                <button
+                  onClick={cancelCrop}
+                  className="flex items-center gap-1.5 px-3 py-2 md:py-1.5 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
+                >
+                  <X className="h-3.5 w-3.5" />
+                  <span className="hidden sm:inline">{t("cancelCrop")}</span>
+                </button>
+                {transform.crop && (
+                  <button
+                    onClick={resetImage}
+                    className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
+                  >
+                    <RotateCcw className="h-3.5 w-3.5" />
+                    {t("reset")}
+                  </button>
+                )}
+              </div>
+            )}
+
+            <ZoomIndicator
+              zoomPercent={viewport.zoomPercent}
+              onFitToView={viewport.fitToView}
+              onResetTo100={viewport.resetTo100}
+              onZoomChange={handleZoomChange}
+            />
+          </div>
+
+          {/* Status bar */}
+          <ResizeStatusBar
+            imageWidth={image?.naturalWidth ?? null}
+            imageHeight={image?.naturalHeight ?? null}
+            canvasWidth={canvasSize.width}
+            canvasHeight={canvasSize.height}
             zoomPercent={viewport.zoomPercent}
-            onFitToView={viewport.fitToView}
-            onResetTo100={viewport.resetTo100}
-            onZoomChange={handleZoomChange}
+            mode={mode}
+            cropRect={cropRect}
           />
         </div>
-
-        {/* Status bar */}
-        <ResizeStatusBar
-          imageWidth={image?.naturalWidth ?? null}
-          imageHeight={image?.naturalHeight ?? null}
-          canvasWidth={canvasSize.width}
-          canvasHeight={canvasSize.height}
-          zoomPercent={viewport.zoomPercent}
-          mode={mode}
-          cropRect={cropRect}
-        />
-      </div>
+      </div>{/* close body wrapper */}
 
       <input
         ref={replaceInputRef}

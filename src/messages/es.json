@@ -548,6 +548,8 @@
       "title": "Redimensionar Imagen — Recortar y Ajustar | ImgSplit",
       "description": "Herramienta gratuita para redimensionar imágenes — dimensiones personalizadas, arrastrar para posicionar, recortar y descargar. Sin subir archivos, 100% en el navegador."
     },
+    "navHome": "Inicio",
+    "navTools": "Herramientas",
     "loadingEditor": "Cargando editor...",
     "uploadTitle": "Subir imagen",
     "uploadHint": "Arrastra una imagen aquí o haz clic para subir",

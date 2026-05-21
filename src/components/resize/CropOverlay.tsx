@@ -19,11 +19,15 @@ interface CropOverlayProps {
   onCropChange: (rect: CropRect) => void
   onCursorChange?: (cursor: string) => void
   aspectRatio?: number | null
+  touchDevice?: boolean
 }
 
 const HANDLE_SIZE = 12
+const HANDLE_SIZE_TOUCH = 24
 const EDGE_HANDLE_W = 20
+const EDGE_HANDLE_W_TOUCH = 36
 const EDGE_HANDLE_H = 6
+const EDGE_HANDLE_H_TOUCH = 10
 const HANDLE_COLOR = "#ffffff"
 const HANDLE_STROKE = "#0066ff"
 const DIM_COLOR = "rgba(0, 0, 0, 0.5)"
@@ -81,7 +85,11 @@ export function CropOverlay({
   onCropChange,
   onCursorChange,
   aspectRatio,
+  touchDevice,
 }: CropOverlayProps) {
+  const hs = touchDevice ? HANDLE_SIZE_TOUCH : HANDLE_SIZE
+  const ew = touchDevice ? EDGE_HANDLE_W_TOUCH : EDGE_HANDLE_W
+  const eh = touchDevice ? EDGE_HANDLE_H_TOUCH : EDGE_HANDLE_H
   const dragStartRect = useRef<CropRect | null>(null)
   const dragStartPos = useRef({ x: 0, y: 0 })
 
@@ -129,8 +137,8 @@ export function CropOverlay({
   const handleCornerDrag = useCallback(
     (corner: Corner, e: Konva.KonvaEventObject<DragEvent>) => {
       const node = e.target
-      const nx = node.x() + HANDLE_SIZE / 2
-      const ny = node.y() + HANDLE_SIZE / 2
+      const nx = node.x() + hs / 2
+      const ny = node.y() + hs / 2
 
       let newRect: CropRect
 
@@ -164,7 +172,7 @@ export function CropOverlay({
       const constrained = constrainCropRect(newRect, imageBounds)
       onCropChange(constrained)
     },
-    [cropRect, imageBounds, onCropChange, aspectRatio]
+    [cropRect, imageBounds, onCropChange, aspectRatio, hs]
   )
 
   // --- Edge handles ---
@@ -175,22 +183,22 @@ export function CropOverlay({
 
       switch (edge) {
         case "top": {
-          const ny = node.y() + EDGE_HANDLE_H / 2
+          const ny = node.y() + eh / 2
           newRect = { x: cropRect.x, y: ny, width: cropRect.width, height: cropRect.y + cropRect.height - ny }
           break
         }
         case "bottom": {
-          const ny = node.y() + EDGE_HANDLE_H / 2
+          const ny = node.y() + eh / 2
           newRect = { x: cropRect.x, y: cropRect.y, width: cropRect.width, height: ny - cropRect.y }
           break
         }
         case "left": {
-          const nx = node.x() + EDGE_HANDLE_H / 2
+          const nx = node.x() + eh / 2
           newRect = { x: nx, y: cropRect.y, width: cropRect.x + cropRect.width - nx, height: cropRect.height }
           break
         }
         case "right": {
-          const nx = node.x() + EDGE_HANDLE_H / 2
+          const nx = node.x() + eh / 2
           newRect = { x: cropRect.x, y: cropRect.y, width: nx - cropRect.x, height: cropRect.height }
           break
         }
@@ -199,7 +207,7 @@ export function CropOverlay({
       const constrained = constrainCropRect(newRect, imageBounds)
       onCropChange(constrained)
     },
-    [cropRect, imageBounds, onCropChange]
+    [cropRect, imageBounds, onCropChange, eh]
   )
 
   const thirdW = cropRect.width / 3
@@ -268,14 +276,14 @@ export function CropOverlay({
         return (
           <Rect
             key={corner}
-            x={pos.x - HANDLE_SIZE / 2}
-            y={pos.y - HANDLE_SIZE / 2}
-            width={HANDLE_SIZE}
-            height={HANDLE_SIZE}
+            x={pos.x - hs / 2}
+            y={pos.y - hs / 2}
+            width={hs}
+            height={hs}
             fill={HANDLE_COLOR}
             stroke={HANDLE_STROKE}
             strokeWidth={1.5}
-            cornerRadius={2}
+            cornerRadius={touchDevice ? 4 : 2}
             shadowColor="rgba(0,0,0,0.2)"
             shadowBlur={3}
             shadowOffsetY={1}
@@ -284,8 +292,8 @@ export function CropOverlay({
             onMouseEnter={() => emitCursor(CORNER_CURSORS[corner])}
             onMouseLeave={() => emitCursor("crosshair")}
             dragBoundFunc={(pos) => ({
-              x: Math.max(imageBounds.x - HANDLE_SIZE / 2, Math.min(imageBounds.x + imageBounds.width - HANDLE_SIZE / 2, pos.x)),
-              y: Math.max(imageBounds.y - HANDLE_SIZE / 2, Math.min(imageBounds.y + imageBounds.height - HANDLE_SIZE / 2, pos.y)),
+              x: Math.max(imageBounds.x - hs / 2, Math.min(imageBounds.x + imageBounds.width - hs / 2, pos.x)),
+              y: Math.max(imageBounds.y - hs / 2, Math.min(imageBounds.y + imageBounds.height - hs / 2, pos.y)),
             })}
           />
         )
@@ -295,8 +303,8 @@ export function CropOverlay({
       {EDGES.map((edge) => {
         const pos = getEdgePos(edge, cropRect)
         const isHorizontal = edge === "top" || edge === "bottom"
-        const w = isHorizontal ? EDGE_HANDLE_W : EDGE_HANDLE_H
-        const h = isHorizontal ? EDGE_HANDLE_H : EDGE_HANDLE_W
+        const w = isHorizontal ? ew : eh
+        const h = isHorizontal ? eh : ew
         return (
           <Rect
             key={edge}
