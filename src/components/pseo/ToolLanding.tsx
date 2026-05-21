@@ -76,6 +76,7 @@ interface FooterTranslations {
   tagline: string
   toolsTitle: string
   toolGrid: string
+  toolResize: string
   toolSplit: string
   toolAll: string
   navTitle: string
@@ -380,6 +381,12 @@ export function ToolLanding({ data, locale, t }: ToolLandingProps) {
                   className="hover:text-accent transition-colors duration-500"
                 >
                   {t.footer.toolGrid}
+                </Link>
+                <Link
+                  href="/resize"
+                  className="hover:text-accent transition-colors duration-500"
+                >
+                  {t.footer.toolResize}
                 </Link>
                 <a
                   href="#upload"

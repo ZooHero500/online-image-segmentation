@@ -96,6 +96,7 @@ export default async function ToolsPage({
               { "@type": "ListItem", position: 9, name: "No-Photoshop Slicer", url: `${BASE_URL}/no-photoshop-slicer` },
               { "@type": "ListItem", position: 10, name: "Grid Splitter", url: `${BASE_URL}/grid` },
               { "@type": "ListItem", position: 11, name: "Image Splitter", url: BASE_URL },
+              { "@type": "ListItem", position: 12, name: "Image Resizer", url: `${BASE_URL}/resize` },
             ],
           },
         }}
@@ -264,6 +265,11 @@ export default async function ToolsPage({
               description={t("existingToolGridDesc")}
               href="/grid"
             />
+            <ToolCard
+              title={t("existingToolResize")}
+              description={t("existingToolResizeDesc")}
+              href="/resize"
+            />
           </div>
         </div>
       </section>
@@ -291,6 +297,12 @@ export default async function ToolsPage({
                   className="hover:text-accent transition-colors duration-500"
                 >
                   {tFooter("toolGrid")}
+                </Link>
+                <Link
+                  href="/resize"
+                  className="hover:text-accent transition-colors duration-500"
+                >
+                  {tFooter("toolResize")}
                 </Link>
                 <Link
                   href="/"

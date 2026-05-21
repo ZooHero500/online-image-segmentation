@@ -406,6 +406,9 @@ export default async function GridPage({
               <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-2">{tFooter("toolsTitle")}</p>
               <div className="flex gap-6 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
                 <span className="text-accent">{tFooter("toolGrid")}</span>
+                <Link href="/resize" className="hover:text-accent transition-colors duration-500">
+                  {tFooter("toolResize")}
+                </Link>
                 <Link href="/" className="hover:text-accent transition-colors duration-500">
                   {tFooter("toolSplit")}
                 </Link>

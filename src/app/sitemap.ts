@@ -60,6 +60,34 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   }
 
+  // Add /resize page
+  for (const locale of routing.locales) {
+    const url =
+      locale === routing.defaultLocale
+        ? `${BASE_URL}/resize`
+        : `${BASE_URL}/${locale}/resize`
+
+    entries.push({
+      url,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+      alternates: {
+        languages: {
+          ...Object.fromEntries(
+            routing.locales.map((l) => [
+              l,
+              l === routing.defaultLocale
+                ? `${BASE_URL}/resize`
+                : `${BASE_URL}/${l}/resize`,
+            ])
+          ),
+          "x-default": `${BASE_URL}/resize`,
+        },
+      },
+    })
+  }
+
   // Add /tools hub page
   for (const locale of routing.locales) {
     const url =

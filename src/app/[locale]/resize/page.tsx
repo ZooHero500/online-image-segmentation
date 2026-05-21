@@ -5,6 +5,7 @@ import { notFound } from "next/navigation"
 import { routing } from "@/i18n/routing"
 import type { Metadata } from "next"
 import { DynamicResizeEditor } from "@/components/resize/DynamicResizeEditor"
+import { JsonLd } from "@/components/JsonLd"
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imgsplit.com"
 
@@ -38,6 +39,19 @@ export async function generateMetadata({
         "x-default": `${BASE_URL}/resize`,
       },
     },
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      url: canonicalUrl,
+      siteName: "ImgSplit",
+      type: "website",
+      locale: locale === "zh-CN" ? "zh_CN" : locale,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+    },
   }
 }
 
@@ -58,8 +72,34 @@ export default async function ResizePage({
 
   setRequestLocale(locale)
 
+  const t = await getTranslations({ locale, namespace: "resize.metadata" })
+
   return (
     <main className="h-screen flex flex-col overflow-hidden">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "ImgSplit Image Resizer",
+          url: `${BASE_URL}/resize`,
+          description: t("description"),
+          applicationCategory: "DesignApplication",
+          operatingSystem: "Any",
+          offers: {
+            "@type": "Offer",
+            price: "0",
+            priceCurrency: "USD",
+          },
+          featureList: [
+            "Custom canvas dimensions",
+            "Drag & drop image positioning",
+            "Crop with aspect ratio presets",
+            "Rotate & flip",
+            "Export as PNG, JPEG, WebP",
+            "100% browser-based, no upload",
+          ],
+        }}
+      />
       <DynamicResizeEditor />
     </main>
   )

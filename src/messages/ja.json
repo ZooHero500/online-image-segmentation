@@ -510,7 +510,9 @@
     "existingToolSplit": "画像分割",
     "existingToolSplitDesc": "ドラッグ＆ドロップの分割線、スナップ整列、ピクセル精度を備えた多機能画像分割ツール。",
     "existingToolGrid": "グリッド分割",
-    "existingToolGridDesc": "画像を3×3、1×3、2×2のグリッドに分割。各種SNSプラットフォームに対応。"
+    "existingToolGridDesc": "画像を3×3、1×3、2×2のグリッドに分割。各種SNSプラットフォームに対応。",
+    "existingToolResize": "画像リサイズ",
+    "existingToolResizeDesc": "画像を任意のサイズにリサイズ・トリミング・回転 — ドラッグ配置、スナップ整列、複数形式で書き出し。"
   },
   "aiSegmentation": {
     "title": "AI自動分割",

@@ -510,7 +510,9 @@
     "existingToolSplit": "이미지 분할",
     "existingToolSplitDesc": "드래그 앤 드롭 분할선, 스냅 정렬, 픽셀 단위 정밀 자르기를 지원하는 종합 이미지 분할 도구.",
     "existingToolGrid": "그리드 분할",
-    "existingToolGridDesc": "이미지를 3×3, 1×3 또는 2×2 그리드로 분할하여 소셜 미디어 플랫폼에 활용."
+    "existingToolGridDesc": "이미지를 3×3, 1×3 또는 2×2 그리드로 분할하여 소셜 미디어 플랫폼에 활용.",
+    "existingToolResize": "이미지 크기 조정",
+    "existingToolResizeDesc": "이미지를 원하는 크기로 조정, 자르기, 회전 — 드래그 위치 지정, 스냅 정렬, 다중 형식 내보내기."
   },
   "aiSegmentation": {
     "title": "AI 분할",

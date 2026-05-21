@@ -100,6 +100,7 @@ export default async function ToolSlugPage({
       tagline: tFooter("tagline"),
       toolsTitle: tFooter("toolsTitle"),
       toolGrid: tFooter("toolGrid"),
+      toolResize: tFooter("toolResize"),
       toolSplit: tFooter("toolSplit"),
       toolAll: tFooter("toolAll"),
       navTitle: tFooter("navTitle"),
