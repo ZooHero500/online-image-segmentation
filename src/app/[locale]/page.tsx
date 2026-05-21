@@ -606,77 +606,60 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
       {/* FOOTER */}
       <footer className="border-t border-border py-12 md:py-16 px-4 sm:px-8 md:px-16">
-        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
+        <div className="max-w-[1600px] mx-auto">
+          {/* Top: Logo + tagline */}
+          <div className="flex items-center gap-3 mb-10">
             <LogoIcon className="h-3.5 w-3.5 text-foreground" />
             <span className="text-xs uppercase tracking-[0.3em] font-medium">
               ImgSplit
             </span>
-            <span className="hidden md:inline text-[10px] uppercase tracking-[0.25em] text-muted-foreground ml-4">
+            <span className="hidden sm:inline text-[10px] uppercase tracking-[0.25em] text-muted-foreground ml-4">
               {t("footer.tagline")}
             </span>
           </div>
-          <div className="flex flex-col md:flex-row gap-6 md:gap-12">
+
+          {/* Middle: Link columns */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-10">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-2">{t("footer.toolsTitle")}</p>
-              <div className="flex gap-6 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                <Link
-                  href="/grid"
-                  className="hover:text-accent transition-colors duration-500"
-                >
-                  {t("footer.toolGrid")}
-                </Link>
-                <Link
-                  href="/resize"
-                  className="hover:text-accent transition-colors duration-500"
-                >
-                  {t("footer.toolResize")}
-                </Link>
-                <a
-                  href="#upload"
-                  className="hover:text-accent transition-colors duration-500"
-                >
-                  {t("footer.toolSplit")}
-                </a>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">{t("footer.toolsTitle")}</p>
+              <div className="flex flex-col gap-2.5 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                <a href="#upload" className="hover:text-accent transition-colors duration-500">{t("footer.toolSplit")}</a>
+                <Link href="/grid" className="hover:text-accent transition-colors duration-500">{t("footer.toolGrid")}</Link>
+                <Link href="/resize" className="hover:text-accent transition-colors duration-500">{t("footer.toolResize")}</Link>
                 <Link href="/tools" className="hover:text-accent transition-colors duration-500">{t("footer.toolAll")}</Link>
               </div>
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-2">{t("footer.navTitle")}</p>
-              <div className="flex gap-6 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                <a href="#features" className="hover:text-accent transition-colors duration-500">
-                  {t("footer.navFeatures")}
-                </a>
-                <a href="#how-it-works" className="hover:text-accent transition-colors duration-500">
-                  {t("footer.navHowItWorks")}
-                </a>
-                <a href="#faq" className="hover:text-accent transition-colors duration-500">
-                  {t("footer.navFaq")}
-                </a>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">{t("footer.navTitle")}</p>
+              <div className="flex flex-col gap-2.5 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                <a href="#features" className="hover:text-accent transition-colors duration-500">{t("footer.navFeatures")}</a>
+                <a href="#how-it-works" className="hover:text-accent transition-colors duration-500">{t("footer.navHowItWorks")}</a>
+                <a href="#faq" className="hover:text-accent transition-colors duration-500">{t("footer.navFaq")}</a>
               </div>
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-2">{t("footer.legalTitle")}</p>
-              <div className="flex gap-6 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                <Link href="/about" className="hover:text-accent transition-colors duration-500">
-                  {t("footer.about")}
-                </Link>
-                <Link href="/privacy" className="hover:text-accent transition-colors duration-500">
-                  {t("footer.privacy")}
-                </Link>
-                <Link href="/terms" className="hover:text-accent transition-colors duration-500">
-                  {t("footer.terms")}
-                </Link>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">{t("footer.legalTitle")}</p>
+              <div className="flex flex-col gap-2.5 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                <Link href="/about" className="hover:text-accent transition-colors duration-500">{t("footer.about")}</Link>
+                <Link href="/privacy" className="hover:text-accent transition-colors duration-500">{t("footer.privacy")}</Link>
+                <Link href="/terms" className="hover:text-accent transition-colors duration-500">{t("footer.terms")}</Link>
               </div>
             </div>
+            <div>
+              <a href="https://www.producthunt.com/products/imgsplit?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-imgsplit" target="_blank" rel="noopener noreferrer" className="inline-block mb-3">
+                <img alt="ImgSplit on Product Hunt" width="200" height="43" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1114907&theme=light&t=1775379733917" />
+              </a>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                zoohero.dev@gmail.com
+              </p>
+            </div>
           </div>
-          <div className="mt-6 md:mt-0 flex flex-col items-start md:items-end gap-4">
-            <a href="https://www.producthunt.com/products/imgsplit?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-imgsplit" target="_blank" rel="noopener noreferrer">
-              <img alt="ImgSplit - Split images with precision — free, private, no upload | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1114907&theme=light&t=1775379733917" />
-            </a>
-            <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-              zoohero.dev@gmail.com
-            </span>
+
+          {/* Bottom: copyright line */}
+          <div className="pt-6 border-t border-border">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60">
+              © {new Date().getFullYear()} ImgSplit. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
