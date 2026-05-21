@@ -575,6 +575,27 @@
     "px": "px",
     "statusImage": "이미지",
     "statusCanvas": "캔버스",
-    "statusCrop": "자르기"
+    "statusCrop": "자르기",
+    "rotateLeft": "왼쪽 회전",
+    "rotateRight": "오른쪽 회전",
+    "flipH": "수평 뒤집기",
+    "flipV": "수직 뒤집기",
+    "alignCenter": "가운데 정렬",
+    "alignLeft": "왼쪽 정렬",
+    "alignRight": "오른쪽 정렬",
+    "alignTop": "상단 정렬",
+    "alignBottom": "하단 정렬",
+    "alignFill": "캔버스 채우기",
+    "fitMode": "맞춤 모드",
+    "fitModeFill": "채우기",
+    "fitModeFit": "맞추기",
+    "position": "위치",
+    "scale": "배율",
+    "cropRatio": "자르기 비율",
+    "ratioFree": "자유",
+    "ratio1_1": "1:1",
+    "ratio4_3": "4:3",
+    "ratio16_9": "16:9",
+    "ratio3_2": "3:2"
   }
 }

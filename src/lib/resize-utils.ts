@@ -24,6 +24,26 @@ export function calculateFillTransform(
   }
 }
 
+export function calculateFitTransform(
+  imageWidth: number,
+  imageHeight: number,
+  artboardWidth: number,
+  artboardHeight: number
+): { x: number; y: number; scale: number } {
+  const scaleToFitW = artboardWidth / imageWidth
+  const scaleToFitH = artboardHeight / imageHeight
+  const scale = Math.min(scaleToFitW, scaleToFitH)
+
+  const scaledW = imageWidth * scale
+  const scaledH = imageHeight * scale
+
+  return {
+    x: (artboardWidth - scaledW) / 2,
+    y: (artboardHeight - scaledH) / 2,
+    scale,
+  }
+}
+
 export function constrainCropRect(
   crop: CropRect,
   bounds: CropRect

@@ -1,9 +1,14 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState, Fragment } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
-import { Download, RotateCcw, ImagePlus, Check, X, Undo2, Redo2, ChevronDown } from "lucide-react"
+import {
+  Download, RotateCcw, ImagePlus, Check, X, Undo2, Redo2, ChevronDown,
+  RotateCw, FlipHorizontal2, FlipVertical2,
+  AlignCenterHorizontal, AlignCenterVertical, AlignStartHorizontal,
+  AlignEndHorizontal, AlignStartVertical, AlignEndVertical, Maximize2,
+} from "lucide-react"
 import { useResizeEditor } from "@/hooks/use-resize-editor"
 import { useCanvasViewport } from "@/hooks/use-canvas-viewport"
 import { exportArtboard } from "@/lib/resize-export"
@@ -18,6 +23,14 @@ const DOWNLOAD_FORMATS = [
   { label: "JPEG", mime: "image/jpeg" as const, desc: "Smaller size, no transparency" },
   { label: "WebP", mime: "image/webp" as const, desc: "Best compression, modern" },
 ]
+
+const CROP_RATIOS = [
+  { key: "ratioFree", value: null },
+  { key: "ratio1_1", value: 1 },
+  { key: "ratio4_3", value: 4 / 3 },
+  { key: "ratio16_9", value: 16 / 9 },
+  { key: "ratio3_2", value: 3 / 2 },
+] as const
 
 function DownloadDropdown({ onDownload }: { onDownload: (format: "image/png" | "image/jpeg" | "image/webp") => void }) {
   const [open, setOpen] = useState(false)
@@ -62,6 +75,24 @@ function DownloadDropdown({ onDownload }: { onDownload: (format: "image/png" | "
   )
 }
 
+function ToolbarButton({ onClick, disabled, title, children }: {
+  onClick: () => void
+  disabled?: boolean
+  title: string
+  children: React.ReactNode
+}) {
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className="w-7 h-7 flex items-center justify-center text-muted-foreground rounded cursor-pointer hover:bg-muted hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none"
+      title={title}
+    >
+      {children}
+    </button>
+  )
+}
+
 export function ResizeEditor() {
   const t = useTranslations("resize")
   const replaceInputRef = useRef<HTMLInputElement>(null)
@@ -86,7 +117,16 @@ export function ResizeEditor() {
     redo,
     canUndo,
     canRedo,
+    rotateLeft,
+    rotateRight,
+    flipHorizontal,
+    flipVertical,
+    fitMode,
+    setFitMode,
+    alignImage,
   } = useResizeEditor()
+
+  const [cropAspectRatio, setCropAspectRatio] = useState<number | null>(null)
 
   // Track container size reactively
   const [containerSize, setContainerSize] = useState({ width: 800, height: 600 })
@@ -218,6 +258,25 @@ export function ResizeEditor() {
     [viewport, containerSize]
   )
 
+  // Position input handlers
+  const handlePositionChange = useCallback(
+    (axis: "x" | "y", value: string) => {
+      const num = parseFloat(value)
+      if (isNaN(num)) return
+      setTransform({ ...transform, [axis]: num })
+    },
+    [transform, setTransform]
+  )
+
+  const handleScaleChange = useCallback(
+    (value: string) => {
+      const num = parseFloat(value)
+      if (isNaN(num) || num <= 0) return
+      setTransform({ ...transform, scale: num / 100 })
+    },
+    [transform, setTransform]
+  )
+
   return (
     <div className="flex h-full">
       {/* Left Sidebar */}
@@ -227,12 +286,95 @@ export function ResizeEditor() {
           <div className="absolute inset-0 bg-background/80 z-10" />
         )}
 
-        <div className="flex-1 overflow-y-auto px-4 py-4">
+        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
           <CanvasSizeControl
             width={canvasSize.width}
             height={canvasSize.height}
             onChange={setCanvasSize}
           />
+
+          {/* Fit Mode */}
+          {image && (
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
+                {t("fitMode")}
+              </p>
+              <div className="flex gap-1">
+                {(["fill", "fit"] as const).map((m) => (
+                  <button
+                    key={m}
+                    onClick={() => setFitMode(m)}
+                    className={`flex-1 py-1.5 text-xs uppercase tracking-wider rounded cursor-pointer transition-colors ${
+                      fitMode === m ? "bg-accent/10 text-accent" : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    }`}
+                  >
+                    {t(m === "fill" ? "fitModeFill" : "fitModeFit")}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Position & Scale */}
+          {image && (
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
+                {t("position")}
+              </p>
+              <div className="grid grid-cols-3 gap-1.5">
+                <div>
+                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">X</label>
+                  <input
+                    type="number"
+                    value={Math.round(transform.x)}
+                    onChange={(e) => handlePositionChange("x", e.target.value)}
+                    className="w-full h-7 px-1.5 text-xs bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">Y</label>
+                  <input
+                    type="number"
+                    value={Math.round(transform.y)}
+                    onChange={(e) => handlePositionChange("y", e.target.value)}
+                    className="w-full h-7 px-1.5 text-xs bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase tracking-wider text-muted-foreground mb-1 block">{t("scale")}</label>
+                  <input
+                    type="number"
+                    value={Math.round(transform.scale * 100)}
+                    onChange={(e) => handleScaleChange(e.target.value)}
+                    min={1}
+                    className="w-full h-7 px-1.5 text-xs bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Crop Ratio (shown during crop mode) */}
+          {mode === "crop" && (
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
+                {t("cropRatio")}
+              </p>
+              <div className="flex flex-wrap gap-1">
+                {CROP_RATIOS.map((ratio) => (
+                  <button
+                    key={ratio.key}
+                    onClick={() => setCropAspectRatio(ratio.value)}
+                    className={`px-2 py-1 text-[10px] uppercase tracking-wider rounded cursor-pointer transition-colors ${
+                      cropAspectRatio === ratio.value ? "bg-accent/10 text-accent" : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    }`}
+                  >
+                    {t(ratio.key)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Sidebar bottom: replace image + restore */}
@@ -262,34 +404,55 @@ export function ResizeEditor() {
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top bar — compact */}
         <div className="flex items-center justify-between h-11 px-3 border-b border-border bg-background">
-          {/* Left: undo/redo + mode actions */}
-          <div className="flex items-center gap-1.5">
+          {/* Left: undo/redo + transform tools */}
+          <div className="flex items-center gap-1">
             {image && mode !== "crop" && (
               <>
-                <button
-                  onClick={undo}
-                  disabled={!canUndo}
-                  className="w-7 h-7 flex items-center justify-center text-muted-foreground rounded cursor-pointer hover:bg-muted hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none"
-                  title="Undo (Cmd+Z)"
-                >
+                <ToolbarButton onClick={undo} disabled={!canUndo} title="Undo (Cmd+Z)">
                   <Undo2 className="h-3.5 w-3.5" />
-                </button>
-                <button
-                  onClick={redo}
-                  disabled={!canRedo}
-                  className="w-7 h-7 flex items-center justify-center text-muted-foreground rounded cursor-pointer hover:bg-muted hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none"
-                  title="Redo (Cmd+Shift+Z)"
-                >
+                </ToolbarButton>
+                <ToolbarButton onClick={redo} disabled={!canRedo} title="Redo (Cmd+Shift+Z)">
                   <Redo2 className="h-3.5 w-3.5" />
-                </button>
+                </ToolbarButton>
+
                 <div className="w-px h-4 bg-border mx-1" />
-                <button
-                  onClick={resetImage}
-                  className="w-7 h-7 flex items-center justify-center text-muted-foreground rounded cursor-pointer hover:bg-muted hover:text-foreground transition-colors"
-                  title={t("reset")}
-                >
+
+                <ToolbarButton onClick={rotateLeft} title={t("rotateLeft")}>
                   <RotateCcw className="h-3.5 w-3.5" />
-                </button>
+                </ToolbarButton>
+                <ToolbarButton onClick={rotateRight} title={t("rotateRight")}>
+                  <RotateCw className="h-3.5 w-3.5" />
+                </ToolbarButton>
+                <ToolbarButton onClick={flipHorizontal} title={t("flipH")}>
+                  <FlipHorizontal2 className="h-3.5 w-3.5" />
+                </ToolbarButton>
+                <ToolbarButton onClick={flipVertical} title={t("flipV")}>
+                  <FlipVertical2 className="h-3.5 w-3.5" />
+                </ToolbarButton>
+
+                <div className="w-px h-4 bg-border mx-1" />
+
+                <ToolbarButton onClick={() => alignImage("left")} title={t("alignLeft")}>
+                  <AlignStartHorizontal className="h-3.5 w-3.5" />
+                </ToolbarButton>
+                <ToolbarButton onClick={() => alignImage("center")} title={t("alignCenter")}>
+                  <AlignCenterHorizontal className="h-3.5 w-3.5" />
+                </ToolbarButton>
+                <ToolbarButton onClick={() => alignImage("right")} title={t("alignRight")}>
+                  <AlignEndHorizontal className="h-3.5 w-3.5" />
+                </ToolbarButton>
+                <ToolbarButton onClick={() => alignImage("top")} title={t("alignTop")}>
+                  <AlignStartVertical className="h-3.5 w-3.5" />
+                </ToolbarButton>
+                <ToolbarButton onClick={() => alignImage("center")} title={t("alignCenter")}>
+                  <AlignCenterVertical className="h-3.5 w-3.5" />
+                </ToolbarButton>
+                <ToolbarButton onClick={() => alignImage("bottom")} title={t("alignBottom")}>
+                  <AlignEndVertical className="h-3.5 w-3.5" />
+                </ToolbarButton>
+                <ToolbarButton onClick={() => alignImage("fill")} title={t("alignFill")}>
+                  <Maximize2 className="h-3.5 w-3.5" />
+                </ToolbarButton>
               </>
             )}
 
@@ -337,6 +500,7 @@ export function ResizeEditor() {
             viewportPosition={viewport.position}
             onZoomAtPoint={viewport.zoomAtPoint}
             onPan={viewport.panBy}
+            cropAspectRatio={cropAspectRatio}
           />
 
           {/* Floating crop actions */}

@@ -575,6 +575,27 @@
     "px": "px",
     "statusImage": "Image",
     "statusCanvas": "Canvas",
-    "statusCrop": "Crop"
+    "statusCrop": "Crop",
+    "rotateLeft": "Rotate Left",
+    "rotateRight": "Rotate Right",
+    "flipH": "Flip Horizontal",
+    "flipV": "Flip Vertical",
+    "alignCenter": "Center",
+    "alignLeft": "Align Left",
+    "alignRight": "Align Right",
+    "alignTop": "Align Top",
+    "alignBottom": "Align Bottom",
+    "alignFill": "Fill Canvas",
+    "fitMode": "Fit Mode",
+    "fitModeFill": "Fill",
+    "fitModeFit": "Fit",
+    "position": "Position",
+    "scale": "Scale",
+    "cropRatio": "Crop Ratio",
+    "ratioFree": "Free",
+    "ratio1_1": "1:1",
+    "ratio4_3": "4:3",
+    "ratio16_9": "16:9",
+    "ratio3_2": "3:2"
   }
 }

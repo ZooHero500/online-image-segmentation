@@ -575,6 +575,27 @@
     "px": "px",
     "statusImage": "画像",
     "statusCanvas": "キャンバス",
-    "statusCrop": "トリミング"
+    "statusCrop": "トリミング",
+    "rotateLeft": "左に回転",
+    "rotateRight": "右に回転",
+    "flipH": "水平反転",
+    "flipV": "垂直反転",
+    "alignCenter": "中央揃え",
+    "alignLeft": "左揃え",
+    "alignRight": "右揃え",
+    "alignTop": "上揃え",
+    "alignBottom": "下揃え",
+    "alignFill": "キャンバスに合わせる",
+    "fitMode": "フィットモード",
+    "fitModeFill": "フィル",
+    "fitModeFit": "フィット",
+    "position": "位置",
+    "scale": "スケール",
+    "cropRatio": "トリミング比率",
+    "ratioFree": "フリー",
+    "ratio1_1": "1:1",
+    "ratio4_3": "4:3",
+    "ratio16_9": "16:9",
+    "ratio3_2": "3:2"
   }
 }

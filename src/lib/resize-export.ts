@@ -27,14 +27,25 @@ export function exportArtboard(
     ctx.rect(0, 0, artboardWidth, artboardHeight)
     ctx.clip()
 
+    const srcW = transform.crop ? transform.crop.width : image.naturalWidth
+    const srcH = transform.crop ? transform.crop.height : image.naturalHeight
+    const dw = srcW * transform.scale
+    const dh = srcH * transform.scale
+
+    // Apply rotation and flip around image center
+    const cx = transform.x + dw / 2
+    const cy = transform.y + dh / 2
+    ctx.translate(cx, cy)
+    if (transform.rotation) {
+      ctx.rotate((transform.rotation * Math.PI) / 180)
+    }
+    ctx.scale(transform.flipX ? -1 : 1, transform.flipY ? -1 : 1)
+    ctx.translate(-cx, -cy)
+
     if (transform.crop) {
       const { x: sx, y: sy, width: sw, height: sh } = transform.crop
-      const dw = sw * transform.scale
-      const dh = sh * transform.scale
       ctx.drawImage(image, sx, sy, sw, sh, transform.x, transform.y, dw, dh)
     } else {
-      const dw = image.naturalWidth * transform.scale
-      const dh = image.naturalHeight * transform.scale
       ctx.drawImage(image, transform.x, transform.y, dw, dh)
     }
 

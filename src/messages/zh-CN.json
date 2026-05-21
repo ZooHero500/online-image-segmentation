@@ -575,6 +575,27 @@
     "px": "px",
     "statusImage": "图片",
     "statusCanvas": "画布",
-    "statusCrop": "裁剪"
+    "statusCrop": "裁剪",
+    "rotateLeft": "向左旋转",
+    "rotateRight": "向右旋转",
+    "flipH": "水平翻转",
+    "flipV": "垂直翻转",
+    "alignCenter": "居中",
+    "alignLeft": "左对齐",
+    "alignRight": "右对齐",
+    "alignTop": "顶部对齐",
+    "alignBottom": "底部对齐",
+    "alignFill": "铺满画布",
+    "fitMode": "适应模式",
+    "fitModeFill": "填充",
+    "fitModeFit": "适应",
+    "position": "位置",
+    "scale": "缩放",
+    "cropRatio": "裁剪比例",
+    "ratioFree": "自由",
+    "ratio1_1": "1:1",
+    "ratio4_3": "4:3",
+    "ratio16_9": "16:9",
+    "ratio3_2": "3:2"
   }
 }

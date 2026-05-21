@@ -575,6 +575,27 @@
     "px": "px",
     "statusImage": "Imagen",
     "statusCanvas": "Lienzo",
-    "statusCrop": "Recorte"
+    "statusCrop": "Recorte",
+    "rotateLeft": "Rotar a la izquierda",
+    "rotateRight": "Rotar a la derecha",
+    "flipH": "Voltear horizontal",
+    "flipV": "Voltear vertical",
+    "alignCenter": "Centrar",
+    "alignLeft": "Alinear a la izquierda",
+    "alignRight": "Alinear a la derecha",
+    "alignTop": "Alinear arriba",
+    "alignBottom": "Alinear abajo",
+    "alignFill": "Rellenar lienzo",
+    "fitMode": "Modo de ajuste",
+    "fitModeFill": "Rellenar",
+    "fitModeFit": "Ajustar",
+    "position": "Posición",
+    "scale": "Escala",
+    "cropRatio": "Proporción de recorte",
+    "ratioFree": "Libre",
+    "ratio1_1": "1:1",
+    "ratio4_3": "4:3",
+    "ratio16_9": "16:9",
+    "ratio3_2": "3:2"
   }
 }

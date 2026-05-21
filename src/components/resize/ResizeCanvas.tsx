@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useCallback, useEffect, useState, useMemo } from "react"
+import { useTheme } from "next-themes"
 import { Stage, Layer, Rect, Image, Transformer, Group, Line } from "@/lib/konva"
 import { useTranslations } from "next-intl"
 import { Upload } from "lucide-react"
@@ -26,13 +27,12 @@ interface ResizeCanvasProps {
   viewportPosition: { x: number; y: number }
   onZoomAtPoint: (screenX: number, screenY: number, factor: number) => void
   onPan: (dx: number, dy: number) => void
+  cropAspectRatio?: number | null
 }
 
 const SNAP_THRESHOLD = 8
 const ZOOM_FACTOR = 1.05
 const CHECKER_SIZE = 10
-const CHECKER_COLOR_1 = "#f0f0f0"
-const CHECKER_COLOR_2 = "#ffffff"
 const SNAP_LINE_COLOR = "#3b82f6"
 
 export function ResizeCanvas({
@@ -51,6 +51,7 @@ export function ResizeCanvas({
   viewportPosition,
   onZoomAtPoint,
   onPan,
+  cropAspectRatio,
 }: ResizeCanvasProps) {
   const t = useTranslations("resize")
   const containerRef = useRef<HTMLDivElement>(null)
@@ -92,30 +93,47 @@ export function ResizeCanvas({
       transformerRef.current.nodes([])
       transformerRef.current.getLayer()?.batchDraw()
     }
+    // Force cursor when entering/leaving crop mode
+    if (containerRef.current) {
+      containerRef.current.style.cursor = mode === "crop" ? "crosshair" : "grab"
+    }
   }, [mode])
+
+  // Cursor helper — crop mode always forces crosshair
+  const modeRef = useRef(mode)
+  modeRef.current = mode
+  const setCursor = useCallback((cursor: string) => {
+    if (!containerRef.current) return
+    containerRef.current.style.cursor = modeRef.current === "crop" ? "crosshair" : cursor
+  }, [])
 
   const srcW = transform.crop ? transform.crop.width : image?.naturalWidth ?? 0
   const srcH = transform.crop ? transform.crop.height : image?.naturalHeight ?? 0
   const displayW = srcW * transform.scale
   const displayH = srcH * transform.scale
 
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
+
   const checkerboardImage = useMemo(() => {
     if (typeof document === "undefined") return undefined
+    const color1 = isDark ? "#2a2a2a" : "#f0f0f0"
+    const color2 = isDark ? "#333333" : "#ffffff"
     const size = CHECKER_SIZE * 2
     const canvas = document.createElement("canvas")
     canvas.width = size
     canvas.height = size
     const ctx = canvas.getContext("2d")
     if (!ctx) return undefined
-    ctx.fillStyle = CHECKER_COLOR_2
+    ctx.fillStyle = color2
     ctx.fillRect(0, 0, size, size)
-    ctx.fillStyle = CHECKER_COLOR_1
+    ctx.fillStyle = color1
     ctx.fillRect(0, 0, CHECKER_SIZE, CHECKER_SIZE)
     ctx.fillRect(CHECKER_SIZE, CHECKER_SIZE, CHECKER_SIZE, CHECKER_SIZE)
     const img = new window.Image()
     img.src = canvas.toDataURL()
     return img
-  }, [])
+  }, [isDark])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -123,14 +141,14 @@ export function ResizeCanvas({
         e.preventDefault()
         isPanningRef.current = true
         setIsPanning(true)
-        if (containerRef.current) containerRef.current.style.cursor = "grab"
+        setCursor("grab")
       }
     }
     const handleKeyUp = (e: KeyboardEvent) => {
       if (e.code === "Space") {
         isPanningRef.current = false
         setIsPanning(false)
-        if (containerRef.current) containerRef.current.style.cursor = ""
+        setCursor("")
       }
     }
     window.addEventListener("keydown", handleKeyDown)
@@ -169,7 +187,7 @@ export function ResizeCanvas({
       if (isPanningRef.current || isBackground) {
         isStagePanningRef.current = true
         panStartRef.current = { x: e.evt.clientX, y: e.evt.clientY }
-        if (containerRef.current) containerRef.current.style.cursor = "grabbing"
+        setCursor("grabbing")
       }
     },
     []
@@ -189,7 +207,7 @@ export function ResizeCanvas({
 
   const handleStageMouseUp = useCallback(() => {
     isStagePanningRef.current = false
-    if (containerRef.current) containerRef.current.style.cursor = "grab"
+    setCursor("grab")
   }, [])
 
   const handleStageClick = useCallback(
@@ -247,57 +265,63 @@ export function ResizeCanvas({
     setIsDraggingImage(true)
     // Auto-select on drag start (Canva behavior)
     if (mode !== "selected") onModeChange("selected")
-    if (containerRef.current) containerRef.current.style.cursor = "grabbing"
+    setCursor("grabbing")
   }, [mode, onModeChange])
+
+  // Offset used for rotation center — must be subtracted when reading drag position
+  const halfW = displayW * viewportScale / 2
+  const halfH = displayH * viewportScale / 2
 
   const handleImageDragMove = useCallback(
     (e: Konva.KonvaEventObject<DragEvent>) => {
-      const artX = (e.target.x() - artboardX) / viewportScale
-      const artY = (e.target.y() - artboardY) / viewportScale
+      // e.target.x() includes the center offset, subtract it to get visual top-left
+      const artX = (e.target.x() - halfW - artboardX) / viewportScale
+      const artY = (e.target.y() - halfH - artboardY) / viewportScale
       const snap = calculateSnap(
         artX, artY, displayW, displayH,
         { width: canvasWidth, height: canvasHeight },
         SNAP_THRESHOLD / viewportScale
       )
-      e.target.x(artboardX + snap.snappedX * viewportScale)
-      e.target.y(artboardY + snap.snappedY * viewportScale)
+      e.target.x(artboardX + snap.snappedX * viewportScale + halfW)
+      e.target.y(artboardY + snap.snappedY * viewportScale + halfH)
       setSnapGuides({ x: snap.guidesX, y: snap.guidesY })
     },
-    [artboardX, artboardY, viewportScale, displayW, displayH, canvasWidth, canvasHeight]
+    [artboardX, artboardY, viewportScale, displayW, displayH, canvasWidth, canvasHeight, halfW, halfH]
   )
 
   const handleImageDragEnd = useCallback(
     (e: Konva.KonvaEventObject<DragEvent>) => {
       setIsDraggingImage(false)
       setSnapGuides({ x: [], y: [] })
-      if (containerRef.current) containerRef.current.style.cursor = "grab"
-      const newX = (e.target.x() - artboardX) / viewportScale
-      const newY = (e.target.y() - artboardY) / viewportScale
+      setCursor("grab")
+      const newX = (e.target.x() - halfW - artboardX) / viewportScale
+      const newY = (e.target.y() - halfH - artboardY) / viewportScale
       onTransformChange({ ...transform, x: newX, y: newY })
     },
-    [transform, onTransformChange, artboardX, artboardY, viewportScale]
+    [transform, onTransformChange, artboardX, artboardY, viewportScale, halfW, halfH]
   )
 
   const handleTransformEnd = useCallback(() => {
     const node = imageRef.current
     if (!node) return
     const scaleX = node.scaleX()
-    const newScale = transform.scale * scaleX
-    const newX = (node.x() - artboardX) / viewportScale
-    const newY = (node.y() - artboardY) / viewportScale
+    const newScale = transform.scale * Math.abs(scaleX)
+    const newX = (node.x() - halfW - artboardX) / viewportScale
+    const newY = (node.y() - halfH - artboardY) / viewportScale
     onTransformChange({ ...transform, x: newX, y: newY, scale: newScale })
-    node.scaleX(1)
-    node.scaleY(1)
-  }, [transform, onTransformChange, artboardX, artboardY, viewportScale])
+    // Reset Konva scale but preserve flip direction
+    node.scaleX(transform.flipX ? -1 : 1)
+    node.scaleY(transform.flipY ? -1 : 1)
+  }, [transform, onTransformChange, artboardX, artboardY, viewportScale, halfW, halfH])
 
   const handleImageMouseEnter = useCallback(() => {
     if (isPanningRef.current || isDraggingImage) return
-    if (containerRef.current && mode !== "crop") containerRef.current.style.cursor = "grab"
+    setCursor("grab")
   }, [mode, isDraggingImage])
 
   const handleImageMouseLeave = useCallback(() => {
     if (isPanningRef.current || isDraggingImage) return
-    if (containerRef.current) containerRef.current.style.cursor = "grab"
+    setCursor("grab")
   }, [isDraggingImage])
 
   const handleDrop = useCallback(
@@ -328,7 +352,20 @@ export function ResizeCanvas({
       onDragLeave={(e) => { e.preventDefault(); setIsDragOver(false) }}
     >
       {isDragOver && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-accent/10 border-2 border-dashed border-accent pointer-events-none">
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-accent/5 pointer-events-none">
+          <div
+            className="flex items-center justify-center border-2 border-dashed border-accent rounded-lg transition-transform duration-200 scale-[1.02]"
+            style={{
+              left: artboardX,
+              top: artboardY,
+              width: artboardDisplayW + 24,
+              height: artboardDisplayH + 24,
+              position: "absolute",
+              transform: "translate(-12px, -12px) scale(1.02)",
+              marginLeft: artboardX,
+              marginTop: artboardY,
+            }}
+          />
           <p className="text-accent text-sm uppercase tracking-wider">{t("uploadHint")}</p>
         </div>
       )}
@@ -375,10 +412,15 @@ export function ResizeCanvas({
               <Image
                 ref={imageRef}
                 image={image}
-                x={artboardX + transform.x * viewportScale}
-                y={artboardY + transform.y * viewportScale}
+                x={artboardX + transform.x * viewportScale + displayW * viewportScale / 2}
+                y={artboardY + transform.y * viewportScale + displayH * viewportScale / 2}
                 width={displayW * viewportScale}
                 height={displayH * viewportScale}
+                offsetX={displayW * viewportScale / 2}
+                offsetY={displayH * viewportScale / 2}
+                rotation={transform.rotation || 0}
+                scaleX={transform.flipX ? -1 : 1}
+                scaleY={transform.flipY ? -1 : 1}
                 crop={transform.crop ? { x: transform.crop.x, y: transform.crop.y, width: transform.crop.width, height: transform.crop.height } : undefined}
                 draggable={mode !== "crop" && !isPanning}
                 onClick={handleImageClick}
@@ -429,6 +471,11 @@ export function ResizeCanvas({
             <CropOverlay
               cropRect={{ x: artboardX + cropRect.x * viewportScale, y: artboardY + cropRect.y * viewportScale, width: cropRect.width * viewportScale, height: cropRect.height * viewportScale }}
               imageBounds={{ x: artboardX + transform.x * viewportScale, y: artboardY + transform.y * viewportScale, width: displayW * viewportScale, height: displayH * viewportScale }}
+              artboardBounds={{ x: artboardX, y: artboardY, width: artboardDisplayW, height: artboardDisplayH }}
+              aspectRatio={cropAspectRatio}
+              onCursorChange={(cursor) => {
+                if (containerRef.current) containerRef.current.style.cursor = cursor
+              }}
               onCropChange={(displayRect) => {
                 onCropRectChange({
                   x: (displayRect.x - artboardX) / viewportScale,

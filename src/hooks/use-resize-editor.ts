@@ -2,13 +2,15 @@
 
 import { useState, useCallback, useRef, useEffect } from "react"
 import type { ResizeImageTransform, CropRect, ResizeEditorMode } from "@/types"
-import { calculateFillTransform } from "@/lib/resize-utils"
+import { calculateFillTransform, calculateFitTransform } from "@/lib/resize-utils"
 import { useUndoRedo } from "@/hooks/use-undo-redo"
 
 interface CanvasSize {
   width: number
   height: number
 }
+
+export type FitMode = "fill" | "fit"
 
 interface UseResizeEditorReturn {
   canvasSize: CanvasSize
@@ -31,6 +33,20 @@ interface UseResizeEditorReturn {
   redo: () => void
   canUndo: boolean
   canRedo: boolean
+  // New: rotation/flip
+  rotateLeft: () => void
+  rotateRight: () => void
+  flipHorizontal: () => void
+  flipVertical: () => void
+  // New: fit mode
+  fitMode: FitMode
+  setFitMode: (mode: FitMode) => void
+  // New: alignment
+  alignImage: (alignment: "center" | "left" | "right" | "top" | "bottom" | "fill") => void
+}
+
+const DEFAULT_TRANSFORM: ResizeImageTransform = {
+  x: 0, y: 0, scale: 1, crop: null, rotation: 0, flipX: false, flipY: false,
 }
 
 export function useResizeEditor(
@@ -50,12 +66,13 @@ export function useResizeEditor(
     canUndo,
     canRedo,
   } = useUndoRedo<ResizeImageTransform>({
-    initialState: { x: 0, y: 0, scale: 1, crop: null },
+    initialState: DEFAULT_TRANSFORM,
   })
   const [mode, setMode] = useState<ResizeEditorMode>("idle")
   const [cropRect, setCropRect] = useState<CropRect | null>(null)
   const [fileName, setFileName] = useState("")
   const [mimeType, setMimeType] = useState("image/png")
+  const [fitMode, setFitModeState] = useState<FitMode>("fill")
   const imageUrlRef = useRef<string | null>(null)
 
   // Cleanup object URL on unmount
@@ -67,14 +84,27 @@ export function useResizeEditor(
     }
   }, [])
 
-  const fitImageToArtboard = useCallback(
-    (img: HTMLImageElement, size: CanvasSize, currentCrop: CropRect | null) => {
-      const srcW = currentCrop ? currentCrop.width : img.naturalWidth
-      const srcH = currentCrop ? currentCrop.height : img.naturalHeight
-      const fill = calculateFillTransform(srcW, srcH, size.width, size.height)
-      setTransform({ ...fill, crop: currentCrop })
+  const getEffectiveDimensions = useCallback(
+    (img: HTMLImageElement, currentCrop: CropRect | null, rotation: number) => {
+      let w = currentCrop ? currentCrop.width : img.naturalWidth
+      let h = currentCrop ? currentCrop.height : img.naturalHeight
+      // For 90/270 rotation, swap width/height for layout purposes
+      if (rotation === 90 || rotation === 270) {
+        ;[w, h] = [h, w]
+      }
+      return { w, h }
     },
     []
+  )
+
+  const fitImageToArtboard = useCallback(
+    (img: HTMLImageElement, size: CanvasSize, currentCrop: CropRect | null, currentFitMode: FitMode = fitMode, rotation: number = 0, flipX: boolean = false, flipY: boolean = false) => {
+      const { w: srcW, h: srcH } = getEffectiveDimensions(img, currentCrop, rotation)
+      const calc = currentFitMode === "fill" ? calculateFillTransform : calculateFitTransform
+      const result = calc(srcW, srcH, size.width, size.height)
+      setTransform({ ...result, crop: currentCrop, rotation, flipX, flipY })
+    },
+    [fitMode, getEffectiveDimensions]
   )
 
   const loadImage = useCallback(
@@ -99,9 +129,9 @@ export function useResizeEditor(
       setMimeType(file.type || "image/png")
       setMode("idle")
       setCropRect(null)
-      fitImageToArtboard(img, canvasSize, null)
+      fitImageToArtboard(img, canvasSize, null, fitMode, 0, false, false)
     },
-    [canvasSize, fitImageToArtboard]
+    [canvasSize, fitImageToArtboard, fitMode]
   )
 
   const applyCrop = useCallback(() => {
@@ -133,8 +163,8 @@ export function useResizeEditor(
 
     setCropRect(null)
     setMode("idle")
-    fitImageToArtboard(image, canvasSize, newCrop)
-  }, [cropRect, image, transform, canvasSize, fitImageToArtboard])
+    fitImageToArtboard(image, canvasSize, newCrop, fitMode, transform.rotation, transform.flipX, transform.flipY)
+  }, [cropRect, image, transform, canvasSize, fitImageToArtboard, fitMode])
 
   const cancelCrop = useCallback(() => {
     setCropRect(null)
@@ -145,8 +175,8 @@ export function useResizeEditor(
     if (!image) return
     setMode("idle")
     setCropRect(null)
-    fitImageToArtboard(image, canvasSize, null)
-  }, [image, canvasSize, fitImageToArtboard])
+    fitImageToArtboard(image, canvasSize, null, fitMode, 0, false, false)
+  }, [image, canvasSize, fitImageToArtboard, fitMode])
 
   const clearImage = useCallback(() => {
     if (imageUrlRef.current) {
@@ -154,7 +184,7 @@ export function useResizeEditor(
       imageUrlRef.current = null
     }
     setImage(null)
-    setTransform({ x: 0, y: 0, scale: 1, crop: null })
+    setTransform(DEFAULT_TRANSFORM)
     setMode("idle")
     setCropRect(null)
     setFileName("")
@@ -165,10 +195,86 @@ export function useResizeEditor(
     (size: CanvasSize) => {
       setCanvasSize(size)
       if (image) {
-        fitImageToArtboard(image, size, transform.crop)
+        fitImageToArtboard(image, size, transform.crop, fitMode, transform.rotation, transform.flipX, transform.flipY)
       }
     },
-    [image, transform.crop, fitImageToArtboard]
+    [image, transform.crop, transform.rotation, transform.flipX, transform.flipY, fitImageToArtboard, fitMode]
+  )
+
+  // Rotation
+  const rotateLeft = useCallback(() => {
+    if (!image) return
+    const newRotation = ((transform.rotation - 90) + 360) % 360
+    fitImageToArtboard(image, canvasSize, transform.crop, fitMode, newRotation, transform.flipX, transform.flipY)
+  }, [image, transform, canvasSize, fitImageToArtboard, fitMode])
+
+  const rotateRight = useCallback(() => {
+    if (!image) return
+    const newRotation = (transform.rotation + 90) % 360
+    fitImageToArtboard(image, canvasSize, transform.crop, fitMode, newRotation, transform.flipX, transform.flipY)
+  }, [image, transform, canvasSize, fitImageToArtboard, fitMode])
+
+  // Flip
+  const flipHorizontal = useCallback(() => {
+    setTransform({ ...transform, flipX: !transform.flipX })
+  }, [transform, setTransform])
+
+  const flipVertical = useCallback(() => {
+    setTransform({ ...transform, flipY: !transform.flipY })
+  }, [transform, setTransform])
+
+  // Fit mode
+  const setFitMode = useCallback(
+    (newMode: FitMode) => {
+      setFitModeState(newMode)
+      if (image) {
+        fitImageToArtboard(image, canvasSize, transform.crop, newMode, transform.rotation, transform.flipX, transform.flipY)
+      }
+    },
+    [image, canvasSize, transform, fitImageToArtboard]
+  )
+
+  // Alignment
+  const alignImage = useCallback(
+    (alignment: "center" | "left" | "right" | "top" | "bottom" | "fill") => {
+      if (!image) return
+      const { w: srcW, h: srcH } = getEffectiveDimensions(image, transform.crop, transform.rotation)
+      const imgW = srcW * transform.scale
+      const imgH = srcH * transform.scale
+
+      let newX = transform.x
+      let newY = transform.y
+      let newScale = transform.scale
+
+      switch (alignment) {
+        case "center":
+          newX = (canvasSize.width - imgW) / 2
+          newY = (canvasSize.height - imgH) / 2
+          break
+        case "left":
+          newX = 0
+          break
+        case "right":
+          newX = canvasSize.width - imgW
+          break
+        case "top":
+          newY = 0
+          break
+        case "bottom":
+          newY = canvasSize.height - imgH
+          break
+        case "fill": {
+          const fillResult = calculateFillTransform(srcW, srcH, canvasSize.width, canvasSize.height)
+          newX = fillResult.x
+          newY = fillResult.y
+          newScale = fillResult.scale
+          break
+        }
+      }
+
+      setTransform({ ...transform, x: newX, y: newY, scale: newScale })
+    },
+    [image, transform, canvasSize, setTransform, getEffectiveDimensions]
   )
 
   return {
@@ -192,5 +298,12 @@ export function useResizeEditor(
     redo,
     canUndo,
     canRedo,
+    rotateLeft,
+    rotateRight,
+    flipHorizontal,
+    flipVertical,
+    fitMode,
+    setFitMode,
+    alignImage,
   }
 }

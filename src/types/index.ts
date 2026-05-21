@@ -144,6 +144,12 @@ export interface ResizeImageTransform {
   scale: number
   /** Source crop region (image pixel coordinates). null = full image */
   crop: CropRect | null
+  /** Rotation in degrees (0, 90, 180, 270) */
+  rotation: number
+  /** Horizontal flip */
+  flipX: boolean
+  /** Vertical flip */
+  flipY: boolean
 }
 
 /** Crop rectangle in image source pixel coordinates */
