@@ -22,6 +22,9 @@ function createMockCanvas() {
     drawImage: vi.fn(),
     fillStyle: "",
     fillRect: vi.fn(),
+    translate: vi.fn(),
+    rotate: vi.fn(),
+    scale: vi.fn(),
   }
   const canvas = {
     width: 0,
@@ -47,7 +50,7 @@ describe("exportArtboard", () => {
 
   it("should create canvas at artboard dimensions", async () => {
     const image = createMockImage(800, 600)
-    const transform: ResizeImageTransform = { x: 0, y: 0, scale: 1, crop: null }
+    const transform: ResizeImageTransform = { x: 0, y: 0, scale: 1, crop: null, rotation: 0, flipX: false, flipY: false }
     await exportArtboard(image, transform, 500, 500, "image/png")
     expect(mockCanvas.canvas.width).toBe(500)
     expect(mockCanvas.canvas.height).toBe(500)
@@ -55,7 +58,7 @@ describe("exportArtboard", () => {
 
   it("should draw image with correct transform", async () => {
     const image = createMockImage(800, 600)
-    const transform: ResizeImageTransform = { x: -150, y: -50, scale: 1.25, crop: null }
+    const transform: ResizeImageTransform = { x: -150, y: -50, scale: 1.25, crop: null, rotation: 0, flipX: false, flipY: false }
     await exportArtboard(image, transform, 500, 500, "image/png")
     expect(mockCanvas.ctx.drawImage).toHaveBeenCalledWith(
       image, -150, -50, 800 * 1.25, 600 * 1.25
@@ -67,6 +70,7 @@ describe("exportArtboard", () => {
     const transform: ResizeImageTransform = {
       x: 0, y: 0, scale: 1,
       crop: { x: 100, y: 50, width: 400, height: 300 },
+      rotation: 0, flipX: false, flipY: false,
     }
     await exportArtboard(image, transform, 500, 500, "image/png")
     expect(mockCanvas.ctx.drawImage).toHaveBeenCalledWith(
@@ -76,7 +80,7 @@ describe("exportArtboard", () => {
 
   it("should return blob with correct mime type", async () => {
     const image = createMockImage(800, 600)
-    const transform: ResizeImageTransform = { x: 0, y: 0, scale: 1, crop: null }
+    const transform: ResizeImageTransform = { x: 0, y: 0, scale: 1, crop: null, rotation: 0, flipX: false, flipY: false }
     const blob = await exportArtboard(image, transform, 500, 500, "image/jpeg", 0.92)
     expect(blob).toBeInstanceOf(Blob)
     expect(mockCanvas.canvas.toBlob).toHaveBeenCalledWith(
