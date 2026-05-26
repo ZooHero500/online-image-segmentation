@@ -549,6 +549,29 @@
     "segmentComplete": "Segmentation complete",
     "exportFailed": "Export failed. Please try again."
   },
+  "compress": {
+    "metadata": {
+      "title": "Image Compressor & Format Converter — Free Online Tool | ImgSplit",
+      "description": "Compress images and convert between PNG, JPEG, WebP formats online. Free, private, 100% browser-based — your files never leave your device."
+    },
+    "loadingEditor": "Loading editor...",
+    "uploadTitle": "Compress & Convert",
+    "formatPng": "PNG",
+    "formatJpeg": "JPEG",
+    "formatWebp": "WebP",
+    "quality": "Quality",
+    "download": "Download",
+    "downloadZip": "Download ZIP",
+    "original": "Original",
+    "compressed": "Compressed",
+    "saved": "saved",
+    "filesCount": "{count} files",
+    "totalSaved": "Total saved: {size} ({percent}%)",
+    "addMore": "Add more images",
+    "changeImage": "Change",
+    "processing": "Processing...",
+    "ready": "Ready"
+  },
   "resize": {
     "metadata": {
       "title": "Image Resizer — Resize & Crop to Any Dimension | ImgSplit",
