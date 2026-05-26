@@ -616,6 +616,7 @@
     },
     "loadingEditor": "加载编辑器...",
     "uploadTitle": "压缩 & 转换",
+    "formatLabel": "格式",
     "formatPng": "PNG",
     "formatJpeg": "JPEG",
     "formatWebp": "WebP",

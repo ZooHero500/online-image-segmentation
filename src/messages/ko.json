@@ -616,6 +616,7 @@
     },
     "loadingEditor": "에디터 로딩 중...",
     "uploadTitle": "압축 & 변환",
+    "formatLabel": "형식",
     "formatPng": "PNG",
     "formatJpeg": "JPEG",
     "formatWebp": "WebP",

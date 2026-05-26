@@ -616,6 +616,7 @@
     },
     "loadingEditor": "Cargando editor...",
     "uploadTitle": "Comprimir & Convertir",
+    "formatLabel": "Formato",
     "formatPng": "PNG",
     "formatJpeg": "JPEG",
     "formatWebp": "WebP",

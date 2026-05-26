@@ -258,23 +258,27 @@ export function CompressEditor() {
           </div>
         </div>
       ) : (
-        <div className="flex-1 flex flex-col min-h-0">
-          {isSingle ? (
-            <CompressPreview
-              originalFile={items[0].file}
-              originalUrl={originalUrl}
-              result={items[0].result}
-              resultUrl={resultUrl}
-            />
-          ) : (
-            <CompressBatchList
-              items={items}
-              onRemove={handleRemove}
-              onAddMore={handleAddMore}
-            />
-          )}
+        <div className="flex-1 flex flex-col md:flex-row min-h-0">
+          {/* Main area — preview or batch list */}
+          <div className="flex-1 min-h-0 min-w-0">
+            {isSingle ? (
+              <CompressPreview
+                originalFile={items[0].file}
+                originalUrl={originalUrl}
+                result={items[0].result}
+                resultUrl={resultUrl}
+              />
+            ) : (
+              <CompressBatchList
+                items={items}
+                onRemove={handleRemove}
+                onAddMore={handleAddMore}
+              />
+            )}
+          </div>
 
-          <div className="shrink-0 p-4">
+          {/* Controls — bottom on mobile, right sidebar on desktop */}
+          <div className="shrink-0 md:w-56 lg:w-64 md:border-l border-t md:border-t-0 border-border">
             <CompressControls
               format={format}
               quality={quality}

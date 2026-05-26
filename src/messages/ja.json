@@ -616,6 +616,7 @@
     },
     "loadingEditor": "エディタを読み込み中...",
     "uploadTitle": "圧縮 & 変換",
+    "formatLabel": "形式",
     "formatPng": "PNG",
     "formatJpeg": "JPEG",
     "formatWebp": "WebP",
