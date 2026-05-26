@@ -68,10 +68,12 @@ export function CompressPreview({
               <span className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground/60">
                 {result.format === "image/png" ? "PNG" : result.format === "image/jpeg" ? "JPEG" : "WebP"}
               </span>
-              <span className="ml-auto text-xs tabular-nums text-accent">
+              <span className={`ml-auto text-xs tabular-nums ${result.savedPercent >= 0 ? "text-accent" : "text-destructive"}`}>
                 {formatFileSize(result.compressedSize)}
-                {result.savedPercent > 0 && (
-                  <span className="ml-1 text-[10px]">↓{result.savedPercent}%</span>
+                {result.savedPercent !== 0 && (
+                  <span className="ml-1 text-[10px]">
+                    {result.savedPercent > 0 ? `↓${result.savedPercent}%` : `↑${Math.abs(result.savedPercent)}%`}
+                  </span>
                 )}
               </span>
             </>

@@ -55,13 +55,21 @@ export function CompressBatchList({
             <span className="text-[11px] text-muted-foreground shrink-0">→</span>
             {item.result ? (
               <>
-                <span className="text-[11px] tabular-nums text-accent shrink-0">
+                <span className={`text-[11px] tabular-nums shrink-0 ${item.result.savedPercent >= 0 ? "text-accent" : "text-destructive"}`}>
                   {formatFileSize(item.result.compressedSize)}
                 </span>
-                <span className="text-[10px] tabular-nums text-accent shrink-0">
-                  ↓{item.result.savedPercent}%
+                {item.result.savedPercent >= 0 ? (
+                  <span className="text-[10px] tabular-nums text-accent shrink-0">
+                    ↓{item.result.savedPercent}%
+                  </span>
+                ) : (
+                  <span className="text-[10px] tabular-nums text-destructive shrink-0">
+                    ↑{Math.abs(item.result.savedPercent)}%
+                  </span>
+                )}
+                <span className={`text-xs shrink-0 ${item.result.savedPercent >= 0 ? "text-accent" : "text-destructive"}`}>
+                  {item.result.savedPercent >= 0 ? "✓" : "!"}
                 </span>
-                <span className="text-accent text-xs shrink-0">✓</span>
               </>
             ) : (
               <span className="text-[11px] text-muted-foreground shrink-0 animate-pulse">
