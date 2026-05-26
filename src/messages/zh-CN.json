@@ -605,5 +605,28 @@
     "ratio4_3": "4:3",
     "ratio16_9": "16:9",
     "ratio3_2": "3:2"
+  },
+  "compress": {
+    "metadata": {
+      "title": "图片压缩 & 格式转换 — 免费在线工具 | ImgSplit",
+      "description": "在线压缩图片，PNG、JPEG、WebP 格式互转。免费、隐私安全、100% 浏览器端处理——文件不会离开你的设备。"
+    },
+    "loadingEditor": "加载编辑器...",
+    "uploadTitle": "压缩 & 转换",
+    "formatPng": "PNG",
+    "formatJpeg": "JPEG",
+    "formatWebp": "WebP",
+    "quality": "质量",
+    "download": "下载",
+    "downloadZip": "下载 ZIP",
+    "original": "原图",
+    "compressed": "压缩后",
+    "saved": "已节省",
+    "filesCount": "{count} 个文件",
+    "totalSaved": "总计节省: {size} ({percent}%)",
+    "addMore": "添加更多图片",
+    "changeImage": "换一张",
+    "processing": "处理中...",
+    "ready": "就绪"
   }
 }

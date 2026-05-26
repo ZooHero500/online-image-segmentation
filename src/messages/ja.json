@@ -605,5 +605,28 @@
     "ratio4_3": "4:3",
     "ratio16_9": "16:9",
     "ratio3_2": "3:2"
+  },
+  "compress": {
+    "metadata": {
+      "title": "画像圧縮 & フォーマット変換 — 無料オンラインツール | ImgSplit",
+      "description": "オンラインで画像を圧縮し、PNG、JPEG、WebP形式間で変換。無料・プライバシー安全・100%ブラウザ処理。"
+    },
+    "loadingEditor": "エディタを読み込み中...",
+    "uploadTitle": "圧縮 & 変換",
+    "formatPng": "PNG",
+    "formatJpeg": "JPEG",
+    "formatWebp": "WebP",
+    "quality": "品質",
+    "download": "ダウンロード",
+    "downloadZip": "ZIPでダウンロード",
+    "original": "元画像",
+    "compressed": "圧縮後",
+    "saved": "削減",
+    "filesCount": "{count}ファイル",
+    "totalSaved": "合計削減: {size} ({percent}%)",
+    "addMore": "画像を追加",
+    "changeImage": "変更",
+    "processing": "処理中...",
+    "ready": "完了"
   }
 }
