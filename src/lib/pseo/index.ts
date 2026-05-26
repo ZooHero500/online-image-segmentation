@@ -30,6 +30,16 @@ const slugMeta: { slug: string; category: ToolCategory }[] = [
   { slug: "photo-splitter", category: "use-case" },
   { slug: "image-cutter", category: "use-case" },
   { slug: "grid-maker", category: "use-case" },
+  { slug: "compress-image", category: "use-case" },
+  { slug: "compress-jpeg", category: "use-case" },
+  { slug: "compress-png", category: "use-case" },
+  { slug: "png-to-webp", category: "use-case" },
+  { slug: "png-to-jpg", category: "use-case" },
+  { slug: "jpg-to-png", category: "use-case" },
+  { slug: "jpg-to-webp", category: "use-case" },
+  { slug: "webp-to-png", category: "use-case" },
+  { slug: "webp-to-jpg", category: "use-case" },
+  { slug: "reduce-image-size", category: "use-case" },
 ]
 
 const toolPages: ToolPageConfig[] = slugMeta.map(({ slug, category }) => ({

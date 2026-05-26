@@ -574,6 +574,457 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
+  "compress-image": {
+    slug: "compress-image",
+    category: "use-case",
+    seo: {
+      title: "Compress Images Online — Free & Private | ImgSplit",
+      description: "Compress images online for free — reduce file size while maintaining visual quality. Browser-based, no upload to servers, supports JPEG, PNG, and WebP.",
+      ogTitle: "Compress Images Online — Free & Private",
+      ogDescription: "Reduce image file size instantly in your browser. Free, private, no upload needed.",
+    },
+    hero: {
+      overline: "Image Compression Tool",
+      headlinePart1: "Compress",
+      headlineAccent: "Images",
+      headlinePart2: "— Instantly",
+      description: "Reduce image file size without visible quality loss. Supports JPEG, PNG, and WebP — everything runs in your browser, nothing leaves your device.",
+    },
+    scenarios: [
+      {
+        icon: "Globe",
+        title: "Web Optimization",
+        description: "Compress images before uploading to your website — faster page loads, better Core Web Vitals, and improved SEO rankings without sacrificing visual quality.",
+      },
+      {
+        icon: "Mail",
+        title: "Email Attachments",
+        description: "Shrink image attachments to fit email size limits. Keep your photos looking great while staying under the 10 MB or 25 MB attachment cap.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Upload Your Image", description: "Drag and drop or click to upload any JPEG, PNG, or WebP image you want to compress." },
+      { stepNumber: 2, title: "Adjust Quality", description: "Use the quality slider to balance file size and visual quality. Preview the result in real-time before downloading." },
+      { stepNumber: 3, title: "Download Compressed File", description: "Download your optimized image — smaller file size, same great appearance. Compare before and after sizes instantly." },
+    ],
+    faqEntries: [
+      { question: "Does compressing an image reduce its quality?", answer: "Compression reduces file size by removing redundant data. At quality settings above 70%, the visual difference is typically imperceptible to the human eye." },
+      { question: "What image formats can I compress?", answer: "You can compress JPEG, PNG, and WebP images. For maximum compression, consider converting to WebP format which offers the best size-to-quality ratio." },
+      { question: "Is there a file size limit for uploads?", answer: "You can upload images up to 20 MB. The tool processes everything in your browser, so larger files may take a moment longer." },
+    ],
+    relatedTools: [
+      { slug: "/compress-jpeg", title: "Compress JPEG", description: "Specialized JPEG compression with quality control." },
+      { slug: "/png-to-webp", title: "PNG to WebP", description: "Convert PNG to WebP for maximum compression." },
+      { slug: "/resize", title: "Resize Image", description: "Resize images to exact dimensions or percentages." },
+      { slug: "/", title: "Image Splitter", description: "Split images into multiple pieces with drag-and-drop lines." },
+    ],
+  },
+
+  "compress-jpeg": {
+    slug: "compress-jpeg",
+    category: "use-case",
+    seo: {
+      title: "Compress JPEG Online — Reduce JPG File Size | ImgSplit",
+      description: "Compress JPEG and JPG images online for free. Reduce file size with adjustable quality settings. Browser-based, private, no upload to servers.",
+      ogTitle: "Compress JPEG Online — Reduce JPG File Size",
+      ogDescription: "Reduce JPEG file size with adjustable quality. Free, private, browser-based.",
+    },
+    hero: {
+      overline: "JPEG Compression",
+      headlinePart1: "Compress",
+      headlineAccent: "JPEG",
+      headlinePart2: "— Reduce Size",
+      description: "Reduce JPEG and JPG file sizes with fine-grained quality control. Perfect for photographers, bloggers, and web developers who need smaller files without visible quality loss.",
+    },
+    scenarios: [
+      {
+        icon: "Camera",
+        title: "Photography Workflow",
+        description: "Compress high-resolution JPEG photos from your camera for web galleries, client proofs, or social media — reduce 10 MB files to under 1 MB while keeping detail.",
+      },
+      {
+        icon: "Globe",
+        title: "Blog Images",
+        description: "Optimize JPEG images for blog posts and articles. Faster loading means better reader engagement and improved search engine rankings.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Upload Your JPEG", description: "Drag and drop or select the JPEG/JPG file you want to compress." },
+      { stepNumber: 2, title: "Set Quality Level", description: "Adjust the quality slider — lower values mean smaller files. Preview the output to find the sweet spot between size and quality." },
+      { stepNumber: 3, title: "Download Compressed JPEG", description: "Save your compressed JPEG. The tool shows you exactly how much file size was saved." },
+    ],
+    faqEntries: [
+      { question: "What is a good quality setting for JPEG compression?", answer: "For web use, 75-85% quality offers an excellent balance — typically 60-80% file size reduction with minimal visible difference. For print, keep quality at 90% or above." },
+      { question: "Can I compress a JPEG multiple times?", answer: "You can, but each re-compression introduces slight artifacts. For best results, always compress from the original file rather than re-compressing a previously compressed JPEG." },
+      { question: "What is the difference between JPEG and JPG?", answer: "There is no difference — JPG and JPEG refer to the same format. The shorter '.jpg' extension became common on Windows, which originally limited extensions to 3 characters." },
+    ],
+    relatedTools: [
+      { slug: "/compress-image", title: "Compress Image", description: "General-purpose image compression for any format." },
+      { slug: "/jpg-to-webp", title: "JPG to WebP", description: "Convert JPEG to WebP for even smaller file sizes." },
+      { slug: "/reduce-image-size", title: "Reduce Image Size", description: "Optimize any image for minimal file size." },
+    ],
+  },
+
+  "compress-png": {
+    slug: "compress-png",
+    category: "use-case",
+    seo: {
+      title: "Compress PNG Online — Reduce PNG File Size | ImgSplit",
+      description: "Compress PNG images online while preserving transparency. Reduce file size with lossless or lossy compression. Free, browser-based, no upload to servers.",
+      ogTitle: "Compress PNG Online — Reduce PNG File Size",
+      ogDescription: "Reduce PNG file size while keeping transparency. Free, private, browser-based.",
+    },
+    hero: {
+      overline: "PNG Compression",
+      headlinePart1: "Compress",
+      headlineAccent: "PNG",
+      headlinePart2: "— Keep Transparency",
+      description: "Reduce PNG file sizes while preserving full transparency support. Ideal for UI screenshots, design assets, and graphics that need alpha channels.",
+    },
+    scenarios: [
+      {
+        icon: "Smartphone",
+        title: "UI Screenshots",
+        description: "Compress PNG screenshots from design tools and screen captures. Reduce file size for faster loading in documentation, bug reports, and design reviews.",
+      },
+      {
+        icon: "Layers",
+        title: "Design Assets",
+        description: "Optimize PNG design assets — icons, logos, and UI elements — for web and app development while preserving crisp edges and transparency.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Upload Your PNG", description: "Drag and drop or select the PNG file you want to compress. Transparency is fully preserved." },
+      { stepNumber: 2, title: "Adjust Compression", description: "Choose your compression level. Higher compression means smaller files — preview the result to ensure quality meets your standards." },
+      { stepNumber: 3, title: "Download Optimized PNG", description: "Save your compressed PNG. Transparency, color depth, and visual quality are maintained." },
+    ],
+    faqEntries: [
+      { question: "Will compression remove my PNG's transparency?", answer: "No. The compression process preserves the alpha channel completely. Your transparent backgrounds remain intact." },
+      { question: "Why are PNG files so large compared to JPEG?", answer: "PNG uses lossless compression which preserves every pixel exactly, plus it stores transparency data. For photos without transparency, converting to JPEG or WebP yields much smaller files." },
+      { question: "Should I convert my PNG to WebP instead of compressing?", answer: "If you need maximum size reduction and your platform supports WebP, converting to WebP can reduce file size by 50-80% compared to optimized PNG while still supporting transparency." },
+    ],
+    relatedTools: [
+      { slug: "/png-to-webp", title: "PNG to WebP", description: "Convert PNG to WebP for dramatically smaller files with transparency." },
+      { slug: "/png-to-jpg", title: "PNG to JPG", description: "Convert PNG to JPEG for smaller files when transparency is not needed." },
+      { slug: "/compress-image", title: "Compress Image", description: "General-purpose image compression for any format." },
+    ],
+  },
+
+  "png-to-webp": {
+    slug: "png-to-webp",
+    category: "use-case",
+    seo: {
+      title: "Convert PNG to WebP Online — Free & Fast | ImgSplit",
+      description: "Convert PNG images to WebP format for dramatically smaller files. Preserves transparency. Free browser-based converter, no upload to servers.",
+      ogTitle: "Convert PNG to WebP — Free Online Converter",
+      ogDescription: "Convert PNG to WebP for smaller files with transparency. Free and browser-based.",
+    },
+    hero: {
+      overline: "PNG to WebP Converter",
+      headlinePart1: "Convert PNG to",
+      headlineAccent: "WebP",
+      headlinePart2: "— Smaller Files",
+      description: "Transform PNG images into WebP format for up to 80% smaller files while preserving transparency. The modern image format for faster websites and apps.",
+    },
+    scenarios: [
+      {
+        icon: "Zap",
+        title: "Website Performance",
+        description: "Switch your site's PNG assets to WebP — pages load faster, bandwidth drops, and Core Web Vitals improve. Most browsers support WebP natively.",
+      },
+      {
+        icon: "Smartphone",
+        title: "App Assets",
+        description: "Convert app icons, UI elements, and graphics from PNG to WebP. Smaller assets mean faster app installs, quicker loading, and less storage usage.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Upload Your PNG", description: "Drag and drop or select the PNG image you want to convert to WebP format." },
+      { stepNumber: 2, title: "Configure Output", description: "Adjust quality settings for the WebP output. Higher quality means larger files — preview to find the right balance." },
+      { stepNumber: 3, title: "Download WebP File", description: "Save your converted WebP image. Compare file sizes to see the dramatic reduction." },
+    ],
+    faqEntries: [
+      { question: "Does WebP support transparency like PNG?", answer: "Yes. WebP fully supports alpha transparency, making it an excellent replacement for PNG in most use cases — with significantly smaller file sizes." },
+      { question: "Which browsers support WebP?", answer: "All modern browsers support WebP: Chrome, Firefox, Safari, Edge, and Opera. Only Internet Explorer and very old browser versions lack support." },
+      { question: "How much smaller is WebP compared to PNG?", answer: "WebP files are typically 50-80% smaller than equivalent PNG files. The exact savings depend on image content, but the reduction is consistently dramatic." },
+    ],
+    relatedTools: [
+      { slug: "/png-to-jpg", title: "PNG to JPG", description: "Convert PNG to JPEG when transparency is not needed." },
+      { slug: "/jpg-to-webp", title: "JPG to WebP", description: "Convert JPEG images to the modern WebP format." },
+      { slug: "/compress-png", title: "Compress PNG", description: "Reduce PNG file size while keeping the PNG format." },
+    ],
+  },
+
+  "png-to-jpg": {
+    slug: "png-to-jpg",
+    category: "use-case",
+    seo: {
+      title: "Convert PNG to JPG Online — Free Converter | ImgSplit",
+      description: "Convert PNG images to JPG format online for free. Remove transparency and reduce file size. Browser-based, private, no upload to servers.",
+      ogTitle: "Convert PNG to JPG — Free Online Converter",
+      ogDescription: "Convert PNG to JPG to remove transparency and reduce file size. Free and browser-based.",
+    },
+    hero: {
+      overline: "PNG to JPG Converter",
+      headlinePart1: "Convert PNG to",
+      headlineAccent: "JPG",
+      headlinePart2: "— Remove Transparency",
+      description: "Convert PNG images to JPG format for smaller file sizes and universal compatibility. Transparent areas are filled with a solid background color of your choice.",
+    },
+    scenarios: [
+      {
+        icon: "Globe",
+        title: "Social Media Posting",
+        description: "Convert PNG screenshots and graphics to JPG for social media platforms that compress PNG uploads heavily. Upload a clean JPG for predictable quality.",
+      },
+      {
+        icon: "Mail",
+        title: "Document Sharing",
+        description: "Convert PNG graphics to JPG for email attachments, presentations, and documents. JPG files are smaller and universally viewable on any device.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Upload Your PNG", description: "Drag and drop or select the PNG file you want to convert to JPG format." },
+      { stepNumber: 2, title: "Set Background & Quality", description: "Choose a background color for transparent areas (default: white) and set the JPEG quality level." },
+      { stepNumber: 3, title: "Download JPG File", description: "Save your converted JPG image. Transparent areas are replaced with the chosen background color." },
+    ],
+    faqEntries: [
+      { question: "What happens to the transparent areas in my PNG?", answer: "Transparent areas are filled with a solid background color — white by default. You can choose any color before converting." },
+      { question: "Will the image quality change when converting PNG to JPG?", answer: "JPEG uses lossy compression, so there may be slight quality differences at lower settings. At 90%+ quality, the difference is virtually invisible." },
+      { question: "When should I keep PNG instead of converting to JPG?", answer: "Keep PNG when you need transparency, pixel-perfect precision for text or line art, or lossless quality. Convert to JPG for photographs or when you need smaller file sizes." },
+    ],
+    relatedTools: [
+      { slug: "/png-to-webp", title: "PNG to WebP", description: "Convert PNG to WebP for modern browsers with even smaller files." },
+      { slug: "/compress-jpeg", title: "Compress JPEG", description: "Further reduce your JPEG file size after conversion." },
+      { slug: "/jpg-to-png", title: "JPG to PNG", description: "Convert JPG back to PNG when you need lossless quality." },
+    ],
+  },
+
+  "jpg-to-png": {
+    slug: "jpg-to-png",
+    category: "use-case",
+    seo: {
+      title: "Convert JPG to PNG Online — Free Converter | ImgSplit",
+      description: "Convert JPG and JPEG images to PNG format for lossless quality. Free browser-based converter, no upload to servers, instant download.",
+      ogTitle: "Convert JPG to PNG — Free Online Converter",
+      ogDescription: "Convert JPEG to PNG for lossless quality. Free, private, browser-based.",
+    },
+    hero: {
+      overline: "JPG to PNG Converter",
+      headlinePart1: "Convert JPG to",
+      headlineAccent: "PNG",
+      headlinePart2: "— Lossless Quality",
+      description: "Convert JPEG images to PNG format for lossless quality and transparency support. Ideal for design work, editing, and any workflow that requires pixel-perfect output.",
+    },
+    scenarios: [
+      {
+        icon: "Layers",
+        title: "Design Work",
+        description: "Convert photos to PNG for use in design projects — layer compositions, overlays, and mockups work best with PNG's lossless quality and transparency support.",
+      },
+      {
+        icon: "Shield",
+        title: "Transparency Needs",
+        description: "Need to add transparency to a photo? Convert to PNG first, then edit the alpha channel in your design tool for clean cutouts and overlays.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Upload Your JPG", description: "Drag and drop or select the JPG/JPEG file you want to convert to PNG format." },
+      { stepNumber: 2, title: "Preview the Result", description: "Review the PNG preview. The conversion preserves all visual content from the original JPEG at full quality." },
+      { stepNumber: 3, title: "Download PNG File", description: "Save your lossless PNG image. The file will be larger than the original JPEG but with zero additional compression artifacts." },
+    ],
+    faqEntries: [
+      { question: "Does converting JPG to PNG improve image quality?", answer: "Converting to PNG prevents further quality loss but cannot restore detail lost during the original JPEG compression. The converted PNG preserves the JPEG's current state perfectly." },
+      { question: "Why is the PNG file larger than the original JPG?", answer: "PNG uses lossless compression which preserves every pixel exactly, resulting in larger files. JPEG uses lossy compression that discards some data to achieve smaller sizes." },
+      { question: "Can I add transparency after converting to PNG?", answer: "Yes. Once in PNG format, you can edit the alpha channel in any design tool (Photoshop, GIMP, Figma) to add transparency — something not possible with JPEG." },
+    ],
+    relatedTools: [
+      { slug: "/jpg-to-webp", title: "JPG to WebP", description: "Convert JPEG to WebP for smaller files with modern compression." },
+      { slug: "/compress-png", title: "Compress PNG", description: "Reduce the PNG file size after conversion." },
+      { slug: "/png-to-jpg", title: "PNG to JPG", description: "Convert back to JPG when you need smaller files." },
+    ],
+  },
+
+  "jpg-to-webp": {
+    slug: "jpg-to-webp",
+    category: "use-case",
+    seo: {
+      title: "Convert JPG to WebP Online — Modern Format | ImgSplit",
+      description: "Convert JPG and JPEG images to WebP format for maximum compression. Up to 80% smaller files. Free browser-based converter, no upload to servers.",
+      ogTitle: "Convert JPG to WebP — Modern Format Converter",
+      ogDescription: "Convert JPEG to WebP for up to 80% smaller files. Free, private, browser-based.",
+    },
+    hero: {
+      overline: "JPG to WebP Converter",
+      headlinePart1: "Convert JPG to",
+      headlineAccent: "WebP",
+      headlinePart2: "— Maximum Compression",
+      description: "Transform JPEG images into the modern WebP format for dramatically smaller files. Up to 80% size reduction with comparable visual quality — the smart choice for web performance.",
+    },
+    scenarios: [
+      {
+        icon: "RefreshCw",
+        title: "Website Migration",
+        description: "Batch-convert your site's JPEG images to WebP during a performance overhaul. Faster page loads, lower hosting costs, and better Google PageSpeed scores.",
+      },
+      {
+        icon: "Zap",
+        title: "Performance Optimization",
+        description: "Replace heavy JPEG hero images and product photos with WebP versions. Your visitors get the same visual experience with fraction of the download time.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Upload Your JPG", description: "Drag and drop or select the JPEG file you want to convert to WebP." },
+      { stepNumber: 2, title: "Adjust WebP Quality", description: "Fine-tune the quality setting. Even at 80% quality, WebP files are dramatically smaller than the equivalent JPEG." },
+      { stepNumber: 3, title: "Download WebP File", description: "Save your WebP image and compare the file size savings. Most users see 50-80% reduction." },
+    ],
+    faqEntries: [
+      { question: "How much smaller is WebP compared to JPEG?", answer: "WebP is typically 25-34% smaller than JPEG at equivalent visual quality (according to Google's studies). For many images, the savings reach 50% or more." },
+      { question: "Is WebP supported everywhere?", answer: "Yes, all modern browsers (Chrome, Firefox, Safari 14+, Edge) support WebP. For the rare legacy browser, serve JPEG as a fallback using the HTML <picture> element." },
+      { question: "Does converting from JPEG to WebP lose quality?", answer: "Both JPEG and WebP are lossy formats, so re-encoding introduces minimal additional artifacts. For best results, convert from the highest quality JPEG source you have." },
+    ],
+    relatedTools: [
+      { slug: "/png-to-webp", title: "PNG to WebP", description: "Convert PNG images to WebP with transparency support." },
+      { slug: "/compress-jpeg", title: "Compress JPEG", description: "Reduce JPEG file size while keeping the JPEG format." },
+      { slug: "/jpg-to-png", title: "JPG to PNG", description: "Convert JPEG to lossless PNG format." },
+    ],
+  },
+
+  "webp-to-png": {
+    slug: "webp-to-png",
+    category: "use-case",
+    seo: {
+      title: "Convert WebP to PNG Online — Free Converter | ImgSplit",
+      description: "Convert WebP images to PNG format for universal compatibility. Preserves transparency. Free browser-based converter, no upload to servers.",
+      ogTitle: "Convert WebP to PNG — Free Online Converter",
+      ogDescription: "Convert WebP to PNG for universal compatibility. Free, private, browser-based.",
+    },
+    hero: {
+      overline: "WebP to PNG Converter",
+      headlinePart1: "Convert WebP to",
+      headlineAccent: "PNG",
+      headlinePart2: "— Universal Format",
+      description: "Convert WebP images to PNG for maximum compatibility with older software, print workflows, and design tools that don't yet support WebP.",
+    },
+    scenarios: [
+      {
+        icon: "ArrowRightLeft",
+        title: "Compatibility Needs",
+        description: "Downloaded a WebP image but your software doesn't support it? Convert to PNG for instant compatibility with Photoshop, PowerPoint, Word, and every other tool.",
+      },
+      {
+        icon: "Image",
+        title: "Editing in Legacy Tools",
+        description: "Older image editors and design tools may not open WebP files. Convert to PNG first, make your edits, then convert back if needed.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Upload Your WebP", description: "Drag and drop or select the WebP image you want to convert to PNG format." },
+      { stepNumber: 2, title: "Preview the Conversion", description: "Review the PNG preview. All visual content and transparency from the WebP file is preserved perfectly." },
+      { stepNumber: 3, title: "Download PNG File", description: "Save your PNG image — now compatible with virtually every image viewer, editor, and platform." },
+    ],
+    faqEntries: [
+      { question: "Will I lose quality converting WebP to PNG?", answer: "No quality is lost in the conversion. PNG is a lossless format, so every pixel from the WebP source is preserved exactly. The file size will be larger because PNG doesn't compress as aggressively." },
+      { question: "Is transparency preserved when converting WebP to PNG?", answer: "Yes. Both WebP and PNG support alpha transparency. Any transparent areas in your WebP image are perfectly preserved in the PNG output." },
+      { question: "Why would I convert WebP to PNG instead of JPG?", answer: "Choose PNG when you need transparency support or lossless quality. Choose JPG if you want the smallest file size and don't need transparency." },
+    ],
+    relatedTools: [
+      { slug: "/webp-to-jpg", title: "WebP to JPG", description: "Convert WebP to JPG for smaller files without transparency." },
+      { slug: "/compress-png", title: "Compress PNG", description: "Reduce PNG file size after conversion." },
+      { slug: "/png-to-webp", title: "PNG to WebP", description: "Convert back to WebP when you need smaller files." },
+    ],
+  },
+
+  "webp-to-jpg": {
+    slug: "webp-to-jpg",
+    category: "use-case",
+    seo: {
+      title: "Convert WebP to JPG Online — Free Converter | ImgSplit",
+      description: "Convert WebP images to JPG format for maximum compatibility. Free browser-based converter, no upload to servers, instant download.",
+      ogTitle: "Convert WebP to JPG — Free Online Converter",
+      ogDescription: "Convert WebP to JPG for maximum compatibility. Free, private, browser-based.",
+    },
+    hero: {
+      overline: "WebP to JPG Converter",
+      headlinePart1: "Convert WebP to",
+      headlineAccent: "JPG",
+      headlinePart2: "— Maximum Compatibility",
+      description: "Convert WebP images to the universally supported JPG format. Perfect for sharing, printing, and use with any software or platform — no compatibility worries.",
+    },
+    scenarios: [
+      {
+        icon: "Mail",
+        title: "Sharing with Others",
+        description: "Not everyone's device handles WebP. Convert to JPG before sharing via email, messaging apps, or file transfers to ensure everyone can open your images.",
+      },
+      {
+        icon: "FileDown",
+        title: "Print Preparation",
+        description: "Most print shops and print-on-demand services expect JPG files. Convert WebP images to JPG for hassle-free printing with predictable color output.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Upload Your WebP", description: "Drag and drop or select the WebP image you want to convert to JPG format." },
+      { stepNumber: 2, title: "Set JPG Quality", description: "Adjust the quality slider. Transparent areas are filled with a background color of your choice (default: white)." },
+      { stepNumber: 3, title: "Download JPG File", description: "Save your JPG image — ready for sharing, printing, or use in any application." },
+    ],
+    faqEntries: [
+      { question: "What happens to transparency when converting WebP to JPG?", answer: "JPG does not support transparency. Any transparent areas in your WebP image are filled with a solid background color — white by default. You can choose a different color before converting." },
+      { question: "Is JPG the most compatible image format?", answer: "Yes. JPG/JPEG is supported by virtually every device, browser, email client, and software application in existence. It's the safest choice when compatibility is your priority." },
+      { question: "Will the file size increase when converting WebP to JPG?", answer: "Typically yes, since WebP offers better compression than JPG. However, you can adjust the JPG quality setting to find the right balance between file size and visual quality." },
+    ],
+    relatedTools: [
+      { slug: "/webp-to-png", title: "WebP to PNG", description: "Convert WebP to PNG when you need transparency and lossless quality." },
+      { slug: "/compress-jpeg", title: "Compress JPEG", description: "Further reduce your JPEG file size after conversion." },
+      { slug: "/jpg-to-webp", title: "JPG to WebP", description: "Convert back to WebP when you need smaller files." },
+    ],
+  },
+
+  "reduce-image-size": {
+    slug: "reduce-image-size",
+    category: "use-case",
+    seo: {
+      title: "Reduce Image Size Online — Free File Optimizer | ImgSplit",
+      description: "Reduce image file size online for free. Optimize JPEG, PNG, and WebP images for web, email, and storage. Browser-based, private, no upload to servers.",
+      ogTitle: "Reduce Image Size — Free Online Optimizer",
+      ogDescription: "Optimize and reduce image file size instantly. Free, private, browser-based.",
+    },
+    hero: {
+      overline: "Image Size Reducer",
+      headlinePart1: "Reduce Image",
+      headlineAccent: "Size",
+      headlinePart2: "— Instant Optimization",
+      description: "Optimize any image for the smallest possible file size. Intelligent compression for JPEG, PNG, and WebP — perfect for faster websites, smaller storage, and quicker uploads.",
+    },
+    scenarios: [
+      {
+        icon: "Zap",
+        title: "Website Speed",
+        description: "Large images are the #1 cause of slow websites. Reduce image sizes to dramatically improve page load times, bounce rates, and search engine rankings.",
+      },
+      {
+        icon: "FileDown",
+        title: "Storage Optimization",
+        description: "Running low on cloud storage or device space? Reduce image sizes across your photo library to free up gigabytes without deleting any images.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Upload Your Image", description: "Drag and drop or select any JPEG, PNG, or WebP image you want to make smaller." },
+      { stepNumber: 2, title: "Optimize Settings", description: "Adjust compression quality and optionally change the output format. WebP typically offers the best size reduction." },
+      { stepNumber: 3, title: "Download Optimized Image", description: "Save your smaller image file. The tool shows the exact bytes saved and percentage reduction." },
+    ],
+    faqEntries: [
+      { question: "What is the best way to reduce image file size?", answer: "Three strategies work best: compress with quality adjustment (fastest), convert to WebP format (most effective), or resize to smaller dimensions (most aggressive). Combining all three yields the smallest files." },
+      { question: "How much can I reduce an image's file size?", answer: "Typical reductions range from 40-80% depending on the source image and settings. Converting a 5 MB JPEG to a quality-80 WebP can easily produce a 500 KB file." },
+      { question: "Will reducing file size affect print quality?", answer: "For web and screen use, a well-compressed image looks identical to the original. For professional printing, keep quality above 90% and avoid excessive compression." },
+    ],
+    relatedTools: [
+      { slug: "/compress-image", title: "Compress Image", description: "General-purpose image compression with format options." },
+      { slug: "/compress-jpeg", title: "Compress JPEG", description: "Specialized compression for JPEG photos." },
+      { slug: "/png-to-webp", title: "PNG to WebP", description: "Convert to WebP for the best compression ratio." },
+    ],
+  },
+
 }
 
 export default data
