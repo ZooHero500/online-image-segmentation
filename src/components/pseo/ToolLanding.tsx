@@ -250,14 +250,33 @@ export function ToolLanding({ data, locale, t }: ToolLandingProps) {
         </div>
       </section>
 
-      {/* UPLOAD */}
+      {/* UPLOAD — for split tools show inline splitter; for compress tools show link to /compress */}
       <section id="upload" className="px-4 sm:px-8 md:px-16 pb-12 sm:pb-24 md:pb-32 max-w-[1600px] mx-auto">
         <div className="mb-8">
           <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
             {t.uploadSection.overline}
           </span>
         </div>
-        <LandingContent />
+        {compressHref ? (
+          <Link
+            href={compressHref}
+            className="group flex flex-col items-center justify-center border-t border-b p-8 sm:p-16 md:p-24 border-primary/20 hover:border-primary/40 transition-all duration-700 cursor-pointer"
+          >
+            <div className="text-center">
+              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6">
+                {data.hero.overline}
+              </p>
+              <p className="font-serif text-2xl md:text-3xl text-foreground mb-4 group-hover:text-accent transition-colors duration-500">
+                {t.pseoChrome.ctaButton} →
+              </p>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">
+                PNG · JPEG · WebP
+              </p>
+            </div>
+          </Link>
+        ) : (
+          <LandingContent />
+        )}
       </section>
 
       {/* SCENARIOS */}
