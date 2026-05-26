@@ -97,6 +97,7 @@ export default async function ToolsPage({
               { "@type": "ListItem", position: 10, name: "Grid Splitter", url: `${BASE_URL}/grid` },
               { "@type": "ListItem", position: 11, name: "Image Splitter", url: BASE_URL },
               { "@type": "ListItem", position: 12, name: "Image Resizer", url: `${BASE_URL}/resize` },
+              { "@type": "ListItem", position: 13, name: "Image Compressor", url: `${BASE_URL}/compress` },
             ],
           },
         }}
@@ -288,6 +289,11 @@ export default async function ToolsPage({
               description={t("existingToolResizeDesc")}
               href="/resize"
             />
+            <ToolCard
+              title={t("existingToolCompress")}
+              description={t("existingToolCompressDesc")}
+              href="/compress"
+            />
           </div>
         </div>
       </section>
@@ -343,6 +349,12 @@ export default async function ToolsPage({
                   className="hover:text-accent transition-colors duration-500"
                 >
                   {tFooter("toolResize")}
+                </Link>
+                <Link
+                  href="/compress"
+                  className="hover:text-accent transition-colors duration-500"
+                >
+                  {tFooter("toolCompress")}
                 </Link>
                 <Link
                   href="/"

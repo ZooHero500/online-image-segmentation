@@ -409,6 +409,9 @@ export default async function GridPage({
                 <Link href="/resize" className="hover:text-accent transition-colors duration-500">
                   {tFooter("toolResize")}
                 </Link>
+                <Link href="/compress" className="hover:text-accent transition-colors duration-500">
+                  {tFooter("toolCompress")}
+                </Link>
                 <Link href="/" className="hover:text-accent transition-colors duration-500">
                   {tFooter("toolSplit")}
                 </Link>
