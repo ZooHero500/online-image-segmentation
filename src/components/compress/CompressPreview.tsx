@@ -45,11 +45,15 @@ export function CompressPreview({
           </span>
         </div>
         <div className="flex-1 bg-muted/30 rounded-lg overflow-hidden flex items-center justify-center min-h-0">
-          <img
-            src={originalUrl}
-            alt="Original"
-            className="max-w-full max-h-full object-contain"
-          />
+          {originalUrl ? (
+            <img
+              src={originalUrl}
+              alt="Original"
+              className="max-w-full max-h-full object-contain"
+            />
+          ) : (
+            <span className="text-xs text-muted-foreground">{t("processing")}</span>
+          )}
         </div>
       </div>
 
