@@ -532,6 +532,457 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
+  "compress-image": {
+    slug: "compress-image",
+    category: "use-case",
+    seo: {
+      title: "オンライン画像圧縮 — 無料＆プライバシー安全 | ImgSplit",
+      description: "無料で画像をオンライン圧縮 — 視覚品質を維持しながらファイルサイズを縮小。ブラウザ処理、サーバーへのアップロード不要、JPEG・PNG・WebP対応。",
+      ogTitle: "オンライン画像圧縮 — 無料＆プライバシー安全",
+      ogDescription: "ブラウザで画像ファイルサイズを即座に縮小。無料・プライバシー安全・アップロード不要。",
+    },
+    hero: {
+      overline: "画像圧縮ツール",
+      headlinePart1: "画像を",
+      headlineAccent: "圧縮",
+      headlinePart2: "— 即座に",
+      description: "目に見える品質低下なしに画像ファイルサイズを縮小。JPEG・PNG・WebP対応 — すべてブラウザ内で処理、データはデバイスから外に出ません。",
+    },
+    scenarios: [
+      {
+        icon: "Globe",
+        title: "Web最適化",
+        description: "Webサイトにアップロードする前に画像を圧縮 — ページ読み込み高速化、Core Web Vitals向上、SEOランキング改善を視覚品質を犠牲にせずに実現。",
+      },
+      {
+        icon: "Mail",
+        title: "メール添付ファイル",
+        description: "画像添付ファイルを圧縮してメールのサイズ制限に対応。写真の見た目を保ちながら10MBや25MBの添付上限に収めます。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "画像をアップロード", description: "圧縮したいJPEG、PNG、またはWebP画像をドラッグ＆ドロップまたはクリックでアップロード。" },
+      { stepNumber: 2, title: "品質を調整", description: "品質スライダーでファイルサイズと視覚品質のバランスを調整。ダウンロード前にリアルタイムでプレビュー。" },
+      { stepNumber: 3, title: "圧縮ファイルをダウンロード", description: "最適化された画像をダウンロード — ファイルサイズが小さくなり、同じ素晴らしい見た目を維持。圧縮前後のサイズを即座に比較。" },
+    ],
+    faqEntries: [
+      { question: "画像を圧縮すると品質は低下しますか？", answer: "圧縮は冗長なデータを除去してファイルサイズを縮小します。品質設定70%以上では、視覚的な差異は通常肉眼では認識できません。" },
+      { question: "どの画像フォーマットを圧縮できますか？", answer: "JPEG、PNG、WebP画像を圧縮できます。最大限の圧縮には、サイズ対品質比で最優秀なWebPフォーマットへの変換がおすすめです。" },
+      { question: "アップロードのファイルサイズ制限はありますか？", answer: "最大20MBの画像をアップロードできます。すべてブラウザ内で処理するため、大きなファイルは少し時間がかかる場合があります。" },
+    ],
+    relatedTools: [
+      { slug: "/compress-jpeg", title: "JPEG圧縮", description: "品質コントロール付きの専用JPEG圧縮。" },
+      { slug: "/png-to-webp", title: "PNGからWebP", description: "PNGをWebPに変換して最大限の圧縮を実現。" },
+      { slug: "/resize", title: "画像リサイズ", description: "画像を正確なサイズやパーセンテージでリサイズ。" },
+      { slug: "/", title: "画像分割ツール", description: "ドラッグ＆ドロップの分割線で画像を分割。" },
+    ],
+  },
+
+  "compress-jpeg": {
+    slug: "compress-jpeg",
+    category: "use-case",
+    seo: {
+      title: "オンラインJPEG圧縮 — JPGファイルサイズ縮小 | ImgSplit",
+      description: "JPEGおよびJPG画像を無料でオンライン圧縮。調整可能な品質設定でファイルサイズを縮小。ブラウザ処理、プライバシー安全、サーバーアップロード不要。",
+      ogTitle: "オンラインJPEG圧縮 — JPGファイルサイズ縮小",
+      ogDescription: "調整可能な品質でJPEGファイルサイズを縮小。無料・プライバシー安全・ブラウザベース。",
+    },
+    hero: {
+      overline: "JPEG圧縮",
+      headlinePart1: "JPEGを",
+      headlineAccent: "圧縮",
+      headlinePart2: "— サイズ縮小",
+      description: "きめ細かい品質コントロールでJPEGおよびJPGファイルサイズを縮小。写真家、ブロガー、Web開発者に最適 — 目に見える品質低下なしにファイルを小さくします。",
+    },
+    scenarios: [
+      {
+        icon: "Camera",
+        title: "写真ワークフロー",
+        description: "カメラの高解像度JPEG写真をWebギャラリー、クライアント確認用、SNS用に圧縮 — 10MBのファイルを1MB以下に縮小しながらディテールを維持。",
+      },
+      {
+        icon: "Globe",
+        title: "ブログ画像",
+        description: "ブログ記事のJPEG画像を最適化。読み込み速度の向上は読者のエンゲージメント向上と検索エンジンランキングの改善につながります。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "JPEGをアップロード", description: "圧縮したいJPEG/JPGファイルをドラッグ＆ドロップまたは選択。" },
+      { stepNumber: 2, title: "品質レベルを設定", description: "品質スライダーを調整 — 低い値ほどファイルが小さくなります。出力をプレビューしてサイズと品質の最適なバランスを見つけてください。" },
+      { stepNumber: 3, title: "圧縮JPEGをダウンロード", description: "圧縮されたJPEGを保存。ファイルサイズがどれだけ節約されたかを確認できます。" },
+    ],
+    faqEntries: [
+      { question: "JPEG圧縮の最適な品質設定は？", answer: "Web用途では75-85%の品質が最適なバランス — 通常60-80%のファイルサイズ削減で視覚的な差異は最小限。印刷用には90%以上を維持してください。" },
+      { question: "JPEGを複数回圧縮できますか？", answer: "可能ですが、再圧縮のたびに微細なアーティファクトが発生します。最良の結果を得るには、既に圧縮されたJPEGではなく、常にオリジナルファイルから圧縮してください。" },
+      { question: "JPEGとJPGの違いは何ですか？", answer: "違いはありません — JPGとJPEGは同じフォーマットを指します。短い「.jpg」拡張子は、拡張子を3文字に制限していたWindowsで一般的になりました。" },
+    ],
+    relatedTools: [
+      { slug: "/compress-image", title: "画像圧縮", description: "あらゆるフォーマットに対応する汎用画像圧縮。" },
+      { slug: "/jpg-to-webp", title: "JPGからWebP", description: "JPEGをWebPに変換してさらに小さなファイルサイズに。" },
+      { slug: "/reduce-image-size", title: "画像サイズ縮小", description: "あらゆる画像を最小ファイルサイズに最適化。" },
+    ],
+  },
+
+  "compress-png": {
+    slug: "compress-png",
+    category: "use-case",
+    seo: {
+      title: "オンラインPNG圧縮 — PNGファイルサイズ縮小 | ImgSplit",
+      description: "透明度を保持しながらPNG画像をオンライン圧縮。ロスレスまたはロッシー圧縮でファイルサイズを縮小。無料・ブラウザ処理・サーバーアップロード不要。",
+      ogTitle: "オンラインPNG圧縮 — PNGファイルサイズ縮小",
+      ogDescription: "透明度を保ちながらPNGファイルサイズを縮小。無料・プライバシー安全・ブラウザベース。",
+    },
+    hero: {
+      overline: "PNG圧縮",
+      headlinePart1: "PNGを",
+      headlineAccent: "圧縮",
+      headlinePart2: "— 透明度維持",
+      description: "透明度サポートを完全に保持しながらPNGファイルサイズを縮小。UIスクリーンショット、デザインアセット、アルファチャンネルが必要なグラフィックに最適。",
+    },
+    scenarios: [
+      {
+        icon: "Smartphone",
+        title: "UIスクリーンショット",
+        description: "デザインツールやスクリーンキャプチャからのPNGスクリーンショットを圧縮。ドキュメント、バグレポート、デザインレビューでの読み込みを高速化。",
+      },
+      {
+        icon: "Layers",
+        title: "デザインアセット",
+        description: "PNGデザインアセット — アイコン、ロゴ、UI要素 — をWebおよびアプリ開発用に最適化しながら、鮮明なエッジと透明度を維持。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "PNGをアップロード", description: "圧縮したいPNGファイルをドラッグ＆ドロップまたは選択。透明度は完全に保持されます。" },
+      { stepNumber: 2, title: "圧縮を調整", description: "圧縮レベルを選択。高い圧縮ほどファイルが小さくなります — 品質が基準を満たすかプレビューで確認してください。" },
+      { stepNumber: 3, title: "最適化PNGをダウンロード", description: "圧縮されたPNGを保存。透明度、色深度、視覚品質が維持されます。" },
+    ],
+    faqEntries: [
+      { question: "圧縮でPNGの透明度は失われますか？", answer: "いいえ。圧縮プロセスはアルファチャンネルを完全に保持します。透明な背景はそのまま維持されます。" },
+      { question: "なぜPNGファイルはJPEGより大きいのですか？", answer: "PNGはロスレス圧縮を使用して各ピクセルを正確に保持し、さらに透明度データも保存します。透明度が不要な写真には、JPEGやWebPへの変換でより小さなファイルが得られます。" },
+      { question: "圧縮するよりWebPに変換すべきですか？", answer: "最大限のサイズ削減が必要でプラットフォームがWebPをサポートしている場合、WebPへの変換で透明度を保ちながらファイルサイズを50-80%削減できます。" },
+    ],
+    relatedTools: [
+      { slug: "/png-to-webp", title: "PNGからWebP", description: "PNGをWebPに変換して透明度付きで劇的に小さなファイルに。" },
+      { slug: "/png-to-jpg", title: "PNGからJPG", description: "透明度が不要な場合にPNGをJPEGに変換して小さなファイルに。" },
+      { slug: "/compress-image", title: "画像圧縮", description: "あらゆるフォーマットに対応する汎用画像圧縮。" },
+    ],
+  },
+
+  "png-to-webp": {
+    slug: "png-to-webp",
+    category: "use-case",
+    seo: {
+      title: "PNGからWebPに変換 — 無料＆高速 | ImgSplit",
+      description: "PNG画像をWebPフォーマットに変換して劇的にファイルサイズを縮小。透明度を保持。無料ブラウザベースコンバーター、サーバーアップロード不要。",
+      ogTitle: "PNGからWebP変換 — 無料オンラインコンバーター",
+      ogDescription: "PNGをWebPに変換して透明度付きで小さなファイルに。無料・ブラウザベース。",
+    },
+    hero: {
+      overline: "PNGからWebPコンバーター",
+      headlinePart1: "PNGを",
+      headlineAccent: "WebP",
+      headlinePart2: "に変換 — より小さなファイル",
+      description: "PNG画像をWebPフォーマットに変換し、透明度を保持しながら最大80%のファイルサイズ削減を実現。より高速なWebサイトとアプリのための最新画像フォーマット。",
+    },
+    scenarios: [
+      {
+        icon: "Zap",
+        title: "Webサイトパフォーマンス",
+        description: "サイトのPNGアセットをWebPに切り替え — ページ読み込みが高速化、帯域幅が削減、Core Web Vitalsが向上。主要ブラウザはWebPをネイティブサポート。",
+      },
+      {
+        icon: "Smartphone",
+        title: "アプリアセット",
+        description: "アプリアイコン、UI要素、グラフィックをPNGからWebPに変換。アセットが小さくなりインストール高速化、読み込み迅速化、ストレージ使用量削減を実現。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "PNGをアップロード", description: "WebPフォーマットに変換したいPNG画像をドラッグ＆ドロップまたは選択。" },
+      { stepNumber: 2, title: "出力を設定", description: "WebP出力の品質設定を調整。高品質ほどファイルが大きくなります — プレビューで最適なバランスを見つけてください。" },
+      { stepNumber: 3, title: "WebPファイルをダウンロード", description: "変換されたWebP画像を保存。ファイルサイズを比較して劇的な削減を確認してください。" },
+    ],
+    faqEntries: [
+      { question: "WebPはPNGのような透明度をサポートしますか？", answer: "はい。WebPはアルファ透明度を完全にサポートし、ほとんどのユースケースでPNGの優れた代替となります — 大幅に小さなファイルサイズで。" },
+      { question: "どのブラウザがWebPをサポートしていますか？", answer: "すべての主要ブラウザがWebPをサポート：Chrome、Firefox、Safari、Edge、Opera。Internet Explorerと非常に古いブラウザバージョンのみ非対応です。" },
+      { question: "WebPはPNGと比べてどのくらい小さいですか？", answer: "WebPファイルは通常、同等のPNGファイルより50-80%小さくなります。正確な節約は画像の内容によりますが、削減は常に劇的です。" },
+    ],
+    relatedTools: [
+      { slug: "/png-to-jpg", title: "PNGからJPG", description: "透明度が不要な場合にPNGをJPEGに変換。" },
+      { slug: "/jpg-to-webp", title: "JPGからWebP", description: "JPEG画像を最新のWebPフォーマットに変換。" },
+      { slug: "/compress-png", title: "PNG圧縮", description: "PNGフォーマットを維持しながらファイルサイズを縮小。" },
+    ],
+  },
+
+  "png-to-jpg": {
+    slug: "png-to-jpg",
+    category: "use-case",
+    seo: {
+      title: "PNGからJPGに変換 — 無料オンラインコンバーター | ImgSplit",
+      description: "PNG画像を無料でJPGフォーマットにオンライン変換。透明度を除去してファイルサイズを縮小。ブラウザ処理、プライバシー安全、サーバーアップロード不要。",
+      ogTitle: "PNGからJPG変換 — 無料オンラインコンバーター",
+      ogDescription: "PNGをJPGに変換して透明度を除去しファイルサイズを縮小。無料・ブラウザベース。",
+    },
+    hero: {
+      overline: "PNGからJPGコンバーター",
+      headlinePart1: "PNGを",
+      headlineAccent: "JPG",
+      headlinePart2: "に変換 — 透明度を除去",
+      description: "PNG画像をJPGフォーマットに変換してファイルサイズを縮小し、ユニバーサルな互換性を実現。透明部分はお好みの背景色で塗りつぶされます。",
+    },
+    scenarios: [
+      {
+        icon: "Globe",
+        title: "SNS投稿",
+        description: "PNGスクリーンショットやグラフィックをJPGに変換してSNSプラットフォーム用に。PNGの過度な圧縮を回避し、クリーンなJPGをアップロードして予測可能な品質を確保。",
+      },
+      {
+        icon: "Mail",
+        title: "文書共有",
+        description: "PNGグラフィックをJPGに変換してメール添付、プレゼンテーション、文書用に。JPGファイルは小さく、あらゆるデバイスで閲覧可能。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "PNGをアップロード", description: "JPGフォーマットに変換したいPNGファイルをドラッグ＆ドロップまたは選択。" },
+      { stepNumber: 2, title: "背景色と品質を設定", description: "透明部分の背景色を選択（デフォルト：白）し、JPEG品質レベルを設定。" },
+      { stepNumber: 3, title: "JPGファイルをダウンロード", description: "変換されたJPG画像を保存。透明部分は選択した背景色で置き換えられます。" },
+    ],
+    faqEntries: [
+      { question: "PNGの透明部分はどうなりますか？", answer: "透明部分は単色の背景色 — デフォルトでは白 — で塗りつぶされます。変換前にお好みの色を選択できます。" },
+      { question: "PNGからJPGへの変換で画質は変わりますか？", answer: "JPEGはロッシー圧縮を使用するため、低い設定ではわずかな品質差が生じる場合があります。品質90%以上では違いはほぼ目に見えません。" },
+      { question: "JPGに変換せずPNGのまま維持すべき場合は？", answer: "透明度が必要な場合、テキストや線画のピクセルパーフェクトな精度が必要な場合、またはロスレス品質が必要な場合はPNGを維持。写真やファイルサイズの縮小が必要な場合はJPGに変換。" },
+    ],
+    relatedTools: [
+      { slug: "/png-to-webp", title: "PNGからWebP", description: "最新ブラウザ向けにPNGをWebPに変換してさらに小さなファイルに。" },
+      { slug: "/compress-jpeg", title: "JPEG圧縮", description: "変換後にJPEGファイルサイズをさらに縮小。" },
+      { slug: "/jpg-to-png", title: "JPGからPNG", description: "ロスレス品質が必要な場合にJPGをPNGに戻す。" },
+    ],
+  },
+
+  "jpg-to-png": {
+    slug: "jpg-to-png",
+    category: "use-case",
+    seo: {
+      title: "JPGからPNGに変換 — 無料オンラインコンバーター | ImgSplit",
+      description: "JPGおよびJPEG画像を無料でPNGフォーマットに変換してロスレス品質を実現。ブラウザベースコンバーター、サーバーアップロード不要、即座にダウンロード。",
+      ogTitle: "JPGからPNG変換 — 無料オンラインコンバーター",
+      ogDescription: "JPEGをPNGに変換してロスレス品質を実現。無料・プライバシー安全・ブラウザベース。",
+    },
+    hero: {
+      overline: "JPGからPNGコンバーター",
+      headlinePart1: "JPGを",
+      headlineAccent: "PNG",
+      headlinePart2: "に変換 — ロスレス品質",
+      description: "JPEG画像をPNGフォーマットに変換してロスレス品質と透明度サポートを実現。デザイン作業、編集、ピクセルパーフェクトな出力が必要なワークフローに最適。",
+    },
+    scenarios: [
+      {
+        icon: "Layers",
+        title: "デザインワーク",
+        description: "写真をPNGに変換してデザインプロジェクトに活用 — レイヤー合成、オーバーレイ、モックアップにはPNGのロスレス品質と透明度サポートが最適。",
+      },
+      {
+        icon: "Shield",
+        title: "透明度が必要な場合",
+        description: "写真に透明度を追加する必要がある場合、まずPNGに変換し、デザインツールでアルファチャンネルを編集してクリーンな切り抜きやオーバーレイを実現。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "JPGをアップロード", description: "PNGフォーマットに変換したいJPG/JPEGファイルをドラッグ＆ドロップまたは選択。" },
+      { stepNumber: 2, title: "結果をプレビュー", description: "PNGプレビューを確認。変換はオリジナルJPEGの全視覚コンテンツをフル品質で保持します。" },
+      { stepNumber: 3, title: "PNGファイルをダウンロード", description: "ロスレスPNG画像を保存。ファイルはオリジナルJPEGより大きくなりますが、追加の圧縮アーティファクトはゼロです。" },
+    ],
+    faqEntries: [
+      { question: "JPGからPNGへの変換で画質は向上しますか？", answer: "PNGへの変換はさらなる品質低下を防ぎますが、オリジナルのJPEG圧縮で失われたディテールを復元することはできません。変換されたPNGはJPEGの現在の状態を完璧に保持します。" },
+      { question: "なぜPNGファイルはオリジナルJPGより大きいのですか？", answer: "PNGはロスレス圧縮を使用して各ピクセルを正確に保持するため、ファイルが大きくなります。JPEGはロッシー圧縮を使用し、一部のデータを破棄して小さなサイズを実現します。" },
+      { question: "PNGに変換後、透明度を追加できますか？", answer: "はい。PNGフォーマットになれば、任意のデザインツール（Photoshop、GIMP、Figma）でアルファチャンネルを編集して透明度を追加できます — JPEGでは不可能な操作です。" },
+    ],
+    relatedTools: [
+      { slug: "/jpg-to-webp", title: "JPGからWebP", description: "JPEGをWebPに変換して最新の圧縮で小さなファイルに。" },
+      { slug: "/compress-png", title: "PNG圧縮", description: "変換後にPNGファイルサイズを縮小。" },
+      { slug: "/png-to-jpg", title: "PNGからJPG", description: "ファイルサイズが小さい方が必要な場合にJPGに戻す。" },
+    ],
+  },
+
+  "jpg-to-webp": {
+    slug: "jpg-to-webp",
+    category: "use-case",
+    seo: {
+      title: "JPGからWebPに変換 — 最新フォーマット | ImgSplit",
+      description: "JPGおよびJPEG画像をWebPフォーマットに変換して最大限の圧縮を実現。最大80%のサイズ削減。無料ブラウザベースコンバーター、サーバーアップロード不要。",
+      ogTitle: "JPGからWebP変換 — 最新フォーマットコンバーター",
+      ogDescription: "JPEGをWebPに変換して最大80%のサイズ削減。無料・プライバシー安全・ブラウザベース。",
+    },
+    hero: {
+      overline: "JPGからWebPコンバーター",
+      headlinePart1: "JPGを",
+      headlineAccent: "WebP",
+      headlinePart2: "に変換 — 最大圧縮",
+      description: "JPEG画像を最新のWebPフォーマットに変換して劇的にファイルサイズを縮小。同等の視覚品質で最大80%のサイズ削減 — Webパフォーマンスのための賢い選択。",
+    },
+    scenarios: [
+      {
+        icon: "RefreshCw",
+        title: "Webサイト移行",
+        description: "パフォーマンス改善の一環としてサイトのJPEG画像をWebPに一括変換。ページ読み込み高速化、ホスティングコスト削減、Google PageSpeedスコア向上を実現。",
+      },
+      {
+        icon: "Zap",
+        title: "パフォーマンス最適化",
+        description: "重いJPEGのヒーロー画像や商品写真をWebP版に置き換え。訪問者は同じビジュアル体験を得ながら、ダウンロード時間はごくわずかに。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "JPGをアップロード", description: "WebPに変換したいJPEGファイルをドラッグ＆ドロップまたは選択。" },
+      { stepNumber: 2, title: "WebP品質を調整", description: "品質設定を微調整。品質80%でもWebPファイルは同等のJPEGより劇的に小さくなります。" },
+      { stepNumber: 3, title: "WebPファイルをダウンロード", description: "WebP画像を保存してファイルサイズの節約を比較。ほとんどのユーザーが50-80%の削減を確認できます。" },
+    ],
+    faqEntries: [
+      { question: "WebPはJPEGと比べてどのくらい小さいですか？", answer: "WebPは同等の視覚品質でJPEGより通常25-34%小さくなります（Googleの研究によると）。多くの画像で50%以上の節約を実現します。" },
+      { question: "WebPはどこでもサポートされていますか？", answer: "はい。すべての主要ブラウザ（Chrome、Firefox、Safari 14以降、Edge）がWebPをサポートしています。まれなレガシーブラウザには、HTML <picture>要素でJPEGをフォールバックとして提供できます。" },
+      { question: "JPEGからWebPへの変換で品質は低下しますか？", answer: "JPEGとWebPはどちらもロッシーフォーマットのため、再エンコードで最小限の追加アーティファクトが生じます。最良の結果を得るには、お持ちの最高品質のJPEGソースから変換してください。" },
+    ],
+    relatedTools: [
+      { slug: "/png-to-webp", title: "PNGからWebP", description: "PNG画像を透明度サポート付きでWebPに変換。" },
+      { slug: "/compress-jpeg", title: "JPEG圧縮", description: "JPEGフォーマットを維持しながらファイルサイズを縮小。" },
+      { slug: "/jpg-to-png", title: "JPGからPNG", description: "JPEGをロスレスPNGフォーマットに変換。" },
+    ],
+  },
+
+  "webp-to-png": {
+    slug: "webp-to-png",
+    category: "use-case",
+    seo: {
+      title: "WebPからPNGに変換 — 無料オンラインコンバーター | ImgSplit",
+      description: "WebP画像をPNGフォーマットに変換してユニバーサルな互換性を実現。透明度を保持。無料ブラウザベースコンバーター、サーバーアップロード不要。",
+      ogTitle: "WebPからPNG変換 — 無料オンラインコンバーター",
+      ogDescription: "WebPをPNGに変換してユニバーサルな互換性を実現。無料・プライバシー安全・ブラウザベース。",
+    },
+    hero: {
+      overline: "WebPからPNGコンバーター",
+      headlinePart1: "WebPを",
+      headlineAccent: "PNG",
+      headlinePart2: "に変換 — ユニバーサルフォーマット",
+      description: "WebP画像をPNGに変換して、WebPに未対応の旧ソフトウェア、印刷ワークフロー、デザインツールとの最大限の互換性を確保。",
+    },
+    scenarios: [
+      {
+        icon: "ArrowRightLeft",
+        title: "互換性のニーズ",
+        description: "WebP画像をダウンロードしたがソフトウェアが対応していない？PNGに変換すればPhotoshop、PowerPoint、Wordなどすべてのツールで即座に互換性を確保。",
+      },
+      {
+        icon: "Image",
+        title: "レガシーツールでの編集",
+        description: "古い画像エディターやデザインツールはWebPファイルを開けない場合があります。まずPNGに変換して編集し、必要に応じて後で変換し直してください。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "WebPをアップロード", description: "PNGフォーマットに変換したいWebP画像をドラッグ＆ドロップまたは選択。" },
+      { stepNumber: 2, title: "変換をプレビュー", description: "PNGプレビューを確認。WebPファイルの全視覚コンテンツと透明度が完璧に保持されます。" },
+      { stepNumber: 3, title: "PNGファイルをダウンロード", description: "PNG画像を保存 — 事実上すべての画像ビューア、エディター、プラットフォームと互換性があります。" },
+    ],
+    faqEntries: [
+      { question: "WebPからPNGへの変換で品質は低下しますか？", answer: "変換で品質は失われません。PNGはロスレスフォーマットのため、WebPソースの全ピクセルが正確に保持されます。PNGはWebPほど積極的に圧縮しないためファイルサイズは大きくなります。" },
+      { question: "WebPからPNGへの変換で透明度は保持されますか？", answer: "はい。WebPとPNGの両方がアルファ透明度をサポートしています。WebP画像の透明部分はPNG出力で完璧に保持されます。" },
+      { question: "JPGではなくPNGに変換すべき理由は？", answer: "透明度サポートやロスレス品質が必要な場合はPNGを選択。最小のファイルサイズが必要で透明度が不要な場合はJPGを選択。" },
+    ],
+    relatedTools: [
+      { slug: "/webp-to-jpg", title: "WebPからJPG", description: "透明度なしでWebPをJPGに変換して小さなファイルに。" },
+      { slug: "/compress-png", title: "PNG圧縮", description: "変換後にPNGファイルサイズを縮小。" },
+      { slug: "/png-to-webp", title: "PNGからWebP", description: "ファイルサイズが小さい方が必要な場合にWebPに戻す。" },
+    ],
+  },
+
+  "webp-to-jpg": {
+    slug: "webp-to-jpg",
+    category: "use-case",
+    seo: {
+      title: "WebPからJPGに変換 — 無料オンラインコンバーター | ImgSplit",
+      description: "WebP画像をJPGフォーマットに変換して最大限の互換性を実現。無料ブラウザベースコンバーター、サーバーアップロード不要、即座にダウンロード。",
+      ogTitle: "WebPからJPG変換 — 無料オンラインコンバーター",
+      ogDescription: "WebPをJPGに変換して最大限の互換性を実現。無料・プライバシー安全・ブラウザベース。",
+    },
+    hero: {
+      overline: "WebPからJPGコンバーター",
+      headlinePart1: "WebPを",
+      headlineAccent: "JPG",
+      headlinePart2: "に変換 — 最大互換性",
+      description: "WebP画像をユニバーサルにサポートされるJPGフォーマットに変換。共有、印刷、あらゆるソフトウェアやプラットフォームでの使用に最適 — 互換性の心配なし。",
+    },
+    scenarios: [
+      {
+        icon: "Mail",
+        title: "他者との共有",
+        description: "すべてのデバイスがWebPに対応しているわけではありません。メール、メッセージアプリ、ファイル転送で共有する前にJPGに変換すれば、誰でも画像を開けます。",
+      },
+      {
+        icon: "FileDown",
+        title: "印刷準備",
+        description: "ほとんどの印刷業者やオンデマンド印刷サービスはJPGファイルを期待しています。WebP画像をJPGに変換して、手間なく予測可能な色出力で印刷できます。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "WebPをアップロード", description: "JPGフォーマットに変換したいWebP画像をドラッグ＆ドロップまたは選択。" },
+      { stepNumber: 2, title: "JPG品質を設定", description: "品質スライダーを調整。透明部分はお好みの背景色（デフォルト：白）で塗りつぶされます。" },
+      { stepNumber: 3, title: "JPGファイルをダウンロード", description: "JPG画像を保存 — 共有、印刷、あらゆるアプリケーションですぐに使えます。" },
+    ],
+    faqEntries: [
+      { question: "WebPからJPGへの変換で透明度はどうなりますか？", answer: "JPGは透明度をサポートしていません。WebP画像の透明部分は単色の背景色 — デフォルトでは白 — で塗りつぶされます。変換前に別の色を選択できます。" },
+      { question: "JPGは最も互換性の高い画像フォーマットですか？", answer: "はい。JPG/JPEGは事実上すべてのデバイス、ブラウザ、メールクライアント、ソフトウェアでサポートされています。互換性を最優先する場合、最も安全な選択です。" },
+      { question: "WebPからJPGへの変換でファイルサイズは増加しますか？", answer: "通常は増加します。WebPはJPGより優れた圧縮を提供するためです。ただし、JPGの品質設定を調整してファイルサイズと視覚品質の適切なバランスを見つけることができます。" },
+    ],
+    relatedTools: [
+      { slug: "/webp-to-png", title: "WebPからPNG", description: "透明度とロスレス品質が必要な場合にWebPをPNGに変換。" },
+      { slug: "/compress-jpeg", title: "JPEG圧縮", description: "変換後にJPEGファイルサイズをさらに縮小。" },
+      { slug: "/jpg-to-webp", title: "JPGからWebP", description: "ファイルサイズが小さい方が必要な場合にWebPに戻す。" },
+    ],
+  },
+
+  "reduce-image-size": {
+    slug: "reduce-image-size",
+    category: "use-case",
+    seo: {
+      title: "画像サイズ縮小 — 無料ファイルオプティマイザー | ImgSplit",
+      description: "無料で画像ファイルサイズをオンライン縮小。JPEG、PNG、WebP画像をWeb、メール、ストレージ用に最適化。ブラウザ処理、プライバシー安全、サーバーアップロード不要。",
+      ogTitle: "画像サイズ縮小 — 無料オンラインオプティマイザー",
+      ogDescription: "画像ファイルサイズを即座に最適化・縮小。無料・プライバシー安全・ブラウザベース。",
+    },
+    hero: {
+      overline: "画像サイズ縮小",
+      headlinePart1: "画像",
+      headlineAccent: "サイズ",
+      headlinePart2: "を縮小 — 即座に最適化",
+      description: "あらゆる画像を最小限のファイルサイズに最適化。JPEG、PNG、WebPのインテリジェント圧縮 — より高速なWebサイト、より少ないストレージ、より素早いアップロードに最適。",
+    },
+    scenarios: [
+      {
+        icon: "Zap",
+        title: "Webサイト高速化",
+        description: "大きな画像はWebサイトが遅い原因の第1位。画像サイズを縮小してページ読み込み時間、直帰率、検索エンジンランキングを劇的に改善。",
+      },
+      {
+        icon: "FileDown",
+        title: "ストレージ最適化",
+        description: "クラウドストレージやデバイスの容量が不足？写真ライブラリ全体の画像サイズを縮小して、画像を削除せずにギガバイト単位のスペースを解放。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "画像をアップロード", description: "小さくしたいJPEG、PNG、またはWebP画像をドラッグ＆ドロップまたは選択。" },
+      { stepNumber: 2, title: "設定を最適化", description: "圧縮品質を調整し、必要に応じて出力フォーマットを変更。WebPが通常最も効果的なサイズ削減を提供します。" },
+      { stepNumber: 3, title: "最適化画像をダウンロード", description: "小さくなった画像ファイルを保存。ツールは正確な節約バイト数と削減率を表示します。" },
+    ],
+    faqEntries: [
+      { question: "画像ファイルサイズを縮小する最良の方法は？", answer: "3つの戦略が最も効果的：品質調整による圧縮（最速）、WebPフォーマットへの変換（最も効果的）、またはより小さな寸法へのリサイズ（最も積極的）。3つすべてを組み合わせると最小のファイルが得られます。" },
+      { question: "画像ファイルサイズはどのくらい縮小できますか？", answer: "ソース画像と設定に応じて通常40-80%の削減が可能。5MBのJPEGを品質80のWebPに変換すると500KBのファイルを簡単に生成できます。" },
+      { question: "ファイルサイズの縮小は印刷品質に影響しますか？", answer: "Webおよびスクリーン用途では、適切に圧縮された画像はオリジナルと見分けがつきません。プロフェッショナル印刷用には品質を90%以上に保ち、過度な圧縮を避けてください。" },
+    ],
+    relatedTools: [
+      { slug: "/compress-image", title: "画像圧縮", description: "フォーマット選択付きの汎用画像圧縮。" },
+      { slug: "/compress-jpeg", title: "JPEG圧縮", description: "JPEG写真専用の圧縮。" },
+      { slug: "/png-to-webp", title: "PNGからWebP", description: "最良の圧縮率のためにWebPに変換。" },
+    ],
+  },
+
 }
 
 export default data

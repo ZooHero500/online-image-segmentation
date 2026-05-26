@@ -580,6 +580,457 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
+  "compress-image": {
+    slug: "compress-image",
+    category: "use-case",
+    seo: {
+      title: "在线压缩图片 — 免费且保护隐私 | ImgSplit",
+      description: "免费在线压缩图片——在保持视觉质量的同时减小文件大小。纯浏览器处理，无需上传至服务器，支持 JPEG、PNG 和 WebP。",
+      ogTitle: "在线压缩图片 — 免费且保护隐私",
+      ogDescription: "在浏览器中即时缩小图片文件大小。免费、隐私安全、无需上传。",
+    },
+    hero: {
+      overline: "图片压缩工具",
+      headlinePart1: "压缩",
+      headlineAccent: "图片",
+      headlinePart2: "即时完成",
+      description: "在不损失视觉质量的前提下减小图片文件大小。支持 JPEG、PNG 和 WebP——全部在浏览器中处理，数据不离开您的设备。",
+    },
+    scenarios: [
+      {
+        icon: "Globe",
+        title: "网页优化",
+        description: "在上传到网站之前压缩图片——加快页面加载速度，提升 Core Web Vitals 得分，改善 SEO 排名，同时不损失视觉质量。",
+      },
+      {
+        icon: "Mail",
+        title: "邮件附件",
+        description: "压缩图片附件以符合邮件大小限制。保持照片美观的同时控制在 10MB 或 25MB 附件大小上限以内。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传图片", description: "拖拽或点击上传您要压缩的 JPEG、PNG 或 WebP 图片。" },
+      { stepNumber: 2, title: "调整质量", description: "使用质量滑块平衡文件大小和视觉质量。下载前可实时预览效果。" },
+      { stepNumber: 3, title: "下载压缩文件", description: "下载优化后的图片——更小的文件大小，同样出色的画质。即时对比压缩前后的大小。" },
+    ],
+    faqEntries: [
+      { question: "压缩图片会降低质量吗？", answer: "压缩通过移除冗余数据来减小文件大小。在 70% 以上的质量设置下，肉眼通常无法察觉视觉差异。" },
+      { question: "支持压缩哪些图片格式？", answer: "支持压缩 JPEG、PNG 和 WebP 图片。如需最大程度压缩，建议转换为 WebP 格式，它提供最佳的大小与质量比。" },
+      { question: "上传文件有大小限制吗？", answer: "支持上传最大 20MB 的图片。工具在浏览器中处理所有文件，较大的文件可能需要稍长的处理时间。" },
+    ],
+    relatedTools: [
+      { slug: "/compress-jpeg", title: "压缩 JPEG", description: "专业的 JPEG 压缩，支持质量控制。" },
+      { slug: "/png-to-webp", title: "PNG 转 WebP", description: "将 PNG 转换为 WebP 以获得最大压缩效果。" },
+      { slug: "/resize", title: "调整图片大小", description: "按精确尺寸或百分比调整图片大小。" },
+      { slug: "/", title: "图片分割工具", description: "用拖拽分割线将图片分成多个部分。" },
+    ],
+  },
+
+  "compress-jpeg": {
+    slug: "compress-jpeg",
+    category: "use-case",
+    seo: {
+      title: "在线压缩 JPEG — 缩小 JPG 文件大小 | ImgSplit",
+      description: "免费在线压缩 JPEG 和 JPG 图片。可调节质量设置，缩小文件大小。纯浏览器处理，隐私安全，无需上传至服务器。",
+      ogTitle: "在线压缩 JPEG — 缩小 JPG 文件大小",
+      ogDescription: "可调节质量压缩 JPEG 文件大小。免费、隐私安全、浏览器端处理。",
+    },
+    hero: {
+      overline: "JPEG 压缩",
+      headlinePart1: "压缩",
+      headlineAccent: "JPEG",
+      headlinePart2: "缩小体积",
+      description: "通过精细的质量控制缩小 JPEG 和 JPG 文件大小。适合摄影师、博主和网页开发者——在无可见质量损失的前提下获得更小的文件。",
+    },
+    scenarios: [
+      {
+        icon: "Camera",
+        title: "摄影工作流程",
+        description: "压缩相机拍摄的高分辨率 JPEG 照片，用于网络画廊、客户预览或社交媒体——将 10MB 的文件缩小到 1MB 以下，同时保留细节。",
+      },
+      {
+        icon: "Globe",
+        title: "博客配图",
+        description: "优化博客文章和文章的 JPEG 图片。更快的加载速度意味着更好的读者参与度和更高的搜索引擎排名。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传 JPEG", description: "拖拽或选择您要压缩的 JPEG/JPG 文件。" },
+      { stepNumber: 2, title: "设置质量级别", description: "调整质量滑块——更低的值意味着更小的文件。预览输出效果，找到大小和质量之间的最佳平衡点。" },
+      { stepNumber: 3, title: "下载压缩后的 JPEG", description: "保存压缩后的 JPEG。工具会显示您节省了多少文件大小。" },
+    ],
+    faqEntries: [
+      { question: "JPEG 压缩的最佳质量设置是多少？", answer: "网页用途建议 75-85% 质量，通常可实现 60-80% 的文件大小减少，且视觉差异极小。印刷用途建议保持 90% 以上。" },
+      { question: "可以多次压缩同一张 JPEG 吗？", answer: "可以，但每次重新压缩都会引入轻微的压缩伪影。为获得最佳效果，建议始终从原始文件压缩，而不是对已压缩的 JPEG 再次压缩。" },
+      { question: "JPEG 和 JPG 有什么区别？", answer: "没有区别——JPG 和 JPEG 指的是同一种格式。较短的 '.jpg' 扩展名在 Windows 上变得普遍，因为早期 Windows 将扩展名限制为 3 个字符。" },
+    ],
+    relatedTools: [
+      { slug: "/compress-image", title: "压缩图片", description: "适用于任何格式的通用图片压缩。" },
+      { slug: "/jpg-to-webp", title: "JPG 转 WebP", description: "将 JPEG 转换为 WebP 以获得更小的文件大小。" },
+      { slug: "/reduce-image-size", title: "缩小图片体积", description: "优化任何图片以获得最小文件大小。" },
+    ],
+  },
+
+  "compress-png": {
+    slug: "compress-png",
+    category: "use-case",
+    seo: {
+      title: "在线压缩 PNG — 缩小 PNG 文件大小 | ImgSplit",
+      description: "在线压缩 PNG 图片，同时保留透明度。支持无损或有损压缩缩小文件大小。免费、浏览器端处理、无需上传至服务器。",
+      ogTitle: "在线压缩 PNG — 缩小 PNG 文件大小",
+      ogDescription: "缩小 PNG 文件大小，同时保留透明度。免费、隐私安全、浏览器端处理。",
+    },
+    hero: {
+      overline: "PNG 压缩",
+      headlinePart1: "压缩",
+      headlineAccent: "PNG",
+      headlinePart2: "保留透明度",
+      description: "缩小 PNG 文件大小，同时完整保留透明度支持。适合 UI 截图、设计素材和需要 Alpha 通道的图形。",
+    },
+    scenarios: [
+      {
+        icon: "Smartphone",
+        title: "UI 截图",
+        description: "压缩来自设计工具和屏幕截图的 PNG 文件。减小文件大小以加快文档、Bug 报告和设计评审中的加载速度。",
+      },
+      {
+        icon: "Layers",
+        title: "设计素材",
+        description: "优化 PNG 设计素材——图标、Logo 和 UI 元素——用于网页和应用开发，同时保留清晰的边缘和透明度。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传 PNG", description: "拖拽或选择您要压缩的 PNG 文件。透明度将完整保留。" },
+      { stepNumber: 2, title: "调整压缩级别", description: "选择压缩级别。更高的压缩意味着更小的文件——预览结果以确保质量达标。" },
+      { stepNumber: 3, title: "下载优化后的 PNG", description: "保存压缩后的 PNG。透明度、色深和视觉质量均得到保持。" },
+    ],
+    faqEntries: [
+      { question: "压缩会移除 PNG 的透明度吗？", answer: "不会。压缩过程完整保留 Alpha 通道。您的透明背景将保持不变。" },
+      { question: "为什么 PNG 文件比 JPEG 大很多？", answer: "PNG 使用无损压缩，精确保留每个像素，并且存储透明度数据。如果照片不需要透明度，转换为 JPEG 或 WebP 可以获得更小的文件。" },
+      { question: "应该将 PNG 转换为 WebP 还是直接压缩？", answer: "如果需要最大程度的体积缩减且您的平台支持 WebP，转换为 WebP 可以在保留透明度的同时将文件大小减少 50-80%。" },
+    ],
+    relatedTools: [
+      { slug: "/png-to-webp", title: "PNG 转 WebP", description: "将 PNG 转换为 WebP，在保留透明度的同时大幅缩小文件。" },
+      { slug: "/png-to-jpg", title: "PNG 转 JPG", description: "当不需要透明度时将 PNG 转换为 JPEG 以缩小文件。" },
+      { slug: "/compress-image", title: "压缩图片", description: "适用于任何格式的通用图片压缩。" },
+    ],
+  },
+
+  "png-to-webp": {
+    slug: "png-to-webp",
+    category: "use-case",
+    seo: {
+      title: "在线将 PNG 转换为 WebP — 免费且快速 | ImgSplit",
+      description: "将 PNG 图片转换为 WebP 格式，大幅缩小文件大小。保留透明度。免费浏览器端转换器，无需上传至服务器。",
+      ogTitle: "PNG 转 WebP — 免费在线转换器",
+      ogDescription: "将 PNG 转换为 WebP，在保留透明度的同时缩小文件。免费、浏览器端处理。",
+    },
+    hero: {
+      overline: "PNG 转 WebP 转换器",
+      headlinePart1: "将 PNG 转换为",
+      headlineAccent: "WebP",
+      headlinePart2: "更小的文件",
+      description: "将 PNG 图片转换为 WebP 格式，文件最多缩小 80%，同时保留透明度。现代图片格式，让网站和应用加载更快。",
+    },
+    scenarios: [
+      {
+        icon: "Zap",
+        title: "网站性能优化",
+        description: "将网站的 PNG 素材切换为 WebP——页面加载更快，带宽降低，Core Web Vitals 指标提升。大多数浏览器原生支持 WebP。",
+      },
+      {
+        icon: "Smartphone",
+        title: "应用素材",
+        description: "将应用图标、UI 元素和图形从 PNG 转换为 WebP。更小的素材意味着更快的安装、更快的加载和更少的存储占用。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传 PNG", description: "拖拽或选择您要转换为 WebP 格式的 PNG 图片。" },
+      { stepNumber: 2, title: "配置输出", description: "调整 WebP 输出的质量设置。更高的质量意味着更大的文件——预览以找到合适的平衡点。" },
+      { stepNumber: 3, title: "下载 WebP 文件", description: "保存转换后的 WebP 图片。对比文件大小，查看显著的缩减效果。" },
+    ],
+    faqEntries: [
+      { question: "WebP 像 PNG 一样支持透明度吗？", answer: "是的。WebP 完全支持 Alpha 透明度，使其成为大多数场景下 PNG 的优秀替代方案——文件大小显著缩小。" },
+      { question: "哪些浏览器支持 WebP？", answer: "所有现代浏览器都支持 WebP：Chrome、Firefox、Safari、Edge 和 Opera。只有 Internet Explorer 和非常旧的浏览器版本不支持。" },
+      { question: "WebP 比 PNG 小多少？", answer: "WebP 文件通常比等效的 PNG 文件小 50-80%。具体节省取决于图片内容，但缩减效果始终非常显著。" },
+    ],
+    relatedTools: [
+      { slug: "/png-to-jpg", title: "PNG 转 JPG", description: "当不需要透明度时将 PNG 转换为 JPEG。" },
+      { slug: "/jpg-to-webp", title: "JPG 转 WebP", description: "将 JPEG 图片转换为现代 WebP 格式。" },
+      { slug: "/compress-png", title: "压缩 PNG", description: "在保留 PNG 格式的同时缩小文件大小。" },
+    ],
+  },
+
+  "png-to-jpg": {
+    slug: "png-to-jpg",
+    category: "use-case",
+    seo: {
+      title: "在线将 PNG 转换为 JPG — 免费转换器 | ImgSplit",
+      description: "免费在线将 PNG 图片转换为 JPG 格式。去除透明度并缩小文件大小。浏览器端处理，隐私安全，无需上传至服务器。",
+      ogTitle: "PNG 转 JPG — 免费在线转换器",
+      ogDescription: "将 PNG 转换为 JPG 以去除透明度并缩小文件。免费、浏览器端处理。",
+    },
+    hero: {
+      overline: "PNG 转 JPG 转换器",
+      headlinePart1: "将 PNG 转换为",
+      headlineAccent: "JPG",
+      headlinePart2: "去除透明度",
+      description: "将 PNG 图片转换为 JPG 格式，获得更小的文件大小和通用兼容性。透明区域将填充为您选择的纯色背景。",
+    },
+    scenarios: [
+      {
+        icon: "Globe",
+        title: "社交媒体发布",
+        description: "将 PNG 截图和图形转换为 JPG，用于社交媒体平台。避免平台对 PNG 的重度压缩，上传干净的 JPG 获得可预测的质量。",
+      },
+      {
+        icon: "Mail",
+        title: "文档分享",
+        description: "将 PNG 图形转换为 JPG 用于邮件附件、演示文稿和文档。JPG 文件更小且在任何设备上都能查看。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传 PNG", description: "拖拽或选择您要转换为 JPG 格式的 PNG 文件。" },
+      { stepNumber: 2, title: "设置背景色和质量", description: "选择透明区域的背景色（默认白色）并设置 JPEG 质量级别。" },
+      { stepNumber: 3, title: "下载 JPG 文件", description: "保存转换后的 JPG 图片。透明区域已替换为所选背景色。" },
+    ],
+    faqEntries: [
+      { question: "PNG 中的透明区域会怎样？", answer: "透明区域将填充为纯色背景——默认为白色。您可以在转换前选择任意颜色。" },
+      { question: "PNG 转 JPG 后图片质量会变化吗？", answer: "JPEG 使用有损压缩，在较低设置下可能存在轻微的质量差异。在 90% 以上的质量下，差异几乎不可见。" },
+      { question: "什么时候应该保留 PNG 而不转换为 JPG？", answer: "当您需要透明度、文字或线条的像素级精准度，或无损品质时保留 PNG。当需要照片或更小的文件大小时转换为 JPG。" },
+    ],
+    relatedTools: [
+      { slug: "/png-to-webp", title: "PNG 转 WebP", description: "将 PNG 转换为 WebP，在现代浏览器中获得更小的文件。" },
+      { slug: "/compress-jpeg", title: "压缩 JPEG", description: "转换后进一步缩小 JPEG 文件大小。" },
+      { slug: "/jpg-to-png", title: "JPG 转 PNG", description: "当需要无损质量时将 JPG 转回 PNG。" },
+    ],
+  },
+
+  "jpg-to-png": {
+    slug: "jpg-to-png",
+    category: "use-case",
+    seo: {
+      title: "在线将 JPG 转换为 PNG — 免费转换器 | ImgSplit",
+      description: "免费在线将 JPG 和 JPEG 图片转换为 PNG 格式，获得无损质量。浏览器端转换器，无需上传至服务器，即时下载。",
+      ogTitle: "JPG 转 PNG — 免费在线转换器",
+      ogDescription: "将 JPEG 转换为 PNG 获得无损质量。免费、隐私安全、浏览器端处理。",
+    },
+    hero: {
+      overline: "JPG 转 PNG 转换器",
+      headlinePart1: "将 JPG 转换为",
+      headlineAccent: "PNG",
+      headlinePart2: "无损质量",
+      description: "将 JPEG 图片转换为 PNG 格式，获得无损质量和透明度支持。适合设计工作、编辑和任何需要像素级精准输出的工作流程。",
+    },
+    scenarios: [
+      {
+        icon: "Layers",
+        title: "设计工作",
+        description: "将照片转换为 PNG 用于设计项目——图层合成、叠加和效果图最适合使用 PNG 的无损质量和透明度支持。",
+      },
+      {
+        icon: "Shield",
+        title: "透明度需求",
+        description: "需要为照片添加透明度？先转换为 PNG，然后在设计工具中编辑 Alpha 通道，实现干净的抠图和叠加效果。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传 JPG", description: "拖拽或选择您要转换为 PNG 格式的 JPG/JPEG 文件。" },
+      { stepNumber: 2, title: "预览结果", description: "查看 PNG 预览。转换过程以完整质量保留原始 JPEG 的所有视觉内容。" },
+      { stepNumber: 3, title: "下载 PNG 文件", description: "保存无损 PNG 图片。文件会比原始 JPEG 大，但不会有额外的压缩伪影。" },
+    ],
+    faqEntries: [
+      { question: "将 JPG 转换为 PNG 会提升图片质量吗？", answer: "转换为 PNG 可以防止进一步的质量损失，但无法恢复原始 JPEG 压缩中丢失的细节。转换后的 PNG 完美保留了 JPEG 的当前状态。" },
+      { question: "为什么 PNG 文件比原始 JPG 大？", answer: "PNG 使用无损压缩精确保留每个像素，因此文件更大。JPEG 使用有损压缩丢弃部分数据以获得更小的文件大小。" },
+      { question: "转换为 PNG 后可以添加透明度吗？", answer: "可以。一旦转为 PNG 格式，您就可以在任何设计工具（Photoshop、GIMP、Figma）中编辑 Alpha 通道添加透明度——这在 JPEG 格式下无法实现。" },
+    ],
+    relatedTools: [
+      { slug: "/jpg-to-webp", title: "JPG 转 WebP", description: "将 JPEG 转换为 WebP，使用现代压缩获得更小的文件。" },
+      { slug: "/compress-png", title: "压缩 PNG", description: "转换后缩小 PNG 文件大小。" },
+      { slug: "/png-to-jpg", title: "PNG 转 JPG", description: "当需要更小文件时转回 JPG。" },
+    ],
+  },
+
+  "jpg-to-webp": {
+    slug: "jpg-to-webp",
+    category: "use-case",
+    seo: {
+      title: "在线将 JPG 转换为 WebP — 现代格式 | ImgSplit",
+      description: "将 JPG 和 JPEG 图片转换为 WebP 格式以获得最大压缩效果。最多缩小 80%。免费浏览器端转换器，无需上传至服务器。",
+      ogTitle: "JPG 转 WebP — 现代格式转换器",
+      ogDescription: "将 JPEG 转换为 WebP，最多缩小 80%。免费、隐私安全、浏览器端处理。",
+    },
+    hero: {
+      overline: "JPG 转 WebP 转换器",
+      headlinePart1: "将 JPG 转换为",
+      headlineAccent: "WebP",
+      headlinePart2: "极致压缩",
+      description: "将 JPEG 图片转换为现代 WebP 格式，文件大幅缩小。最高可实现 80% 的体积缩减，同时保持相当的视觉质量——网页性能的明智之选。",
+    },
+    scenarios: [
+      {
+        icon: "RefreshCw",
+        title: "网站迁移",
+        description: "在性能优化过程中批量将网站的 JPEG 图片转换为 WebP。更快的页面加载、更低的托管成本和更好的 Google PageSpeed 得分。",
+      },
+      {
+        icon: "Zap",
+        title: "性能优化",
+        description: "将沉重的 JPEG 首屏大图和产品照片替换为 WebP 版本。访客获得同样的视觉体验，下载时间只需一小部分。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传 JPG", description: "拖拽或选择您要转换为 WebP 的 JPEG 文件。" },
+      { stepNumber: 2, title: "调整 WebP 质量", description: "微调质量设置。即使在 80% 质量下，WebP 文件也比等效的 JPEG 小得多。" },
+      { stepNumber: 3, title: "下载 WebP 文件", description: "保存 WebP 图片并对比文件大小节省。大多数用户可以看到 50-80% 的缩减。" },
+    ],
+    faqEntries: [
+      { question: "WebP 比 JPEG 小多少？", answer: "在同等视觉质量下，WebP 通常比 JPEG 小 25-34%（根据 Google 的研究）。对于许多图片，节省可达 50% 或更多。" },
+      { question: "WebP 在所有地方都受支持吗？", answer: "是的，所有现代浏览器（Chrome、Firefox、Safari 14+、Edge）都支持 WebP。对于极少数旧版浏览器，可以使用 HTML <picture> 元素提供 JPEG 作为后备方案。" },
+      { question: "从 JPEG 转换为 WebP 会丢失质量吗？", answer: "JPEG 和 WebP 都是有损格式，因此重新编码会引入极少量的额外伪影。为获得最佳效果，请从您拥有的最高质量 JPEG 原始文件进行转换。" },
+    ],
+    relatedTools: [
+      { slug: "/png-to-webp", title: "PNG 转 WebP", description: "将 PNG 图片转换为 WebP，支持透明度。" },
+      { slug: "/compress-jpeg", title: "压缩 JPEG", description: "在保留 JPEG 格式的同时缩小文件大小。" },
+      { slug: "/jpg-to-png", title: "JPG 转 PNG", description: "将 JPEG 转换为无损 PNG 格式。" },
+    ],
+  },
+
+  "webp-to-png": {
+    slug: "webp-to-png",
+    category: "use-case",
+    seo: {
+      title: "在线将 WebP 转换为 PNG — 免费转换器 | ImgSplit",
+      description: "将 WebP 图片转换为 PNG 格式以获得通用兼容性。保留透明度。免费浏览器端转换器，无需上传至服务器。",
+      ogTitle: "WebP 转 PNG — 免费在线转换器",
+      ogDescription: "将 WebP 转换为 PNG 以获得通用兼容性。免费、隐私安全、浏览器端处理。",
+    },
+    hero: {
+      overline: "WebP 转 PNG 转换器",
+      headlinePart1: "将 WebP 转换为",
+      headlineAccent: "PNG",
+      headlinePart2: "通用格式",
+      description: "将 WebP 图片转换为 PNG，以获得与旧版软件、打印工作流程和尚不支持 WebP 的设计工具的最大兼容性。",
+    },
+    scenarios: [
+      {
+        icon: "ArrowRightLeft",
+        title: "兼容性需求",
+        description: "下载了 WebP 图片但您的软件不支持？转换为 PNG 即可与 Photoshop、PowerPoint、Word 等所有工具兼容。",
+      },
+      {
+        icon: "Image",
+        title: "在旧版工具中编辑",
+        description: "部分旧版图片编辑器和设计工具可能无法打开 WebP 文件。先转换为 PNG，完成编辑后如需再转回。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传 WebP", description: "拖拽或选择您要转换为 PNG 格式的 WebP 图片。" },
+      { stepNumber: 2, title: "预览转换效果", description: "查看 PNG 预览。WebP 文件的所有视觉内容和透明度都被完美保留。" },
+      { stepNumber: 3, title: "下载 PNG 文件", description: "保存 PNG 图片——现在可与几乎所有图片查看器、编辑器和平台兼容。" },
+    ],
+    faqEntries: [
+      { question: "WebP 转 PNG 会丢失质量吗？", answer: "转换过程中不会丢失质量。PNG 是无损格式，因此 WebP 源文件的每个像素都被精确保留。文件大小会更大，因为 PNG 的压缩不如 WebP 激进。" },
+      { question: "WebP 转 PNG 时透明度会保留吗？", answer: "是的。WebP 和 PNG 都支持 Alpha 透明度。WebP 图片中的任何透明区域在 PNG 输出中都被完美保留。" },
+      { question: "为什么选择转换为 PNG 而不是 JPG？", answer: "当您需要透明度支持或无损质量时选择 PNG。当您想要最小的文件大小且不需要透明度时选择 JPG。" },
+    ],
+    relatedTools: [
+      { slug: "/webp-to-jpg", title: "WebP 转 JPG", description: "将 WebP 转换为 JPG，获得更小的文件（不含透明度）。" },
+      { slug: "/compress-png", title: "压缩 PNG", description: "转换后缩小 PNG 文件大小。" },
+      { slug: "/png-to-webp", title: "PNG 转 WebP", description: "当需要更小文件时转回 WebP。" },
+    ],
+  },
+
+  "webp-to-jpg": {
+    slug: "webp-to-jpg",
+    category: "use-case",
+    seo: {
+      title: "在线将 WebP 转换为 JPG — 免费转换器 | ImgSplit",
+      description: "将 WebP 图片转换为 JPG 格式以获得最大兼容性。免费浏览器端转换器，无需上传至服务器，即时下载。",
+      ogTitle: "WebP 转 JPG — 免费在线转换器",
+      ogDescription: "将 WebP 转换为 JPG 以获得最大兼容性。免费、隐私安全、浏览器端处理。",
+    },
+    hero: {
+      overline: "WebP 转 JPG 转换器",
+      headlinePart1: "将 WebP 转换为",
+      headlineAccent: "JPG",
+      headlinePart2: "最大兼容性",
+      description: "将 WebP 图片转换为通用支持的 JPG 格式。适合分享、打印以及在任何软件或平台上使用——无需担心兼容性问题。",
+    },
+    scenarios: [
+      {
+        icon: "Mail",
+        title: "与他人分享",
+        description: "并非所有设备都能处理 WebP。通过邮件、即时通讯应用或文件传输分享之前，先转换为 JPG 以确保所有人都能打开您的图片。",
+      },
+      {
+        icon: "FileDown",
+        title: "打印准备",
+        description: "大多数打印店和按需打印服务期望使用 JPG 文件。将 WebP 图片转换为 JPG，轻松打印，获得可预测的色彩输出。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传 WebP", description: "拖拽或选择您要转换为 JPG 格式的 WebP 图片。" },
+      { stepNumber: 2, title: "设置 JPG 质量", description: "调整质量滑块。透明区域将填充为您选择的背景色（默认白色）。" },
+      { stepNumber: 3, title: "下载 JPG 文件", description: "保存 JPG 图片——可立即用于分享、打印或在任何应用程序中使用。" },
+    ],
+    faqEntries: [
+      { question: "WebP 转 JPG 时透明度会怎样？", answer: "JPG 不支持透明度。WebP 图片中的任何透明区域将填充为纯色背景——默认为白色。您可以在转换前选择其他颜色。" },
+      { question: "JPG 是兼容性最好的图片格式吗？", answer: "是的。JPG/JPEG 几乎被所有设备、浏览器、邮件客户端和软件应用程序支持。当兼容性是首要考虑因素时，它是最安全的选择。" },
+      { question: "WebP 转 JPG 后文件大小会增加吗？", answer: "通常会增加，因为 WebP 比 JPG 提供更好的压缩。不过您可以调整 JPG 质量设置，在文件大小和视觉质量之间找到合适的平衡。" },
+    ],
+    relatedTools: [
+      { slug: "/webp-to-png", title: "WebP 转 PNG", description: "当需要透明度和无损质量时将 WebP 转换为 PNG。" },
+      { slug: "/compress-jpeg", title: "压缩 JPEG", description: "转换后进一步缩小 JPEG 文件大小。" },
+      { slug: "/jpg-to-webp", title: "JPG 转 WebP", description: "当需要更小文件时转回 WebP。" },
+    ],
+  },
+
+  "reduce-image-size": {
+    slug: "reduce-image-size",
+    category: "use-case",
+    seo: {
+      title: "在线缩小图片体积 — 免费文件优化器 | ImgSplit",
+      description: "免费在线缩小图片文件大小。优化 JPEG、PNG 和 WebP 图片，适用于网页、邮件和存储。浏览器端处理，隐私安全，无需上传至服务器。",
+      ogTitle: "缩小图片体积 — 免费在线优化器",
+      ogDescription: "即时优化并缩小图片文件大小。免费、隐私安全、浏览器端处理。",
+    },
+    hero: {
+      overline: "图片体积优化",
+      headlinePart1: "缩小图片",
+      headlineAccent: "体积",
+      headlinePart2: "即时优化",
+      description: "优化任何图片以获得最小的文件大小。智能压缩 JPEG、PNG 和 WebP——适合加速网站、节省存储空间和加快上传速度。",
+    },
+    scenarios: [
+      {
+        icon: "Zap",
+        title: "网站加速",
+        description: "大图片是网站加载慢的头号原因。缩小图片大小可以显著改善页面加载时间、跳出率和搜索引擎排名。",
+      },
+      {
+        icon: "FileDown",
+        title: "存储优化",
+        description: "云存储或设备空间不足？缩小图片库中图片的大小，可以在不删除任何图片的情况下释放数 GB 的空间。",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传图片", description: "拖拽或选择您要缩小的 JPEG、PNG 或 WebP 图片。" },
+      { stepNumber: 2, title: "优化设置", description: "调整压缩质量并可选择更改输出格式。WebP 通常提供最佳的体积缩减效果。" },
+      { stepNumber: 3, title: "下载优化后的图片", description: "保存更小的图片文件。工具会显示精确的节省字节数和缩减百分比。" },
+    ],
+    faqEntries: [
+      { question: "缩小图片文件大小的最佳方式是什么？", answer: "三种策略效果最佳：通过质量调整压缩（最快）、转换为 WebP 格式（最有效）、或缩小到更小的尺寸（最激进）。三者结合可获得最小的文件。" },
+      { question: "图片文件大小可以缩小多少？", answer: "典型的缩减范围为 40-80%，取决于源图片和设置。将 5MB 的 JPEG 转换为质量 80 的 WebP 可以轻松产生 500KB 的文件。" },
+      { question: "缩小文件大小会影响打印质量吗？", answer: "对于网页和屏幕显示，经过良好压缩的图片与原图看起来完全一样。对于专业打印，建议保持 90% 以上的质量，避免过度压缩。" },
+    ],
+    relatedTools: [
+      { slug: "/compress-image", title: "压缩图片", description: "通用图片压缩，支持格式选择。" },
+      { slug: "/compress-jpeg", title: "压缩 JPEG", description: "专门针对 JPEG 照片的压缩。" },
+      { slug: "/png-to-webp", title: "PNG 转 WebP", description: "转换为 WebP 以获得最佳压缩比。" },
+    ],
+  },
+
 }
 
 export default data

@@ -535,6 +535,457 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
+  "compress-image": {
+    slug: "compress-image",
+    category: "use-case",
+    seo: {
+      title: "온라인 이미지 압축 — 무료 & 개인정보 보호 | ImgSplit",
+      description: "무료 온라인 이미지 압축 — 시각적 품질을 유지하면서 파일 크기를 줄이세요. 브라우저 기반, 서버 업로드 불필요, JPEG, PNG, WebP 지원.",
+      ogTitle: "온라인 이미지 압축 — 무료 & 개인정보 보호",
+      ogDescription: "브라우저에서 이미지 파일 크기를 즉시 줄이세요. 무료, 안전, 업로드 불필요.",
+    },
+    hero: {
+      overline: "이미지 압축 도구",
+      headlinePart1: "이미지",
+      headlineAccent: "압축",
+      headlinePart2: "— 즉시 완료",
+      description: "눈에 띄는 품질 저하 없이 이미지 파일 크기를 줄이세요. JPEG, PNG, WebP 지원 — 모든 처리가 브라우저에서 이루어지며 데이터는 기기를 떠나지 않습니다.",
+    },
+    scenarios: [
+      {
+        icon: "Globe",
+        title: "웹 최적화",
+        description: "웹사이트에 업로드하기 전에 이미지를 압축하세요 — 시각적 품질을 희생하지 않으면서 페이지 로딩 속도 향상, Core Web Vitals 개선, SEO 순위 향상을 달성할 수 있습니다.",
+      },
+      {
+        icon: "Mail",
+        title: "이메일 첨부파일",
+        description: "이미지 첨부파일을 압축하여 이메일 크기 제한에 맞추세요. 사진의 좋은 화질을 유지하면서 10MB 또는 25MB 첨부 제한 내로 유지합니다.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "이미지 업로드", description: "압축할 JPEG, PNG 또는 WebP 이미지를 드래그 앤 드롭하거나 클릭하여 업로드하세요." },
+      { stepNumber: 2, title: "품질 조정", description: "품질 슬라이더로 파일 크기와 시각적 품질의 균형을 조정하세요. 다운로드 전에 실시간으로 결과를 미리 볼 수 있습니다." },
+      { stepNumber: 3, title: "압축 파일 다운로드", description: "최적화된 이미지를 다운로드하세요 — 더 작은 파일 크기, 동일한 멋진 화질. 압축 전후 크기를 즉시 비교해 보세요." },
+    ],
+    faqEntries: [
+      { question: "이미지를 압축하면 품질이 떨어지나요?", answer: "압축은 중복 데이터를 제거하여 파일 크기를 줄입니다. 70% 이상의 품질 설정에서는 시각적 차이가 육안으로 거의 인지할 수 없습니다." },
+      { question: "어떤 이미지 형식을 압축할 수 있나요?", answer: "JPEG, PNG, WebP 이미지를 압축할 수 있습니다. 최대한의 압축을 위해서는 크기 대비 품질 비율이 가장 우수한 WebP 형식으로의 변환을 권장합니다." },
+      { question: "업로드 파일 크기 제한이 있나요?", answer: "최대 20MB의 이미지를 업로드할 수 있습니다. 모든 처리가 브라우저에서 이루어지므로 큰 파일은 처리 시간이 약간 더 걸릴 수 있습니다." },
+    ],
+    relatedTools: [
+      { slug: "/compress-jpeg", title: "JPEG 압축", description: "품질 제어가 가능한 전문 JPEG 압축." },
+      { slug: "/png-to-webp", title: "PNG를 WebP로", description: "PNG를 WebP로 변환하여 최대한의 압축 달성." },
+      { slug: "/resize", title: "이미지 크기 조정", description: "이미지를 정확한 크기 또는 백분율로 조정." },
+      { slug: "/", title: "이미지 분할 도구", description: "드래그 앤 드롭 분할선으로 이미지를 여러 조각으로 분할." },
+    ],
+  },
+
+  "compress-jpeg": {
+    slug: "compress-jpeg",
+    category: "use-case",
+    seo: {
+      title: "온라인 JPEG 압축 — JPG 파일 크기 줄이기 | ImgSplit",
+      description: "무료 온라인 JPEG 및 JPG 이미지 압축. 조정 가능한 품질 설정으로 파일 크기를 줄이세요. 브라우저 기반, 개인정보 보호, 서버 업로드 불필요.",
+      ogTitle: "온라인 JPEG 압축 — JPG 파일 크기 줄이기",
+      ogDescription: "조정 가능한 품질로 JPEG 파일 크기를 줄이세요. 무료, 안전, 브라우저 기반.",
+    },
+    hero: {
+      overline: "JPEG 압축",
+      headlinePart1: "JPEG",
+      headlineAccent: "압축",
+      headlinePart2: "— 크기 줄이기",
+      description: "세밀한 품질 제어로 JPEG 및 JPG 파일 크기를 줄이세요. 사진작가, 블로거, 웹 개발자에게 최적 — 눈에 보이는 품질 저하 없이 더 작은 파일을 얻으세요.",
+    },
+    scenarios: [
+      {
+        icon: "Camera",
+        title: "사진 워크플로",
+        description: "카메라로 촬영한 고해상도 JPEG 사진을 웹 갤러리, 고객 시안, 소셜 미디어용으로 압축 — 세부 사항을 유지하면서 10MB 파일을 1MB 이하로 줄이세요.",
+      },
+      {
+        icon: "Globe",
+        title: "블로그 이미지",
+        description: "블로그 게시물과 기사의 JPEG 이미지를 최적화하세요. 빠른 로딩은 독자 참여도 향상과 검색 엔진 순위 개선으로 이어집니다.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "JPEG 업로드", description: "압축할 JPEG/JPG 파일을 드래그 앤 드롭하거나 선택하세요." },
+      { stepNumber: 2, title: "품질 수준 설정", description: "품질 슬라이더를 조정하세요 — 낮은 값일수록 파일이 작아집니다. 출력을 미리 보고 크기와 품질 사이의 최적점을 찾으세요." },
+      { stepNumber: 3, title: "압축된 JPEG 다운로드", description: "압축된 JPEG를 저장하세요. 도구가 절약된 파일 크기를 정확히 보여줍니다." },
+    ],
+    faqEntries: [
+      { question: "JPEG 압축에 적합한 품질 설정은?", answer: "웹 용도에는 75-85% 품질이 최적의 균형을 제공합니다 — 일반적으로 60-80%의 파일 크기 감소에 눈에 띄는 차이가 최소화됩니다. 인쇄용에는 90% 이상을 유지하세요." },
+      { question: "JPEG를 여러 번 압축할 수 있나요?", answer: "가능하지만, 재압축할 때마다 약간의 아티팩트가 발생합니다. 최상의 결과를 위해서는 이미 압축된 JPEG를 다시 압축하기보다 항상 원본 파일에서 압축하세요." },
+      { question: "JPEG와 JPG의 차이점은 무엇인가요?", answer: "차이가 없습니다 — JPG와 JPEG는 동일한 형식을 가리킵니다. 짧은 '.jpg' 확장자는 원래 확장자를 3글자로 제한했던 Windows에서 보편화되었습니다." },
+    ],
+    relatedTools: [
+      { slug: "/compress-image", title: "이미지 압축", description: "모든 형식에 대응하는 범용 이미지 압축." },
+      { slug: "/jpg-to-webp", title: "JPG를 WebP로", description: "JPEG를 WebP로 변환하여 더 작은 파일 크기 달성." },
+      { slug: "/reduce-image-size", title: "이미지 크기 줄이기", description: "모든 이미지를 최소 파일 크기로 최적화." },
+    ],
+  },
+
+  "compress-png": {
+    slug: "compress-png",
+    category: "use-case",
+    seo: {
+      title: "온라인 PNG 압축 — PNG 파일 크기 줄이기 | ImgSplit",
+      description: "투명도를 유지하면서 PNG 이미지를 온라인으로 압축하세요. 무손실 또는 손실 압축으로 파일 크기를 줄이세요. 무료, 브라우저 기반, 서버 업로드 불필요.",
+      ogTitle: "온라인 PNG 압축 — PNG 파일 크기 줄이기",
+      ogDescription: "투명도를 유지하면서 PNG 파일 크기를 줄이세요. 무료, 안전, 브라우저 기반.",
+    },
+    hero: {
+      overline: "PNG 압축",
+      headlinePart1: "PNG",
+      headlineAccent: "압축",
+      headlinePart2: "— 투명도 유지",
+      description: "투명도 지원을 완전히 보존하면서 PNG 파일 크기를 줄이세요. UI 스크린샷, 디자인 에셋, 알파 채널이 필요한 그래픽에 최적입니다.",
+    },
+    scenarios: [
+      {
+        icon: "Smartphone",
+        title: "UI 스크린샷",
+        description: "디자인 도구와 화면 캡처에서 가져온 PNG 스크린샷을 압축하세요. 문서, 버그 리포트, 디자인 리뷰에서의 로딩 속도를 높입니다.",
+      },
+      {
+        icon: "Layers",
+        title: "디자인 에셋",
+        description: "PNG 디자인 에셋 — 아이콘, 로고, UI 요소 — 을 웹 및 앱 개발용으로 최적화하면서 선명한 엣지와 투명도를 유지하세요.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "PNG 업로드", description: "압축할 PNG 파일을 드래그 앤 드롭하거나 선택하세요. 투명도가 완전히 보존됩니다." },
+      { stepNumber: 2, title: "압축 조정", description: "압축 수준을 선택하세요. 높은 압축은 더 작은 파일을 의미합니다 — 미리보기로 품질이 기준에 부합하는지 확인하세요." },
+      { stepNumber: 3, title: "최적화된 PNG 다운로드", description: "압축된 PNG를 저장하세요. 투명도, 색상 심도, 시각적 품질이 유지됩니다." },
+    ],
+    faqEntries: [
+      { question: "압축하면 PNG의 투명도가 제거되나요?", answer: "아닙니다. 압축 과정에서 알파 채널이 완전히 보존됩니다. 투명한 배경은 그대로 유지됩니다." },
+      { question: "왜 PNG 파일은 JPEG보다 큰가요?", answer: "PNG는 무손실 압축을 사용하여 모든 픽셀을 정확히 보존하고 투명도 데이터도 저장합니다. 투명도가 필요 없는 사진의 경우 JPEG나 WebP로 변환하면 훨씬 작은 파일을 얻을 수 있습니다." },
+      { question: "압축 대신 WebP로 변환해야 하나요?", answer: "최대한의 크기 축소가 필요하고 플랫폼이 WebP를 지원한다면, WebP로 변환하면 투명도를 유지하면서 파일 크기를 50-80% 줄일 수 있습니다." },
+    ],
+    relatedTools: [
+      { slug: "/png-to-webp", title: "PNG를 WebP로", description: "PNG를 WebP로 변환하여 투명도를 유지하면서 획기적으로 작은 파일로." },
+      { slug: "/png-to-jpg", title: "PNG를 JPG로", description: "투명도가 필요 없을 때 PNG를 JPEG로 변환하여 더 작은 파일로." },
+      { slug: "/compress-image", title: "이미지 압축", description: "모든 형식에 대응하는 범용 이미지 압축." },
+    ],
+  },
+
+  "png-to-webp": {
+    slug: "png-to-webp",
+    category: "use-case",
+    seo: {
+      title: "PNG를 WebP로 변환 — 무료 & 빠름 | ImgSplit",
+      description: "PNG 이미지를 WebP 형식으로 변환하여 획기적으로 작은 파일을 얻으세요. 투명도 보존. 무료 브라우저 기반 변환기, 서버 업로드 불필요.",
+      ogTitle: "PNG를 WebP로 변환 — 무료 온라인 변환기",
+      ogDescription: "PNG를 WebP로 변환하여 투명도를 유지하면서 파일 축소. 무료, 브라우저 기반.",
+    },
+    hero: {
+      overline: "PNG를 WebP로 변환기",
+      headlinePart1: "PNG를",
+      headlineAccent: "WebP",
+      headlinePart2: "로 변환 — 더 작은 파일",
+      description: "PNG 이미지를 WebP 형식으로 변환하여 투명도를 유지하면서 최대 80% 파일 크기 감소를 달성하세요. 더 빠른 웹사이트와 앱을 위한 최신 이미지 형식입니다.",
+    },
+    scenarios: [
+      {
+        icon: "Zap",
+        title: "웹사이트 성능",
+        description: "사이트의 PNG 에셋을 WebP로 전환하세요 — 페이지 로딩이 빨라지고, 대역폭이 줄어들며, Core Web Vitals가 개선됩니다. 대부분의 브라우저가 WebP를 기본 지원합니다.",
+      },
+      {
+        icon: "Smartphone",
+        title: "앱 에셋",
+        description: "앱 아이콘, UI 요소, 그래픽을 PNG에서 WebP로 변환하세요. 더 작은 에셋은 더 빠른 설치, 더 빠른 로딩, 더 적은 저장 공간 사용을 의미합니다.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "PNG 업로드", description: "WebP 형식으로 변환할 PNG 이미지를 드래그 앤 드롭하거나 선택하세요." },
+      { stepNumber: 2, title: "출력 설정", description: "WebP 출력의 품질 설정을 조정하세요. 높은 품질은 더 큰 파일을 의미합니다 — 미리보기로 적절한 균형을 찾으세요." },
+      { stepNumber: 3, title: "WebP 파일 다운로드", description: "변환된 WebP 이미지를 저장하세요. 파일 크기를 비교하여 획기적인 감소를 확인해 보세요." },
+    ],
+    faqEntries: [
+      { question: "WebP는 PNG처럼 투명도를 지원하나요?", answer: "네. WebP는 알파 투명도를 완전히 지원하므로 대부분의 사용 사례에서 PNG의 우수한 대안이 됩니다 — 훨씬 작은 파일 크기로." },
+      { question: "어떤 브라우저가 WebP를 지원하나요?", answer: "모든 주요 브라우저가 WebP를 지원합니다: Chrome, Firefox, Safari, Edge, Opera. Internet Explorer와 매우 오래된 브라우저 버전만 지원하지 않습니다." },
+      { question: "WebP는 PNG보다 얼마나 작나요?", answer: "WebP 파일은 일반적으로 동등한 PNG 파일보다 50-80% 작습니다. 정확한 절약량은 이미지 내용에 따라 다르지만 감소 효과는 항상 극적입니다." },
+    ],
+    relatedTools: [
+      { slug: "/png-to-jpg", title: "PNG를 JPG로", description: "투명도가 필요 없을 때 PNG를 JPEG로 변환." },
+      { slug: "/jpg-to-webp", title: "JPG를 WebP로", description: "JPEG 이미지를 최신 WebP 형식으로 변환." },
+      { slug: "/compress-png", title: "PNG 압축", description: "PNG 형식을 유지하면서 파일 크기를 축소." },
+    ],
+  },
+
+  "png-to-jpg": {
+    slug: "png-to-jpg",
+    category: "use-case",
+    seo: {
+      title: "PNG를 JPG로 변환 — 무료 온라인 변환기 | ImgSplit",
+      description: "무료 온라인으로 PNG 이미지를 JPG 형식으로 변환하세요. 투명도를 제거하고 파일 크기를 줄이세요. 브라우저 기반, 개인정보 보호, 서버 업로드 불필요.",
+      ogTitle: "PNG를 JPG로 변환 — 무료 온라인 변환기",
+      ogDescription: "PNG를 JPG로 변환하여 투명도를 제거하고 파일 크기를 줄이세요. 무료, 브라우저 기반.",
+    },
+    hero: {
+      overline: "PNG를 JPG로 변환기",
+      headlinePart1: "PNG를",
+      headlineAccent: "JPG",
+      headlinePart2: "로 변환 — 투명도 제거",
+      description: "PNG 이미지를 JPG 형식으로 변환하여 더 작은 파일 크기와 범용 호환성을 얻으세요. 투명한 영역은 원하는 배경색으로 채워집니다.",
+    },
+    scenarios: [
+      {
+        icon: "Globe",
+        title: "소셜 미디어 게시",
+        description: "PNG 스크린샷과 그래픽을 JPG로 변환하여 소셜 미디어 플랫폼에 업로드하세요. PNG 업로드 시 과도한 압축을 피하고 깨끗한 JPG로 예측 가능한 품질을 확보하세요.",
+      },
+      {
+        icon: "Mail",
+        title: "문서 공유",
+        description: "PNG 그래픽을 JPG로 변환하여 이메일 첨부, 프레젠테이션, 문서에 활용하세요. JPG 파일은 더 작고 모든 기기에서 볼 수 있습니다.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "PNG 업로드", description: "JPG 형식으로 변환할 PNG 파일을 드래그 앤 드롭하거나 선택하세요." },
+      { stepNumber: 2, title: "배경색 및 품질 설정", description: "투명 영역의 배경색을 선택하고(기본값: 흰색) JPEG 품질 수준을 설정하세요." },
+      { stepNumber: 3, title: "JPG 파일 다운로드", description: "변환된 JPG 이미지를 저장하세요. 투명 영역은 선택한 배경색으로 대체됩니다." },
+    ],
+    faqEntries: [
+      { question: "PNG의 투명한 영역은 어떻게 되나요?", answer: "투명한 영역은 단색 배경색으로 채워집니다 — 기본값은 흰색입니다. 변환 전에 원하는 색상을 선택할 수 있습니다." },
+      { question: "PNG를 JPG로 변환하면 이미지 품질이 변하나요?", answer: "JPEG는 손실 압축을 사용하므로 낮은 설정에서는 약간의 품질 차이가 있을 수 있습니다. 90% 이상의 품질에서는 차이가 거의 보이지 않습니다." },
+      { question: "JPG로 변환하지 않고 PNG를 유지해야 할 때는?", answer: "투명도가 필요하거나, 텍스트/선 그래픽의 픽셀 단위 정밀도가 필요하거나, 무손실 품질이 필요할 때 PNG를 유지하세요. 사진이나 더 작은 파일 크기가 필요할 때 JPG로 변환하세요." },
+    ],
+    relatedTools: [
+      { slug: "/png-to-webp", title: "PNG를 WebP로", description: "PNG를 WebP로 변환하여 최신 브라우저에서 더 작은 파일로." },
+      { slug: "/compress-jpeg", title: "JPEG 압축", description: "변환 후 JPEG 파일 크기를 더 줄이세요." },
+      { slug: "/jpg-to-png", title: "JPG를 PNG로", description: "무손실 품질이 필요할 때 JPG를 PNG로 되돌리세요." },
+    ],
+  },
+
+  "jpg-to-png": {
+    slug: "jpg-to-png",
+    category: "use-case",
+    seo: {
+      title: "JPG를 PNG로 변환 — 무료 온라인 변환기 | ImgSplit",
+      description: "무료 온라인으로 JPG 및 JPEG 이미지를 PNG 형식으로 변환하여 무손실 품질을 얻으세요. 브라우저 기반 변환기, 서버 업로드 불필요, 즉시 다운로드.",
+      ogTitle: "JPG를 PNG로 변환 — 무료 온라인 변환기",
+      ogDescription: "JPEG를 PNG로 변환하여 무손실 품질 확보. 무료, 안전, 브라우저 기반.",
+    },
+    hero: {
+      overline: "JPG를 PNG로 변환기",
+      headlinePart1: "JPG를",
+      headlineAccent: "PNG",
+      headlinePart2: "로 변환 — 무손실 품질",
+      description: "JPEG 이미지를 PNG 형식으로 변환하여 무손실 품질과 투명도 지원을 얻으세요. 디자인 작업, 편집, 픽셀 단위 정밀 출력이 필요한 워크플로에 최적입니다.",
+    },
+    scenarios: [
+      {
+        icon: "Layers",
+        title: "디자인 작업",
+        description: "사진을 PNG로 변환하여 디자인 프로젝트에 활용 — 레이어 합성, 오버레이, 목업에는 PNG의 무손실 품질과 투명도 지원이 가장 적합합니다.",
+      },
+      {
+        icon: "Shield",
+        title: "투명도 필요",
+        description: "사진에 투명도를 추가해야 하나요? 먼저 PNG로 변환한 후 디자인 도구에서 알파 채널을 편집하여 깔끔한 누끼와 오버레이를 만드세요.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "JPG 업로드", description: "PNG 형식으로 변환할 JPG/JPEG 파일을 드래그 앤 드롭하거나 선택하세요." },
+      { stepNumber: 2, title: "결과 미리보기", description: "PNG 미리보기를 확인하세요. 변환 과정에서 원본 JPEG의 모든 시각적 콘텐츠가 최상 품질로 보존됩니다." },
+      { stepNumber: 3, title: "PNG 파일 다운로드", description: "무손실 PNG 이미지를 저장하세요. 파일은 원본 JPEG보다 크지만 추가 압축 아티팩트는 없습니다." },
+    ],
+    faqEntries: [
+      { question: "JPG를 PNG로 변환하면 이미지 품질이 향상되나요?", answer: "PNG로 변환하면 추가적인 품질 손실은 방지하지만 원본 JPEG 압축에서 손실된 세부 사항을 복원할 수는 없습니다. 변환된 PNG는 JPEG의 현재 상태를 완벽하게 보존합니다." },
+      { question: "왜 PNG 파일이 원본 JPG보다 큰가요?", answer: "PNG는 무손실 압축을 사용하여 모든 픽셀을 정확히 보존하므로 파일이 더 큽니다. JPEG는 손실 압축을 사용하여 일부 데이터를 버려 더 작은 크기를 달성합니다." },
+      { question: "PNG로 변환 후 투명도를 추가할 수 있나요?", answer: "네. PNG 형식이 되면 모든 디자인 도구(Photoshop, GIMP, Figma)에서 알파 채널을 편집하여 투명도를 추가할 수 있습니다 — JPEG에서는 불가능한 작업입니다." },
+    ],
+    relatedTools: [
+      { slug: "/jpg-to-webp", title: "JPG를 WebP로", description: "JPEG를 WebP로 변환하여 최신 압축으로 더 작은 파일로." },
+      { slug: "/compress-png", title: "PNG 압축", description: "변환 후 PNG 파일 크기를 축소." },
+      { slug: "/png-to-jpg", title: "PNG를 JPG로", description: "더 작은 파일이 필요할 때 JPG로 되돌리세요." },
+    ],
+  },
+
+  "jpg-to-webp": {
+    slug: "jpg-to-webp",
+    category: "use-case",
+    seo: {
+      title: "JPG를 WebP로 변환 — 최신 형식 | ImgSplit",
+      description: "JPG 및 JPEG 이미지를 WebP 형식으로 변환하여 최대한의 압축을 달성하세요. 최대 80% 파일 크기 감소. 무료 브라우저 기반 변환기, 서버 업로드 불필요.",
+      ogTitle: "JPG를 WebP로 변환 — 최신 형식 변환기",
+      ogDescription: "JPEG를 WebP로 변환하여 최대 80% 파일 축소. 무료, 안전, 브라우저 기반.",
+    },
+    hero: {
+      overline: "JPG를 WebP로 변환기",
+      headlinePart1: "JPG를",
+      headlineAccent: "WebP",
+      headlinePart2: "로 변환 — 최대 압축",
+      description: "JPEG 이미지를 최신 WebP 형식으로 변환하여 획기적으로 파일 크기를 줄이세요. 비슷한 시각적 품질로 최대 80% 크기 감소 — 웹 성능을 위한 현명한 선택입니다.",
+    },
+    scenarios: [
+      {
+        icon: "RefreshCw",
+        title: "웹사이트 마이그레이션",
+        description: "성능 개선 과정에서 사이트의 JPEG 이미지를 WebP로 일괄 변환하세요. 빠른 페이지 로딩, 낮은 호스팅 비용, 더 나은 Google PageSpeed 점수를 달성합니다.",
+      },
+      {
+        icon: "Zap",
+        title: "성능 최적화",
+        description: "무거운 JPEG 히어로 이미지와 상품 사진을 WebP 버전으로 교체하세요. 방문자는 동일한 시각적 경험을 얻으면서 다운로드 시간은 대폭 단축됩니다.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "JPG 업로드", description: "WebP로 변환할 JPEG 파일을 드래그 앤 드롭하거나 선택하세요." },
+      { stepNumber: 2, title: "WebP 품질 조정", description: "품질 설정을 세밀하게 조정하세요. 80% 품질에서도 WebP 파일은 동등한 JPEG보다 획기적으로 작습니다." },
+      { stepNumber: 3, title: "WebP 파일 다운로드", description: "WebP 이미지를 저장하고 파일 크기 절감을 비교해 보세요. 대부분의 사용자가 50-80%의 감소를 확인합니다." },
+    ],
+    faqEntries: [
+      { question: "WebP는 JPEG보다 얼마나 작나요?", answer: "WebP는 동등한 시각적 품질에서 일반적으로 JPEG보다 25-34% 작습니다(Google 연구 기준). 많은 이미지에서 50% 이상의 절약을 달성합니다." },
+      { question: "WebP는 모든 곳에서 지원되나요?", answer: "네, 모든 주요 브라우저(Chrome, Firefox, Safari 14+, Edge)가 WebP를 지원합니다. 드문 레거시 브라우저를 위해 HTML <picture> 요소로 JPEG를 폴백으로 제공할 수 있습니다." },
+      { question: "JPEG에서 WebP로 변환하면 품질이 손실되나요?", answer: "JPEG와 WebP 모두 손실 형식이므로 재인코딩 시 최소한의 추가 아티팩트가 발생합니다. 최상의 결과를 위해 보유한 최고 품질의 JPEG 원본에서 변환하세요." },
+    ],
+    relatedTools: [
+      { slug: "/png-to-webp", title: "PNG를 WebP로", description: "PNG 이미지를 투명도 지원과 함께 WebP로 변환." },
+      { slug: "/compress-jpeg", title: "JPEG 압축", description: "JPEG 형식을 유지하면서 파일 크기를 축소." },
+      { slug: "/jpg-to-png", title: "JPG를 PNG로", description: "JPEG를 무손실 PNG 형식으로 변환." },
+    ],
+  },
+
+  "webp-to-png": {
+    slug: "webp-to-png",
+    category: "use-case",
+    seo: {
+      title: "WebP를 PNG로 변환 — 무료 온라인 변환기 | ImgSplit",
+      description: "WebP 이미지를 PNG 형식으로 변환하여 범용 호환성을 확보하세요. 투명도 보존. 무료 브라우저 기반 변환기, 서버 업로드 불필요.",
+      ogTitle: "WebP를 PNG로 변환 — 무료 온라인 변환기",
+      ogDescription: "WebP를 PNG로 변환하여 범용 호환성 확보. 무료, 안전, 브라우저 기반.",
+    },
+    hero: {
+      overline: "WebP를 PNG로 변환기",
+      headlinePart1: "WebP를",
+      headlineAccent: "PNG",
+      headlinePart2: "로 변환 — 범용 형식",
+      description: "WebP 이미지를 PNG로 변환하여 WebP를 아직 지원하지 않는 구형 소프트웨어, 인쇄 워크플로, 디자인 도구와의 최대 호환성을 확보하세요.",
+    },
+    scenarios: [
+      {
+        icon: "ArrowRightLeft",
+        title: "호환성 필요",
+        description: "WebP 이미지를 다운로드했지만 소프트웨어가 지원하지 않나요? PNG로 변환하면 Photoshop, PowerPoint, Word 등 모든 도구와 즉시 호환됩니다.",
+      },
+      {
+        icon: "Image",
+        title: "레거시 도구에서 편집",
+        description: "구형 이미지 편집기와 디자인 도구는 WebP 파일을 열지 못할 수 있습니다. 먼저 PNG로 변환하여 편집하고, 필요하면 나중에 다시 변환하세요.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "WebP 업로드", description: "PNG 형식으로 변환할 WebP 이미지를 드래그 앤 드롭하거나 선택하세요." },
+      { stepNumber: 2, title: "변환 미리보기", description: "PNG 미리보기를 확인하세요. WebP 파일의 모든 시각적 콘텐츠와 투명도가 완벽하게 보존됩니다." },
+      { stepNumber: 3, title: "PNG 파일 다운로드", description: "PNG 이미지를 저장하세요 — 이제 거의 모든 이미지 뷰어, 편집기, 플랫폼과 호환됩니다." },
+    ],
+    faqEntries: [
+      { question: "WebP를 PNG로 변환하면 품질이 손실되나요?", answer: "변환 과정에서 품질 손실은 없습니다. PNG는 무손실 형식이므로 WebP 소스의 모든 픽셀이 정확히 보존됩니다. PNG는 WebP만큼 적극적으로 압축하지 않으므로 파일 크기는 더 커집니다." },
+      { question: "WebP를 PNG로 변환할 때 투명도가 보존되나요?", answer: "네. WebP와 PNG 모두 알파 투명도를 지원합니다. WebP 이미지의 모든 투명 영역이 PNG 출력에서 완벽하게 보존됩니다." },
+      { question: "JPG 대신 PNG로 변환해야 하는 이유는?", answer: "투명도 지원이나 무손실 품질이 필요하면 PNG를 선택하세요. 가장 작은 파일 크기가 필요하고 투명도가 불필요하면 JPG를 선택하세요." },
+    ],
+    relatedTools: [
+      { slug: "/webp-to-jpg", title: "WebP를 JPG로", description: "투명도 없이 WebP를 JPG로 변환하여 더 작은 파일로." },
+      { slug: "/compress-png", title: "PNG 압축", description: "변환 후 PNG 파일 크기를 축소." },
+      { slug: "/png-to-webp", title: "PNG를 WebP로", description: "더 작은 파일이 필요할 때 WebP로 되돌리세요." },
+    ],
+  },
+
+  "webp-to-jpg": {
+    slug: "webp-to-jpg",
+    category: "use-case",
+    seo: {
+      title: "WebP를 JPG로 변환 — 무료 온라인 변환기 | ImgSplit",
+      description: "WebP 이미지를 JPG 형식으로 변환하여 최대 호환성을 확보하세요. 무료 브라우저 기반 변환기, 서버 업로드 불필요, 즉시 다운로드.",
+      ogTitle: "WebP를 JPG로 변환 — 무료 온라인 변환기",
+      ogDescription: "WebP를 JPG로 변환하여 최대 호환성 확보. 무료, 안전, 브라우저 기반.",
+    },
+    hero: {
+      overline: "WebP를 JPG로 변환기",
+      headlinePart1: "WebP를",
+      headlineAccent: "JPG",
+      headlinePart2: "로 변환 — 최대 호환성",
+      description: "WebP 이미지를 범용 지원되는 JPG 형식으로 변환하세요. 공유, 인쇄, 모든 소프트웨어와 플랫폼에서의 사용에 최적 — 호환성 걱정이 없습니다.",
+    },
+    scenarios: [
+      {
+        icon: "Mail",
+        title: "타인과 공유",
+        description: "모든 기기가 WebP를 처리하는 것은 아닙니다. 이메일, 메신저, 파일 전송으로 공유하기 전에 JPG로 변환하면 누구나 이미지를 열 수 있습니다.",
+      },
+      {
+        icon: "FileDown",
+        title: "인쇄 준비",
+        description: "대부분의 인쇄소와 주문형 인쇄 서비스는 JPG 파일을 기대합니다. WebP 이미지를 JPG로 변환하여 번거로움 없이 예측 가능한 색상 출력으로 인쇄하세요.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "WebP 업로드", description: "JPG 형식으로 변환할 WebP 이미지를 드래그 앤 드롭하거나 선택하세요." },
+      { stepNumber: 2, title: "JPG 품질 설정", description: "품질 슬라이더를 조정하세요. 투명한 영역은 선택한 배경색(기본값: 흰색)으로 채워집니다." },
+      { stepNumber: 3, title: "JPG 파일 다운로드", description: "JPG 이미지를 저장하세요 — 공유, 인쇄, 모든 애플리케이션에서 바로 사용할 수 있습니다." },
+    ],
+    faqEntries: [
+      { question: "WebP를 JPG로 변환할 때 투명도는 어떻게 되나요?", answer: "JPG는 투명도를 지원하지 않습니다. WebP 이미지의 투명한 영역은 단색 배경색 — 기본값은 흰색 — 으로 채워집니다. 변환 전에 다른 색상을 선택할 수 있습니다." },
+      { question: "JPG가 가장 호환성이 좋은 이미지 형식인가요?", answer: "네. JPG/JPEG는 사실상 모든 기기, 브라우저, 이메일 클라이언트, 소프트웨어에서 지원됩니다. 호환성이 최우선일 때 가장 안전한 선택입니다." },
+      { question: "WebP를 JPG로 변환하면 파일 크기가 증가하나요?", answer: "일반적으로 그렇습니다. WebP가 JPG보다 더 나은 압축을 제공하기 때문입니다. 하지만 JPG 품질 설정을 조정하여 파일 크기와 시각적 품질 사이의 적절한 균형을 찾을 수 있습니다." },
+    ],
+    relatedTools: [
+      { slug: "/webp-to-png", title: "WebP를 PNG로", description: "투명도와 무손실 품질이 필요할 때 WebP를 PNG로 변환." },
+      { slug: "/compress-jpeg", title: "JPEG 압축", description: "변환 후 JPEG 파일 크기를 더 줄이세요." },
+      { slug: "/jpg-to-webp", title: "JPG를 WebP로", description: "더 작은 파일이 필요할 때 WebP로 되돌리세요." },
+    ],
+  },
+
+  "reduce-image-size": {
+    slug: "reduce-image-size",
+    category: "use-case",
+    seo: {
+      title: "이미지 크기 줄이기 — 무료 파일 최적화 도구 | ImgSplit",
+      description: "무료 온라인으로 이미지 파일 크기를 줄이세요. JPEG, PNG, WebP 이미지를 웹, 이메일, 저장용으로 최적화. 브라우저 기반, 개인정보 보호, 서버 업로드 불필요.",
+      ogTitle: "이미지 크기 줄이기 — 무료 온라인 최적화 도구",
+      ogDescription: "이미지 파일 크기를 즉시 최적화하고 줄이세요. 무료, 안전, 브라우저 기반.",
+    },
+    hero: {
+      overline: "이미지 크기 축소",
+      headlinePart1: "이미지",
+      headlineAccent: "크기",
+      headlinePart2: "줄이기 — 즉시 최적화",
+      description: "모든 이미지를 최소 파일 크기로 최적화하세요. JPEG, PNG, WebP의 지능형 압축 — 더 빠른 웹사이트, 적은 저장 공간, 빠른 업로드에 최적입니다.",
+    },
+    scenarios: [
+      {
+        icon: "Zap",
+        title: "웹사이트 속도",
+        description: "큰 이미지는 웹사이트 속도 저하의 1순위 원인입니다. 이미지 크기를 줄여 페이지 로딩 시간, 이탈률, 검색 엔진 순위를 극적으로 개선하세요.",
+      },
+      {
+        icon: "FileDown",
+        title: "저장 공간 최적화",
+        description: "클라우드 저장 공간이나 기기 용량이 부족하신가요? 사진 라이브러리의 이미지 크기를 줄여 이미지를 삭제하지 않고도 기가바이트 단위의 공간을 확보하세요.",
+      },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "이미지 업로드", description: "크기를 줄이고 싶은 JPEG, PNG 또는 WebP 이미지를 드래그 앤 드롭하거나 선택하세요." },
+      { stepNumber: 2, title: "설정 최적화", description: "압축 품질을 조정하고 선택적으로 출력 형식을 변경하세요. WebP가 일반적으로 가장 효과적인 크기 감소를 제공합니다." },
+      { stepNumber: 3, title: "최적화된 이미지 다운로드", description: "작아진 이미지 파일을 저장하세요. 도구가 정확한 절약 바이트 수와 감소 비율을 표시합니다." },
+    ],
+    faqEntries: [
+      { question: "이미지 파일 크기를 줄이는 가장 좋은 방법은?", answer: "세 가지 전략이 가장 효과적입니다: 품질 조정을 통한 압축(가장 빠름), WebP 형식으로 변환(가장 효과적), 또는 더 작은 치수로 리사이즈(가장 적극적). 세 가지를 모두 조합하면 가장 작은 파일을 얻을 수 있습니다." },
+      { question: "이미지 파일 크기를 얼마나 줄일 수 있나요?", answer: "소스 이미지와 설정에 따라 일반적으로 40-80%의 감소가 가능합니다. 5MB JPEG를 품질 80의 WebP로 변환하면 500KB 파일을 쉽게 만들 수 있습니다." },
+      { question: "파일 크기를 줄이면 인쇄 품질에 영향을 미치나요?", answer: "웹 및 화면 용도에서는 잘 압축된 이미지가 원본과 동일하게 보입니다. 전문 인쇄용에는 품질을 90% 이상으로 유지하고 과도한 압축을 피하세요." },
+    ],
+    relatedTools: [
+      { slug: "/compress-image", title: "이미지 압축", description: "형식 옵션을 갖춘 범용 이미지 압축." },
+      { slug: "/compress-jpeg", title: "JPEG 압축", description: "JPEG 사진 전용 압축." },
+      { slug: "/png-to-webp", title: "PNG를 WebP로", description: "최적의 압축률을 위해 WebP로 변환." },
+    ],
+  },
+
 }
 
 export default data
