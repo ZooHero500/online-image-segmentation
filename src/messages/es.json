@@ -512,7 +512,11 @@
     "existingToolGrid": "Divisor en cuadrícula",
     "existingToolGridDesc": "Divide imágenes en cuadrículas de 3×3, 1×3 o 2×2 para plataformas de redes sociales.",
     "existingToolResize": "Redimensionar Imagen",
-    "existingToolResizeDesc": "Redimensiona, recorta y rota imágenes a cualquier tamaño — arrastra para posicionar, ajuste magnético, múltiples formatos."
+    "existingToolResizeDesc": "Redimensiona, recorta y rota imágenes a cualquier tamaño — arrastra para posicionar, ajuste magnético, múltiples formatos.",
+    "feedbackHeroCta": "¿Necesitas otra herramienta? Envía tu solicitud →",
+    "feedbackOverline": "Construye el futuro",
+    "feedbackDesc": "¿Tienes una idea para una nueva herramienta, una función que falta o algo que no funcionó? Leemos cada envío.",
+    "feedbackButton": "Enviar feedback"
   },
   "aiSegmentation": {
     "title": "Segmentación IA",

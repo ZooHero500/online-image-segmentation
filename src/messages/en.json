@@ -512,7 +512,11 @@
     "existingToolGrid": "Grid Splitter",
     "existingToolGridDesc": "Split images into 3×3, 1×3, or 2×2 grids for social media platforms.",
     "existingToolResize": "Image Resizer",
-    "existingToolResizeDesc": "Resize, crop, rotate, and export images to any dimension — drag to position, snap to align."
+    "existingToolResizeDesc": "Resize, crop, rotate, and export images to any dimension — drag to position, snap to align.",
+    "feedbackHeroCta": "Want a different tool? Tell us →",
+    "feedbackOverline": "Shape the future",
+    "feedbackDesc": "Got an idea for a new tool, a missing feature, or something that didn't work? We read every submission.",
+    "feedbackButton": "Share Feedback"
   },
   "aiSegmentation": {
     "title": "AI Segmentation",

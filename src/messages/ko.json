@@ -512,7 +512,11 @@
     "existingToolGrid": "그리드 분할",
     "existingToolGridDesc": "이미지를 3×3, 1×3 또는 2×2 그리드로 분할하여 소셜 미디어 플랫폼에 활용.",
     "existingToolResize": "이미지 크기 조정",
-    "existingToolResizeDesc": "이미지를 원하는 크기로 조정, 자르기, 회전 — 드래그 위치 지정, 스냅 정렬, 다중 형식 내보내기."
+    "existingToolResizeDesc": "이미지를 원하는 크기로 조정, 자르기, 회전 — 드래그 위치 지정, 스냅 정렬, 다중 형식 내보내기.",
+    "feedbackHeroCta": "다른 도구가 필요하세요? 요청하기 →",
+    "feedbackOverline": "함께 만들어요",
+    "feedbackDesc": "새로운 도구 아이디어, 부족한 기능, 문제 신고 등 모든 피드백을 소중히 읽고 있습니다.",
+    "feedbackButton": "피드백 보내기"
   },
   "aiSegmentation": {
     "title": "AI 분할",

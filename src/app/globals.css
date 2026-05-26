@@ -259,6 +259,17 @@
   transition: transform 0.06s ease-out;
 }
 
+/* ─── PWA Standalone Mode ─── */
+@media (display-mode: standalone) {
+  .pwa-hide {
+    display: none !important;
+  }
+  .pwa-first-section {
+    border-top: none;
+    padding-top: 1.5rem;
+  }
+}
+
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
   .hero-enter {

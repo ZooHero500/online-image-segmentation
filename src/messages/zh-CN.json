@@ -512,7 +512,11 @@
     "existingToolGrid": "九宫格切图",
     "existingToolGridDesc": "将图片切割为 3×3、1×3 或 2×2 网格，适用于社交媒体平台。",
     "existingToolResize": "图片调整尺寸",
-    "existingToolResizeDesc": "调整、裁剪、旋转图片到任意尺寸 — 拖拽定位、磁吸对齐、多格式导出。"
+    "existingToolResizeDesc": "调整、裁剪、旋转图片到任意尺寸 — 拖拽定位、磁吸对齐、多格式导出。",
+    "feedbackHeroCta": "想要其他工具？踊跃提交 →",
+    "feedbackOverline": "共建未来",
+    "feedbackDesc": "有新工具的想法、缺少的功能、或者遇到了问题？我们会认真阅读每一条反馈。",
+    "feedbackButton": "提交反馈"
   },
   "aiSegmentation": {
     "title": "AI 智能分割",

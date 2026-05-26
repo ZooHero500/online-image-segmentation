@@ -8,6 +8,7 @@ import { LogoIcon } from "@/components/LogoIcon"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { MobileNav } from "@/components/MobileNav"
 import { GridLines } from "@/components/GridLines"
+import { ReturningUserToolbar } from "@/components/ReturningUserToolbar"
 import {
   Scissors,
   Shield,
@@ -198,6 +199,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </div>
         </div>
       </nav>
+
+      {/* QUICK ACCESS — returning users only */}
+      <ReturningUserToolbar />
 
       {/* HERO */}
       <section className="relative py-12 sm:py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16 max-w-[1600px] mx-auto">

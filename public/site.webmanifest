@@ -27,7 +27,7 @@
       "purpose": "any"
     }
   ],
-  "start_url": "/",
+  "start_url": "/tools",
   "description": "Free online image splitting tool",
   "theme_color": "#F9F8F6",
   "background_color": "#F9F8F6",

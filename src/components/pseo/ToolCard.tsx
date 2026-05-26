@@ -1,5 +1,5 @@
 import { Link } from "@/i18n/navigation"
-import { ArrowRight } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 
 interface ToolCardProps {
   title: string
@@ -11,15 +11,19 @@ export function ToolCard({ title, description, href }: ToolCardProps) {
   return (
     <Link
       href={href}
-      className="group border-t border-border p-8 md:p-12 hover:bg-background/50 transition-colors duration-700"
+      className="group relative flex flex-col justify-between bg-muted/50 p-6 min-h-[140px] hover:bg-muted transition-colors duration-500"
     >
-      <h3 className="text-sm uppercase tracking-[0.15em] text-foreground mb-3 font-medium">
-        {title}
-      </h3>
-      <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-        {description}
-      </p>
-      <ArrowRight className="h-4 w-4 text-muted-foreground/40 group-hover:text-accent transition-colors duration-500" />
+      <div>
+        <h3 className="text-[13px] uppercase tracking-[0.12em] text-foreground font-medium leading-snug mb-2">
+          {title}
+        </h3>
+        <p className="text-[11px] text-muted-foreground leading-relaxed line-clamp-2">
+          {description}
+        </p>
+      </div>
+      <div className="flex justify-end mt-4">
+        <ArrowUpRight className="h-4 w-4 text-muted-foreground/25 group-hover:text-accent transition-colors duration-500" strokeWidth={1.5} />
+      </div>
     </Link>
   )
 }

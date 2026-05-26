@@ -512,7 +512,11 @@
     "existingToolGrid": "グリッド分割",
     "existingToolGridDesc": "画像を3×3、1×3、2×2のグリッドに分割。各種SNSプラットフォームに対応。",
     "existingToolResize": "画像リサイズ",
-    "existingToolResizeDesc": "画像を任意のサイズにリサイズ・トリミング・回転 — ドラッグ配置、スナップ整列、複数形式で書き出し。"
+    "existingToolResizeDesc": "画像を任意のサイズにリサイズ・トリミング・回転 — ドラッグ配置、スナップ整列、複数形式で書き出し。",
+    "feedbackHeroCta": "他のツールが欲しい？リクエストを送る →",
+    "feedbackOverline": "未来を一緒に",
+    "feedbackDesc": "新しいツールのアイデア、不足している機能、不具合のご報告など、すべてのフィードバックを拝読しています。",
+    "feedbackButton": "フィードバック"
   },
   "aiSegmentation": {
     "title": "AI自動分割",

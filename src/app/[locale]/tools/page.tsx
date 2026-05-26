@@ -150,10 +150,20 @@ export default async function ToolsPage({
             >
               {tNav("getStarted")}
             </Link>
+            <a
+              href="https://tally.so/r/NpRyK0"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:inline uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-500 link-underline"
+            >
+              {t("feedbackButton")}
+            </a>
             <MobileNav
-              links={[{ href: "/", label: tNav("getStarted") }]}
-              ctaLabel={tNav("getStarted")}
-              ctaHref="/"
+              links={[
+                { href: "/", label: tNav("getStarted") },
+              ]}
+              ctaLabel={t("feedbackButton")}
+              ctaHref="https://tally.so/r/NpRyK0"
               menuLabel={tNav("menu")}
               closeLabel={tNav("close")}
             />
@@ -162,8 +172,8 @@ export default async function ToolsPage({
         </div>
       </nav>
 
-      {/* HERO */}
-      <section className="relative py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16 max-w-[1600px] mx-auto">
+      {/* HERO — hidden in PWA standalone mode */}
+      <section className="pwa-hide relative py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16 max-w-[1600px] mx-auto">
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-8 md:col-start-1">
             {/* Overline */}
@@ -187,9 +197,17 @@ export default async function ToolsPage({
             </div>
 
             <div className="drift-fast">
-              <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-md mb-8 sm:mb-10 hero-enter hero-delay-3">
+              <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-md mb-6 sm:mb-8 hero-enter hero-delay-3">
                 {t("hero.description")}
               </p>
+              <a
+                href="https://tally.so/r/NpRyK0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-xs uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-500 hero-enter hero-delay-4 link-underline"
+              >
+                {t("feedbackHeroCta")}
+              </a>
             </div>
           </div>
 
@@ -203,12 +221,12 @@ export default async function ToolsPage({
       </section>
 
       {/* DIRECTION TOOLS */}
-      <section className="border-t border-border py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
+      <section className="pwa-first-section border-t border-border py-10 sm:py-16 md:py-20 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
-          <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-8">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-6">
             {t("categoryDirection")}
           </p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-0">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
             {directionPages.map((page) => {
               const data = getToolPageData(page.slug, locale)
               if (!data) return null
@@ -226,12 +244,12 @@ export default async function ToolsPage({
       </section>
 
       {/* USE-CASE TOOLS */}
-      <section className="border-t border-border py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
+      <section className="border-t border-border py-10 sm:py-16 md:py-20 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
-          <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-8">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-6">
             {t("categoryUseCase")}
           </p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-0">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
             {useCasePages.map((page) => {
               const data = getToolPageData(page.slug, locale)
               if (!data) return null
@@ -249,12 +267,12 @@ export default async function ToolsPage({
       </section>
 
       {/* EXISTING / CORE TOOLS */}
-      <section className="border-t border-border py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
+      <section className="border-t border-border py-10 sm:py-16 md:py-20 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
-          <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-8">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-6">
             {t("categoryExisting")}
           </p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-0">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
             <ToolCard
               title={t("existingToolSplit")}
               description={t("existingToolSplitDesc")}
@@ -271,6 +289,28 @@ export default async function ToolsPage({
               href="/resize"
             />
           </div>
+        </div>
+      </section>
+
+      {/* FEEDBACK */}
+      <section className="border-t border-border py-10 sm:py-16 md:py-20 px-4 sm:px-8 md:px-16">
+        <div className="max-w-[1600px] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-2">
+              {t("feedbackOverline")}
+            </p>
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-md">
+              {t("feedbackDesc")}
+            </p>
+          </div>
+          <a
+            href="https://tally.so/r/NpRyK0"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 text-xs uppercase tracking-[0.2em] hover:opacity-90 transition-opacity duration-300 press"
+          >
+            {t("feedbackButton")}
+          </a>
         </div>
       </section>
 
