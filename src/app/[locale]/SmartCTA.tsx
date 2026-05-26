@@ -8,9 +8,10 @@ import { ArrowRight } from "lucide-react"
 interface SmartCTAProps {
   label: string
   className?: string
+  href?: string
 }
 
-export function SmartCTA({ label, className }: SmartCTAProps) {
+export function SmartCTA({ label, className, href }: SmartCTAProps) {
   const router = useRouter()
   const [hasHistory, setHasHistory] = useState(false)
 
@@ -19,12 +20,14 @@ export function SmartCTA({ label, className }: SmartCTAProps) {
   }, [])
 
   const handleClick = useCallback(() => {
-    if (hasHistory) {
+    if (href) {
+      router.push(href)
+    } else if (hasHistory) {
       router.push("/workspace")
     } else {
       document.getElementById("upload")?.scrollIntoView({ behavior: "smooth" })
     }
-  }, [hasHistory, router])
+  }, [hasHistory, router, href])
 
   return (
     <button
