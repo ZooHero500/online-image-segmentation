@@ -240,7 +240,7 @@ export function CompressEditor() {
             {hasImages && (
               <button
                 onClick={handleChangeImage}
-                className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors"
+                className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors cursor-pointer"
               >
                 {t("changeImage")}
               </button>

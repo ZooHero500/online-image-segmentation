@@ -70,7 +70,7 @@ export function CompressBatchList({
             )}
             <button
               onClick={() => onRemove(item.id)}
-              className="opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-destructive transition-all shrink-0"
+              className="opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-destructive transition-all shrink-0 cursor-pointer"
             >
               <X className="h-3.5 w-3.5" />
             </button>
@@ -80,7 +80,7 @@ export function CompressBatchList({
         {/* Add more drop zone */}
         <button
           onClick={onAddMore}
-          className="w-full py-3 border border-dashed border-border rounded text-[11px] uppercase tracking-[0.15em] text-muted-foreground hover:border-primary/40 hover:text-accent transition-colors duration-300"
+          className="w-full py-3 border border-dashed border-border rounded text-[11px] uppercase tracking-[0.15em] text-muted-foreground hover:border-primary/40 hover:text-accent transition-colors duration-300 cursor-pointer"
         >
           + {t("addMore")}
         </button>

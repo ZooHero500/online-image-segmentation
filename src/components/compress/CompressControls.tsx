@@ -45,7 +45,7 @@ export function CompressControls({
             <button
               key={opt.value}
               onClick={() => onFormatChange(opt.value)}
-              className={`px-3 py-1.5 text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 ${
+              className={`px-3 py-1.5 text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 cursor-pointer ${
                 format === opt.value
                   ? "bg-primary text-primary-foreground"
                   : "bg-muted text-muted-foreground hover:text-foreground"
@@ -86,7 +86,7 @@ export function CompressControls({
       {showAddMore && onAddMore && (
         <button
           onClick={onAddMore}
-          className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-300"
+          className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-300 cursor-pointer"
         >
           + {t("addMore")}
         </button>
@@ -95,7 +95,7 @@ export function CompressControls({
       {/* Download button */}
       <button
         onClick={onDownload}
-        className="ml-auto md:ml-0 md:w-full px-5 py-2 bg-primary text-primary-foreground text-xs uppercase tracking-[0.15em] hover:opacity-90 transition-opacity duration-300 press"
+        className="ml-auto md:ml-0 md:w-full px-5 py-2 bg-primary text-primary-foreground text-xs uppercase tracking-[0.15em] hover:opacity-90 transition-opacity duration-300 press cursor-pointer"
       >
         {downloadLabel}
       </button>
