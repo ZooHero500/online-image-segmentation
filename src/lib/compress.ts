@@ -10,6 +10,33 @@ export interface CompressResult {
   height: number
 }
 
+/**
+ * Encode image to blob via offscreen canvas.
+ */
+function canvasToBlob(
+  image: HTMLImageElement,
+  format: OutputFormat,
+  quality?: number,
+  fillWhiteBg = false
+): Promise<Blob> {
+  const canvas = document.createElement("canvas")
+  canvas.width = image.naturalWidth
+  canvas.height = image.naturalHeight
+  const ctx = canvas.getContext("2d")!
+  if (fillWhiteBg) {
+    ctx.fillStyle = "#ffffff"
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+  }
+  ctx.drawImage(image, 0, 0)
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (b) => (b ? resolve(b) : reject(new Error("toBlob failed"))),
+      format,
+      quality
+    )
+  })
+}
+
 export async function compressImage(
   image: HTMLImageElement,
   originalFile: File,
@@ -19,35 +46,28 @@ export async function compressImage(
   const width = image.naturalWidth
   const height = image.naturalHeight
 
-  const canvas = document.createElement("canvas")
-  canvas.width = width
-  canvas.height = height
+  let blob: Blob
 
-  const ctx = canvas.getContext("2d")
-  if (!ctx) {
-    throw new Error("Failed to get 2D canvas context")
-  }
-
-  if (format === "image/jpeg") {
-    ctx.fillStyle = "#ffffff"
-    ctx.fillRect(0, 0, width, height)
-  }
-
-  ctx.drawImage(image, 0, 0)
-
-  const blob = await new Promise<Blob>((resolve, reject) => {
-    canvas.toBlob(
-      (result) => {
-        if (result) {
-          resolve(result)
-        } else {
-          reject(new Error("canvas.toBlob returned null"))
-        }
-      },
+  if (format === "image/png") {
+    // PNG is lossless — canvas re-encoding often increases size.
+    // Encode via canvas, but if result is larger than original (and original is also PNG),
+    // return the original file to avoid "compression" that makes files bigger.
+    const encoded = await canvasToBlob(image, "image/png")
+    if (originalFile.type === "image/png" && encoded.size >= originalFile.size) {
+      blob = originalFile
+    } else {
+      blob = encoded
+    }
+  } else {
+    // JPEG / WebP — use canvas encoder with quality parameter.
+    // JPEG needs white background fill (no alpha channel support).
+    blob = await canvasToBlob(
+      image,
       format,
-      format === "image/png" ? undefined : quality
+      quality,
+      format === "image/jpeg"
     )
-  })
+  }
 
   const originalSize = originalFile.size
   const compressedSize = blob.size
