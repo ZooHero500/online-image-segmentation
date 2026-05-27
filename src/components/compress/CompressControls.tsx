@@ -10,6 +10,8 @@ interface CompressControlsProps {
   onQualityChange: (quality: number) => void
   downloadLabel: string
   onDownload: () => void
+  canDownload: boolean
+  isProcessing: boolean
   onAddMore?: () => void
   showAddMore?: boolean
 }
@@ -27,6 +29,8 @@ export function CompressControls({
   onQualityChange,
   downloadLabel,
   onDownload,
+  canDownload,
+  isProcessing,
   onAddMore,
   showAddMore = false,
 }: CompressControlsProps) {
@@ -95,9 +99,10 @@ export function CompressControls({
       {/* Download button */}
       <button
         onClick={onDownload}
-        className="ml-auto md:ml-0 md:w-full px-5 py-2 bg-primary text-primary-foreground text-xs uppercase tracking-[0.15em] hover:opacity-90 transition-opacity duration-300 press cursor-pointer"
+        disabled={!canDownload}
+        className="ml-auto md:ml-0 md:w-full px-5 py-2 bg-primary text-primary-foreground text-xs uppercase tracking-[0.15em] hover:opacity-90 transition-opacity duration-300 press cursor-pointer disabled:cursor-not-allowed disabled:opacity-45"
       >
-        {downloadLabel}
+        {isProcessing ? t("processing") : downloadLabel}
       </button>
     </div>
   )

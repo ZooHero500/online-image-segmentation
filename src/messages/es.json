@@ -631,6 +631,7 @@
     "addMore": "Añadir más imágenes",
     "changeImage": "Cambiar",
     "processing": "Procesando...",
+    "compressFailed": "No se pudieron procesar algunas imágenes.",
     "ready": "Listo"
   }
 }

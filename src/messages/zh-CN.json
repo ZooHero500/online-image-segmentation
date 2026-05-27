@@ -631,6 +631,7 @@
     "addMore": "添加更多图片",
     "changeImage": "换一张",
     "processing": "处理中...",
+    "compressFailed": "部分图片处理失败。",
     "ready": "就绪"
   }
 }

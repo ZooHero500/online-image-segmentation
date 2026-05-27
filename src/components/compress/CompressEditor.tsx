@@ -4,6 +4,7 @@
 import { useState, useCallback, useRef, useEffect } from "react"
 import { useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
+import { toast } from "sonner"
 import { UploadZone } from "@/components/UploadZone"
 import { CompressPreview } from "./CompressPreview"
 import { CompressBatchList } from "./CompressBatchList"
@@ -15,7 +16,7 @@ import {
   formatFileSize,
   getBaseName,
 } from "@/lib/compress"
-import type { OutputFormat, CompressResult } from "@/lib/compress"
+import type { OutputFormat } from "@/lib/compress"
 import type { UploadResult } from "@/types"
 import { Link } from "@/i18n/navigation"
 import { LogoIcon } from "@/components/LogoIcon"
@@ -28,6 +29,7 @@ function genId() {
 
 export function CompressEditor() {
   const t = useTranslations("compress")
+  const uploadT = useTranslations("upload")
   const searchParams = useSearchParams()
 
   // Read presets from URL params
@@ -51,19 +53,46 @@ export function CompressEditor() {
   const [quality, setQuality] = useState(initialQuality)
   const [items, setItems] = useState<BatchItem[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const settingsRef = useRef({ format: initialFormat, quality: initialQuality })
 
   const isSingle = items.length === 1
   const isBatch = items.length > 1
+  const allReady = items.length > 0 && items.every((item) => item.result !== null)
+  const canDownload = isSingle ? Boolean(items[0]?.result) : isBatch && allReady
+
+  const handleFormatChange = useCallback((nextFormat: OutputFormat) => {
+    settingsRef.current = { ...settingsRef.current, format: nextFormat }
+    setFormat(nextFormat)
+    setItems((prev) => prev.map((item) => ({ ...item, result: null })))
+  }, [])
+
+  const handleQualityChange = useCallback((nextQuality: number) => {
+    settingsRef.current = { ...settingsRef.current, quality: nextQuality }
+    setQuality(nextQuality)
+    setItems((prev) => prev.map((item) => ({ ...item, result: null })))
+  }, [])
 
   // --- Compress all items when format/quality changes ---
   const compressAll = useCallback(
     async (targetItems: BatchItem[], fmt: OutputFormat, q: number) => {
-      const promises = targetItems.map(async (item) => {
-        const result = await compressImage(item.image, item.file, fmt, q / 100)
-        return { id: item.id, result }
-      })
+      const settled = await Promise.allSettled(
+        targetItems.map(async (item) => {
+          const result = await compressImage(item.image, item.file, fmt, q / 100)
+          return { id: item.id, result }
+        })
+      )
 
-      const results = await Promise.all(promises)
+      const currentSettings = settingsRef.current
+      if (currentSettings.format !== fmt || currentSettings.quality !== q) return
+
+      const results = settled
+        .filter((result) => result.status === "fulfilled")
+        .map((result) => result.value)
+
+      if (results.length !== settled.length) {
+        toast.error(t("compressFailed"))
+      }
+
       setItems((prev) =>
         prev.map((item) => {
           const found = results.find((r) => r.id === item.id)
@@ -71,7 +100,7 @@ export function CompressEditor() {
         })
       )
     },
-    []
+    [t]
   )
 
   // Re-compress when format or quality changes
@@ -92,14 +121,11 @@ export function CompressEditor() {
         result: null,
       }))
 
-      setItems((prev) => {
-        const merged = [...prev, ...newItems]
-        // Trigger compress for new items after state update
-        setTimeout(() => compressAll(newItems, format, quality), 0)
-        return merged
-      })
+      setItems((prev) => [...prev, ...newItems])
+      const currentSettings = settingsRef.current
+      void compressAll(newItems, currentSettings.format, currentSettings.quality)
     },
-    [format, quality, compressAll]
+    [compressAll]
   )
 
   const handleRemove = useCallback((id: string) => {
@@ -115,25 +141,39 @@ export function CompressEditor() {
       if (!e.target.files?.length) return
       const files = Array.from(e.target.files)
 
-      // Reuse upload-utils validation
-      import("@/lib/upload-utils").then(({ validateFiles, loadImage }) => {
+      void import("@/lib/upload-utils").then(async ({ validateFiles, loadImage }) => {
         const validation = validateFiles(
           files,
           items.reduce((s, i) => s + i.file.size, 0)
         )
-        if (!validation.valid) return
+        if (!validation.valid) {
+          toast.error(uploadT(validation.error!.key, validation.error!.params))
+          return
+        }
 
-        Promise.all(
+        if (validation.totalSizeWarning) {
+          const totalSize = validation.files.reduce((sum, f) => sum + f.size, 0)
+          toast.warning(
+            uploadT("totalSizeWarning", {
+              size: (totalSize / 1024 / 1024).toFixed(1),
+            })
+          )
+        }
+
+        const loaded = await Promise.all(
           validation.files.map(async (f) => {
             const img = await loadImage(f)
             return { file: f, image: img, mimeType: f.type } as UploadResult
           })
-        ).then(handleImagesLoaded)
+        )
+        handleImagesLoaded(loaded)
+      }).catch(() => {
+        toast.error(uploadT("loadFailed"))
       })
 
       e.target.value = ""
     },
-    [items, handleImagesLoaded]
+    [items, handleImagesLoaded, uploadT]
   )
 
   // --- Download ---
@@ -148,6 +188,7 @@ export function CompressEditor() {
       a.click()
       URL.revokeObjectURL(url)
     } else if (isBatch) {
+      if (!allReady) return
       const readyItems = items.filter((i) => i.result)
       if (readyItems.length === 0) return
 
@@ -165,7 +206,7 @@ export function CompressEditor() {
       a.click()
       URL.revokeObjectURL(url)
     }
-  }, [items, isSingle, isBatch])
+  }, [items, isSingle, isBatch, allReady])
 
   // --- Object URLs for single preview ---
   const [originalUrl, setOriginalUrl] = useState<string>("")
@@ -282,10 +323,12 @@ export function CompressEditor() {
             <CompressControls
               format={format}
               quality={quality}
-              onFormatChange={setFormat}
-              onQualityChange={setQuality}
+              onFormatChange={handleFormatChange}
+              onQualityChange={handleQualityChange}
               downloadLabel={downloadLabel}
               onDownload={handleDownload}
+              canDownload={canDownload}
+              isProcessing={hasImages && !allReady}
               onAddMore={handleAddMore}
               showAddMore={isSingle}
             />

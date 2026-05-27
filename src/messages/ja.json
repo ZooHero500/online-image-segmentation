@@ -631,6 +631,7 @@
     "addMore": "画像を追加",
     "changeImage": "変更",
     "processing": "処理中...",
+    "compressFailed": "一部の画像を処理できませんでした。",
     "ready": "完了"
   }
 }

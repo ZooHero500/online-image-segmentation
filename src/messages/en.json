@@ -574,6 +574,7 @@
     "addMore": "Add more images",
     "changeImage": "Change",
     "processing": "Processing...",
+    "compressFailed": "Some images could not be processed.",
     "ready": "Ready"
   },
   "resize": {
