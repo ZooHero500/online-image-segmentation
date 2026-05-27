@@ -29,6 +29,7 @@ import {
   DollarSign,
   GraduationCap,
   Smartphone,
+  Layers,
 } from "lucide-react"
 import type React from "react"
 
@@ -55,6 +56,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string; strokeWi
   DollarSign,
   GraduationCap,
   Smartphone,
+  Layers,
 }
 
 // ─── Translation Interfaces ───

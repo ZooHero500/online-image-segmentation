@@ -653,7 +653,7 @@ const data: Record<string, ToolPageData> = {
     ],
     howToSteps: [
       { stepNumber: 1, title: "PNGをアップロード", description: "圧縮したいPNGファイルをドラッグ＆ドロップまたは選択。透明度は完全に保持されます。" },
-      { stepNumber: 2, title: "圧縮を調整", description: "圧縮レベルを選択。高い圧縮ほどファイルが小さくなります — 品質が基準を満たすかプレビューで確認してください。" },
+      { stepNumber: 2, title: "PNGを最適化", description: "出力をPNGのままにします。ImgSplitは画像をロスレスで再エンコードし、再エンコードで大きくなる場合は元ファイルを保持します。" },
       { stepNumber: 3, title: "最適化PNGをダウンロード", description: "圧縮されたPNGを保存。透明度、色深度、視覚品質が維持されます。" },
     ],
     faqEntries: [

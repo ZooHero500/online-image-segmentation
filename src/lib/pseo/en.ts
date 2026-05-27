@@ -695,7 +695,7 @@ const data: Record<string, ToolPageData> = {
     ],
     howToSteps: [
       { stepNumber: 1, title: "Upload Your PNG", description: "Drag and drop or select the PNG file you want to compress. Transparency is fully preserved." },
-      { stepNumber: 2, title: "Adjust Compression", description: "Choose your compression level. Higher compression means smaller files — preview the result to ensure quality meets your standards." },
+      { stepNumber: 2, title: "Optimize PNG", description: "Keep PNG output selected. ImgSplit re-encodes the image losslessly and keeps the original file whenever re-encoding would make it larger." },
       { stepNumber: 3, title: "Download Optimized PNG", description: "Save your compressed PNG. Transparency, color depth, and visual quality are maintained." },
     ],
     faqEntries: [

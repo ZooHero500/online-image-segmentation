@@ -656,7 +656,7 @@ const data: Record<string, ToolPageData> = {
     ],
     howToSteps: [
       { stepNumber: 1, title: "PNG 업로드", description: "압축할 PNG 파일을 드래그 앤 드롭하거나 선택하세요. 투명도가 완전히 보존됩니다." },
-      { stepNumber: 2, title: "압축 조정", description: "압축 수준을 선택하세요. 높은 압축은 더 작은 파일을 의미합니다 — 미리보기로 품질이 기준에 부합하는지 확인하세요." },
+      { stepNumber: 2, title: "PNG 최적화", description: "PNG 출력을 유지하세요. ImgSplit은 이미지를 무손실로 다시 인코딩하고, 다시 인코딩한 파일이 더 커지면 원본 파일을 유지합니다." },
       { stepNumber: 3, title: "최적화된 PNG 다운로드", description: "압축된 PNG를 저장하세요. 투명도, 색상 심도, 시각적 품질이 유지됩니다." },
     ],
     faqEntries: [

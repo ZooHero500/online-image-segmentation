@@ -701,7 +701,7 @@ const data: Record<string, ToolPageData> = {
     ],
     howToSteps: [
       { stepNumber: 1, title: "上传 PNG", description: "拖拽或选择您要压缩的 PNG 文件。透明度将完整保留。" },
-      { stepNumber: 2, title: "调整压缩级别", description: "选择压缩级别。更高的压缩意味着更小的文件——预览结果以确保质量达标。" },
+      { stepNumber: 2, title: "优化 PNG", description: "保持 PNG 输出。ImgSplit 会无损重新编码图片，并在重新编码变大时保留原始文件。" },
       { stepNumber: 3, title: "下载优化后的 PNG", description: "保存压缩后的 PNG。透明度、色深和视觉质量均得到保持。" },
     ],
     faqEntries: [

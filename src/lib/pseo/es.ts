@@ -652,7 +652,7 @@ const data: Record<string, ToolPageData> = {
     ],
     howToSteps: [
       { stepNumber: 1, title: "Sube tu PNG", description: "Arrastra y suelta o selecciona el archivo PNG que deseas comprimir. La transparencia se preserva completamente." },
-      { stepNumber: 2, title: "Ajusta la Compresión", description: "Elige tu nivel de compresión. Mayor compresión significa archivos más pequeños — previsualiza el resultado para asegurarte de que la calidad cumple tus estándares." },
+      { stepNumber: 2, title: "Optimiza el PNG", description: "Mantén PNG como salida. ImgSplit vuelve a codificar la imagen sin pérdida y conserva el archivo original cuando la recodificación lo haría más grande." },
       { stepNumber: 3, title: "Descarga el PNG Optimizado", description: "Guarda tu PNG comprimido. La transparencia, profundidad de color y calidad visual se mantienen." },
     ],
     faqEntries: [
