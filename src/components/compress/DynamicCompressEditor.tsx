@@ -1,6 +1,7 @@
 // src/components/compress/DynamicCompressEditor.tsx
 "use client"
 
+import { Suspense } from "react"
 import dynamic from "next/dynamic"
 import { useTranslations } from "next-intl"
 
@@ -13,7 +14,7 @@ function EditorLoading() {
   )
 }
 
-export const DynamicCompressEditor = dynamic(
+const LazyCompressEditor = dynamic(
   () =>
     import("./CompressEditor").then((mod) => ({
       default: mod.CompressEditor,
@@ -23,3 +24,11 @@ export const DynamicCompressEditor = dynamic(
     loading: () => <EditorLoading />,
   }
 )
+
+export function DynamicCompressEditor() {
+  return (
+    <Suspense fallback={<EditorLoading />}>
+      <LazyCompressEditor />
+    </Suspense>
+  )
+}
