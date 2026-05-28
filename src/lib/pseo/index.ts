@@ -40,10 +40,6 @@ const slugMeta: { slug: string; category: ToolCategory }[] = [
   { slug: "webp-to-png", category: "use-case" },
   { slug: "webp-to-jpg", category: "use-case" },
   { slug: "reduce-image-size", category: "use-case" },
-  { slug: "crop-image", category: "use-case" },
-  { slug: "crop-for-instagram", category: "use-case" },
-  { slug: "instagram-story-crop", category: "use-case" },
-  { slug: "youtube-thumbnail-crop", category: "use-case" },
 ]
 
 const toolPages: ToolPageConfig[] = slugMeta.map(({ slug, category }) => ({

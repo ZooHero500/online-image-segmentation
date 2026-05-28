@@ -7,7 +7,7 @@
 | 阶段 | 工具 | 状态 | 开始 | 完成 | 备注 |
 |------|------|------|------|------|------|
 | P1 | ① 图片压缩 & 格式转换 | 🟢 已完成 | 2026-05-26 | 2026-05-26 | 10 pSEO 页, 5 语言 |
-| P1 | ② Resize 裁剪能力增强 + 社媒预设 | 🟢 已完成 | 2026-05-28 | 2026-05-28 | 4 pSEO 页, 5 语言 |
+| P1 | ② 独立裁剪工具 (社媒预设) | ⬜ 未开始 | - | - | |
 | P2 | ③ 图片水印工具 | ⬜ 未开始 | - | - | |
 | P2 | ⑤ 隐私打码/马赛克 | ⬜ 未开始 | - | - | |
 | P3 | ④ 照片拼图/拼贴 | ⬜ 未开始 | - | - | |
@@ -35,19 +35,18 @@
   - [x] i18n: 5 语言翻译
   - [x] 集成: Tools Hub + Sitemap + Footer + Nav
 
-### ② Resize 裁剪能力增强 + 社媒预设
-- **状态**: 🟢 已完成
-- **实际**: ~1 天
-- **Plan**: `docs/superpowers/plans/2026-05-28-resize-social-crop-presets.md`
-- **说明**: 未做独立裁剪编辑器；按产品判断直接增强 Resize，并用 pSEO 页面薄包装到同一编辑器。
+### ② 独立裁剪工具 (社媒预设)
+- **状态**: ⬜ 未开始
+- **预估**: ~150 行新代码, ~1 天
+- **Spec**: -
 - **子任务**:
-  - [x] Plan: 需求 → 任务
-  - [x] 核心: 社媒预设库 (IG Post, Story, YouTube, FB Cover 等)
-  - [x] UI: Resize 中新增显式裁剪入口 + 预设选择器
-  - [x] URL: `/resize?crop=...` 预设入口
-  - [x] pSEO: 4 个落地页 (crop-image, crop-for-instagram, instagram-story-crop, youtube-thumbnail-crop)
-  - [x] i18n: 5 语言翻译
-  - [x] 集成: pSEO CTA + Sitemap
+  - [ ] Spec: 需求 → 设计 → 任务
+  - [ ] 核心: 从 Resize 中抽取 CropOverlay 逻辑
+  - [ ] 核心: 社媒预设库 (IG Post, Story, YouTube, FB Cover 等)
+  - [ ] UI: 预设选择器 + 裁剪画布
+  - [ ] pSEO: 落地页 (crop-for-instagram, youtube-thumbnail-crop 等)
+  - [ ] i18n: 5 语言翻译
+  - [ ] 集成: Tools Hub + Sitemap + Footer
 
 ---
 
@@ -136,4 +135,3 @@
 |------|------|
 | 2026-05-26 | Ideation 完成，7 个工具全部批准，创建进度追踪 |
 | 2026-05-26 | ① 图片压缩 & 格式转换 — 完成全部实施 (11 tasks, 10 pSEO, 5 languages) |
-| 2026-05-28 | ② Resize 裁剪能力增强 + 社媒预设 — 完成实施 (4 pSEO, 5 languages) |

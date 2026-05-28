@@ -41,17 +41,17 @@
 - Modify: `src/lib/pseo/*.ts`
 - Modify: `docs/ideation/PROGRESS.md`
 
-- [x] Map crop pSEO slugs to `/resize?crop=...` editor URLs.
-- [x] Add crop landing page data for `crop-image`, `crop-for-instagram`, `instagram-story-crop`, and `youtube-thumbnail-crop`.
-- [x] Register crop slugs in the pSEO index.
-- [x] Update ideation progress to reflect that item ② is implemented as a Resize enhancement.
+- [ ] Map crop pSEO slugs to `/resize?crop=...` editor URLs.
+- [ ] Add crop landing page data for `crop-image`, `crop-for-instagram`, `instagram-story-crop`, and `youtube-thumbnail-crop`.
+- [ ] Register crop slugs in the pSEO index.
+- [ ] Update ideation progress to reflect that item ② is implemented as a Resize enhancement.
 
 ### Task 4: Verify And Commit In Batches
 
 **Files:**
 - Stage only relevant resize/crop/pSEO/docs files.
 
-- [x] Run targeted Vitest tests with Bun.
-- [x] Run targeted ESLint on changed TS/TSX files.
-- [x] Commit preset/editor changes.
+- [ ] Run targeted Vitest tests with Bun.
+- [ ] Run targeted ESLint on changed TS/TSX files.
+- [ ] Commit preset/editor changes.
 - [ ] Commit pSEO/docs changes.
