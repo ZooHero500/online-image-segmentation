@@ -2,18 +2,20 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
+import { useSearchParams } from "next/navigation"
 import { toast } from "sonner"
 import {
   Download, RotateCcw, ImagePlus, Check, X, Undo2, Redo2, ChevronDown,
   RotateCw, FlipHorizontal2, FlipVertical2,
   AlignCenterHorizontal, AlignCenterVertical, AlignStartHorizontal,
   AlignEndHorizontal, AlignStartVertical, AlignEndVertical, Maximize2,
-  PanelLeftOpen, PanelLeftClose, Settings2,
+  PanelLeftOpen, PanelLeftClose, Settings2, Crop,
 } from "lucide-react"
 import { Link } from "@/i18n/navigation"
 import { useResizeEditor } from "@/hooks/use-resize-editor"
 import { useCanvasViewport } from "@/hooks/use-canvas-viewport"
 import { exportArtboard } from "@/lib/resize-export"
+import { getCropPreset, getCropPresetAspectRatio, SOCIAL_CROP_PRESETS } from "@/lib/resize-crop-presets"
 import { ACCEPTED_TYPES } from "@/lib/upload-utils"
 import { CanvasSizeControl } from "./CanvasSizeControl"
 import { ResizeCanvas } from "./ResizeCanvas"
@@ -112,6 +114,8 @@ function SidebarContent({
   mode,
   cropAspectRatio,
   setCropAspectRatio,
+  selectedCropPreset,
+  applySocialCropPreset,
   resetImage,
   replaceInputRef,
 }: {
@@ -127,6 +131,8 @@ function SidebarContent({
   mode: string
   cropAspectRatio: number | null
   setCropAspectRatio: (r: number | null) => void
+  selectedCropPreset: string | null
+  applySocialCropPreset: (slug: string) => void
   resetImage: () => void
   replaceInputRef: React.RefObject<HTMLInputElement | null>
 }) {
@@ -202,22 +208,44 @@ function SidebarContent({
 
         {/* Crop Ratio */}
         {mode === "crop" && (
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
-              {t("cropRatio")}
-            </p>
-            <div className="flex flex-wrap gap-1">
-              {CROP_RATIOS.map((ratio) => (
-                <button
-                  key={ratio.key}
-                  onClick={() => setCropAspectRatio(ratio.value)}
-                  className={`px-3 py-1.5 text-xs uppercase tracking-wider rounded cursor-pointer transition-colors ${
-                    cropAspectRatio === ratio.value ? "bg-accent/10 text-accent" : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  }`}
-                >
-                  {t(ratio.key)}
-                </button>
-              ))}
+          <div className="space-y-5">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
+                {t("cropPresets")}
+              </p>
+              <div className="grid grid-cols-1 gap-1">
+                {SOCIAL_CROP_PRESETS.map((preset) => (
+                  <button
+                    key={preset.slug}
+                    onClick={() => applySocialCropPreset(preset.slug)}
+                    className={`flex items-center justify-between gap-2 px-3 py-2 text-left rounded cursor-pointer transition-colors ${
+                      selectedCropPreset === preset.slug ? "bg-accent/10 text-accent" : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    }`}
+                  >
+                    <span className="text-xs font-medium">{t(preset.labelKey)}</span>
+                    <span className="text-[10px] tabular-nums opacity-70">{preset.width} x {preset.height}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
+                {t("cropRatio")}
+              </p>
+              <div className="flex flex-wrap gap-1">
+                {CROP_RATIOS.map((ratio) => (
+                  <button
+                    key={ratio.key}
+                    onClick={() => setCropAspectRatio(ratio.value)}
+                    className={`px-3 py-1.5 text-xs uppercase tracking-wider rounded cursor-pointer transition-colors ${
+                      cropAspectRatio === ratio.value ? "bg-accent/10 text-accent" : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    }`}
+                  >
+                    {t(ratio.key)}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         )}
@@ -250,6 +278,8 @@ function SidebarContent({
 
 export function ResizeEditor() {
   const t = useTranslations("resize")
+  const searchParams = useSearchParams()
+  const initialCropPreset = getCropPreset(searchParams.get("crop"))
   const replaceInputRef = useRef<HTMLInputElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -280,9 +310,14 @@ export function ResizeEditor() {
     fitMode,
     setFitMode,
     alignImage,
-  } = useResizeEditor()
+  } = useResizeEditor(initialCropPreset?.width, initialCropPreset?.height)
 
-  const [cropAspectRatio, setCropAspectRatio] = useState<number | null>(null)
+  const [cropAspectRatio, setCropAspectRatio] = useState<number | null>(
+    initialCropPreset ? getCropPresetAspectRatio(initialCropPreset) : null
+  )
+  const [selectedCropPreset, setSelectedCropPreset] = useState<string | null>(
+    initialCropPreset?.slug ?? null
+  )
 
   // Track container size reactively
   const [containerSize, setContainerSize] = useState({ width: 800, height: 600 })
@@ -432,6 +467,53 @@ export function ResizeEditor() {
     [transform, setTransform]
   )
 
+  const applySocialCropPreset = useCallback(
+    (slug: string) => {
+      const preset = getCropPreset(slug)
+      if (!preset) return
+
+      const aspectRatio = getCropPresetAspectRatio(preset)
+      setSelectedCropPreset(preset.slug)
+      setCropAspectRatio(aspectRatio)
+      setCanvasSize({ width: preset.width, height: preset.height })
+      if (image && mode !== "crop") {
+        setMode("selected")
+      }
+    },
+    [image, mode, setCanvasSize, setMode]
+  )
+
+  const handleSetCropAspectRatio = useCallback((ratio: number | null) => {
+    setSelectedCropPreset(null)
+    setCropAspectRatio(ratio)
+  }, [])
+
+  const startCropMode = useCallback(() => {
+    if (!image) return
+
+    const srcW = transform.crop ? transform.crop.width : image.naturalWidth
+    const srcH = transform.crop ? transform.crop.height : image.naturalHeight
+    const displayW = srcW * transform.scale
+    const displayH = srcH * transform.scale
+    const imgLeft = transform.x
+    const imgTop = transform.y
+    const imgRight = transform.x + displayW
+    const imgBottom = transform.y + displayH
+
+    const x1 = Math.max(0, imgLeft)
+    const y1 = Math.max(0, imgTop)
+    const x2 = Math.min(canvasSize.width, imgRight)
+    const y2 = Math.min(canvasSize.height, imgBottom)
+
+    setCropRect({
+      x: x1,
+      y: y1,
+      width: Math.max(20, x2 - x1),
+      height: Math.max(20, y2 - y1),
+    })
+    setMode("crop")
+  }, [image, transform, canvasSize, setCropRect, setMode])
+
   const sidebarProps = {
     t,
     canvasSize,
@@ -444,7 +526,9 @@ export function ResizeEditor() {
     handleScaleChange,
     mode,
     cropAspectRatio,
-    setCropAspectRatio,
+    setCropAspectRatio: handleSetCropAspectRatio,
+    selectedCropPreset,
+    applySocialCropPreset,
     resetImage,
     replaceInputRef,
   }
@@ -543,6 +627,12 @@ export function ResizeEditor() {
                   </ToolbarButton>
                   <ToolbarButton onClick={flipVertical} title={t("flipV")} className="hidden sm:flex">
                     <FlipVertical2 className="h-3.5 w-3.5" />
+                  </ToolbarButton>
+
+                  <div className="w-px h-4 bg-border mx-0.5 md:mx-1 shrink-0" />
+
+                  <ToolbarButton onClick={startCropMode} title={t("cropMode")}>
+                    <Crop className="h-3.5 w-3.5" />
                   </ToolbarButton>
 
                   {/* Align buttons — desktop only */}
