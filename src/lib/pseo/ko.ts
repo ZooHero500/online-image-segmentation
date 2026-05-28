@@ -986,6 +986,110 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
+  "crop-image": {
+    slug: "crop-image",
+    category: "use-case",
+    seo: { title: "온라인 이미지 자르기 — 무료 소셜 크롭 도구 | ImgSplit", description: "Instagram, YouTube, Facebook, X, LinkedIn 크기에 맞춰 이미지를 자르세요. 무료, 비공개, 브라우저 기반.", ogTitle: "온라인 이미지 자르기", ogDescription: "업로드 없이 소셜 크기로 사진을 자르세요." },
+    hero: { overline: "이미지 자르기 도구", headlinePart1: "이미지", headlineAccent: "자르기", headlinePart2: "정확한 크기", description: "이미지를 소셜 미디어용 정확한 크기로 리사이즈하고 자르세요. 프리셋을 선택하고 위치를 조정한 뒤 로컬에서 내보냅니다." },
+    scenarios: [
+      { icon: "Crop", title: "정확한 비율", description: "정사각형, 세로, 와이드 비율을 고정해 게시 전에 플랫폼 요구사항에 맞춥니다." },
+      { icon: "Smartphone", title: "소셜 미디어 준비", description: "Instagram 게시물/스토리, YouTube 썸네일, Facebook 커버, X, LinkedIn 프리셋을 사용할 수 있습니다." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "이미지 업로드", description: "Resize의 자르기 프리셋을 열고 PNG, JPEG 또는 WebP 이미지를 추가하세요." },
+      { stepNumber: 2, title: "프리셋 선택", description: "소셜 크기 또는 수동 비율을 선택하고 자르기 상자를 드래그하세요." },
+      { stepNumber: 3, title: "다운로드", description: "자르기를 적용하고 PNG, JPEG 또는 WebP로 저장하세요." },
+    ],
+    faqEntries: [
+      { question: "별도 자르기 에디터인가요?", answer: "아닙니다. Resize 에디터의 집중된 자르기 흐름과 소셜 프리셋입니다." },
+      { question: "이미지가 업로드되나요?", answer: "아닙니다. 처리는 브라우저에서 이루어지며 이미지는 기기에 남습니다." },
+      { question: "사용자 정의 크기도 가능한가요?", answer: "예. 캔버스 크기, 수동 비율, 이미지 위치를 자유롭게 조정할 수 있습니다." },
+    ],
+    relatedTools: [
+      { slug: "/resize", title: "이미지 크기 조정", description: "정확한 크기로 이미지를 조정하고 내보내기." },
+      { slug: "/crop-for-instagram", title: "Instagram 자르기", description: "정사각형 Instagram 게시물을 빠르게 만들기." },
+      { slug: "/youtube-thumbnail-crop", title: "YouTube 썸네일", description: "16:9 썸네일 크기로 자르기." },
+    ],
+  },
+
+  "crop-for-instagram": {
+    slug: "crop-for-instagram",
+    category: "use-case",
+    seo: { title: "Instagram 이미지 자르기 — 무료 1:1 크롭 도구 | ImgSplit", description: "Instagram 게시물 크기로 온라인 자르기. 1080 x 1080 정사각형 프리셋, 브라우저 기반 비공개 내보내기.", ogTitle: "Instagram 이미지 자르기", ogDescription: "업로드 없이 Instagram 정사각형 게시물을 만드세요." },
+    hero: { overline: "Instagram 자르기 도구", headlinePart1: "Instagram용", headlineAccent: "자르기", headlinePart2: "1:1 게시물", description: "어떤 이미지든 1080 x 1080 Instagram 게시물 크롭으로 만드세요. 주요 피사체를 중앙에 두고 내보낼 수 있습니다." },
+    scenarios: [
+      { icon: "Crop", title: "정사각형 피드 게시물", description: "가로 또는 세로 사진을 비율 고민 없이 1:1 게시물로 변환합니다." },
+      { icon: "Smartphone", title: "모바일 공유", description: "휴대폰이나 예약 게시 도구로 보내기 전에 브라우저에서 준비하세요." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "사진 업로드", description: "Instagram 게시물 프리셋에서 이미지를 추가하세요." },
+      { stepNumber: 2, title: "자르기 조정", description: "이미지나 자르기 상자를 드래그해 정사각형 프레임에 맞추세요." },
+      { stepNumber: 3, title: "다운로드", description: "자르기를 적용하고 Instagram 크기 이미지를 저장하세요." },
+    ],
+    faqEntries: [
+      { question: "프리셋 크기는 무엇인가요?", answer: "Instagram 게시물 프리셋은 1080 x 1080 픽셀, 1:1 비율입니다." },
+      { question: "세로 Instagram 게시물도 가능한가요?", answer: "Resize에서 사용자 정의 크기를 사용하거나 9:16 콘텐츠에는 Story 프리셋을 사용하세요." },
+      { question: "품질이 낮아지나요?", answer: "선택한 캔버스 크기로 내보냅니다. Instagram 게시물은 1080 x 1080이 목표 크기입니다." },
+    ],
+    relatedTools: [
+      { slug: "/instagram-story-crop", title: "Instagram Story 자르기", description: "9:16 세로 Story 이미지 만들기." },
+      { slug: "/resize", title: "이미지 크기 조정", description: "임의 크기로 리사이즈 및 자르기." },
+      { slug: "/compress-image", title: "이미지 압축", description: "공유 전 최종 이미지 크기 줄이기." },
+    ],
+  },
+
+  "instagram-story-crop": {
+    slug: "instagram-story-crop",
+    category: "use-case",
+    seo: { title: "Instagram Story 자르기 — 무료 9:16 크롭 도구 | ImgSplit", description: "Instagram Story 크기로 온라인 자르기. 1080 x 1920 세로 프리셋, 브라우저 기반 편집, 즉시 다운로드.", ogTitle: "Instagram Story 자르기", ogDescription: "1080 x 1920 프리셋으로 세로 Story 만들기." },
+    hero: { overline: "Instagram Story 자르기", headlinePart1: "Instagram", headlineAccent: "Story", headlinePart2: "9:16 세로", description: "1080 x 1920 프리셋으로 전체 화면 Instagram Story를 준비하세요. 위치를 조정하고 비공개로 내보냅니다." },
+    scenarios: [
+      { icon: "Smartphone", title: "전체 화면 Story", description: "가로 또는 정사각형 이미지를 늘리지 않고 세로 Story 소재로 변환합니다." },
+      { icon: "Crop", title: "피사체 제어", description: "얼굴, 제품, 텍스트가 보이는 프레임에 남도록 자르기를 조정합니다." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Story 프리셋 열기", description: "Resize에서 1080 x 1920 Instagram Story 프리셋을 사용하세요." },
+      { stepNumber: 2, title: "자르기 조정", description: "모서리를 드래그하거나 이미지를 이동해 주요 내용을 보이게 하세요." },
+      { stepNumber: 3, title: "내보내기", description: "Instagram, Reels 커버 또는 기타 9:16 배치용 세로 이미지를 다운로드하세요." },
+    ],
+    faqEntries: [
+      { question: "Story 자르기 크기는?", answer: "프리셋은 1080 x 1920 픽셀, 9:16 비율입니다." },
+      { question: "TikTok이나 Reels에도 쓸 수 있나요?", answer: "예. 9:16 출력은 많은 세로형 소셜 배치에 적합합니다." },
+      { question: "전체 이미지를 보이게 할 수 있나요?", answer: "Fit 모드를 사용하면 여백을 두고 전체 이미지를 표시할 수 있습니다." },
+    ],
+    relatedTools: [
+      { slug: "/crop-for-instagram", title: "Instagram 게시물 자르기", description: "정사각형 Instagram 게시물 만들기." },
+      { slug: "/resize", title: "이미지 크기 조정", description: "사용자 정의 크기로 조정." },
+      { slug: "/jpg-to-webp", title: "JPG를 WebP로", description: "완성된 자산을 WebP로 변환." },
+    ],
+  },
+
+  "youtube-thumbnail-crop": {
+    slug: "youtube-thumbnail-crop",
+    category: "use-case",
+    seo: { title: "YouTube 썸네일 자르기 — 무료 1280x720 크롭 도구 | ImgSplit", description: "YouTube 썸네일 크기로 온라인 자르기. 1280 x 720 16:9 프리셋, 업로드 없는 브라우저 처리.", ogTitle: "YouTube 썸네일 자르기", ogDescription: "브라우저에서 1280 x 720 썸네일 만들기." },
+    hero: { overline: "YouTube 썸네일 자르기", headlinePart1: "YouTube", headlineAccent: "썸네일", headlinePart2: "16:9", description: "어떤 이미지든 1280 x 720 YouTube 썸네일로 자르세요. 16:9 프리셋으로 구도를 잡고 내보냅니다." },
+    scenarios: [
+      { icon: "Youtube", title: "썸네일 준비", description: "사진, 스크린샷, 아트워크를 YouTube 권장 크기로 자릅니다." },
+      { icon: "Crop", title: "구도 제어", description: "얼굴, 제품, 제목 영역을 안전한 썸네일 프레임 안에 유지하세요." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "이미지 업로드", description: "YouTube 썸네일 프리셋을 열고 원본 이미지를 추가하세요." },
+      { stepNumber: 2, title: "구도 잡기", description: "16:9 자르기 상자로 클릭하기 좋은 구도를 선택하세요." },
+      { stepNumber: 3, title: "다운로드", description: "최종 1280 x 720 썸네일을 PNG, JPEG 또는 WebP로 내보내세요." },
+    ],
+    faqEntries: [
+      { question: "프리셋 크기는?", answer: "1280 x 720 픽셀, 16:9 비율입니다." },
+      { question: "JPG로 내보낼 수 있나요?", answer: "예. JPEG, PNG 또는 WebP로 다운로드할 수 있습니다." },
+      { question: "썸네일에 텍스트도 추가하나요?", answer: "아닙니다. 이 도구는 자르기와 리사이즈에 집중합니다." },
+    ],
+    relatedTools: [
+      { slug: "/resize", title: "이미지 크기 조정", description: "임의 캔버스 크기로 조정." },
+      { slug: "/compress-jpeg", title: "JPEG 압축", description: "완성된 썸네일 줄이기." },
+      { slug: "/crop-image", title: "이미지 자르기", description: "범용 온라인 자르기." },
+    ],
+  },
+
 }
 
 export default data

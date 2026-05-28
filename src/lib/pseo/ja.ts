@@ -983,6 +983,110 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
+  "crop-image": {
+    slug: "crop-image",
+    category: "use-case",
+    seo: { title: "画像をオンラインでトリミング — 無料SNSクロップツール | ImgSplit", description: "Instagram、YouTube、Facebook、X、LinkedIn向けの正確なサイズで画像をトリミング。無料、プライベート、ブラウザ内処理。", ogTitle: "画像をオンラインでトリミング", ogDescription: "アップロード不要でSNSサイズにトリミング。" },
+    hero: { overline: "画像トリミングツール", headlinePart1: "画像を", headlineAccent: "トリミング", headlinePart2: "正確なサイズ", description: "任意の画像をSNS向けの正確なサイズにリサイズしてトリミング。プリセットを選び、位置を調整し、ローカルで書き出せます。" },
+    scenarios: [
+      { icon: "Crop", title: "正確な比率", description: "正方形、縦長、ワイドの比率を固定して、投稿前にプラットフォーム要件に合わせられます。" },
+      { icon: "Smartphone", title: "SNS対応", description: "Instagram投稿・ストーリー、YouTubeサムネイル、Facebookカバー、X、LinkedInのプリセットを利用できます。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "画像をアップロード", description: "Resizeのクロッププリセットを開き、PNG、JPEG、WebP画像を追加します。" },
+      { stepNumber: 2, title: "プリセットを選択", description: "SNSサイズまたは手動比率を選び、クロップ枠をドラッグします。" },
+      { stepNumber: 3, title: "ダウンロード", description: "トリミングを適用し、PNG、JPEG、WebPで保存します。" },
+    ],
+    faqEntries: [
+      { question: "これは別のクロップエディタですか？", answer: "いいえ。Resizeエディタ内のクロップワークフローとSNSプリセットです。" },
+      { question: "画像はアップロードされますか？", answer: "いいえ。処理はブラウザ内で行われ、画像は端末に残ります。" },
+      { question: "カスタムサイズも使えますか？", answer: "はい。キャンバス寸法、手動比率、画像位置を自由に調整できます。" },
+    ],
+    relatedTools: [
+      { slug: "/resize", title: "画像リサイズ", description: "正確なサイズで画像をリサイズして書き出し。" },
+      { slug: "/crop-for-instagram", title: "Instagram用トリミング", description: "正方形投稿を素早く作成。" },
+      { slug: "/youtube-thumbnail-crop", title: "YouTubeサムネイル", description: "16:9サムネイルサイズにトリミング。" },
+    ],
+  },
+
+  "crop-for-instagram": {
+    slug: "crop-for-instagram",
+    category: "use-case",
+    seo: { title: "Instagram用画像トリミング — 無料1:1クロッパー | ImgSplit", description: "Instagram投稿サイズにオンラインでトリミング。1080 x 1080の正方形プリセット、ブラウザ内でプライベートに書き出し。", ogTitle: "Instagram用画像トリミング", ogDescription: "アップロード不要でInstagram正方形投稿を作成。" },
+    hero: { overline: "Instagramクロップ", headlinePart1: "Instagram用に", headlineAccent: "トリミング", headlinePart2: "1:1投稿", description: "任意の画像から1080 x 1080のInstagram投稿クロップを作成。被写体を中央に配置して書き出せます。" },
+    scenarios: [
+      { icon: "Crop", title: "正方形フィード投稿", description: "横長や縦長の写真を、比率を迷わず1:1投稿に変換します。" },
+      { icon: "Smartphone", title: "モバイル共有", description: "スマホや予約投稿ツールに送る前にブラウザで準備できます。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "写真をアップロード", description: "Instagram投稿プリセットから画像を追加します。" },
+      { stepNumber: 2, title: "クロップを調整", description: "画像またはクロップ枠をドラッグして正方形に収めます。" },
+      { stepNumber: 3, title: "ダウンロード", description: "トリミングを適用し、Instagramサイズの画像を保存します。" },
+    ],
+    faqEntries: [
+      { question: "このプリセットのサイズは？", answer: "1080 x 1080ピクセル、1:1比率です。" },
+      { question: "縦長投稿にも使えますか？", answer: "カスタム寸法はResizeで設定できます。9:16はStoryプリセットを使ってください。" },
+      { question: "品質は下がりますか？", answer: "選択したキャンバスサイズで書き出します。Instagram投稿は1080 x 1080が目標サイズです。" },
+    ],
+    relatedTools: [
+      { slug: "/instagram-story-crop", title: "Instagram Story", description: "9:16縦長画像を作成。" },
+      { slug: "/resize", title: "画像リサイズ", description: "任意の寸法でリサイズとトリミング。" },
+      { slug: "/compress-image", title: "画像圧縮", description: "共有前にファイルサイズを削減。" },
+    ],
+  },
+
+  "instagram-story-crop": {
+    slug: "instagram-story-crop",
+    category: "use-case",
+    seo: { title: "Instagram Storyトリミング — 無料9:16クロッパー | ImgSplit", description: "Instagram Storyサイズにオンラインでトリミング。1080 x 1920縦長プリセット、ブラウザ内編集、即時ダウンロード。", ogTitle: "Instagram Storyトリミング", ogDescription: "1080 x 1920プリセットで縦長Storyを作成。" },
+    hero: { overline: "Instagram Storyクロップ", headlinePart1: "Instagram", headlineAccent: "Story", headlinePart2: "9:16縦長", description: "1080 x 1920プリセットで全画面Story素材を準備。画像位置を調整してプライベートに書き出せます。" },
+    scenarios: [
+      { icon: "Smartphone", title: "全画面Story", description: "横長や正方形画像を伸ばさずに縦長Story素材へ変換します。" },
+      { icon: "Crop", title: "被写体を保持", description: "顔、商品、テキストが表示範囲に残るようにクロップを調整できます。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Storyプリセットを開く", description: "Resizeで1080 x 1920のInstagram Storyプリセットを使用します。" },
+      { stepNumber: 2, title: "クロップを調整", description: "角をドラッグ、または画像を移動して重要部分を残します。" },
+      { stepNumber: 3, title: "書き出し", description: "InstagramやReelsカバー向けの縦長画像をダウンロードします。" },
+    ],
+    faqEntries: [
+      { question: "Storyのサイズは？", answer: "1080 x 1920ピクセル、9:16比率です。" },
+      { question: "TikTokやReelsにも使えますか？", answer: "はい。9:16出力は多くの縦型SNSにも適しています。" },
+      { question: "全体を表示できますか？", answer: "Fitモードを使うと、余白ありで全体を表示できます。" },
+    ],
+    relatedTools: [
+      { slug: "/crop-for-instagram", title: "Instagram投稿", description: "正方形投稿を作成。" },
+      { slug: "/resize", title: "画像リサイズ", description: "カスタム寸法で調整。" },
+      { slug: "/jpg-to-webp", title: "JPGからWebP", description: "完成素材をWebPに変換。" },
+    ],
+  },
+
+  "youtube-thumbnail-crop": {
+    slug: "youtube-thumbnail-crop",
+    category: "use-case",
+    seo: { title: "YouTubeサムネイルトリミング — 無料1280x720クロッパー | ImgSplit", description: "YouTubeサムネイルサイズにオンラインでトリミング。1280 x 720の16:9プリセット、アップロード不要。", ogTitle: "YouTubeサムネイルトリミング", ogDescription: "ブラウザで1280 x 720サムネイルを作成。" },
+    hero: { overline: "YouTubeサムネイルクロップ", headlinePart1: "YouTube", headlineAccent: "サムネイル", headlinePart2: "16:9", description: "任意の画像から1280 x 720のYouTubeサムネイルを作成。16:9プリセットで構図を決めて書き出せます。" },
+    scenarios: [
+      { icon: "Youtube", title: "サムネイル準備", description: "写真、スクリーンショット、アートワークを推奨サイズにトリミングします。" },
+      { icon: "Crop", title: "構図コントロール", description: "顔、商品、タイトル領域を安全なフレーム内に保てます。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "画像をアップロード", description: "YouTubeサムネイルプリセットを開き、元画像を追加します。" },
+      { stepNumber: 2, title: "構図を決める", description: "16:9クロップ枠でクリックされやすい構図を選びます。" },
+      { stepNumber: 3, title: "ダウンロード", description: "1280 x 720のサムネイルをPNG、JPEG、WebPで書き出します。" },
+    ],
+    faqEntries: [
+      { question: "プリセットサイズは？", answer: "1280 x 720ピクセル、16:9比率です。" },
+      { question: "JPGで書き出せますか？", answer: "はい。JPEG、PNG、WebPでダウンロードできます。" },
+      { question: "文字入れもできますか？", answer: "いいえ。このツールはトリミングとリサイズに集中しています。" },
+    ],
+    relatedTools: [
+      { slug: "/resize", title: "画像リサイズ", description: "任意のキャンバスサイズに調整。" },
+      { slug: "/compress-jpeg", title: "JPEG圧縮", description: "完成サムネイルを軽量化。" },
+      { slug: "/crop-image", title: "画像トリミング", description: "汎用オンラインクロップ。" },
+    ],
+  },
+
 }
 
 export default data
