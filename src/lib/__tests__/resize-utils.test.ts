@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest"
 import {
+  calculateInitialCropRect,
   calculateFillTransform,
   constrainCropRect,
   validateCanvasSize,
@@ -73,6 +74,45 @@ describe("constrainCropRect", () => {
     const result = constrainCropRect(crop, bounds)
     expect(result.width).toBeGreaterThanOrEqual(20)
     expect(result.height).toBeGreaterThanOrEqual(20)
+  })
+})
+
+describe("calculateInitialCropRect", () => {
+  it("should create crop rect from image and artboard intersection", () => {
+    const result = calculateInitialCropRect(
+      800,
+      400,
+      { x: -100, y: 25, scale: 1, crop: null },
+      500,
+      300
+    )
+
+    expect(result).toEqual({ x: 0, y: 25, width: 500, height: 275 })
+  })
+
+  it("should respect existing source crop dimensions", () => {
+    const result = calculateInitialCropRect(
+      1000,
+      800,
+      { x: 10, y: -20, scale: 0.5, crop: { x: 100, y: 100, width: 400, height: 200 } },
+      300,
+      120
+    )
+
+    expect(result).toEqual({ x: 10, y: 0, width: 200, height: 80 })
+  })
+
+  it("should enforce minimum crop size", () => {
+    const result = calculateInitialCropRect(
+      100,
+      100,
+      { x: 490, y: 490, scale: 1, crop: null },
+      500,
+      500
+    )
+
+    expect(result.width).toBe(20)
+    expect(result.height).toBe(20)
   })
 })
 

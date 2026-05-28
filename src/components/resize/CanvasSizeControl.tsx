@@ -4,20 +4,13 @@ import { useState, useCallback } from "react"
 import { ArrowLeftRight } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { validateCanvasSize } from "@/lib/resize-utils"
+import { RESIZE_PRESETS } from "@/lib/resize-presets"
 
 interface CanvasSizeControlProps {
   width: number
   height: number
   onChange: (size: { width: number; height: number }) => void
 }
-
-const PRESETS = [
-  { key: "preset_1_1", w: 1080, h: 1080, label: "1080 × 1080" },
-  { key: "preset_4_3", w: 1200, h: 900, label: "1200 × 900" },
-  { key: "preset_3_4", w: 900, h: 1200, label: "900 × 1200" },
-  { key: "preset_16_9", w: 1920, h: 1080, label: "1920 × 1080" },
-  { key: "preset_9_16", w: 1080, h: 1920, label: "1080 × 1920" },
-] as const
 
 export function CanvasSizeControl({
   width,
@@ -81,9 +74,9 @@ export function CanvasSizeControl({
     [onChange]
   )
 
-  const activePreset = PRESETS.find(
-    (p) => p.w === width && p.h === height
-  )?.key
+  const activePreset = RESIZE_PRESETS.find(
+    (p) => p.width === width && p.height === height
+  )?.slug
 
   return (
     <div className="flex flex-col gap-5">
@@ -142,18 +135,18 @@ export function CanvasSizeControl({
           {t("presets")}
         </p>
         <div className="flex flex-col gap-1">
-          {PRESETS.map((preset) => (
+          {RESIZE_PRESETS.map((preset) => (
             <button
-              key={preset.key}
-              onClick={() => handlePreset(preset.w, preset.h)}
+              key={preset.slug}
+              onClick={() => handlePreset(preset.width, preset.height)}
               className={`flex items-center justify-between px-3 py-2.5 md:py-2 text-xs rounded cursor-pointer transition-colors ${
-                activePreset === preset.key
+                activePreset === preset.slug
                   ? "bg-accent/10 text-accent"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
               }`}
             >
-              <span className="uppercase tracking-wider">{t(preset.key)}</span>
-              <span className="text-[10px] text-muted-foreground/70">{preset.label}</span>
+              <span className="uppercase tracking-wider">{t(preset.labelKey)}</span>
+              <span className="text-[10px] text-muted-foreground/70">{preset.width} × {preset.height}</span>
             </button>
           ))}
         </div>

@@ -6,6 +6,7 @@ import { Stage, Layer, Rect, Image, Transformer, Group, Line } from "@/lib/konva
 import { useTranslations } from "next-intl"
 import { Upload } from "lucide-react"
 import { ACCEPTED_TYPES } from "@/lib/upload-utils"
+import { calculateInitialCropRect } from "@/lib/resize-utils"
 import { calculateSnap, type SnapGuide } from "@/lib/resize-snap"
 import type { ResizeImageTransform, ResizeEditorMode, CropRect } from "@/types"
 import type Konva from "konva"
@@ -101,12 +102,10 @@ export function ResizeCanvas({
   }, [mode])
 
   // Cursor helper — crop mode always forces crosshair
-  const modeRef = useRef(mode)
-  modeRef.current = mode
   const setCursor = useCallback((cursor: string) => {
     if (!containerRef.current) return
-    containerRef.current.style.cursor = modeRef.current === "crop" ? "crosshair" : cursor
-  }, [])
+    containerRef.current.style.cursor = mode === "crop" ? "crosshair" : cursor
+  }, [mode])
 
   const srcW = transform.crop ? transform.crop.width : image?.naturalWidth ?? 0
   const srcH = transform.crop ? transform.crop.height : image?.naturalHeight ?? 0
@@ -156,7 +155,7 @@ export function ResizeCanvas({
       window.removeEventListener("keydown", handleKeyDown)
       window.removeEventListener("keyup", handleKeyUp)
     }
-  }, [])
+  }, [setCursor])
 
   const handleWheel = useCallback(
     (e: Konva.KonvaEventObject<WheelEvent>) => {
@@ -253,7 +252,7 @@ export function ResizeCanvas({
         setCursor("grabbing")
       }
     },
-    []
+    [setCursor]
   )
 
   const handleStageMouseMove = useCallback(
@@ -271,7 +270,7 @@ export function ResizeCanvas({
   const handleStageMouseUp = useCallback(() => {
     isStagePanningRef.current = false
     setCursor("grab")
-  }, [])
+  }, [setCursor])
 
   const handleStageClick = useCallback(
     (e: Konva.KonvaEventObject<MouseEvent>) => {
@@ -297,30 +296,13 @@ export function ResizeCanvas({
       return
     }
 
-    // Compute display dimensions fresh from current transform (avoid stale closure)
-    const curSrcW = transform.crop ? transform.crop.width : image.naturalWidth
-    const curSrcH = transform.crop ? transform.crop.height : image.naturalHeight
-    const curDisplayW = curSrcW * transform.scale
-    const curDisplayH = curSrcH * transform.scale
-
-    // Crop rect = intersection of image rect and artboard rect
-    const imgLeft = transform.x
-    const imgTop = transform.y
-    const imgRight = transform.x + curDisplayW
-    const imgBottom = transform.y + curDisplayH
-
-    const x1 = Math.max(0, imgLeft)
-    const y1 = Math.max(0, imgTop)
-    const x2 = Math.min(canvasWidth, imgRight)
-    const y2 = Math.min(canvasHeight, imgBottom)
-
-    const newCropRect = {
-      x: x1,
-      y: y1,
-      width: Math.max(20, x2 - x1),
-      height: Math.max(20, y2 - y1),
-    }
-    onCropRectChange(newCropRect)
+    onCropRectChange(calculateInitialCropRect(
+      image.naturalWidth,
+      image.naturalHeight,
+      transform,
+      canvasWidth,
+      canvasHeight
+    ))
     onModeChange("crop")
   }, [image, transform, mode, canvasWidth, canvasHeight, onCropRectChange, onModeChange, onApplyCrop])
 
@@ -329,7 +311,7 @@ export function ResizeCanvas({
     // Auto-select on drag start (Canva behavior)
     if (mode !== "selected") onModeChange("selected")
     setCursor("grabbing")
-  }, [mode, onModeChange])
+  }, [mode, onModeChange, setCursor])
 
   // Offset used for rotation center — must be subtracted when reading drag position
   const halfW = displayW * viewportScale / 2
@@ -361,7 +343,7 @@ export function ResizeCanvas({
       const newY = (e.target.y() - halfH - artboardY) / viewportScale
       onTransformChange({ ...transform, x: newX, y: newY })
     },
-    [transform, onTransformChange, artboardX, artboardY, viewportScale, halfW, halfH]
+    [transform, onTransformChange, artboardX, artboardY, viewportScale, halfW, halfH, setCursor]
   )
 
   const handleTransformEnd = useCallback(() => {
@@ -380,12 +362,12 @@ export function ResizeCanvas({
   const handleImageMouseEnter = useCallback(() => {
     if (isPanningRef.current || isDraggingImage) return
     setCursor("grab")
-  }, [mode, isDraggingImage])
+  }, [isDraggingImage, setCursor])
 
   const handleImageMouseLeave = useCallback(() => {
     if (isPanningRef.current || isDraggingImage) return
     setCursor("grab")
-  }, [isDraggingImage])
+  }, [isDraggingImage, setCursor])
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {

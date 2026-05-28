@@ -12,7 +12,13 @@ function EditorLoading() {
   )
 }
 
-export const DynamicResizeEditor = dynamic(
+interface DynamicResizeEditorProps {
+  initialWidth?: number
+  initialHeight?: number
+  initialCropAspectRatio?: number | null
+}
+
+export const DynamicResizeEditor = dynamic<DynamicResizeEditorProps>(
   () =>
     import("./ResizeEditor").then((mod) => ({ default: mod.ResizeEditor })),
   {

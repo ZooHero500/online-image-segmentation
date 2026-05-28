@@ -8,12 +8,13 @@ import {
   RotateCw, FlipHorizontal2, FlipVertical2,
   AlignCenterHorizontal, AlignCenterVertical, AlignStartHorizontal,
   AlignEndHorizontal, AlignStartVertical, AlignEndVertical, Maximize2,
-  PanelLeftOpen, PanelLeftClose, Settings2,
+  PanelLeftOpen, PanelLeftClose, Settings2, Crop,
 } from "lucide-react"
 import { Link } from "@/i18n/navigation"
 import { useResizeEditor } from "@/hooks/use-resize-editor"
 import { useCanvasViewport } from "@/hooks/use-canvas-viewport"
 import { exportArtboard } from "@/lib/resize-export"
+import { calculateInitialCropRect } from "@/lib/resize-utils"
 import { ACCEPTED_TYPES } from "@/lib/upload-utils"
 import { CanvasSizeControl } from "./CanvasSizeControl"
 import { ResizeCanvas } from "./ResizeCanvas"
@@ -248,7 +249,17 @@ function SidebarContent({
   )
 }
 
-export function ResizeEditor() {
+interface ResizeEditorProps {
+  initialWidth?: number
+  initialHeight?: number
+  initialCropAspectRatio?: number | null
+}
+
+export function ResizeEditor({
+  initialWidth,
+  initialHeight,
+  initialCropAspectRatio = null,
+}: ResizeEditorProps) {
   const t = useTranslations("resize")
   const replaceInputRef = useRef<HTMLInputElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -280,9 +291,9 @@ export function ResizeEditor() {
     fitMode,
     setFitMode,
     alignImage,
-  } = useResizeEditor()
+  } = useResizeEditor(initialWidth, initialHeight)
 
-  const [cropAspectRatio, setCropAspectRatio] = useState<number | null>(null)
+  const [cropAspectRatio, setCropAspectRatio] = useState<number | null>(initialCropAspectRatio)
 
   // Track container size reactively
   const [containerSize, setContainerSize] = useState({ width: 800, height: 600 })
@@ -432,6 +443,18 @@ export function ResizeEditor() {
     [transform, setTransform]
   )
 
+  const startCropMode = useCallback(() => {
+    if (!image) return
+    setCropRect(calculateInitialCropRect(
+      image.naturalWidth,
+      image.naturalHeight,
+      transform,
+      canvasSize.width,
+      canvasSize.height
+    ))
+    setMode("crop")
+  }, [image, transform, canvasSize, setCropRect, setMode])
+
   const sidebarProps = {
     t,
     canvasSize,
@@ -543,6 +566,12 @@ export function ResizeEditor() {
                   </ToolbarButton>
                   <ToolbarButton onClick={flipVertical} title={t("flipV")} className="hidden sm:flex">
                     <FlipVertical2 className="h-3.5 w-3.5" />
+                  </ToolbarButton>
+
+                  <div className="w-px h-4 bg-border mx-0.5 md:mx-1 shrink-0" />
+
+                  <ToolbarButton onClick={startCropMode} title={t("cropMode")}>
+                    <Crop className="h-3.5 w-3.5" />
                   </ToolbarButton>
 
                   {/* Align buttons — desktop only */}

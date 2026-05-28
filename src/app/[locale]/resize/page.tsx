@@ -6,6 +6,7 @@ import { routing } from "@/i18n/routing"
 import type { Metadata } from "next"
 import { DynamicResizeEditor } from "@/components/resize/DynamicResizeEditor"
 import { JsonLd } from "@/components/JsonLd"
+import { getResizePreset, getResizePresetAspectRatio } from "@/lib/resize-presets"
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imgsplit.com"
 
@@ -61,10 +62,14 @@ export function generateStaticParams() {
 
 export default async function ResizePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>
+  searchParams?: Promise<{ preset?: string }>
 }) {
   const { locale } = await params
+  const resolvedSearchParams = searchParams ? await searchParams : {}
+  const preset = getResizePreset(resolvedSearchParams.preset)
 
   if (!hasLocale(routing.locales, locale)) {
     notFound()
@@ -100,7 +105,11 @@ export default async function ResizePage({
           ],
         }}
       />
-      <DynamicResizeEditor />
+      <DynamicResizeEditor
+        initialWidth={preset?.width}
+        initialHeight={preset?.height}
+        initialCropAspectRatio={preset ? getResizePresetAspectRatio(preset) : null}
+      />
     </main>
   )
 }
