@@ -1031,6 +1031,110 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
+  "crop-image": {
+    slug: "crop-image",
+    category: "use-case",
+    seo: { title: "在线裁剪图片 — 免费社媒裁剪工具 | ImgSplit", description: "在线裁剪图片到 Instagram、YouTube、Facebook 等社媒尺寸。免费、隐私安全、浏览器端处理。", ogTitle: "在线裁剪图片 — 免费社媒裁剪工具", ogDescription: "在浏览器中裁剪照片到社媒尺寸。" },
+    hero: { overline: "图片裁剪工具", headlinePart1: "在线裁剪", headlineAccent: "图片", headlinePart2: "精确尺寸", description: "将任意图片调整并裁剪到精确社媒尺寸。选择预设、定位图片、应用裁剪，然后在本地导出。" },
+    scenarios: [
+      { icon: "Crop", title: "精确比例", description: "导出前锁定正方形、竖版或宽屏比例。" },
+      { icon: "Smartphone", title: "社媒即用", description: "使用 Instagram 帖子、Story、YouTube 缩略图和 Facebook 封面预设。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传图片", description: "打开 Resize 并添加 PNG、JPEG 或 WebP 图片。" },
+      { stepNumber: 2, title: "选择预设", description: "选择社媒尺寸预设，然后用裁剪工具微调可见区域。" },
+      { stepNumber: 3, title: "下载", description: "应用裁剪并下载 PNG、JPEG 或 WebP。" },
+    ],
+    faqEntries: [
+      { question: "这是单独的裁剪编辑器吗？", answer: "不是。它是 Resize 编辑器中的社媒预设和裁剪控制。" },
+      { question: "图片会上传吗？", answer: "不会。裁剪在浏览器中完成，图片留在你的设备上。" },
+      { question: "可以自定义尺寸吗？", answer: "可以。你可以手动修改画布尺寸和裁剪比例。" },
+    ],
+    relatedTools: [
+      { slug: "/resize", title: "图片调整尺寸", description: "设置精确尺寸、定位图片并导出。" },
+      { slug: "/crop-for-instagram", title: "Instagram 裁剪", description: "快速裁剪正方形 Instagram 帖子。" },
+      { slug: "/youtube-thumbnail-crop", title: "YouTube 缩略图裁剪", description: "裁剪到 16:9 缩略图尺寸。" },
+    ],
+  },
+
+  "crop-for-instagram": {
+    slug: "crop-for-instagram",
+    category: "use-case",
+    seo: { title: "Instagram 图片裁剪 — 免费 1:1 帖子裁剪 | ImgSplit", description: "在线裁剪 Instagram 帖子尺寸。1080 x 1080 正方形预设，浏览器端私密导出。", ogTitle: "Instagram 图片裁剪 — 免费在线工具", ogDescription: "无需上传即可制作 Instagram 正方形帖子。" },
+    hero: { overline: "Instagram 裁剪工具", headlinePart1: "裁剪为", headlineAccent: "Instagram", headlinePart2: "1:1 帖子", description: "从任意图片创建 1080 x 1080 Instagram 帖子裁剪。居中主体并导出平台即用的正方形图片。" },
+    scenarios: [
+      { icon: "Crop", title: "正方形动态帖", description: "把横图或竖图转成干净的 1:1 Instagram 帖子。" },
+      { icon: "Smartphone", title: "移动端分享", description: "在浏览器里先准备好图片，再发送到手机或发布工具。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传照片", description: "从 Instagram 正方形预设开始并添加图片。" },
+      { stepNumber: 2, title: "调整裁剪", description: "拖动图片或裁剪框，让主体适合正方形画面。" },
+      { stepNumber: 3, title: "下载", description: "应用裁剪并保存 Instagram 尺寸图片。" },
+    ],
+    faqEntries: [
+      { question: "这个预设是什么尺寸？", answer: "Instagram 正方形预设使用 1080 x 1080 像素，比例为 1:1。" },
+      { question: "也能裁剪竖版内容吗？", answer: "可以使用 Story 预设处理 9:16 竖版内容，或在 Resize 中自定义尺寸。" },
+      { question: "裁剪会降低质量吗？", answer: "工具会按你选择的画布尺寸导出。Instagram 帖子的目标输出是 1080 x 1080。" },
+    ],
+    relatedTools: [
+      { slug: "/instagram-story-crop", title: "Instagram Story 裁剪", description: "裁剪 9:16 竖版 Story 图片。" },
+      { slug: "/resize", title: "图片调整尺寸", description: "按任意尺寸调整和裁剪。" },
+      { slug: "/compress-image", title: "压缩图片", description: "分享前缩小最终图片体积。" },
+    ],
+  },
+
+  "instagram-story-crop": {
+    slug: "instagram-story-crop",
+    category: "use-case",
+    seo: { title: "Instagram Story 裁剪 — 免费 9:16 图片裁剪 | ImgSplit", description: "在线裁剪 Instagram Story 尺寸。1080 x 1920 竖版预设，浏览器端私密编辑。", ogTitle: "Instagram Story 裁剪 — 免费 9:16 裁剪", ogDescription: "用 1080 x 1920 预设在浏览器中裁剪竖版 Story。" },
+    hero: { overline: "Instagram Story 裁剪", headlinePart1: "裁剪 Instagram", headlineAccent: "Story", headlinePart2: "9:16 竖版", description: "使用 1080 x 1920 预设准备全屏 Instagram Story。重新定位图片、应用裁剪并私密导出。" },
+    scenarios: [
+      { icon: "Smartphone", title: "全屏 Story", description: "把宽图或方图转成竖版 Story 素材，不拉伸图片。" },
+      { icon: "Crop", title: "主体控制", description: "移动裁剪区域，让人物、产品或文字保留在可见画面中。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "打开 Story 预设", description: "在 Resize 中使用 1080 x 1920 Instagram Story 预设。" },
+      { stepNumber: 2, title: "调整裁剪", description: "拖动四角或移动图片，让关键内容保持可见。" },
+      { stepNumber: 3, title: "导出 Story", description: "下载竖版图片，用于 Instagram、Reels 封面或其他 9:16 场景。" },
+    ],
+    faqEntries: [
+      { question: "Instagram Story 裁剪尺寸是多少？", answer: "预设使用 1080 x 1920 像素，比例为 9:16。" },
+      { question: "可以用于 TikTok 或 Reels 吗？", answer: "可以。9:16 输出也适合很多短视频和竖版社媒场景。" },
+      { question: "可以保留完整图片不裁剪吗？", answer: "可以使用 Fit 模式，让完整图片可见并保留空白区域。" },
+    ],
+    relatedTools: [
+      { slug: "/crop-for-instagram", title: "Instagram 帖子裁剪", description: "制作正方形 Instagram 帖子。" },
+      { slug: "/resize", title: "图片调整尺寸", description: "自定义尺寸调整和裁剪。" },
+      { slug: "/jpg-to-webp", title: "JPG 转 WebP", description: "将完成的素材转换为 WebP。" },
+    ],
+  },
+
+  "youtube-thumbnail-crop": {
+    slug: "youtube-thumbnail-crop",
+    category: "use-case",
+    seo: { title: "YouTube 缩略图裁剪 — 免费 1280x720 裁剪 | ImgSplit", description: "在线裁剪 YouTube 缩略图尺寸。1280 x 720 16:9 预设，浏览器端处理，无需上传。", ogTitle: "YouTube 缩略图裁剪 — 免费 16:9 裁剪", ogDescription: "在浏览器中裁剪 1280 x 720 缩略图。" },
+    hero: { overline: "YouTube 缩略图裁剪", headlinePart1: "裁剪 YouTube", headlineAccent: "缩略图", headlinePart2: "16:9", description: "从任意图片创建 1280 x 720 YouTube 缩略图裁剪。使用 16:9 预设、定位主体并导出可上传图片。" },
+    scenarios: [
+      { icon: "Youtube", title: "缩略图准备", description: "将照片、截图或设计图裁剪为 YouTube 推荐的 1280 x 720 尺寸。" },
+      { icon: "Crop", title: "构图控制", description: "确保人物、产品和标题区域保留在缩略图安全画面中。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传图片", description: "打开 YouTube 缩略图预设并添加源图片。" },
+      { stepNumber: 2, title: "调整画面", description: "使用 16:9 裁剪框选择更有点击感的构图。" },
+      { stepNumber: 3, title: "下载", description: "将最终 1280 x 720 缩略图导出为 PNG、JPEG 或 WebP。" },
+    ],
+    faqEntries: [
+      { question: "YouTube 缩略图预设是什么尺寸？", answer: "预设使用 1280 x 720 像素，比例为 16:9。" },
+      { question: "可以导出 JPG 吗？", answer: "可以。下载菜单支持 JPEG、PNG 或 WebP。" },
+      { question: "这个工具能给缩略图加文字吗？", answer: "不能。这里专注裁剪和调整尺寸。你可以先在设计工具里加文字，再用 ImgSplit 裁剪/导出最终图片。" },
+    ],
+    relatedTools: [
+      { slug: "/resize", title: "图片调整尺寸", description: "将图片调整到任意画布尺寸。" },
+      { slug: "/compress-jpeg", title: "压缩 JPEG", description: "缩小完成后的缩略图。" },
+      { slug: "/crop-image", title: "裁剪图片", description: "通用在线裁剪工具。" },
+    ],
+  },
+
 }
 
 export default data

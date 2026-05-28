@@ -30,6 +30,8 @@ import {
   GraduationCap,
   Smartphone,
   Layers,
+  Crop,
+  Youtube,
 } from "lucide-react"
 import type React from "react"
 
@@ -57,6 +59,8 @@ const iconMap: Record<string, React.ComponentType<{ className?: string; strokeWi
   GraduationCap,
   Smartphone,
   Layers,
+  Crop,
+  Youtube,
 }
 
 // ─── Translation Interfaces ───
@@ -111,8 +115,8 @@ interface ToolLandingProps {
 
 // ─── Component ───
 
-// Map compress pSEO slugs to their /compress editor preset URLs
-const COMPRESS_SLUG_HREF: Record<string, string> = {
+// Map pSEO wrapper slugs to focused editor preset URLs.
+const EDITOR_SLUG_HREF: Record<string, string> = {
   "compress-image": "/compress",
   "compress-jpeg": "/compress?format=jpeg&quality=75",
   "compress-png": "/compress?format=png",
@@ -123,11 +127,15 @@ const COMPRESS_SLUG_HREF: Record<string, string> = {
   "webp-to-png": "/compress?format=png",
   "webp-to-jpg": "/compress?format=jpeg&quality=85",
   "reduce-image-size": "/compress?format=webp&quality=70",
+  "crop-image": "/resize",
+  "crop-for-instagram": "/resize?preset=instagram-square",
+  "instagram-story-crop": "/resize?preset=instagram-story",
+  "youtube-thumbnail-crop": "/resize?preset=youtube-thumbnail",
 }
 
 export function ToolLanding({ data, locale, t }: ToolLandingProps) {
   const hasFaq = data.faqEntries.length > 0
-  const compressHref = COMPRESS_SLUG_HREF[data.slug]
+  const editorHref = EDITOR_SLUG_HREF[data.slug]
 
   return (
     <main className="min-h-screen bg-background relative">
@@ -171,14 +179,14 @@ export function ToolLanding({ data, locale, t }: ToolLandingProps) {
                 ...(hasFaq ? [{ href: "#faq", label: t.nav.faq }] : []),
               ]}
               ctaLabel={t.nav.getStarted}
-              ctaHref={compressHref || "#upload"}
+              ctaHref={editorHref || "#upload"}
               menuLabel={t.nav.menu}
               closeLabel={t.nav.close}
             />
             <LocaleSwitcher variant="compact" />
             <SmartCTA
               label={t.nav.getStarted}
-              href={compressHref}
+              href={editorHref}
               className="hidden md:inline-flex group relative items-center gap-2 bg-primary text-primary-foreground px-6 py-2.5 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 cursor-pointer press"
             />
           </div>
@@ -221,7 +229,7 @@ export function ToolLanding({ data, locale, t }: ToolLandingProps) {
               <div className="flex flex-col sm:flex-row gap-4 hero-enter hero-delay-4">
                 <SmartCTA
                   label={t.pseoChrome.ctaButton}
-                  href={compressHref}
+                  href={editorHref}
                   className="group relative inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 sm:px-10 py-3 sm:py-4 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 cursor-pointer press"
                 />
                 <a
@@ -252,16 +260,16 @@ export function ToolLanding({ data, locale, t }: ToolLandingProps) {
         </div>
       </section>
 
-      {/* UPLOAD — for split tools show inline splitter; for compress tools show link to /compress */}
+      {/* UPLOAD — editor wrappers deep-link to focused tools; split pages keep inline splitter. */}
       <section id="upload" className="px-4 sm:px-8 md:px-16 pb-12 sm:pb-24 md:pb-32 max-w-[1600px] mx-auto">
         <div className="mb-8">
           <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
             {t.uploadSection.overline}
           </span>
         </div>
-        {compressHref ? (
+        {editorHref ? (
           <Link
-            href={compressHref}
+            href={editorHref}
             className="group flex flex-col items-center justify-center border-t border-b p-8 sm:p-16 md:p-24 border-primary/20 hover:border-primary/40 transition-all duration-700 cursor-pointer"
           >
             <div className="text-center">

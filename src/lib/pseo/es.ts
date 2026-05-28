@@ -982,6 +982,110 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
+  "crop-image": {
+    slug: "crop-image",
+    category: "use-case",
+    seo: { title: "Recortar Imagen Online — Herramienta Social Gratis | ImgSplit", description: "Recorta imágenes a tamaños para Instagram, YouTube, Facebook y más. Gratis, privado y en el navegador.", ogTitle: "Recortar Imagen Online", ogDescription: "Recorta fotos a tamaños sociales en tu navegador." },
+    hero: { overline: "Herramienta de Recorte", headlinePart1: "Recorta", headlineAccent: "Imágenes", headlinePart2: "Tamaños Exactos", description: "Redimensiona y recorta cualquier imagen a dimensiones precisas para redes sociales. Elige un preajuste, ajusta la posición y exporta localmente." },
+    scenarios: [
+      { icon: "Crop", title: "Proporciones Exactas", description: "Bloquea proporciones cuadradas, verticales o panorámicas antes de exportar." },
+      { icon: "Smartphone", title: "Listo para Redes", description: "Usa preajustes para Instagram, historias, YouTube y Facebook." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Sube tu Imagen", description: "Abre Resize y añade una imagen PNG, JPEG o WebP." },
+      { stepNumber: 2, title: "Elige un Preajuste", description: "Selecciona un tamaño social y usa Crop para ajustar el área visible." },
+      { stepNumber: 3, title: "Descarga", description: "Aplica el recorte y guarda como PNG, JPEG o WebP." },
+    ],
+    faqEntries: [
+      { question: "¿Es un editor de recorte separado?", answer: "No. Es el editor Resize con preajustes sociales y controles de recorte." },
+      { question: "¿Se sube mi imagen?", answer: "No. El recorte ocurre en tu navegador y la imagen permanece en tu dispositivo." },
+      { question: "¿Puedo usar tamaños personalizados?", answer: "Sí. Puedes cambiar las dimensiones del lienzo y la proporción de recorte manualmente." },
+    ],
+    relatedTools: [
+      { slug: "/resize", title: "Redimensionar Imagen", description: "Define dimensiones exactas y exporta." },
+      { slug: "/crop-for-instagram", title: "Recortar para Instagram", description: "Crea publicaciones cuadradas rápidamente." },
+      { slug: "/youtube-thumbnail-crop", title: "Recorte para YouTube", description: "Recorta a tamaño de miniatura 16:9." },
+    ],
+  },
+
+  "crop-for-instagram": {
+    slug: "crop-for-instagram",
+    category: "use-case",
+    seo: { title: "Recortar Imagen para Instagram — Gratis 1:1 | ImgSplit", description: "Recorta imágenes al tamaño de publicación de Instagram. Preajuste 1080 x 1080 y exportación privada en navegador.", ogTitle: "Recortar Imagen para Instagram", ogDescription: "Crea publicaciones cuadradas sin subir tu foto." },
+    hero: { overline: "Recorte para Instagram", headlinePart1: "Recorta para", headlineAccent: "Instagram", headlinePart2: "Publicaciones 1:1", description: "Crea recortes de Instagram de 1080 x 1080 desde cualquier imagen. Centra el sujeto y exporta un cuadrado listo para publicar." },
+    scenarios: [
+      { icon: "Crop", title: "Feed Cuadrado", description: "Convierte fotos horizontales o verticales en publicaciones 1:1." },
+      { icon: "Smartphone", title: "Compartir en Móvil", description: "Prepara imágenes en el navegador antes de enviarlas al móvil o programador." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Sube tu Foto", description: "Empieza desde el preajuste cuadrado de Instagram y añade tu imagen." },
+      { stepNumber: 2, title: "Ajusta el Recorte", description: "Arrastra la imagen o el marco hasta que el sujeto encaje en el cuadrado." },
+      { stepNumber: 3, title: "Descarga", description: "Aplica el recorte y guarda la imagen en tamaño Instagram." },
+    ],
+    faqEntries: [
+      { question: "¿Qué tamaño usa este preajuste?", answer: "El preajuste cuadrado de Instagram usa 1080 x 1080 píxeles con proporción 1:1." },
+      { question: "¿Puedo recortar contenido vertical?", answer: "Usa el preajuste Story para contenido 9:16 o define dimensiones personalizadas en Resize." },
+      { question: "¿El recorte reduce calidad?", answer: "La herramienta exporta al tamaño de lienzo elegido. Para Instagram, el objetivo es 1080 x 1080." },
+    ],
+    relatedTools: [
+      { slug: "/instagram-story-crop", title: "Recorte Story", description: "Crea imágenes verticales 9:16." },
+      { slug: "/resize", title: "Redimensionar Imagen", description: "Redimensiona y recorta a cualquier tamaño." },
+      { slug: "/compress-image", title: "Comprimir Imagen", description: "Reduce el tamaño antes de compartir." },
+    ],
+  },
+
+  "instagram-story-crop": {
+    slug: "instagram-story-crop",
+    category: "use-case",
+    seo: { title: "Recorte Instagram Story — Gratis 9:16 | ImgSplit", description: "Recorta imágenes al tamaño de Instagram Story. Preajuste vertical 1080 x 1920 y edición privada en navegador.", ogTitle: "Recorte Instagram Story", ogDescription: "Crea historias verticales con preajuste 1080 x 1920." },
+    hero: { overline: "Recorte Instagram Story", headlinePart1: "Recorta", headlineAccent: "Stories", headlinePart2: "Vertical 9:16", description: "Prepara historias de pantalla completa con el preajuste 1080 x 1920. Reposiciona, recorta y exporta de forma privada." },
+    scenarios: [
+      { icon: "Smartphone", title: "Stories Pantalla Completa", description: "Convierte imágenes anchas o cuadradas en assets verticales sin estirar." },
+      { icon: "Crop", title: "Control del Sujeto", description: "Mantén caras, productos o texto dentro del marco visible." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Abre el Preajuste", description: "Usa el preajuste 1080 x 1920 de Instagram Story en Resize." },
+      { stepNumber: 2, title: "Ajusta el Recorte", description: "Arrastra esquinas o mueve la imagen para mantener visible el contenido clave." },
+      { stepNumber: 3, title: "Exporta", description: "Descarga la imagen vertical para Instagram, Reels u otros formatos 9:16." },
+    ],
+    faqEntries: [
+      { question: "¿Cuál es el tamaño de Story?", answer: "1080 x 1920 píxeles, proporción 9:16." },
+      { question: "¿Sirve para TikTok o Reels?", answer: "Sí. El formato 9:16 funciona bien para muchos formatos verticales." },
+      { question: "¿Puedo mostrar la imagen completa?", answer: "Usa modo Fit para ver la imagen completa con espacio vacío." },
+    ],
+    relatedTools: [
+      { slug: "/crop-for-instagram", title: "Recorte Instagram", description: "Crea publicaciones cuadradas." },
+      { slug: "/resize", title: "Redimensionar Imagen", description: "Ajusta dimensiones personalizadas." },
+      { slug: "/jpg-to-webp", title: "JPG a WebP", description: "Convierte assets finales a WebP." },
+    ],
+  },
+
+  "youtube-thumbnail-crop": {
+    slug: "youtube-thumbnail-crop",
+    category: "use-case",
+    seo: { title: "Recorte Miniatura YouTube — Gratis 1280x720 | ImgSplit", description: "Recorta imágenes al tamaño de miniatura de YouTube. Preajuste 1280 x 720 16:9, navegador privado, sin subir archivos.", ogTitle: "Recorte Miniatura YouTube", ogDescription: "Crea miniaturas 1280 x 720 en el navegador." },
+    hero: { overline: "Recorte YouTube", headlinePart1: "Recorta", headlineAccent: "Miniaturas", headlinePart2: "16:9", description: "Crea miniaturas de YouTube de 1280 x 720 desde cualquier imagen. Usa el preajuste 16:9, encuadra el sujeto y exporta." },
+    scenarios: [
+      { icon: "Youtube", title: "Preparar Miniaturas", description: "Recorta fotos, capturas o diseños al tamaño recomendado de YouTube." },
+      { icon: "Crop", title: "Control de Composición", description: "Mantén caras, productos y títulos dentro del marco seguro." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Sube tu Imagen", description: "Abre el preajuste de miniatura de YouTube y añade la imagen fuente." },
+      { stepNumber: 2, title: "Encuadra", description: "Usa el marco 16:9 para elegir una composición más atractiva." },
+      { stepNumber: 3, title: "Descarga", description: "Exporta la miniatura final 1280 x 720 como PNG, JPEG o WebP." },
+    ],
+    faqEntries: [
+      { question: "¿Qué tamaño usa el preajuste?", answer: "1280 x 720 píxeles con proporción 16:9." },
+      { question: "¿Puedo exportar JPG?", answer: "Sí. Puedes descargar JPEG, PNG o WebP." },
+      { question: "¿Añade texto a las miniaturas?", answer: "No. Esta herramienta se enfoca en recorte y redimensionado." },
+    ],
+    relatedTools: [
+      { slug: "/resize", title: "Redimensionar Imagen", description: "Ajusta cualquier tamaño de lienzo." },
+      { slug: "/compress-jpeg", title: "Comprimir JPEG", description: "Reduce miniaturas terminadas." },
+      { slug: "/crop-image", title: "Recortar Imagen", description: "Herramienta general de recorte online." },
+    ],
+  },
+
 }
 
 export default data
