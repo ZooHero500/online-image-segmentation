@@ -1,6 +1,5 @@
 "use client"
 
-import { Suspense } from "react"
 import dynamic from "next/dynamic"
 import { useTranslations } from "next-intl"
 
@@ -13,7 +12,7 @@ function EditorLoading() {
   )
 }
 
-const LazyResizeEditor = dynamic(
+export const DynamicResizeEditor = dynamic(
   () =>
     import("./ResizeEditor").then((mod) => ({ default: mod.ResizeEditor })),
   {
@@ -21,11 +20,3 @@ const LazyResizeEditor = dynamic(
     loading: () => <EditorLoading />,
   }
 )
-
-export function DynamicResizeEditor() {
-  return (
-    <Suspense fallback={<EditorLoading />}>
-      <LazyResizeEditor />
-    </Suspense>
-  )
-}
