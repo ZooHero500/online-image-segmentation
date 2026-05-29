@@ -4,7 +4,7 @@ import { useState, useCallback } from "react"
 import { ArrowLeftRight } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { validateCanvasSize } from "@/lib/resize-utils"
-import { RESIZE_PRESETS } from "@/lib/resize-presets"
+import { RATIO_RESIZE_PRESETS, SOCIAL_RESIZE_PRESETS } from "@/lib/resize-presets"
 
 interface CanvasSizeControlProps {
   width: number
@@ -21,6 +21,7 @@ export function CanvasSizeControl({
   const [inputW, setInputW] = useState(String(width))
   const [inputH, setInputH] = useState(String(height))
   const [error, setError] = useState<string | null>(null)
+  const [selectedPreset, setSelectedPreset] = useState<string | null>(null)
 
   const applySize = useCallback(
     (w: string, h: string) => {
@@ -65,18 +66,35 @@ export function CanvasSizeControl({
   }, [inputW, inputH, applySize])
 
   const handlePreset = useCallback(
-    (w: number, h: number) => {
-      setInputW(String(w))
-      setInputH(String(h))
+    (preset: (typeof RATIO_RESIZE_PRESETS)[number]) => {
+      setSelectedPreset(preset.slug)
+      setInputW(String(preset.width))
+      setInputH(String(preset.height))
       setError(null)
-      onChange({ width: w, height: h })
+      onChange({ width: preset.width, height: preset.height })
     },
     [onChange]
   )
 
-  const activePreset = RESIZE_PRESETS.find(
+  const matchingPreset = [...RATIO_RESIZE_PRESETS, ...SOCIAL_RESIZE_PRESETS].find(
     (p) => p.width === width && p.height === height
   )?.slug
+  const activePreset = selectedPreset ?? matchingPreset
+
+  const renderPresetButton = (preset: (typeof RATIO_RESIZE_PRESETS)[number]) => (
+    <button
+      key={preset.slug}
+      onClick={() => handlePreset(preset)}
+      className={`flex items-center justify-between px-3 py-2.5 md:py-2 text-xs rounded cursor-pointer transition-colors ${
+        activePreset === preset.slug
+          ? "bg-accent/10 text-accent"
+          : "text-muted-foreground hover:bg-muted hover:text-foreground"
+      }`}
+    >
+      <span className="uppercase tracking-wider">{t(preset.labelKey)}</span>
+      <span className="text-[10px] text-muted-foreground/70">{preset.width} × {preset.height}</span>
+    </button>
+  )
 
   return (
     <div className="flex flex-col gap-5">
@@ -135,20 +153,17 @@ export function CanvasSizeControl({
           {t("presets")}
         </p>
         <div className="flex flex-col gap-1">
-          {RESIZE_PRESETS.map((preset) => (
-            <button
-              key={preset.slug}
-              onClick={() => handlePreset(preset.width, preset.height)}
-              className={`flex items-center justify-between px-3 py-2.5 md:py-2 text-xs rounded cursor-pointer transition-colors ${
-                activePreset === preset.slug
-                  ? "bg-accent/10 text-accent"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
-              }`}
-            >
-              <span className="uppercase tracking-wider">{t(preset.labelKey)}</span>
-              <span className="text-[10px] text-muted-foreground/70">{preset.width} × {preset.height}</span>
-            </button>
-          ))}
+          {RATIO_RESIZE_PRESETS.map(renderPresetButton)}
+        </div>
+      </div>
+
+      {/* Section: Social Presets */}
+      <div>
+        <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
+          {t("socialPresets")}
+        </p>
+        <div className="flex flex-col gap-1">
+          {SOCIAL_RESIZE_PRESETS.map(renderPresetButton)}
         </div>
       </div>
     </div>
