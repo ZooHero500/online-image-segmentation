@@ -85,6 +85,7 @@ export function CanvasSizeControl({
     <button
       key={preset.slug}
       onClick={() => handlePreset(preset)}
+      title={`${t(preset.labelKey)} · ${preset.width} × ${preset.height}`}
       className={`flex min-w-0 items-center justify-between gap-2 px-3 py-2.5 md:py-2 text-xs rounded cursor-pointer transition-colors ${
         activePreset === preset.slug
           ? "bg-accent/10 text-accent"
