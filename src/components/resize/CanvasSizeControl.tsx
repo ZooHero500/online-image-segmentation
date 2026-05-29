@@ -85,14 +85,18 @@ export function CanvasSizeControl({
     <button
       key={preset.slug}
       onClick={() => handlePreset(preset)}
-      className={`flex items-center justify-between px-3 py-2.5 md:py-2 text-xs rounded cursor-pointer transition-colors ${
+      className={`flex min-w-0 items-center justify-between gap-2 px-3 py-2.5 md:py-2 text-xs rounded cursor-pointer transition-colors ${
         activePreset === preset.slug
           ? "bg-accent/10 text-accent"
           : "text-muted-foreground hover:bg-muted hover:text-foreground"
       }`}
     >
-      <span className="uppercase tracking-wider">{t(preset.labelKey)}</span>
-      <span className="text-[10px] text-muted-foreground/70">{preset.width} × {preset.height}</span>
+      <span className="min-w-0 flex-1 truncate whitespace-nowrap text-left uppercase tracking-wide">
+        {t(preset.labelKey)}
+      </span>
+      <span className="shrink-0 whitespace-nowrap text-[10px] tabular-nums text-muted-foreground/70">
+        {preset.width} × {preset.height}
+      </span>
     </button>
   )
 
