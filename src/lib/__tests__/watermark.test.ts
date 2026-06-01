@@ -1,7 +1,8 @@
-import { describe, expect, it } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 import {
   createWatermarkLayer,
   createWatermarkState,
+  exportWatermarkedImage,
   getEnabledLayers,
   updateWatermarkLayer,
 } from "../watermark"
@@ -66,5 +67,53 @@ describe("watermark templates", () => {
       text: "Copyright",
       rotation: -28,
     })
+  })
+})
+
+describe("exportWatermarkedImage", () => {
+  it("draws the base image and enabled text layers", async () => {
+    const ctx = {
+      drawImage: vi.fn(),
+      fillText: vi.fn(),
+      fillRect: vi.fn(),
+      save: vi.fn(),
+      restore: vi.fn(),
+      translate: vi.fn(),
+      rotate: vi.fn(),
+      globalAlpha: 1,
+      fillStyle: "",
+      font: "",
+      textAlign: "center",
+      textBaseline: "middle",
+    }
+    const canvas = {
+      width: 0,
+      height: 0,
+      getContext: vi.fn(() => ctx),
+      toBlob: vi.fn((cb: BlobCallback, type?: string) => {
+        cb(new Blob(["ok"], { type }))
+      }),
+    }
+    const originalCreateElement = document.createElement.bind(document)
+    vi.spyOn(document, "createElement").mockImplementation((tag) => {
+      if (tag === "canvas") {
+        return canvas as unknown as HTMLCanvasElement
+      }
+      return originalCreateElement(tag)
+    })
+
+    const image = {
+      naturalWidth: 800,
+      naturalHeight: 600,
+    } as HTMLImageElement
+    const state = createWatermarkState([
+      createWatermarkLayer("text", { text: "Owner" }),
+    ])
+
+    const blob = await exportWatermarkedImage(image, state, "image/png")
+
+    expect(blob.type).toBe("image/png")
+    expect(ctx.drawImage).toHaveBeenCalledWith(image, 0, 0, 800, 600)
+    expect(ctx.fillText).toHaveBeenCalledWith("Owner", 0, 0)
   })
 })
