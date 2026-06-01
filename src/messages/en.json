@@ -577,6 +577,30 @@
     "compressFailed": "Some images could not be processed.",
     "ready": "Ready"
   },
+  "watermark": {
+    "metadata": {
+      "title": "Add Watermark to Photo Online - Free Browser Tool | ImgSplit",
+      "description": "Add text, logo, and repeated watermarks to images online. Free, private, browser-based watermark maker with no upload."
+    },
+    "loadingEditor": "Loading editor...",
+    "uploadTitle": "Add Watermark",
+    "uploadDescription": "Upload an image to add text, logo, or repeated watermark templates.",
+    "templates": "Templates",
+    "layers": "Layers",
+    "text": "Text",
+    "logo": "Logo",
+    "opacity": "Opacity",
+    "rotation": "Rotation",
+    "size": "Size",
+    "spacing": "Spacing",
+    "color": "Color",
+    "repeat": "Repeat",
+    "single": "Single",
+    "download": "Download",
+    "addText": "Add text",
+    "addLogo": "Add logo",
+    "replaceImage": "Replace image"
+  },
   "resize": {
     "metadata": {
       "title": "Image Resizer — Resize & Crop to Any Dimension | ImgSplit",
