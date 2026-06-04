@@ -1,9 +1,9 @@
-export type CoreToolId = "split" | "grid" | "resize" | "compress" | "watermark" | "mosaic"
-export type CoreToolIcon = "scissors" | "grid" | "resize" | "compress" | "watermark" | "mosaic"
+export type CoreToolId = "split" | "grid" | "resize" | "compress" | "watermark" | "mosaic" | "collage"
+export type CoreToolIcon = "scissors" | "grid" | "resize" | "compress" | "watermark" | "mosaic" | "collage"
 
 export interface CoreTool {
   id: CoreToolId
-  labelKey: "toolSplit" | "toolGrid" | "toolResize" | "toolCompress" | "toolWatermark" | "toolMosaic"
+  labelKey: "toolSplit" | "toolGrid" | "toolResize" | "toolCompress" | "toolWatermark" | "toolMosaic" | "toolCollage"
   descriptionKey:
     | "existingToolSplitDesc"
     | "existingToolGridDesc"
@@ -11,6 +11,7 @@ export interface CoreTool {
     | "existingToolCompressDesc"
     | "existingToolWatermarkDesc"
     | "existingToolMosaicDesc"
+    | "existingToolCollageDesc"
   href: string
   quickAccessHref: string
   sitemapPriority: number
@@ -72,6 +73,15 @@ export const CORE_TOOLS: CoreTool[] = [
     sitemapPriority: 0.9,
     icon: "mosaic",
   },
+  {
+    id: "collage",
+    labelKey: "toolCollage",
+    descriptionKey: "existingToolCollageDesc",
+    href: "/collage",
+    quickAccessHref: "/collage",
+    sitemapPriority: 0.9,
+    icon: "collage",
+  },
 ]
 
 export const POPULAR_TOOL_SLUGS = [
@@ -109,4 +119,7 @@ export const TOOL_EDITOR_HREFS: Record<string, string> = {
   "mosaic-tool": "/mosaic",
   "redact-image": "/mosaic",
   "redact-image-online": "/mosaic",
+  "photo-collage-maker": "/collage",
+  "photo-grid-maker": "/collage",
+  "instagram-story-collage": "/collage?template=story-stack",
 }

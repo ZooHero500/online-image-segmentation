@@ -905,6 +905,9 @@ export function MosaicEditor() {
               <Link href="/watermark" className="transition-colors hover:text-foreground">
                 Watermark
               </Link>
+              <Link href="/collage" className="transition-colors hover:text-foreground">
+                Collage
+              </Link>
               <Link href="/tools" className="transition-colors hover:text-foreground">
                 Tools
               </Link>

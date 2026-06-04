@@ -509,6 +509,9 @@ export function ResizeEditor({
           <Link href="/mosaic" className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
             Mosaic
           </Link>
+          <Link href="/collage" className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
+            Collage
+          </Link>
           <LocaleSwitcher variant="compact" />
         </div>
       </nav>

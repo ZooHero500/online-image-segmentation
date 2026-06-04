@@ -8,15 +8,16 @@ import ko from "./ko"
 import es from "./es"
 import { watermarkPagesByLocale } from "./watermark-pages"
 import { mosaicPagesByLocale } from "./mosaic-pages"
+import { collagePagesByLocale } from "./collage-pages"
 
 // ─── Assemble ───
 
 const localeData: Record<string, Record<string, ToolPageData>> = {
-  en: { ...en, ...watermarkPagesByLocale.en, ...mosaicPagesByLocale.en },
-  "zh-CN": { ...zhCN, ...watermarkPagesByLocale["zh-CN"], ...mosaicPagesByLocale["zh-CN"] },
-  ja: { ...ja, ...watermarkPagesByLocale.ja, ...mosaicPagesByLocale.ja },
-  ko: { ...ko, ...watermarkPagesByLocale.ko, ...mosaicPagesByLocale.ko },
-  es: { ...es, ...watermarkPagesByLocale.es, ...mosaicPagesByLocale.es },
+  en: { ...en, ...watermarkPagesByLocale.en, ...mosaicPagesByLocale.en, ...collagePagesByLocale.en },
+  "zh-CN": { ...zhCN, ...watermarkPagesByLocale["zh-CN"], ...mosaicPagesByLocale["zh-CN"], ...collagePagesByLocale["zh-CN"] },
+  ja: { ...ja, ...watermarkPagesByLocale.ja, ...mosaicPagesByLocale.ja, ...collagePagesByLocale.ja },
+  ko: { ...ko, ...watermarkPagesByLocale.ko, ...mosaicPagesByLocale.ko, ...collagePagesByLocale.ko },
+  es: { ...es, ...watermarkPagesByLocale.es, ...mosaicPagesByLocale.es, ...collagePagesByLocale.es },
 }
 
 const slugMeta: { slug: string; category: ToolCategory }[] = [
@@ -58,6 +59,9 @@ const slugMeta: { slug: string; category: ToolCategory }[] = [
   { slug: "mosaic-tool", category: "use-case" },
   { slug: "redact-image", category: "use-case" },
   { slug: "redact-image-online", category: "use-case" },
+  { slug: "photo-collage-maker", category: "use-case" },
+  { slug: "photo-grid-maker", category: "use-case" },
+  { slug: "instagram-story-collage", category: "use-case" },
 ]
 
 const toolPages: ToolPageConfig[] = slugMeta.map(({ slug, category }) => ({

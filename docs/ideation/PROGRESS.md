@@ -10,7 +10,7 @@
 | P1 | ② Resize 裁剪增强 (社媒预设) | 🟢 已完成 | 2026-05-28 | 2026-05-29 | 4 pSEO 页, 5 语言, 预设 UI 已优化 |
 | P2 | ③ 图片水印工具 | 🟢 已完成 | 2026-06-04 | 2026-06-04 | 工具 MVP + 4 pSEO 页, 5 语言；批量水印暂缓 |
 | P2 | ⑤ 隐私打码/马赛克 | 🟢 已完成 | 2026-06-04 | 2026-06-04 | 工具 MVP + 画笔/图片遮罩增强 + 8 pSEO 页, 5 语言, 跳转已验证 |
-| P3 | ④ 照片拼图/拼贴 | ⬜ 未开始 | - | - | |
+| P3 | ④ 照片拼图/拼贴 | 🟢 已完成 | 2026-06-04 | 2026-06-04 | 工具 MVP + 10 模板 + 3 pSEO 页, 5 语言, build 已验证 |
 | P3 | ⑥ 社媒多平台一键导出 | ⬜ 未开始 | - | - | |
 | P4 | ⑦ AI 背景移除 | ⬜ 未开始 | - | - | |
 
@@ -101,17 +101,22 @@
 ## Phase 3 — 品牌延伸 (~5天)
 
 ### ④ 照片拼图/拼贴 (Collage)
-- **状态**: ⬜ 未开始
+- **状态**: 🟢 已完成
 - **预估**: ~800 行新代码, ~3 天
-- **Spec**: -
+- **实际**: ~1 天；完成模板化照片拼图 MVP
+- **Spec/Plan**: `docs/superpowers/plans/2026-06-04-photo-collage-tool.md`
+- **说明**: 照片拼图工具已上线 `/collage`，支持多图上传、10 个模板 (双图、斜切双图、三图、四宫格、五图 mosaic、六宫格、Story Stack、Story Diagonal)、空 frame 点击/拖拽上传、点击照片填入选中 frame、frame 内拖动定位、fit/fill、缩放、90 度旋转、间距/边距/圆角/背景/透明背景控制，以及 PNG/JPEG/WebP 导出。已接入核心工具 catalog、Tools Hub、Footer、返回用户快捷栏、Sitemap、编辑器互链、5 语言文案与 3 个 pSEO 长尾页。
+- **验证**: 2026-06-04 `bunx vitest run src/lib/__tests__/collage.test.ts` 通过 16 tests；Collage 相关文件 scoped `eslint` 通过；`bun run build` 通过并生成 `/collage` 与新增 pSEO 静态页。全量 `bun run lint` 仍因既有 `.worktrees/watermark-tool` 与旧 React Compiler 规则问题失败，非本次 Collage 改动引入。
 - **子任务**:
-  - [ ] Spec: 需求 → 设计 → 任务
-  - [ ] 核心: 模板布局系统 (2-up, 3-panel, 4-grid, mosaic)
-  - [ ] 核心: 多图上传 + 拖入 slot
-  - [ ] 核心: 每张图独立裁剪/缩放/位移
-  - [ ] UI: 模板选择器 + 间距/背景控制
-  - [ ] 导出: 合成单图输出
-  - [ ] pSEO + i18n + 集成
+  - [x] Spec/Plan: 需求 → 设计 → 任务
+  - [x] 核心: 模板布局系统 (2-up, diagonal, 3-panel, 4-grid, mosaic, story)
+  - [x] 核心: 多图上传 + 空 frame 点击/拖拽上传 + 点击填入选中 frame
+  - [x] 核心: 每张图独立 fit/fill、缩放、位移、90 度旋转
+  - [x] UI: 模板选择器 + 间距/边距/圆角/背景控制
+  - [x] 导出: 合成单图输出 (PNG/JPEG/WebP)
+  - [x] pSEO: 3 个落地页 (photo-collage-maker, photo-grid-maker, instagram-story-collage)
+  - [x] i18n: 5 语言翻译
+  - [x] 集成: Tools Hub + Sitemap + Footer + Nav + 返回用户快捷栏
 
 ### ⑥ 社媒多平台一键导出
 - **状态**: ⬜ 未开始
@@ -160,3 +165,5 @@
 | 2026-06-04 | ⑤ 隐私打码/马赛克 — 增强自由画笔、橡皮擦、自定义图片遮罩图层，支持图片遮罩拖动/缩放/透明度/旋转 |
 | 2026-06-04 | ⑤ 隐私打码 pSEO — 补跑 DataForSEO MCP 校准，新增 blur-face、pixelate-image、censor-image-online、redact-image，扩展到 8 个长尾页 |
 | 2026-06-04 | ⑤ 隐私打码 pSEO — 验证 8 个长尾页 CTA/上传入口均指向 `/mosaic`，非默认语言正确保留 locale 前缀 |
+| 2026-06-04 | ④ 照片拼图/拼贴 — 完成 `/collage` 模板化拼图 MVP，支持 8 模板、多图上传、frame 内调整、样式控制、PNG/JPEG/WebP 导出、3 pSEO 与 5 语言文案 |
+| 2026-06-04 | ④ 照片拼图/拼贴 — 优化空 frame 点击/拖拽上传，新增 Diagonal Duo 与 Story Diagonal 斜切模板，模板数扩展到 10 个 |

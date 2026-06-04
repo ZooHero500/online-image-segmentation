@@ -322,6 +322,9 @@ export function WatermarkEditor() {
               <Link href="/mosaic" className="hover:text-foreground transition-colors">
                 Mosaic
               </Link>
+              <Link href="/collage" className="hover:text-foreground transition-colors">
+                Collage
+              </Link>
               <Link href="/tools" className="hover:text-foreground transition-colors">
                 Tools
               </Link>

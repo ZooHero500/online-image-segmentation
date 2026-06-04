@@ -98,6 +98,7 @@ export default async function ToolsPage({
               { "@type": "ListItem", position: 13, name: "Image Compressor", url: `${BASE_URL}/compress` },
               { "@type": "ListItem", position: 14, name: "Watermark Tool", url: `${BASE_URL}/watermark` },
               { "@type": "ListItem", position: 15, name: "Privacy Mosaic Tool", url: `${BASE_URL}/mosaic` },
+              { "@type": "ListItem", position: 16, name: "Photo Collage Maker", url: `${BASE_URL}/collage` },
             ],
           },
         }}
