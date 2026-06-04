@@ -341,19 +341,25 @@ export function CollageEditor() {
         Number.parseFloat(style.paddingLeft) + Number.parseFloat(style.paddingRight)
       const verticalPadding =
         Number.parseFloat(style.paddingTop) + Number.parseFloat(style.paddingBottom)
+      const visibleWidth =
+        Math.min(rect.right, window.innerWidth) - Math.max(rect.left, 0)
+      const visibleHeight =
+        Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0)
 
       setPreviewAreaSize({
-        width: Math.max(0, rect.width - horizontalPadding),
-        height: Math.max(0, rect.height - verticalPadding),
+        width: Math.max(0, visibleWidth - horizontalPadding),
+        height: Math.max(0, visibleHeight - verticalPadding),
       })
     }
     const observer = new ResizeObserver(updatePreviewAreaSize)
     observer.observe(previewArea)
     const frame = requestAnimationFrame(updatePreviewAreaSize)
+    window.addEventListener("resize", updatePreviewAreaSize)
 
     return () => {
       cancelAnimationFrame(frame)
       observer.disconnect()
+      window.removeEventListener("resize", updatePreviewAreaSize)
     }
   }, [hasImages])
 
