@@ -2,8 +2,21 @@
 
 import { useState, useCallback } from "react"
 import { createPortal } from "react-dom"
-import { Menu, X, ArrowRight } from "lucide-react"
+import {
+  Menu,
+  X,
+  ArrowRight,
+  EyeOff,
+  Grid3X3,
+  LayoutTemplate,
+  Maximize2,
+  Scissors,
+  Stamp,
+  Zap,
+} from "lucide-react"
 import { Link } from "@/i18n/navigation"
+import type { CoreToolIcon } from "@/lib/tools/catalog"
+import type { LucideIcon } from "lucide-react"
 import type { ReactNode } from "react"
 
 interface NavLink {
@@ -11,15 +24,37 @@ interface NavLink {
   label: string
 }
 
+interface ToolLink extends NavLink {
+  icon: CoreToolIcon
+}
+
 interface MobileNavProps {
   links: NavLink[]
+  toolLinks?: ToolLink[]
   ctaLabel: string
   ctaHref: string
   menuLabel?: string
   closeLabel?: string
 }
 
-export function MobileNav({ links, ctaLabel, ctaHref, menuLabel = "Menu", closeLabel = "Close" }: MobileNavProps) {
+const toolIconMap: Record<CoreToolIcon, LucideIcon> = {
+  scissors: Scissors,
+  grid: Grid3X3,
+  resize: Maximize2,
+  compress: Zap,
+  watermark: Stamp,
+  mosaic: EyeOff,
+  collage: LayoutTemplate,
+}
+
+export function MobileNav({
+  links,
+  toolLinks,
+  ctaLabel,
+  ctaHref,
+  menuLabel = "Menu",
+  closeLabel = "Close",
+}: MobileNavProps) {
   const [open, setOpen] = useState(false)
 
   const handleLinkClick = useCallback(() => {
@@ -55,12 +90,21 @@ export function MobileNav({ links, ctaLabel, ctaHref, menuLabel = "Menu", closeL
         </div>
 
         {/* Links */}
-        <nav className="flex-1 flex flex-col p-6 gap-1">
-          {links.map((link) => (
-            <MobileLink key={link.href} href={link.href} onClick={handleLinkClick}>
-              {link.label}
-            </MobileLink>
-          ))}
+        <nav className="flex-1 flex flex-col p-6 gap-1 overflow-y-auto">
+          {links.map((link) =>
+            link.href === "/tools" && toolLinks?.length ? (
+              <MobileToolsSection
+                key={link.href}
+                label={link.label}
+                tools={toolLinks}
+                onClick={handleLinkClick}
+              />
+            ) : (
+              <MobileLink key={link.href} href={link.href} onClick={handleLinkClick}>
+                {link.label}
+              </MobileLink>
+            )
+          )}
         </nav>
 
         {/* CTA */}
@@ -92,6 +136,42 @@ export function MobileNav({ links, ctaLabel, ctaHref, menuLabel = "Menu", closeL
 
       {/* Portal to body — escapes nav's backdrop-filter stacking context */}
       {open && typeof document !== "undefined" && createPortal(overlay, document.body)}
+    </div>
+  )
+}
+
+function MobileToolsSection({
+  label,
+  tools,
+  onClick,
+}: {
+  label: string
+  tools: ToolLink[]
+  onClick: () => void
+}) {
+  return (
+    <div className="border-b border-border pb-4">
+      <MobileLink href="/tools" onClick={onClick} className="flex items-center justify-between py-3 text-sm uppercase tracking-[0.15em] text-foreground hover:text-accent transition-colors duration-500">
+        {label}
+        <ArrowRight className="h-3 w-3" strokeWidth={1.5} />
+      </MobileLink>
+      <div className="grid grid-cols-1 gap-1 pt-1">
+        {tools.map((tool) => {
+          const Icon = toolIconMap[tool.icon]
+
+          return (
+            <MobileLink
+              key={tool.href}
+              href={tool.href}
+              onClick={onClick}
+              className="flex min-h-11 items-center gap-3 px-3 py-2 text-xs uppercase tracking-[0.14em] text-muted-foreground hover:bg-secondary/70 hover:text-foreground transition-colors duration-300"
+            >
+              <Icon className="h-3.5 w-3.5 text-accent" strokeWidth={1.5} />
+              <span>{tool.label}</span>
+            </MobileLink>
+          )
+        })}
+      </div>
     </div>
   )
 }
