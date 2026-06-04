@@ -7,15 +7,16 @@ import ja from "./ja"
 import ko from "./ko"
 import es from "./es"
 import { watermarkPagesByLocale } from "./watermark-pages"
+import { mosaicPagesByLocale } from "./mosaic-pages"
 
 // ─── Assemble ───
 
 const localeData: Record<string, Record<string, ToolPageData>> = {
-  en: { ...en, ...watermarkPagesByLocale.en },
-  "zh-CN": { ...zhCN, ...watermarkPagesByLocale["zh-CN"] },
-  ja: { ...ja, ...watermarkPagesByLocale.ja },
-  ko: { ...ko, ...watermarkPagesByLocale.ko },
-  es: { ...es, ...watermarkPagesByLocale.es },
+  en: { ...en, ...watermarkPagesByLocale.en, ...mosaicPagesByLocale.en },
+  "zh-CN": { ...zhCN, ...watermarkPagesByLocale["zh-CN"], ...mosaicPagesByLocale["zh-CN"] },
+  ja: { ...ja, ...watermarkPagesByLocale.ja, ...mosaicPagesByLocale.ja },
+  ko: { ...ko, ...watermarkPagesByLocale.ko, ...mosaicPagesByLocale.ko },
+  es: { ...es, ...watermarkPagesByLocale.es, ...mosaicPagesByLocale.es },
 }
 
 const slugMeta: { slug: string; category: ToolCategory }[] = [
@@ -49,6 +50,10 @@ const slugMeta: { slug: string; category: ToolCategory }[] = [
   { slug: "add-watermark-to-photo", category: "use-case" },
   { slug: "add-watermark-to-image", category: "use-case" },
   { slug: "online-watermark-tool", category: "use-case" },
+  { slug: "blur-face-in-photo", category: "use-case" },
+  { slug: "pixelate-image-online", category: "use-case" },
+  { slug: "mosaic-tool", category: "use-case" },
+  { slug: "redact-image-online", category: "use-case" },
 ]
 
 const toolPages: ToolPageConfig[] = slugMeta.map(({ slug, category }) => ({

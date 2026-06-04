@@ -1,15 +1,16 @@
-export type CoreToolId = "split" | "grid" | "resize" | "compress" | "watermark"
-export type CoreToolIcon = "scissors" | "grid" | "resize" | "compress" | "watermark"
+export type CoreToolId = "split" | "grid" | "resize" | "compress" | "watermark" | "mosaic"
+export type CoreToolIcon = "scissors" | "grid" | "resize" | "compress" | "watermark" | "mosaic"
 
 export interface CoreTool {
   id: CoreToolId
-  labelKey: "toolSplit" | "toolGrid" | "toolResize" | "toolCompress" | "toolWatermark"
+  labelKey: "toolSplit" | "toolGrid" | "toolResize" | "toolCompress" | "toolWatermark" | "toolMosaic"
   descriptionKey:
     | "existingToolSplitDesc"
     | "existingToolGridDesc"
     | "existingToolResizeDesc"
     | "existingToolCompressDesc"
     | "existingToolWatermarkDesc"
+    | "existingToolMosaicDesc"
   href: string
   quickAccessHref: string
   sitemapPriority: number
@@ -62,6 +63,15 @@ export const CORE_TOOLS: CoreTool[] = [
     sitemapPriority: 0.9,
     icon: "watermark",
   },
+  {
+    id: "mosaic",
+    labelKey: "toolMosaic",
+    descriptionKey: "existingToolMosaicDesc",
+    href: "/mosaic",
+    quickAccessHref: "/mosaic",
+    sitemapPriority: 0.9,
+    icon: "mosaic",
+  },
 ]
 
 export const POPULAR_TOOL_SLUGS = [
@@ -91,4 +101,8 @@ export const TOOL_EDITOR_HREFS: Record<string, string> = {
   "add-watermark-to-photo": "/watermark",
   "add-watermark-to-image": "/watermark",
   "online-watermark-tool": "/watermark",
+  "blur-face-in-photo": "/mosaic",
+  "pixelate-image-online": "/mosaic",
+  "mosaic-tool": "/mosaic",
+  "redact-image-online": "/mosaic",
 }
