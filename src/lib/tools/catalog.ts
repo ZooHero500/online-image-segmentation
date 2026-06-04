@@ -101,8 +101,12 @@ export const TOOL_EDITOR_HREFS: Record<string, string> = {
   "add-watermark-to-photo": "/watermark",
   "add-watermark-to-image": "/watermark",
   "online-watermark-tool": "/watermark",
+  "blur-face": "/mosaic",
   "blur-face-in-photo": "/mosaic",
+  "pixelate-image": "/mosaic",
   "pixelate-image-online": "/mosaic",
+  "censor-image-online": "/mosaic",
   "mosaic-tool": "/mosaic",
+  "redact-image": "/mosaic",
   "redact-image-online": "/mosaic",
 }

@@ -50,9 +50,13 @@ const slugMeta: { slug: string; category: ToolCategory }[] = [
   { slug: "add-watermark-to-photo", category: "use-case" },
   { slug: "add-watermark-to-image", category: "use-case" },
   { slug: "online-watermark-tool", category: "use-case" },
+  { slug: "blur-face", category: "use-case" },
   { slug: "blur-face-in-photo", category: "use-case" },
+  { slug: "pixelate-image", category: "use-case" },
   { slug: "pixelate-image-online", category: "use-case" },
+  { slug: "censor-image-online", category: "use-case" },
   { slug: "mosaic-tool", category: "use-case" },
+  { slug: "redact-image", category: "use-case" },
   { slug: "redact-image-online", category: "use-case" },
 ]
 

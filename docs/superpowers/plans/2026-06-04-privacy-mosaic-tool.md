@@ -136,14 +136,20 @@ Add `/mosaic` to `CORE_TOOLS`, editor quick links, toolbar icon mapping, and too
 - [ ] **Step 1: Add mosaic pSEO data**
 
 Create pages:
+- `blur-face`
 - `blur-face-in-photo`
+- `pixelate-image`
 - `pixelate-image-online`
+- `censor-image-online`
 - `mosaic-tool`
+- `redact-image`
 - `redact-image-online`
+
+DataForSEO follow-up (2026-06-04, US / English) added the higher-volume `blur-face`, `pixelate-image`, `censor-image-online`, and `redact-image` targets while retaining the initial four slugs.
 
 - [ ] **Step 2: Register pSEO pages**
 
-Merge the new locale page data into `localeData`, append the four slugs to `slugMeta`, and map each slug to `/mosaic` in `TOOL_EDITOR_HREFS`.
+Merge the new locale page data into `localeData`, append the eight slugs to `slugMeta`, and map each slug to `/mosaic` in `TOOL_EDITOR_HREFS`.
 
 ## Task 5: Verification and Progress
 
