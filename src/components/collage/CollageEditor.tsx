@@ -266,7 +266,7 @@ export function CollageEditor() {
   const previewDisplaySize = useMemo(() => {
     if (previewAreaSize.width <= 0 || previewAreaSize.height <= 0) return null
 
-    const frameChrome = 20
+    const frameChrome = 28
     const availableWidth = Math.max(1, previewAreaSize.width - frameChrome)
     const availableHeight = Math.max(1, previewAreaSize.height - frameChrome)
     const scale = Math.min(
@@ -336,7 +336,16 @@ export function CollageEditor() {
 
     const updatePreviewAreaSize = () => {
       const rect = previewArea.getBoundingClientRect()
-      setPreviewAreaSize({ width: rect.width, height: rect.height })
+      const style = window.getComputedStyle(previewArea)
+      const horizontalPadding =
+        Number.parseFloat(style.paddingLeft) + Number.parseFloat(style.paddingRight)
+      const verticalPadding =
+        Number.parseFloat(style.paddingTop) + Number.parseFloat(style.paddingBottom)
+
+      setPreviewAreaSize({
+        width: Math.max(0, rect.width - horizontalPadding),
+        height: Math.max(0, rect.height - verticalPadding),
+      })
     }
     const observer = new ResizeObserver(updatePreviewAreaSize)
     observer.observe(previewArea)
@@ -723,9 +732,9 @@ export function CollageEditor() {
           <div className="flex min-h-0 min-w-0 flex-1 flex-col">
             <div
               ref={previewAreaRef}
-              className="flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-muted/20 p-3 md:p-5"
+              className="flex min-h-0 flex-1 items-center justify-center bg-muted/20 p-3 md:p-5"
             >
-              <div className="relative max-h-full max-w-full overflow-hidden border border-border bg-background p-2 shadow-sm">
+              <div className="relative max-h-full max-w-full border border-border bg-background p-2 shadow-sm">
                 {isRendering && (
                   <div className="absolute left-3 top-3 z-20 rounded bg-background/90 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
                     {t("rendering")}
