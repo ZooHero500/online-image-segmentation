@@ -35,6 +35,12 @@ import {
   Shield,
   Stamp,
   Type,
+  Grid3X3,
+  Images,
+  Instagram,
+  LayoutTemplate,
+  Palette,
+  ShieldCheck,
 } from "lucide-react"
 import type React from "react"
 
@@ -67,6 +73,12 @@ const iconMap: Record<string, React.ComponentType<{ className?: string; strokeWi
   Shield,
   Stamp,
   Type,
+  Grid3X3,
+  Images,
+  Instagram,
+  LayoutTemplate,
+  Palette,
+  ShieldCheck,
 }
 
 // ─── Translation Interfaces ───

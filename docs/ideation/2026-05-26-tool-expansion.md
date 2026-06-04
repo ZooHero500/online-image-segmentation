@@ -43,10 +43,10 @@
 ### 4. 照片拼图/拼贴 (Collage)
 - **功能**: 上传多张图 → 选模板布局 → 拖拽调整 → 导出一张图
 - **复用**: `GridEditorState` cell 定位 + Konva 多图层 + `Transformer`
-- **SEO**: photo-collage-maker, instagram-story-collage
+- **SEO**: photo-collage-maker, free-photo-collage-maker, photo-grid-maker, picture-grid-maker, instagram-story-collage, instagram-collage-maker
 - **工作量**: ~800 行新代码，~3 天
 - **大胆度**: 中
-- **落地状态**: 2026-06-04 已完成模板化照片拼图 MVP 与 3 个 pSEO 页面；支持 `/collage` 多图上传、10 个模板、空 frame 点击/拖拽上传、frame 内定位/缩放/旋转、间距/边距/圆角/背景控制和 PNG/JPEG/WebP 导出
+- **落地状态**: 2026-06-04 已完成模板化照片拼图 MVP 与 6 个 pSEO 页面；支持 `/collage` 多图上传、10 个模板、空 frame 点击/拖拽上传、frame 内定位/缩放/旋转、间距/边距/圆角/背景控制和 PNG/JPEG/WebP 导出
 
 ### 5. 隐私打码/马赛克工具
 - **功能**: 上传 → 框选区域 → 马赛克/高斯模糊/纯色遮挡 → 导出（像素级不可逆）

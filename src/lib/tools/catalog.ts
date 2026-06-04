@@ -122,4 +122,7 @@ export const TOOL_EDITOR_HREFS: Record<string, string> = {
   "photo-collage-maker": "/collage",
   "photo-grid-maker": "/collage",
   "instagram-story-collage": "/collage?template=story-stack",
+  "free-photo-collage-maker": "/collage",
+  "picture-grid-maker": "/collage?template=grid-4",
+  "instagram-collage-maker": "/collage?template=story-stack",
 }

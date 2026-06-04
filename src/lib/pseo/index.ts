@@ -62,6 +62,9 @@ const slugMeta: { slug: string; category: ToolCategory }[] = [
   { slug: "photo-collage-maker", category: "use-case" },
   { slug: "photo-grid-maker", category: "use-case" },
   { slug: "instagram-story-collage", category: "use-case" },
+  { slug: "free-photo-collage-maker", category: "use-case" },
+  { slug: "picture-grid-maker", category: "use-case" },
+  { slug: "instagram-collage-maker", category: "use-case" },
 ]
 
 const toolPages: ToolPageConfig[] = slugMeta.map(({ slug, category }) => ({
