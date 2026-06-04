@@ -512,6 +512,9 @@ export function ResizeEditor({
           <Link href="/collage" className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
             Collage
           </Link>
+          <Link href="/social-export" className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
+            Social Export
+          </Link>
           <LocaleSwitcher variant="compact" />
         </div>
       </nav>

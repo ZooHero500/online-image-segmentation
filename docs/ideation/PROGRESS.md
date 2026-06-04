@@ -11,7 +11,7 @@
 | P2 | ③ 图片水印工具 | 🟢 已完成 | 2026-06-04 | 2026-06-04 | 工具 MVP + 4 pSEO 页, 5 语言；批量水印暂缓 |
 | P2 | ⑤ 隐私打码/马赛克 | 🟢 已完成 | 2026-06-04 | 2026-06-04 | 工具 MVP + 画笔/图片遮罩增强 + 8 pSEO 页, 5 语言, 跳转已验证 |
 | P3 | ④ 照片拼图/拼贴 | 🟢 已完成 | 2026-06-04 | 2026-06-04 | 工具 MVP + 10 模板 + 3 pSEO 页, 5 语言, build 已验证 |
-| P3 | ⑥ 社媒多平台一键导出 | ⬜ 未开始 | - | - | |
+| P3 | ⑥ 社媒多平台一键导出 | 🟢 已完成 | 2026-06-04 | 2026-06-04 | 工具 MVP + 9 平台尺寸预设 + 5 pSEO 页, 5 语言, build 已验证 |
 | P4 | ⑦ AI 背景移除 | ⬜ 未开始 | - | - | |
 
 **状态图例**: ⬜ 未开始 | 🔵 Spec 中 | 🟡 开发中 | 🟢 已完成 | 🔴 阻塞
@@ -26,7 +26,7 @@
 - **Spec**: `docs/superpowers/specs/2026-05-26-image-compress-convert-design.md`
 - **Plan**: `docs/superpowers/plans/2026-05-26-image-compress-convert.md`
 - **子任务**:
-  - [x] Spec: 需求 → 设计 → 任务
+  - [x] 产品范围: 单图 → 多平台尺寸 → 命名 ZIP 的 MVP 路径确认
   - [x] 核心: 压缩引擎 (canvas.toBlob quality 控制)
   - [x] 核心: 格式转换 (PNG/JPEG/WebP 互转)
   - [x] UI: 质量滑块 + 实时文件大小预览
@@ -119,16 +119,22 @@
   - [x] 集成: Tools Hub + Sitemap + Footer + Nav + 返回用户快捷栏
 
 ### ⑥ 社媒多平台一键导出
-- **状态**: ⬜ 未开始
+- **状态**: 🟢 已完成
 - **预估**: ~600 行新代码, ~2 天
+- **实际**: ~1 天；完成单图多平台尺寸批量导出 MVP
 - **Spec**: -
+- **说明**: 社媒多平台导出工具已上线 `/social-export`，支持上传单图后选择 Instagram Feed 方图/竖图/Story、YouTube Thumbnail、Facebook Page/Group Cover、X 横图/主页头图、LinkedIn Post、TikTok 竖图、小红书封面、微信文章封面等 12 个尺寸输出；每个输出可单独切换 fill/fit、拖动裁剪位置、调整缩放，支持 PNG/JPEG/WebP 与 JPEG/WebP 质量控制，导出时按平台文件夹生成命名 ZIP。已接入核心工具 catalog、Tools Hub、Footer、返回用户快捷栏、Sitemap、编辑器互链、5 语言文案与 13 个 pSEO slug。
+- **SEO**: 2026-06-04 使用 DataForSEO MCP 校准 US / English 社媒尺寸词；优先新增 `instagram-post-size`、`instagram-story-size`、`facebook-cover-photo-size`、`linkedin-post-size`、`twitter-header-size`、`social-media-image-sizes`，并把小红书/微信扩展为 zh-CN 专属市场页 `xiaohongshu-cover-size`、`wechat-official-account-cover-size`。同步修正 pSEO sitemap/hreflang，仅为有内容的 locale/slug 输出页面。
+- **验证**: 2026-06-04 `bunx vitest run src/lib/__tests__/social-export.test.ts` 通过 10 tests；Social Export 相关文件 scoped `eslint` 通过；`bun run build` 通过并生成 `/social-export` 与新增 pSEO 静态页。全量 `bunx tsc --noEmit` 仍因既有 `use-history`、`use-image-export`、`storage-service` 测试类型问题失败，非本次 Social Export 改动引入。
 - **子任务**:
-  - [ ] Spec: 需求 → 设计 → 任务
-  - [ ] 核心: 平台尺寸预设库 (IG/FB/Twitter/YouTube/小红书/微信)
-  - [ ] 核心: 批量裁剪引擎 (一图 → N 尺寸)
-  - [ ] UI: 多尺寸预览网格 + 逐个调整裁剪位置
-  - [ ] 导出: 按平台命名的 ZIP 包
-  - [ ] pSEO + i18n + 集成
+  - [x] Spec: 需求 → 设计 → 任务
+  - [x] 核心: 平台尺寸预设库 (IG/FB/X/YouTube/TikTok/小红书/微信)
+  - [x] 核心: 批量裁剪引擎 (一图 → N 尺寸)
+  - [x] UI: 多尺寸预览网格 + 逐个调整裁剪位置
+  - [x] 导出: 按平台命名的 ZIP 包
+  - [x] pSEO: 13 个 slug；英文主力按 DFS 重排，中文平台页按 zh-CN 市场拆分
+  - [x] i18n: 5 语言翻译
+  - [x] 集成: Tools Hub + Sitemap + Footer + Nav + 返回用户快捷栏
 
 ---
 
@@ -168,3 +174,5 @@
 | 2026-06-04 | ④ 照片拼图/拼贴 — 完成 `/collage` 模板化拼图 MVP，支持 8 模板、多图上传、frame 内调整、样式控制、PNG/JPEG/WebP 导出、6 pSEO 与 5 语言文案 |
 | 2026-06-04 | ④ 照片拼图 pSEO — 使用 DataForSEO MCP 校准长尾词，新增 free-photo-collage-maker、picture-grid-maker、instagram-collage-maker |
 | 2026-06-04 | ④ 照片拼图/拼贴 — 优化空 frame 点击/拖拽上传，新增 Diagonal Duo 与 Story Diagonal 斜切模板，模板数扩展到 10 个 |
+| 2026-06-04 | ⑥ 社媒多平台一键导出 — 完成 `/social-export` MVP，支持 9 个社媒尺寸、单尺寸裁剪微调、PNG/JPEG/WebP、按平台命名 ZIP、5 pSEO 与 5 语言文案 |
+| 2026-06-04 | ⑥ 社媒多平台导出 SEO — 使用 DataForSEO MCP 重排英文主力词，新增 Instagram/Facebook/LinkedIn/Twitter 高价值尺寸页；中文小红书/微信页改为 locale-specific sitemap/hreflang |

@@ -9,15 +9,16 @@ import es from "./es"
 import { watermarkPagesByLocale } from "./watermark-pages"
 import { mosaicPagesByLocale } from "./mosaic-pages"
 import { collagePagesByLocale } from "./collage-pages"
+import { socialExportPagesByLocale } from "./social-export-pages"
 
 // ─── Assemble ───
 
 const localeData: Record<string, Record<string, ToolPageData>> = {
-  en: { ...en, ...watermarkPagesByLocale.en, ...mosaicPagesByLocale.en, ...collagePagesByLocale.en },
-  "zh-CN": { ...zhCN, ...watermarkPagesByLocale["zh-CN"], ...mosaicPagesByLocale["zh-CN"], ...collagePagesByLocale["zh-CN"] },
-  ja: { ...ja, ...watermarkPagesByLocale.ja, ...mosaicPagesByLocale.ja, ...collagePagesByLocale.ja },
-  ko: { ...ko, ...watermarkPagesByLocale.ko, ...mosaicPagesByLocale.ko, ...collagePagesByLocale.ko },
-  es: { ...es, ...watermarkPagesByLocale.es, ...mosaicPagesByLocale.es, ...collagePagesByLocale.es },
+  en: { ...en, ...watermarkPagesByLocale.en, ...mosaicPagesByLocale.en, ...collagePagesByLocale.en, ...socialExportPagesByLocale.en },
+  "zh-CN": { ...zhCN, ...watermarkPagesByLocale["zh-CN"], ...mosaicPagesByLocale["zh-CN"], ...collagePagesByLocale["zh-CN"], ...socialExportPagesByLocale["zh-CN"] },
+  ja: { ...ja, ...watermarkPagesByLocale.ja, ...mosaicPagesByLocale.ja, ...collagePagesByLocale.ja, ...socialExportPagesByLocale.ja },
+  ko: { ...ko, ...watermarkPagesByLocale.ko, ...mosaicPagesByLocale.ko, ...collagePagesByLocale.ko, ...socialExportPagesByLocale.ko },
+  es: { ...es, ...watermarkPagesByLocale.es, ...mosaicPagesByLocale.es, ...collagePagesByLocale.es, ...socialExportPagesByLocale.es },
 }
 
 const slugMeta: { slug: string; category: ToolCategory }[] = [
@@ -65,6 +66,19 @@ const slugMeta: { slug: string; category: ToolCategory }[] = [
   { slug: "free-photo-collage-maker", category: "use-case" },
   { slug: "picture-grid-maker", category: "use-case" },
   { slug: "instagram-collage-maker", category: "use-case" },
+  { slug: "social-media-image-resizer", category: "use-case" },
+  { slug: "resize-image-for-social-media", category: "use-case" },
+  { slug: "social-media-image-sizes", category: "use-case" },
+  { slug: "instagram-image-size", category: "use-case" },
+  { slug: "instagram-post-size", category: "use-case" },
+  { slug: "instagram-story-size", category: "use-case" },
+  { slug: "youtube-thumbnail-size", category: "use-case" },
+  { slug: "facebook-cover-photo-size", category: "use-case" },
+  { slug: "linkedin-post-size", category: "use-case" },
+  { slug: "twitter-header-size", category: "use-case" },
+  { slug: "xiaohongshu-cover-size", category: "use-case" },
+  { slug: "wechat-cover-size", category: "use-case" },
+  { slug: "wechat-official-account-cover-size", category: "use-case" },
 ]
 
 const toolPages: ToolPageConfig[] = slugMeta.map(({ slug, category }) => ({
@@ -81,6 +95,20 @@ const toolPages: ToolPageConfig[] = slugMeta.map(({ slug, category }) => ({
 
 export function getAllToolSlugs(): string[] {
   return toolPages.map((page) => page.slug)
+}
+
+export function getAllToolPageParams(): Array<{ locale: string; toolSlug: string }> {
+  return toolPages.flatMap((page) =>
+    Object.keys(page.locales).map((locale) => ({
+      locale,
+      toolSlug: page.slug,
+    }))
+  )
+}
+
+export function getToolPageLocales(slug: string): string[] {
+  const config = toolPages.find((page) => page.slug === slug)
+  return config ? Object.keys(config.locales) : []
 }
 
 export function getToolPageData(slug: string, locale: string): ToolPageData | null {

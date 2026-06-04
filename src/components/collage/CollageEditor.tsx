@@ -650,6 +650,9 @@ export function CollageEditor() {
                 Mosaic
               </Link>
               <span className="font-medium text-foreground">Collage</span>
+              <Link href="/social-export" className="transition-colors hover:text-foreground">
+                Social Export
+              </Link>
               <Link href="/tools" className="transition-colors hover:text-foreground">
                 Tools
               </Link>

@@ -908,6 +908,9 @@ export function MosaicEditor() {
               <Link href="/collage" className="transition-colors hover:text-foreground">
                 Collage
               </Link>
+              <Link href="/social-export" className="transition-colors hover:text-foreground">
+                Social Export
+              </Link>
               <Link href="/tools" className="transition-colors hover:text-foreground">
                 Tools
               </Link>

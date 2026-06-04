@@ -1,9 +1,50 @@
 import type { MetadataRoute } from "next"
 import { routing } from "@/i18n/routing"
-import { getAllToolSlugs } from "@/lib/pseo"
+import { getAllToolPages } from "@/lib/pseo"
 import { CORE_TOOLS } from "@/lib/tools/catalog"
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imgsplit.com"
+
+function getLocalizedToolPageUrl(slug: string, locale: string) {
+  return locale === routing.defaultLocale
+    ? `${BASE_URL}/${slug}`
+    : `${BASE_URL}/${locale}/${slug}`
+}
+
+function getToolPageSitemapPriority(slug: string, locale: string): number {
+  if (
+    [
+      "youtube-thumbnail-size",
+      "instagram-post-size",
+      "instagram-story-size",
+      "facebook-cover-photo-size",
+    ].includes(slug)
+  ) {
+    return 0.85
+  }
+
+  if (["linkedin-post-size", "twitter-header-size"].includes(slug)) {
+    return 0.82
+  }
+
+  if (
+    ["xiaohongshu-cover-size", "wechat-official-account-cover-size"].includes(slug)
+  ) {
+    return locale === "zh-CN" ? 0.82 : 0.5
+  }
+
+  if (
+    ["social-media-image-resizer", "resize-image-for-social-media"].includes(slug)
+  ) {
+    return 0.6
+  }
+
+  if (slug === "wechat-cover-size" && locale !== "zh-CN") {
+    return 0.5
+  }
+
+  return 0.8
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = []
@@ -176,30 +217,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
 
   // Add pSEO tool pages
-  const toolSlugs = getAllToolSlugs()
-  for (const slug of toolSlugs) {
-    for (const locale of routing.locales) {
-      const url =
-        locale === routing.defaultLocale
-          ? `${BASE_URL}/${slug}`
-          : `${BASE_URL}/${locale}/${slug}`
+  const toolPages = getAllToolPages()
+  for (const page of toolPages) {
+    const locales = Object.keys(page.locales)
+    const xDefaultLocale = locales.includes(routing.defaultLocale)
+      ? routing.defaultLocale
+      : locales[0] ?? routing.defaultLocale
+
+    for (const locale of locales) {
+      const url = getLocalizedToolPageUrl(page.slug, locale)
 
       entries.push({
         url,
         lastModified: new Date(),
         changeFrequency: "weekly",
-        priority: 0.8,
+        priority: getToolPageSitemapPriority(page.slug, locale),
         alternates: {
           languages: {
             ...Object.fromEntries(
-              routing.locales.map((l) => [
+              locales.map((l) => [
                 l,
-                l === routing.defaultLocale
-                  ? `${BASE_URL}/${slug}`
-                  : `${BASE_URL}/${l}/${slug}`,
+                getLocalizedToolPageUrl(page.slug, l),
               ])
             ),
-            "x-default": `${BASE_URL}/${slug}`,
+            "x-default": getLocalizedToolPageUrl(page.slug, xDefaultLocale),
           },
         },
       })

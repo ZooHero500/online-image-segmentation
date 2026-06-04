@@ -2,18 +2,25 @@ import type { Metadata } from "next"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { routing } from "@/i18n/routing"
-import { getAllToolSlugs, getToolPageData } from "@/lib/pseo"
+import {
+  getAllToolPageParams,
+  getToolPageData,
+  getToolPageLocales,
+} from "@/lib/pseo"
 import { ToolLanding } from "@/components/pseo/ToolLanding"
 import { JsonLd } from "@/components/JsonLd"
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imgsplit.com"
 
-// Generate static params for all locale x slug combinations
+// Generate static params only for locale/slug pairs with content.
 export function generateStaticParams() {
-  const slugs = getAllToolSlugs()
-  return slugs.flatMap((toolSlug) =>
-    routing.locales.map((locale) => ({ locale, toolSlug }))
-  )
+  return getAllToolPageParams()
+}
+
+function getLocalizedToolUrl(toolSlug: string, locale: string) {
+  return locale === routing.defaultLocale
+    ? `${BASE_URL}/${toolSlug}`
+    : `${BASE_URL}/${locale}/${toolSlug}`
 }
 
 export async function generateMetadata({
@@ -25,10 +32,11 @@ export async function generateMetadata({
   const data = getToolPageData(toolSlug, locale)
   if (!data) return {}
 
-  const canonicalUrl =
-    locale === routing.defaultLocale
-      ? `${BASE_URL}/${toolSlug}`
-      : `${BASE_URL}/${locale}/${toolSlug}`
+  const canonicalUrl = getLocalizedToolUrl(toolSlug, locale)
+  const availableLocales = getToolPageLocales(toolSlug)
+  const xDefaultLocale = availableLocales.includes(routing.defaultLocale)
+    ? routing.defaultLocale
+    : availableLocales[0] ?? locale
 
   return {
     title: data.seo.title,
@@ -37,14 +45,12 @@ export async function generateMetadata({
       canonical: canonicalUrl,
       languages: {
         ...Object.fromEntries(
-          routing.locales.map((l) => [
+          availableLocales.map((l) => [
             l,
-            l === routing.defaultLocale
-              ? `${BASE_URL}/${toolSlug}`
-              : `${BASE_URL}/${l}/${toolSlug}`,
+            getLocalizedToolUrl(toolSlug, l),
           ])
         ),
-        "x-default": `${BASE_URL}/${toolSlug}`,
+        "x-default": getLocalizedToolUrl(toolSlug, xDefaultLocale),
       },
     },
     openGraph: {
@@ -157,7 +163,7 @@ export default async function ToolSlugPage({
           "@type": "SoftwareApplication",
           name: "ImgSplit",
           dateModified: new Date().toISOString().split("T")[0],
-          url: locale === routing.defaultLocale ? `${BASE_URL}/${toolSlug}` : `${BASE_URL}/${locale}/${toolSlug}`,
+          url: getLocalizedToolUrl(toolSlug, locale),
           description: data.seo.description,
           applicationCategory: "DesignApplication",
           operatingSystem: "Any",

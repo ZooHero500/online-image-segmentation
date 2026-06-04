@@ -1,9 +1,33 @@
-export type CoreToolId = "split" | "grid" | "resize" | "compress" | "watermark" | "mosaic" | "collage"
-export type CoreToolIcon = "scissors" | "grid" | "resize" | "compress" | "watermark" | "mosaic" | "collage"
+export type CoreToolId =
+  | "split"
+  | "grid"
+  | "resize"
+  | "compress"
+  | "watermark"
+  | "mosaic"
+  | "collage"
+  | "socialExport"
+export type CoreToolIcon =
+  | "scissors"
+  | "grid"
+  | "resize"
+  | "compress"
+  | "watermark"
+  | "mosaic"
+  | "collage"
+  | "socialExport"
 
 export interface CoreTool {
   id: CoreToolId
-  labelKey: "toolSplit" | "toolGrid" | "toolResize" | "toolCompress" | "toolWatermark" | "toolMosaic" | "toolCollage"
+  labelKey:
+    | "toolSplit"
+    | "toolGrid"
+    | "toolResize"
+    | "toolCompress"
+    | "toolWatermark"
+    | "toolMosaic"
+    | "toolCollage"
+    | "toolSocialExport"
   descriptionKey:
     | "existingToolSplitDesc"
     | "existingToolGridDesc"
@@ -12,6 +36,7 @@ export interface CoreTool {
     | "existingToolWatermarkDesc"
     | "existingToolMosaicDesc"
     | "existingToolCollageDesc"
+    | "existingToolSocialExportDesc"
   href: string
   quickAccessHref: string
   sitemapPriority: number
@@ -82,6 +107,15 @@ export const CORE_TOOLS: CoreTool[] = [
     sitemapPriority: 0.9,
     icon: "collage",
   },
+  {
+    id: "socialExport",
+    labelKey: "toolSocialExport",
+    descriptionKey: "existingToolSocialExportDesc",
+    href: "/social-export",
+    quickAccessHref: "/social-export",
+    sitemapPriority: 0.9,
+    icon: "socialExport",
+  },
 ]
 
 export const POPULAR_TOOL_SLUGS = [
@@ -125,4 +159,17 @@ export const TOOL_EDITOR_HREFS: Record<string, string> = {
   "free-photo-collage-maker": "/collage",
   "picture-grid-maker": "/collage?template=grid-4",
   "instagram-collage-maker": "/collage?template=story-stack",
+  "social-media-image-resizer": "/social-export",
+  "resize-image-for-social-media": "/social-export",
+  "social-media-image-sizes": "/social-export",
+  "instagram-image-size": "/social-export",
+  "instagram-post-size": "/social-export",
+  "instagram-story-size": "/social-export",
+  "youtube-thumbnail-size": "/social-export",
+  "facebook-cover-photo-size": "/social-export",
+  "linkedin-post-size": "/social-export",
+  "twitter-header-size": "/social-export",
+  "xiaohongshu-cover-size": "/social-export",
+  "wechat-cover-size": "/social-export",
+  "wechat-official-account-cover-size": "/social-export",
 }

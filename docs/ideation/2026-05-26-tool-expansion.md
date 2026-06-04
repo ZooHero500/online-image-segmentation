@@ -62,6 +62,7 @@
 - **SEO**: instagram-image-size, youtube-thumbnail-size
 - **工作量**: ~600 行新代码，~2 天
 - **大胆度**: 中
+- **落地状态**: 2026-06-04 已完成单图多平台尺寸批量导出 MVP；支持 `/social-export` 上传一张图片后生成 Instagram、YouTube、Facebook、X、LinkedIn、TikTok、小红书、微信等 12 个尺寸输出，逐个微调裁剪并按平台命名 ZIP 导出。SEO 已用 DataForSEO 重排，英文主推 Instagram/YouTube/Facebook/LinkedIn/Twitter 尺寸词，中文小红书/微信页面按 locale-specific pSEO 拆分。
 
 ### 7. 背景移除 (浏览器端 AI)
 - **功能**: 上传 → 一键移除背景 → 透明 PNG。可选替换纯色/渐变/自定义背景

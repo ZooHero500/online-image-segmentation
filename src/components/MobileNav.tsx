@@ -10,6 +10,7 @@ import {
   Grid3X3,
   LayoutTemplate,
   Maximize2,
+  Send,
   Scissors,
   Stamp,
   Zap,
@@ -45,6 +46,7 @@ const toolIconMap: Record<CoreToolIcon, LucideIcon> = {
   watermark: Stamp,
   mosaic: EyeOff,
   collage: LayoutTemplate,
+  socialExport: Send,
 }
 
 export function MobileNav({

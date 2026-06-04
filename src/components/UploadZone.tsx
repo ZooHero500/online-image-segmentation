@@ -9,9 +9,22 @@ import { validateFiles, loadImage, ACCEPTED_TYPES } from "@/lib/upload-utils"
 interface UploadZoneProps {
   onImageLoaded?: (result: UploadResult) => void
   onImagesLoaded?: (results: UploadResult[]) => void
+  multiple?: boolean
+  title?: string
+  dragHint?: string
+  clickHint?: string
+  formatHint?: string
 }
 
-export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
+export function UploadZone({
+  onImageLoaded,
+  onImagesLoaded,
+  multiple = true,
+  title,
+  dragHint,
+  clickHint,
+  formatHint,
+}: UploadZoneProps) {
   const t = useTranslations("upload")
   const [error, setError] = useState<string | null>(null)
   const [isDragOver, setIsDragOver] = useState(false)
@@ -21,7 +34,8 @@ export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
     async (files: FileList) => {
       setError(null)
 
-      const result = validateFiles(Array.from(files))
+      const selectedFiles = multiple ? Array.from(files) : Array.from(files).slice(0, 1)
+      const result = validateFiles(selectedFiles)
       if (!result.valid) {
         setError(t(result.error!.key, result.error!.params))
         return
@@ -50,7 +64,7 @@ export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
         setError(t("loadFailed"))
       }
     },
-    [onImageLoaded, onImagesLoaded, t]
+    [multiple, onImageLoaded, onImagesLoaded, t]
   )
 
   const handleDrop = useCallback(
@@ -100,17 +114,17 @@ export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
         ref={inputRef}
         type="file"
         accept={ACCEPTED_TYPES.join(",")}
-        multiple
+        multiple={multiple}
         className="hidden"
         onChange={handleFileChange}
       />
 
       <div className="text-center">
         <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6">
-          {t("title")}
+          {title ?? t("title")}
         </p>
         <p className="font-serif text-2xl md:text-3xl text-foreground mb-4">
-          {t("dragHint")}
+          {dragHint ?? t("dragHint")}
         </p>
         <div className="flex items-center gap-4 justify-center mb-6">
           <span className="h-px w-8 bg-primary/20" />
@@ -118,10 +132,10 @@ export function UploadZone({ onImageLoaded, onImagesLoaded }: UploadZoneProps) {
           <span className="h-px w-8 bg-primary/20" />
         </div>
         <p className="text-sm text-foreground group-hover:text-accent transition-colors duration-500">
-          {t("clickHint")}
+          {clickHint ?? t("clickHint")}
         </p>
         <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">
-          {t("formatHint")}
+          {formatHint ?? t("formatHint")}
         </p>
       </div>
 

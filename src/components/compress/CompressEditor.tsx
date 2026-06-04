@@ -278,6 +278,7 @@ export function CompressEditor() {
               <Link href="/watermark" className="hover:text-foreground transition-colors">Watermark</Link>
               <Link href="/mosaic" className="hover:text-foreground transition-colors">Mosaic</Link>
               <Link href="/collage" className="hover:text-foreground transition-colors">Collage</Link>
+              <Link href="/social-export" className="hover:text-foreground transition-colors">Social Export</Link>
             </div>
           </div>
           <div className="flex items-center gap-3">
