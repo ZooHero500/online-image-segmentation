@@ -118,7 +118,7 @@ function ToolsDropdown({
   }>
 }) {
   return (
-    <div className="hidden md:block group">
+    <div className="hidden md:flex h-16 items-center group">
       <Link
         href="/tools"
         aria-haspopup="true"
