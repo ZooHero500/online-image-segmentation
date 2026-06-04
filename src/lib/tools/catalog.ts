@@ -87,4 +87,8 @@ export const TOOL_EDITOR_HREFS: Record<string, string> = {
   "crop-for-instagram": "/resize?preset=instagram-square",
   "instagram-story-crop": "/resize?preset=instagram-story",
   "youtube-thumbnail-crop": "/resize?preset=youtube-thumbnail",
+  "watermark-maker": "/watermark",
+  "add-watermark-to-photo": "/watermark",
+  "add-watermark-to-image": "/watermark",
+  "online-watermark-tool": "/watermark",
 }

@@ -6,15 +6,16 @@ import zhCN from "./zh-CN"
 import ja from "./ja"
 import ko from "./ko"
 import es from "./es"
+import { watermarkPagesByLocale } from "./watermark-pages"
 
 // ─── Assemble ───
 
 const localeData: Record<string, Record<string, ToolPageData>> = {
-  en,
-  "zh-CN": zhCN,
-  ja,
-  ko,
-  es,
+  en: { ...en, ...watermarkPagesByLocale.en },
+  "zh-CN": { ...zhCN, ...watermarkPagesByLocale["zh-CN"] },
+  ja: { ...ja, ...watermarkPagesByLocale.ja },
+  ko: { ...ko, ...watermarkPagesByLocale.ko },
+  es: { ...es, ...watermarkPagesByLocale.es },
 }
 
 const slugMeta: { slug: string; category: ToolCategory }[] = [
@@ -44,6 +45,10 @@ const slugMeta: { slug: string; category: ToolCategory }[] = [
   { slug: "crop-for-instagram", category: "use-case" },
   { slug: "instagram-story-crop", category: "use-case" },
   { slug: "youtube-thumbnail-crop", category: "use-case" },
+  { slug: "watermark-maker", category: "use-case" },
+  { slug: "add-watermark-to-photo", category: "use-case" },
+  { slug: "add-watermark-to-image", category: "use-case" },
+  { slug: "online-watermark-tool", category: "use-case" },
 ]
 
 const toolPages: ToolPageConfig[] = slugMeta.map(({ slug, category }) => ({

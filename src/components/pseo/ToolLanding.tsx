@@ -32,6 +32,9 @@ import {
   Layers,
   Crop,
   Youtube,
+  Shield,
+  Stamp,
+  Type,
 } from "lucide-react"
 import type React from "react"
 
@@ -61,6 +64,9 @@ const iconMap: Record<string, React.ComponentType<{ className?: string; strokeWi
   Layers,
   Crop,
   Youtube,
+  Shield,
+  Stamp,
+  Type,
 }
 
 // ─── Translation Interfaces ───
