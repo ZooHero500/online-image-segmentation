@@ -9,7 +9,7 @@
 | P1 | ① 图片压缩 & 格式转换 | 🟢 已完成 | 2026-05-26 | 2026-05-26 | 10 pSEO 页, 5 语言 |
 | P1 | ② Resize 裁剪增强 (社媒预设) | 🟢 已完成 | 2026-05-28 | 2026-05-29 | 4 pSEO 页, 5 语言, 预设 UI 已优化 |
 | P2 | ③ 图片水印工具 | 🟢 已完成 | 2026-06-04 | 2026-06-04 | 工具 MVP + 4 pSEO 页, 5 语言；批量水印暂缓 |
-| P2 | ⑤ 隐私打码/马赛克 | 🟢 已完成 | 2026-06-04 | 2026-06-04 | 工具 MVP + 画笔/图片遮罩增强 + 8 pSEO 页, 5 语言 |
+| P2 | ⑤ 隐私打码/马赛克 | 🟢 已完成 | 2026-06-04 | 2026-06-04 | 工具 MVP + 画笔/图片遮罩增强 + 8 pSEO 页, 5 语言, 跳转已验证 |
 | P3 | ④ 照片拼图/拼贴 | ⬜ 未开始 | - | - | |
 | P3 | ⑥ 社媒多平台一键导出 | ⬜ 未开始 | - | - | |
 | P4 | ⑦ AI 背景移除 | ⬜ 未开始 | - | - | |
@@ -79,6 +79,7 @@
 - **Spec**: -
 - **说明**: 隐私打码工具已上线 `/mosaic`，支持上传单图后用矩形区域、自由画笔、橡皮擦和自定义图片遮罩隐藏敏感内容，效果包含马赛克、模糊、纯色遮挡；图片遮罩支持拖动、缩放、透明度与旋转调节；支持图层列表、删除/清空、PNG/JPEG/WebP 导出，canvas 重新编码会剥离常见图片元数据。已接入 Tools Hub、Footer、返回用户快捷栏、Sitemap、编辑器互链、5 语言文案与 8 个 pSEO 长尾页。
 - **DataForSEO**: 2026-06-04 使用 US / English live 数据补充校准；优先保留 `blur face in photo`、`pixelate image online`、`mosaic tool`，并新增更高量的 `blur face`、`pixelate image`、`censor image online`、`redact image`；`redact image online` 保留为旧长尾入口。
+- **跳转验证**: 2026-06-04 已验证 8 个隐私打码 pSEO slug 在 `en`、`zh-CN`、`ja`、`ko`、`es` 均有页面数据；CTA 与上传入口通过 `TOOL_EDITOR_HREFS` 指向 `/mosaic`，非默认语言渲染为对应 locale 下的 `/mosaic`；本地 HTML 抽查通过。
 - **子任务**:
   - [x] Spec/Plan: 需求 → 设计 → 任务
   - [x] 核心: 区域选择 (矩形框选)
@@ -91,6 +92,7 @@
   - [x] 核心: EXIF 元数据清除 (canvas 重新编码附带)
   - [x] UI: 效果选择器 + 强度滑块
   - [x] pSEO: 8 个落地页 (blur-face, blur-face-in-photo, pixelate-image, pixelate-image-online, censor-image-online, mosaic-tool, redact-image, redact-image-online)
+  - [x] 验证: 8 个 pSEO 长尾页 CTA/上传入口跳转到 `/mosaic`，非默认语言保留 locale 前缀
   - [x] i18n: 5 语言翻译
   - [x] 集成: Tools Hub + Sitemap + Footer + Nav
 
@@ -157,3 +159,4 @@
 | 2026-06-04 | ⑤ 隐私打码/马赛克 — 完成 `/mosaic` 单图矩形打码 MVP，支持马赛克/模糊/纯色遮挡、导出、4 pSEO 与 5 语言文案 |
 | 2026-06-04 | ⑤ 隐私打码/马赛克 — 增强自由画笔、橡皮擦、自定义图片遮罩图层，支持图片遮罩拖动/缩放/透明度/旋转 |
 | 2026-06-04 | ⑤ 隐私打码 pSEO — 补跑 DataForSEO MCP 校准，新增 blur-face、pixelate-image、censor-image-online、redact-image，扩展到 8 个长尾页 |
+| 2026-06-04 | ⑤ 隐私打码 pSEO — 验证 8 个长尾页 CTA/上传入口均指向 `/mosaic`，非默认语言正确保留 locale 前缀 |
