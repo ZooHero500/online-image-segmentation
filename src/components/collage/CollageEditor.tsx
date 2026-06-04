@@ -229,6 +229,11 @@ export function CollageEditor() {
   const [isExporting, setIsExporting] = useState(false)
   const [canvasEpoch, setCanvasEpoch] = useState(0)
   const [displaySize, setDisplaySize] = useState({ width: 0, height: 0 })
+  const [previewAreaSize, setPreviewAreaSize] = useState({
+    width: 0,
+    height: 0,
+  })
+  const previewAreaRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const overlayRef = useRef<SVGSVGElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -258,6 +263,28 @@ export function CollageEditor() {
     ? images.find((image) => image.id === selectedFrame.image?.imageId) ?? null
     : null
   const hasImages = images.length > 0
+  const previewDisplaySize = useMemo(() => {
+    if (previewAreaSize.width <= 0 || previewAreaSize.height <= 0) return null
+
+    const frameChrome = 20
+    const availableWidth = Math.max(1, previewAreaSize.width - frameChrome)
+    const availableHeight = Math.max(1, previewAreaSize.height - frameChrome)
+    const scale = Math.min(
+      1,
+      availableWidth / collageState.artboard.width,
+      availableHeight / collageState.artboard.height
+    )
+
+    return {
+      width: Math.floor(collageState.artboard.width * scale),
+      height: Math.floor(collageState.artboard.height * scale),
+    }
+  }, [
+    collageState.artboard.height,
+    collageState.artboard.width,
+    previewAreaSize.height,
+    previewAreaSize.width,
+  ])
 
   const syncDisplaySize = useCallback(() => {
     const canvas = canvasRef.current
@@ -290,10 +317,36 @@ export function CollageEditor() {
   }, [assetMap, collageState, hasImages, syncDisplaySize, t])
 
   useEffect(() => {
-    syncDisplaySize()
-    window.addEventListener("resize", syncDisplaySize)
-    return () => window.removeEventListener("resize", syncDisplaySize)
-  }, [syncDisplaySize])
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const observer = new ResizeObserver(syncDisplaySize)
+    observer.observe(canvas)
+    const frame = requestAnimationFrame(syncDisplaySize)
+
+    return () => {
+      cancelAnimationFrame(frame)
+      observer.disconnect()
+    }
+  }, [canvasEpoch, hasImages, syncDisplaySize])
+
+  useEffect(() => {
+    const previewArea = previewAreaRef.current
+    if (!previewArea) return
+
+    const updatePreviewAreaSize = () => {
+      const rect = previewArea.getBoundingClientRect()
+      setPreviewAreaSize({ width: rect.width, height: rect.height })
+    }
+    const observer = new ResizeObserver(updatePreviewAreaSize)
+    observer.observe(previewArea)
+    const frame = requestAnimationFrame(updatePreviewAreaSize)
+
+    return () => {
+      cancelAnimationFrame(frame)
+      observer.disconnect()
+    }
+  }, [hasImages])
 
   const addUploadedImages = useCallback((results: UploadResult[], targetFrameId?: string | null) => {
     const newImages = results.map(createUploadedImage)
@@ -668,18 +721,32 @@ export function CollageEditor() {
           </aside>
 
           <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-            <div className="flex min-h-0 flex-1 items-center justify-center bg-muted/20 p-3 md:p-5">
-              <div className="relative max-h-full max-w-full overflow-auto border border-border bg-background p-2 shadow-sm">
+            <div
+              ref={previewAreaRef}
+              className="flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-muted/20 p-3 md:p-5"
+            >
+              <div className="relative max-h-full max-w-full overflow-hidden border border-border bg-background p-2 shadow-sm">
                 {isRendering && (
                   <div className="absolute left-3 top-3 z-20 rounded bg-background/90 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
                     {t("rendering")}
                   </div>
                 )}
-                <div className="relative inline-block max-w-full align-top">
+                <div className="relative block max-h-full max-w-full">
                   <canvas
                     key={canvasEpoch}
                     ref={canvasRef}
-                    className="block h-auto max-h-[calc(100vh-17rem)] max-w-full select-none lg:max-h-[calc(100vh-8rem)]"
+                    className="block select-none"
+                    style={
+                      previewDisplaySize
+                        ? {
+                            width: previewDisplaySize.width,
+                            height: previewDisplaySize.height,
+                          }
+                        : {
+                            maxWidth: "100%",
+                            maxHeight: "100%",
+                          }
+                    }
                     aria-label={t("previewCanvas")}
                   />
                   {displaySize.width > 0 && displaySize.height > 0 && (
