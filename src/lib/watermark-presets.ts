@@ -24,6 +24,10 @@ export interface ApplyTemplateOptions {
   text?: string
 }
 
+export interface ApplyTemplateToStateOptions extends ApplyTemplateOptions {
+  targetLayerId?: string | null
+}
+
 export const WATERMARK_TEMPLATES: WatermarkTemplate[] = [
   {
     id: "corner-copyright",
@@ -132,5 +136,42 @@ export function applyWatermarkTemplate(
           fontSize: Math.max(72, Math.round(options.imageWidth * 0.12)),
         }),
       ])
+  }
+}
+
+export function applyWatermarkTemplateToState(
+  state: WatermarkState,
+  templateId: WatermarkTemplateId,
+  options: ApplyTemplateToStateOptions
+): WatermarkState {
+  const targetLayer =
+    state.layers.find(
+      (layer) => layer.id === options.targetLayerId && layer.type === "text"
+    ) ?? state.layers.find((layer) => layer.type === "text")
+
+  const templateLayer = applyWatermarkTemplate(templateId, {
+    imageWidth: options.imageWidth,
+    imageHeight: options.imageHeight,
+    text: options.text ?? targetLayer?.text,
+  }).layers[0]
+
+  if (!targetLayer) {
+    return {
+      layers: [...state.layers, templateLayer],
+      selectedLayerId: templateLayer.id,
+    }
+  }
+
+  return {
+    layers: state.layers.map((layer) =>
+      layer.id === targetLayer.id
+        ? {
+            ...templateLayer,
+            id: layer.id,
+            enabled: layer.enabled,
+          }
+        : layer
+    ),
+    selectedLayerId: targetLayer.id,
   }
 }

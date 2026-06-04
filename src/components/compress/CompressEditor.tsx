@@ -275,6 +275,7 @@ export function CompressEditor() {
               <Link href="/grid" className="hover:text-foreground transition-colors">Grid</Link>
               <Link href="/resize" className="hover:text-foreground transition-colors">Resize</Link>
               <span className="text-foreground font-medium">Compress</span>
+              <Link href="/watermark" className="hover:text-foreground transition-colors">Watermark</Link>
             </div>
           </div>
           <div className="flex items-center gap-3">

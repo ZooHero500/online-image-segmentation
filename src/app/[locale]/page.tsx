@@ -180,11 +180,18 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             >
               {t("nav.faq")}
             </a>
+            <Link
+              href="/watermark"
+              className="hidden md:inline uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-500 link-underline"
+            >
+              {t("footer.toolWatermark")}
+            </Link>
             <MobileNav
               links={[
                 { href: "#features", label: t("nav.features") },
                 { href: "#how-it-works", label: t("nav.howItWorks") },
                 { href: "#faq", label: t("nav.faq") },
+                { href: "/watermark", label: t("footer.toolWatermark") },
               ]}
               ctaLabel={t("nav.getStarted")}
               ctaHref="#upload"
@@ -631,6 +638,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 <Link href="/grid" className="hover:text-accent transition-colors duration-500">{t("footer.toolGrid")}</Link>
                 <Link href="/resize" className="hover:text-accent transition-colors duration-500">{t("footer.toolResize")}</Link>
                 <Link href="/compress" className="hover:text-accent transition-colors duration-500">{t("footer.toolCompress")}</Link>
+                <Link href="/watermark" className="hover:text-accent transition-colors duration-500">{t("footer.toolWatermark")}</Link>
                 <Link href="/tools" className="hover:text-accent transition-colors duration-500">{t("footer.toolAll")}</Link>
               </div>
             </div>

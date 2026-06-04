@@ -88,6 +88,62 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   }
 
+  // Add /compress page
+  for (const locale of routing.locales) {
+    const url =
+      locale === routing.defaultLocale
+        ? `${BASE_URL}/compress`
+        : `${BASE_URL}/${locale}/compress`
+
+    entries.push({
+      url,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+      alternates: {
+        languages: {
+          ...Object.fromEntries(
+            routing.locales.map((l) => [
+              l,
+              l === routing.defaultLocale
+                ? `${BASE_URL}/compress`
+                : `${BASE_URL}/${l}/compress`,
+            ])
+          ),
+          "x-default": `${BASE_URL}/compress`,
+        },
+      },
+    })
+  }
+
+  // Add /watermark page
+  for (const locale of routing.locales) {
+    const url =
+      locale === routing.defaultLocale
+        ? `${BASE_URL}/watermark`
+        : `${BASE_URL}/${locale}/watermark`
+
+    entries.push({
+      url,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+      alternates: {
+        languages: {
+          ...Object.fromEntries(
+            routing.locales.map((l) => [
+              l,
+              l === routing.defaultLocale
+                ? `${BASE_URL}/watermark`
+                : `${BASE_URL}/${l}/watermark`,
+            ])
+          ),
+          "x-default": `${BASE_URL}/watermark`,
+        },
+      },
+    })
+  }
+
   // Add /tools hub page
   for (const locale of routing.locales) {
     const url =

@@ -412,6 +412,9 @@ export default async function GridPage({
                 <Link href="/compress" className="hover:text-accent transition-colors duration-500">
                   {tFooter("toolCompress")}
                 </Link>
+                <Link href="/watermark" className="hover:text-accent transition-colors duration-500">
+                  {tFooter("toolWatermark")}
+                </Link>
                 <Link href="/" className="hover:text-accent transition-colors duration-500">
                   {tFooter("toolSplit")}
                 </Link>

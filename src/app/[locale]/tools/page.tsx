@@ -98,6 +98,7 @@ export default async function ToolsPage({
               { "@type": "ListItem", position: 11, name: "Image Splitter", url: BASE_URL },
               { "@type": "ListItem", position: 12, name: "Image Resizer", url: `${BASE_URL}/resize` },
               { "@type": "ListItem", position: 13, name: "Image Compressor", url: `${BASE_URL}/compress` },
+              { "@type": "ListItem", position: 14, name: "Watermark Tool", url: `${BASE_URL}/watermark` },
             ],
           },
         }}
@@ -294,6 +295,11 @@ export default async function ToolsPage({
               description={t("existingToolCompressDesc")}
               href="/compress"
             />
+            <ToolCard
+              title={t("existingToolWatermark")}
+              description={t("existingToolWatermarkDesc")}
+              href="/watermark"
+            />
           </div>
         </div>
       </section>
@@ -355,6 +361,12 @@ export default async function ToolsPage({
                   className="hover:text-accent transition-colors duration-500"
                 >
                   {tFooter("toolCompress")}
+                </Link>
+                <Link
+                  href="/watermark"
+                  className="hover:text-accent transition-colors duration-500"
+                >
+                  {tFooter("toolWatermark")}
                 </Link>
                 <Link
                   href="/"

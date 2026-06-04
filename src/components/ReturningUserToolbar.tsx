@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
-import { Scissors, Grid3X3, Maximize2, ArrowRight } from "lucide-react"
+import { Scissors, Grid3X3, Maximize2, Stamp, ArrowRight } from "lucide-react"
 
 const VISITED_KEY = "imgsplit_visited"
 
@@ -14,7 +14,7 @@ export function ReturningUserToolbar() {
   useEffect(() => {
     try {
       if (localStorage.getItem(VISITED_KEY)) {
-        setShow(true)
+        queueMicrotask(() => setShow(true))
       }
       localStorage.setItem(VISITED_KEY, "1")
     } catch {
@@ -47,6 +47,13 @@ export function ReturningUserToolbar() {
         >
           <Maximize2 className="h-3 w-3" strokeWidth={1.5} />
           {t("toolResize")}
+        </Link>
+        <Link
+          href="/watermark"
+          className="flex items-center gap-1.5 text-muted-foreground hover:text-accent transition-colors duration-300 whitespace-nowrap"
+        >
+          <Stamp className="h-3 w-3" strokeWidth={1.5} />
+          {t("toolWatermark")}
         </Link>
         <Link
           href="/tools"

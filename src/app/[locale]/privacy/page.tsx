@@ -315,6 +315,12 @@ export default async function PrivacyPage({
                   {tFooter("toolGrid")}
                 </Link>
                 <Link
+                  href="/watermark"
+                  className="hover:text-accent transition-colors duration-500"
+                >
+                  {tFooter("toolWatermark")}
+                </Link>
+                <Link
                   href="/"
                   className="hover:text-accent transition-colors duration-500"
                 >

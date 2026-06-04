@@ -503,6 +503,9 @@ export function ResizeEditor({
           <Link href="/tools" className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
             {t("navTools")}
           </Link>
+          <Link href="/watermark" className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
+            Watermark
+          </Link>
           <LocaleSwitcher variant="compact" />
         </div>
       </nav>
