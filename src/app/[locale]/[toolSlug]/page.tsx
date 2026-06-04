@@ -80,7 +80,6 @@ export default async function ToolSlugPage({
   // Get all translations needed by ToolLanding
   const tNav = await getTranslations("nav")
   const tUpload = await getTranslations("uploadSection")
-  const tFooter = await getTranslations("footer")
   const tPseo = await getTranslations("pseoChrome")
 
   // Build the t prop for ToolLanding
@@ -95,20 +94,6 @@ export default async function ToolSlugPage({
     },
     uploadSection: {
       overline: tUpload("overline"),
-    },
-    footer: {
-      tagline: tFooter("tagline"),
-      toolsTitle: tFooter("toolsTitle"),
-      toolGrid: tFooter("toolGrid"),
-      toolResize: tFooter("toolResize"),
-      toolCompress: tFooter("toolCompress"),
-      toolWatermark: tFooter("toolWatermark"),
-      toolSplit: tFooter("toolSplit"),
-      toolAll: tFooter("toolAll"),
-      navTitle: tFooter("navTitle"),
-      navFeatures: tFooter("navFeatures"),
-      navHowItWorks: tFooter("navHowItWorks"),
-      navFaq: tFooter("navFaq"),
     },
     pseoChrome: {
       scenariosTitle: tPseo("scenariosTitle"),

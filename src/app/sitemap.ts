@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next"
 import { routing } from "@/i18n/routing"
 import { getAllToolSlugs } from "@/lib/pseo"
+import { CORE_TOOLS } from "@/lib/tools/catalog"
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imgsplit.com"
 
@@ -32,116 +33,34 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   }
 
-  // Add /grid page
-  for (const locale of routing.locales) {
-    const url =
-      locale === routing.defaultLocale
-        ? `${BASE_URL}/grid`
-        : `${BASE_URL}/${locale}/grid`
+  // Add core tool pages.
+  for (const tool of CORE_TOOLS.filter((tool) => tool.href !== "/")) {
+    for (const locale of routing.locales) {
+      const url =
+        locale === routing.defaultLocale
+          ? `${BASE_URL}${tool.href}`
+          : `${BASE_URL}/${locale}${tool.href}`
 
-    entries.push({
-      url,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-      alternates: {
-        languages: {
-          ...Object.fromEntries(
-            routing.locales.map((l) => [
-              l,
-              l === routing.defaultLocale
-                ? `${BASE_URL}/grid`
-                : `${BASE_URL}/${l}/grid`,
-            ])
-          ),
-          "x-default": `${BASE_URL}/grid`,
+      entries.push({
+        url,
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: tool.sitemapPriority,
+        alternates: {
+          languages: {
+            ...Object.fromEntries(
+              routing.locales.map((l) => [
+                l,
+                l === routing.defaultLocale
+                  ? `${BASE_URL}${tool.href}`
+                  : `${BASE_URL}/${l}${tool.href}`,
+              ])
+            ),
+            "x-default": `${BASE_URL}${tool.href}`,
+          },
         },
-      },
-    })
-  }
-
-  // Add /resize page
-  for (const locale of routing.locales) {
-    const url =
-      locale === routing.defaultLocale
-        ? `${BASE_URL}/resize`
-        : `${BASE_URL}/${locale}/resize`
-
-    entries.push({
-      url,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-      alternates: {
-        languages: {
-          ...Object.fromEntries(
-            routing.locales.map((l) => [
-              l,
-              l === routing.defaultLocale
-                ? `${BASE_URL}/resize`
-                : `${BASE_URL}/${l}/resize`,
-            ])
-          ),
-          "x-default": `${BASE_URL}/resize`,
-        },
-      },
-    })
-  }
-
-  // Add /compress page
-  for (const locale of routing.locales) {
-    const url =
-      locale === routing.defaultLocale
-        ? `${BASE_URL}/compress`
-        : `${BASE_URL}/${locale}/compress`
-
-    entries.push({
-      url,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-      alternates: {
-        languages: {
-          ...Object.fromEntries(
-            routing.locales.map((l) => [
-              l,
-              l === routing.defaultLocale
-                ? `${BASE_URL}/compress`
-                : `${BASE_URL}/${l}/compress`,
-            ])
-          ),
-          "x-default": `${BASE_URL}/compress`,
-        },
-      },
-    })
-  }
-
-  // Add /watermark page
-  for (const locale of routing.locales) {
-    const url =
-      locale === routing.defaultLocale
-        ? `${BASE_URL}/watermark`
-        : `${BASE_URL}/${locale}/watermark`
-
-    entries.push({
-      url,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-      alternates: {
-        languages: {
-          ...Object.fromEntries(
-            routing.locales.map((l) => [
-              l,
-              l === routing.defaultLocale
-                ? `${BASE_URL}/watermark`
-                : `${BASE_URL}/${l}/watermark`,
-            ])
-          ),
-          "x-default": `${BASE_URL}/watermark`,
-        },
-      },
-    })
+      })
+    }
   }
 
   // Add /tools hub page

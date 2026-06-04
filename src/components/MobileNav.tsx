@@ -1,8 +1,10 @@
 "use client"
 
-import { useState, useCallback, useEffect } from "react"
+import { useState, useCallback } from "react"
 import { createPortal } from "react-dom"
 import { Menu, X, ArrowRight } from "lucide-react"
+import { Link } from "@/i18n/navigation"
+import type { ReactNode } from "react"
 
 interface NavLink {
   href: string
@@ -19,11 +21,6 @@ interface MobileNavProps {
 
 export function MobileNav({ links, ctaLabel, ctaHref, menuLabel = "Menu", closeLabel = "Close" }: MobileNavProps) {
   const [open, setOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   const handleLinkClick = useCallback(() => {
     setOpen(false)
@@ -60,20 +57,15 @@ export function MobileNav({ links, ctaLabel, ctaHref, menuLabel = "Menu", closeL
         {/* Links */}
         <nav className="flex-1 flex flex-col p-6 gap-1">
           {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={handleLinkClick}
-              className="py-3 text-sm uppercase tracking-[0.15em] text-muted-foreground hover:text-accent transition-colors duration-500 border-b border-border"
-            >
+            <MobileLink key={link.href} href={link.href} onClick={handleLinkClick}>
               {link.label}
-            </a>
+            </MobileLink>
           ))}
         </nav>
 
         {/* CTA */}
         <div className="p-6 border-t border-border">
-          <a
+          <MobileLink
             href={ctaHref}
             onClick={handleLinkClick}
             className="group relative flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 py-3 text-xs uppercase tracking-[0.2em] overflow-hidden"
@@ -81,7 +73,7 @@ export function MobileNav({ links, ctaLabel, ctaHref, menuLabel = "Menu", closeL
             <span className="absolute inset-0 bg-accent -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
             <span className="relative z-10">{ctaLabel}</span>
             <ArrowRight className="relative z-10 h-3 w-3" />
-          </a>
+          </MobileLink>
         </div>
       </div>
     </>
@@ -99,7 +91,33 @@ export function MobileNav({ links, ctaLabel, ctaHref, menuLabel = "Menu", closeL
       </button>
 
       {/* Portal to body — escapes nav's backdrop-filter stacking context */}
-      {mounted && createPortal(overlay, document.body)}
+      {open && typeof document !== "undefined" && createPortal(overlay, document.body)}
     </div>
+  )
+}
+
+function MobileLink({
+  href,
+  onClick,
+  className = "py-3 text-sm uppercase tracking-[0.15em] text-muted-foreground hover:text-accent transition-colors duration-500 border-b border-border",
+  children,
+}: {
+  href: string
+  onClick: () => void
+  className?: string
+  children: ReactNode
+}) {
+  if (href.startsWith("#") || href.startsWith("http") || href.startsWith("mailto:")) {
+    return (
+      <a href={href} onClick={onClick} className={className}>
+        {children}
+      </a>
+    )
+  }
+
+  return (
+    <Link href={href} onClick={onClick} className={className}>
+      {children}
+    </Link>
   )
 }

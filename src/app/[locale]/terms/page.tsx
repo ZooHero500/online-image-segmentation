@@ -1,12 +1,10 @@
 import type { Metadata } from "next"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { routing } from "@/i18n/routing"
-import { Link } from "@/i18n/navigation"
 import { JsonLd } from "@/components/JsonLd"
-import { LogoIcon } from "@/components/LogoIcon"
-import { LocaleSwitcher } from "@/components/LocaleSwitcher"
-import { MobileNav } from "@/components/MobileNav"
 import { GridLines } from "@/components/GridLines"
+import { SiteFooter } from "@/components/SiteFooter"
+import { SiteNav } from "@/components/SiteNav"
 import { Github } from "lucide-react"
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imgsplit.com"
@@ -63,8 +61,6 @@ export default async function TermsPage({
   const { locale } = await params
   setRequestLocale(locale)
   const t = await getTranslations("terms")
-  const tNav = await getTranslations("nav")
-  const tFooter = await getTranslations("footer")
 
   return (
     <main className="min-h-screen bg-background relative">
@@ -96,42 +92,7 @@ export default async function TermsPage({
       {/* Grid Lines */}
       <GridLines />
 
-      {/* NAV */}
-      <nav className="sticky top-0 z-40 bg-background/90 backdrop-blur-sm border-b border-border">
-        <div className="max-w-[1600px] mx-auto px-4 md:px-16 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <LogoIcon className="h-4 w-4 text-foreground" />
-            <span className="text-xs uppercase tracking-[0.3em] font-medium text-foreground">
-              ImgSplit
-            </span>
-          </Link>
-          <div className="flex items-center gap-2 md:gap-8 text-xs">
-            <Link
-              href="/"
-              className="hidden md:inline uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-500 link-underline"
-            >
-              {tNav("getStarted")}
-            </Link>
-            <Link
-              href="/tools"
-              className="hidden md:inline uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-500 link-underline"
-            >
-              {tFooter("toolAll")}
-            </Link>
-            <MobileNav
-              links={[
-                { href: "/", label: tNav("getStarted") },
-                { href: "/tools", label: tFooter("toolAll") },
-              ]}
-              ctaLabel={tNav("getStarted")}
-              ctaHref="/"
-              menuLabel={tNav("menu")}
-              closeLabel={tNav("close")}
-            />
-            <LocaleSwitcher variant="compact" />
-          </div>
-        </div>
-      </nav>
+      <SiteNav locale={locale} ctaHref="/" />
 
       {/* HERO */}
       <section className="relative py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16 max-w-[1600px] mx-auto">
@@ -314,72 +275,7 @@ export default async function TermsPage({
           </div>
         </section>
       </div>
-
-      {/* FOOTER */}
-      <footer className="border-t border-border py-12 md:py-16 px-4 sm:px-8 md:px-16">
-        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <LogoIcon className="h-3.5 w-3.5 text-foreground" />
-            <span className="text-xs uppercase tracking-[0.3em] font-medium">
-              ImgSplit
-            </span>
-            <span className="hidden md:inline text-[10px] uppercase tracking-[0.25em] text-muted-foreground ml-4">
-              {tFooter("tagline")}
-            </span>
-          </div>
-          <div className="flex flex-col md:flex-row gap-6 md:gap-12">
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-2">
-                {tFooter("toolsTitle")}
-              </p>
-              <div className="flex gap-6 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                <Link
-                  href="/grid"
-                  className="hover:text-accent transition-colors duration-500"
-                >
-                  {tFooter("toolGrid")}
-                </Link>
-                <Link
-                  href="/watermark"
-                  className="hover:text-accent transition-colors duration-500"
-                >
-                  {tFooter("toolWatermark")}
-                </Link>
-                <Link
-                  href="/"
-                  className="hover:text-accent transition-colors duration-500"
-                >
-                  {tFooter("toolSplit")}
-                </Link>
-                <Link
-                  href="/tools"
-                  className="hover:text-accent transition-colors duration-500"
-                >
-                  {tFooter("toolAll")}
-                </Link>
-              </div>
-            </div>
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-2">
-                {tFooter("navTitle")}
-              </p>
-              <div className="flex gap-6 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                <Link
-                  href="/"
-                  className="hover:text-accent transition-colors duration-500"
-                >
-                  {tFooter("navFeatures")}
-                </Link>
-              </div>
-            </div>
-          </div>
-          <div className="mt-6 md:mt-0">
-            <a href="https://www.producthunt.com/products/imgsplit?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-imgsplit" target="_blank" rel="noopener noreferrer">
-              <img alt="ImgSplit - Split images with precision — free, private, no upload | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1114907&theme=light&t=1775379733917" />
-            </a>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter locale={locale} />
     </main>
   )
 }

@@ -4,11 +4,10 @@ import { LandingContent } from "./LandingContent"
 import { SmartCTA } from "./SmartCTA"
 import { FaqItem } from "./FaqSection"
 import { JsonLd } from "@/components/JsonLd"
-import { LogoIcon } from "@/components/LogoIcon"
-import { LocaleSwitcher } from "@/components/LocaleSwitcher"
-import { MobileNav } from "@/components/MobileNav"
 import { GridLines } from "@/components/GridLines"
 import { ReturningUserToolbar } from "@/components/ReturningUserToolbar"
+import { SiteFooter } from "@/components/SiteFooter"
+import { SiteNav } from "@/components/SiteNav"
 import {
   Scissors,
   Shield,
@@ -18,7 +17,6 @@ import {
   Grid3X3,
   MousePointerClick,
   Layers,
-  ArrowRight,
   CheckCircle2,
 } from "lucide-react"
 import type React from "react"
@@ -152,60 +150,17 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       {/* Visible Grid Lines */}
       <GridLines />
 
-      {/* NAV */}
-      <nav className="sticky top-0 z-40 bg-background/90 backdrop-blur-sm border-b border-border">
-        <div className="max-w-[1600px] mx-auto px-4 md:px-16 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <LogoIcon className="h-4 w-4 text-foreground" />
-            <span className="text-xs uppercase tracking-[0.3em] font-medium text-foreground">
-              ImgSplit
-            </span>
-          </div>
-          <div className="flex items-center gap-2 md:gap-8 text-xs">
-            <a
-              href="#features"
-              className="hidden md:inline uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-500 link-underline"
-            >
-              {t("nav.features")}
-            </a>
-            <a
-              href="#how-it-works"
-              className="hidden md:inline uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-500 link-underline"
-            >
-              {t("nav.howItWorks")}
-            </a>
-            <a
-              href="#faq"
-              className="hidden md:inline uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-500 link-underline"
-            >
-              {t("nav.faq")}
-            </a>
-            <Link
-              href="/watermark"
-              className="hidden md:inline uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors duration-500 link-underline"
-            >
-              {t("footer.toolWatermark")}
-            </Link>
-            <MobileNav
-              links={[
-                { href: "#features", label: t("nav.features") },
-                { href: "#how-it-works", label: t("nav.howItWorks") },
-                { href: "#faq", label: t("nav.faq") },
-                { href: "/watermark", label: t("footer.toolWatermark") },
-              ]}
-              ctaLabel={t("nav.getStarted")}
-              ctaHref="#upload"
-              menuLabel={t("nav.menu")}
-              closeLabel={t("nav.close")}
-            />
-            <LocaleSwitcher variant="compact" />
-            <SmartCTA
-              label={t("nav.getStarted")}
-              className="hidden md:inline-flex group relative items-center gap-2 bg-primary text-primary-foreground px-6 py-2.5 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 cursor-pointer press"
-            />
-          </div>
-        </div>
-      </nav>
+      <SiteNav
+        locale={locale}
+        links={[
+          { href: "#features", label: t("nav.features") },
+          { href: "#how-it-works", label: t("nav.howItWorks") },
+          { href: "#faq", label: t("nav.faq") },
+        ]}
+        ctaLabel={t("nav.getStarted")}
+        ctaHref="#upload"
+        smartCta
+      />
 
       {/* QUICK ACCESS — returning users only */}
       <ReturningUserToolbar />
@@ -615,67 +570,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="border-t border-border py-12 md:py-16 px-4 sm:px-8 md:px-16">
-        <div className="max-w-[1600px] mx-auto">
-          {/* Top: Logo + tagline */}
-          <div className="flex items-center gap-3 mb-10">
-            <LogoIcon className="h-3.5 w-3.5 text-foreground" />
-            <span className="text-xs uppercase tracking-[0.3em] font-medium">
-              ImgSplit
-            </span>
-            <span className="hidden sm:inline text-[10px] uppercase tracking-[0.25em] text-muted-foreground ml-4">
-              {t("footer.tagline")}
-            </span>
-          </div>
-
-          {/* Middle: Link columns */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-10">
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">{t("footer.toolsTitle")}</p>
-              <div className="flex flex-col gap-2.5 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                <a href="#upload" className="hover:text-accent transition-colors duration-500">{t("footer.toolSplit")}</a>
-                <Link href="/grid" className="hover:text-accent transition-colors duration-500">{t("footer.toolGrid")}</Link>
-                <Link href="/resize" className="hover:text-accent transition-colors duration-500">{t("footer.toolResize")}</Link>
-                <Link href="/compress" className="hover:text-accent transition-colors duration-500">{t("footer.toolCompress")}</Link>
-                <Link href="/watermark" className="hover:text-accent transition-colors duration-500">{t("footer.toolWatermark")}</Link>
-                <Link href="/tools" className="hover:text-accent transition-colors duration-500">{t("footer.toolAll")}</Link>
-              </div>
-            </div>
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">{t("footer.navTitle")}</p>
-              <div className="flex flex-col gap-2.5 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                <a href="#features" className="hover:text-accent transition-colors duration-500">{t("footer.navFeatures")}</a>
-                <a href="#how-it-works" className="hover:text-accent transition-colors duration-500">{t("footer.navHowItWorks")}</a>
-                <a href="#faq" className="hover:text-accent transition-colors duration-500">{t("footer.navFaq")}</a>
-              </div>
-            </div>
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">{t("footer.legalTitle")}</p>
-              <div className="flex flex-col gap-2.5 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                <Link href="/about" className="hover:text-accent transition-colors duration-500">{t("footer.about")}</Link>
-                <Link href="/privacy" className="hover:text-accent transition-colors duration-500">{t("footer.privacy")}</Link>
-                <Link href="/terms" className="hover:text-accent transition-colors duration-500">{t("footer.terms")}</Link>
-              </div>
-            </div>
-            <div>
-              <a href="https://www.producthunt.com/products/imgsplit?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-imgsplit" target="_blank" rel="noopener noreferrer" className="inline-block mb-3">
-                <img alt="ImgSplit on Product Hunt" width="200" height="43" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1114907&theme=light&t=1775379733917" />
-              </a>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                zoohero.dev@gmail.com
-              </p>
-            </div>
-          </div>
-
-          {/* Bottom: copyright line */}
-          <div className="pt-6 border-t border-border">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60">
-              © {new Date().getFullYear()} ImgSplit. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter locale={locale} />
     </main>
   )
 }
