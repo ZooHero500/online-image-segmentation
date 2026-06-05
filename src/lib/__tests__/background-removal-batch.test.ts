@@ -259,6 +259,7 @@ describe("background removal batch helpers", () => {
         error: null,
         resultCanvas: canvas,
         resultUrl: "blob:result",
+        appliedRefineOptions: null,
         device: "wasm",
       },
       "image/webp",
@@ -288,6 +289,7 @@ describe("background removal batch helpers", () => {
         error: null,
         resultCanvas: null,
         resultUrl: "",
+        appliedRefineOptions: null,
         device: null,
       },
       "image/png"
