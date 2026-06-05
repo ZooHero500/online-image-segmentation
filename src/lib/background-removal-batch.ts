@@ -4,7 +4,10 @@ import {
   getBackgroundRemovalBaseName,
   getBackgroundRemovalOutputExtension,
 } from "@/lib/background-removal"
-import type { BackgroundRemovalOutputFormat } from "@/lib/background-removal"
+import type {
+  BackgroundRemovalOutputFormat,
+  BackgroundRemovalRefineOptions,
+} from "@/lib/background-removal"
 
 export type BatchRemovalStatus =
   | "queued"
@@ -27,6 +30,7 @@ export type BatchRemovalItem = {
   error: string | null
   resultCanvas: HTMLCanvasElement | null
   resultUrl: string
+  appliedRefineOptions: BackgroundRemovalRefineOptions | null
   device: "webgpu" | "wasm" | null
 }
 
@@ -74,6 +78,7 @@ export function createBatchRemovalItems(
     error: null,
     resultCanvas: null,
     resultUrl: "",
+    appliedRefineOptions: null,
     device: null,
   }))
 }

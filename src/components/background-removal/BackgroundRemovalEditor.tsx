@@ -84,8 +84,6 @@ export function BackgroundRemovalEditor() {
   const [isModelCached, setIsModelCached] = useState(false)
   const [refineOptions, setRefineOptions] =
     useState<BackgroundRemovalRefineOptions>(DEFAULT_REFINE_OPTIONS)
-  const [appliedRefineOptions, setAppliedRefineOptions] =
-    useState<BackgroundRemovalRefineOptions>(DEFAULT_REFINE_OPTIONS)
   const [format, setFormat] = useState<BackgroundRemovalOutputFormat>("image/png")
   const [quality, setQuality] = useState(92)
   const [error, setError] = useState<string | null>(null)
@@ -94,6 +92,7 @@ export function BackgroundRemovalEditor() {
     url: string
   } | null>(null)
   const addMoreInputRef = useRef<HTMLInputElement>(null)
+  const uploadGenerationRef = useRef(0)
 
   const refreshCacheState = useCallback(async () => {
     const cached = await isBackgroundRemovalModelLikelyCached()
@@ -192,10 +191,10 @@ export function BackgroundRemovalEditor() {
   }, [batch])
 
   const handleChangeImage = useCallback(() => {
+    uploadGenerationRef.current += 1
     batch.clearAll()
     setError(null)
     setRefineOptions(DEFAULT_REFINE_OPTIONS)
-    setAppliedRefineOptions(DEFAULT_REFINE_OPTIONS)
     setPreviewImage(null)
   }, [batch])
 
@@ -204,6 +203,7 @@ export function BackgroundRemovalEditor() {
       const files = event.target.files
       event.target.value = ""
       if (!files || files.length === 0) return
+      const uploadGeneration = uploadGenerationRef.current
 
       const result = validateFiles(Array.from(files))
       if (!result.valid) {
@@ -226,6 +226,7 @@ export function BackgroundRemovalEditor() {
           const image = await loadImage(file)
           results.push({ file, image, mimeType: file.type })
         }
+        if (uploadGenerationRef.current !== uploadGeneration) return
         handleImagesLoaded(results)
       } catch {
         toast.error(uploadT("loadFailed"))
@@ -257,10 +258,9 @@ export function BackgroundRemovalEditor() {
     if (isBusy) return
     if (!(await ensureModelAvailable())) return
 
-    setAppliedRefineOptions(refineOptions)
     await batch.runQueue()
     await refreshCacheState()
-  }, [batch, ensureModelAvailable, isBusy, refineOptions, refreshCacheState])
+  }, [batch, ensureModelAvailable, isBusy, refreshCacheState])
 
   const handleRemoveBackground = useCallback(async () => {
     if (!selectedItem || isBusy) return
@@ -363,7 +363,10 @@ export function BackgroundRemovalEditor() {
   }, [])
 
   const hasPendingRefineChanges =
-    hasResult && !areRefineOptionsEqual(refineOptions, appliedRefineOptions)
+    hasResult &&
+    selectedItem?.appliedRefineOptions !== null &&
+    selectedItem?.appliedRefineOptions !== undefined &&
+    !areRefineOptionsEqual(refineOptions, selectedItem.appliedRefineOptions)
   const removeButtonLabel = hasResult
     ? t("rerunRemoval")
     : state === "loading-model"

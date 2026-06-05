@@ -34,6 +34,7 @@ function batchItem(overrides: Partial<BatchRemovalItem> = {}): BatchRemovalItem 
     error: null,
     resultCanvas: null,
     resultUrl: "",
+    appliedRefineOptions: null,
     device: null,
     ...overrides,
   }
@@ -88,6 +89,7 @@ describe("background removal batch helpers", () => {
       error: null,
       resultCanvas: null,
       resultUrl: "",
+      appliedRefineOptions: null,
       device: null,
     })
   })

@@ -37,6 +37,7 @@ type BatchAction =
       id: string
       resultCanvas: HTMLCanvasElement
       resultUrl: string
+      appliedRefineOptions: BackgroundRemovalRefineOptions
       device: BackgroundRemovalWorkerDevice
     }
   | { type: "error"; id: string; error: string }
@@ -103,6 +104,7 @@ function resetItemForRetry(item: BatchRemovalItem): BatchRemovalItem {
     error: null,
     resultCanvas: null,
     resultUrl: "",
+    appliedRefineOptions: null,
     device: null,
   }
 }
@@ -154,6 +156,7 @@ function batchReducer(
               error: null,
               resultCanvas: action.resultCanvas,
               resultUrl: action.resultUrl,
+              appliedRefineOptions: action.appliedRefineOptions,
               device: action.device,
             }
           : item
@@ -397,6 +400,7 @@ export function useBackgroundRemovalBatch(options: UseBackgroundRemovalBatchOpti
             id: nextItem.id,
             resultCanvas,
             resultUrl,
+            appliedRefineOptions: refineOptionsForRun,
             device: result.device,
           })
 

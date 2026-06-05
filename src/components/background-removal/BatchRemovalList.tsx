@@ -97,6 +97,7 @@ export function BatchRemovalList({
       {items.map((item) => {
         const isActive = isActiveItem(item)
         const canPreview = item.status === "ready" && Boolean(item.resultUrl)
+        const canRetry = item.status === "error" || item.status === "canceled"
         const progress = getProgressValue(item)
         const progressPercent = Math.round(progress * 100)
 
@@ -168,7 +169,7 @@ export function BatchRemovalList({
             </div>
 
             <div className="flex items-start gap-1">
-              {item.status === "error" && (
+              {canRetry && (
                 <button
                   type="button"
                   onClick={() => onRetry(item.id)}
