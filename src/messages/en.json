@@ -772,7 +772,7 @@
     "presets": "Outputs",
     "defaults": "Defaults",
     "all": "All",
-    "packWestern": "Western",
+    "packWestern": "Standard",
     "packChina": "Chinese",
     "packAll": "All",
     "selectedOutput": "Selected Output",

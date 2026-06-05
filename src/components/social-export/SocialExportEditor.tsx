@@ -569,9 +569,8 @@ export function SocialExportEditor() {
           </div>
         </div>
       ) : (
-        <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
-          <aside className="shrink-0 border-b border-border bg-background lg:w-80 lg:border-b-0 lg:border-r">
-            <div className="max-h-64 space-y-5 overflow-y-auto p-4 lg:max-h-none">
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden lg:flex-row">
+          <aside className="max-h-64 min-h-0 shrink-0 space-y-5 overflow-y-auto overscroll-contain border-b border-border bg-background p-4 pb-8 lg:max-h-none lg:w-80 lg:border-b-0 lg:border-r">
               <section>
                 <div className="mb-3 flex items-center justify-between gap-3">
                   <SectionTitle icon={<Layers2 className="h-3.5 w-3.5" />}>
@@ -637,7 +636,6 @@ export function SocialExportEditor() {
                   })}
                 </div>
               </section>
-            </div>
           </aside>
 
           <div className="flex min-h-0 min-w-0 flex-1 flex-col">
@@ -710,8 +708,7 @@ export function SocialExportEditor() {
             </div>
           </div>
 
-          <aside className="shrink-0 border-t border-border bg-background lg:w-72 lg:border-l lg:border-t-0">
-            <div className="space-y-6 p-4">
+          <aside className="max-h-80 min-h-0 shrink-0 space-y-6 overflow-y-auto overscroll-contain border-t border-border bg-background p-4 pb-8 lg:max-h-none lg:w-72 lg:border-l lg:border-t-0">
               <section>
                 <SectionTitle icon={<SlidersHorizontal className="h-3.5 w-3.5" />}>
                   {t("selectedOutput")}
@@ -820,7 +817,6 @@ export function SocialExportEditor() {
                   {t("zipHint")}
                 </p>
               </section>
-            </div>
           </aside>
         </div>
       )}

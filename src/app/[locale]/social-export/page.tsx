@@ -69,7 +69,7 @@ export default async function SocialExportPage({
   const t = await getTranslations({ locale, namespace: "socialExport.metadata" })
 
   return (
-    <main className="flex h-screen flex-col overflow-hidden">
+    <main className="fixed inset-0 flex flex-col overflow-hidden bg-background">
       <JsonLd
         data={{
           "@context": "https://schema.org",
