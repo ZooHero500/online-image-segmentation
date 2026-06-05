@@ -226,4 +226,52 @@ describe("BackgroundRemovalWorkerClient", () => {
     await expect(promise).rejects.toThrow("Worker crashed")
     expect(worker.terminated).toBe(true)
   })
+
+  it("ignores stale worker events after replacement", async () => {
+    const firstWorker = new FakeWorker()
+    const secondWorker = new FakeWorker()
+    const createWorker = vi
+      .fn<[], Worker>()
+      .mockReturnValueOnce(firstWorker as unknown as Worker)
+      .mockReturnValueOnce(secondWorker as unknown as Worker)
+    const client = new BackgroundRemovalWorkerClient(createWorker)
+
+    const firstPromise = client.remove({
+      requestId: "request-1",
+      file: imageFile(),
+      modelId: "imgsplit/rmbg-1.4",
+    })
+
+    client.terminate()
+    await expect(firstPromise).rejects.toThrow("canceled")
+
+    const secondBlob = new Blob(["result"], { type: "image/png" })
+    const secondPromise = client.remove({
+      requestId: "request-2",
+      file: imageFile(),
+      modelId: "imgsplit/rmbg-1.4",
+    })
+
+    firstWorker.fail("Late worker error")
+    firstWorker.send({
+      type: "result",
+      requestId: "request-2",
+      image: new Blob(["wrong"], { type: "image/png" }),
+      device: "webgpu",
+    })
+
+    expect(secondWorker.terminated).toBe(false)
+
+    secondWorker.send({
+      type: "result",
+      requestId: "request-2",
+      image: secondBlob,
+      device: "wasm",
+    })
+
+    await expect(secondPromise).resolves.toEqual({
+      image: secondBlob,
+      device: "wasm",
+    })
+  })
 })

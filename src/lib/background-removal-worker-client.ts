@@ -93,15 +93,23 @@ export class BackgroundRemovalWorkerClient {
   terminate() {
     this.pending?.reject(new Error("Background removal canceled"))
     this.pending = null
-    this.worker?.terminate()
+    if (this.worker) {
+      this.worker.onmessage = null
+      this.worker.onerror = null
+      this.worker.terminate()
+    }
     this.worker = null
   }
 
   private getWorker() {
     if (this.worker) return this.worker
 
-    this.worker = this.createWorker()
-    this.worker.onmessage = (event: MessageEvent<BackgroundRemovalWorkerMessage>) => {
+    const worker = this.createWorker()
+    this.worker = worker
+
+    worker.onmessage = (event: MessageEvent<BackgroundRemovalWorkerMessage>) => {
+      if (this.worker !== worker) return
+
       const message = event.data
       const pending = this.pending
       if (!pending || message.requestId !== pending.requestId) return
@@ -126,14 +134,18 @@ export class BackgroundRemovalWorkerClient {
       pending.resolve({ image: message.image, device: message.device })
     }
 
-    this.worker.onerror = (event: ErrorEvent) => {
+    worker.onerror = (event: ErrorEvent) => {
+      if (this.worker !== worker) return
+
       const pending = this.pending
       this.pending = null
-      this.worker?.terminate()
+      worker.onmessage = null
+      worker.onerror = null
+      worker.terminate()
       this.worker = null
       pending?.reject(new Error(event.message || "Background removal failed"))
     }
 
-    return this.worker
+    return worker
   }
 }
