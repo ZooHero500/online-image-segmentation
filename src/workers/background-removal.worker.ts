@@ -13,10 +13,10 @@ type WorkerStatus = "loading" | "ready" | "processing"
 type WorkerDevice = "webgpu" | "wasm"
 
 type WorkerResponse =
-  | { type: "status"; requestId?: string; status: WorkerStatus; device?: WorkerDevice }
-  | { type: "download-progress"; requestId?: string; progress: number | null; loaded?: number; total?: number }
-  | { type: "result"; requestId?: string; image: Blob; device: WorkerDevice }
-  | { type: "error"; requestId?: string; message: string }
+  | { type: "status"; requestId: string; status: WorkerStatus; device?: WorkerDevice }
+  | { type: "download-progress"; requestId: string; progress: number | null; loaded?: number; total?: number }
+  | { type: "result"; requestId: string; image: Blob; device: WorkerDevice }
+  | { type: "error"; requestId: string; message: string }
 
 type ProgressEvent = {
   status?: string

@@ -56,10 +56,10 @@ type ProcessingState =
   | "error"
 
 type WorkerStatusMessage =
-  | { type: "status"; requestId?: string; status: "loading" | "ready" | "processing"; device?: "webgpu" | "wasm" }
-  | { type: "download-progress"; requestId?: string; progress: number | null; loaded?: number; total?: number }
-  | { type: "result"; requestId?: string; image: Blob; device: "webgpu" | "wasm" }
-  | { type: "error"; requestId?: string; message: string }
+  | { type: "status"; requestId: string; status: "loading" | "ready" | "processing"; device?: "webgpu" | "wasm" }
+  | { type: "download-progress"; requestId: string; progress: number | null; loaded?: number; total?: number }
+  | { type: "result"; requestId: string; image: Blob; device: "webgpu" | "wasm" }
+  | { type: "error"; requestId: string; message: string }
 
 const DEFAULT_REFINE_OPTIONS: BackgroundRemovalRefineOptions = {
   alphaCutoff: 0,
