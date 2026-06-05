@@ -2,6 +2,7 @@ import type { RawImage } from "@huggingface/transformers"
 
 type RemoveBackgroundMessage = {
   type: "remove-background"
+  requestId: string
   image: Blob
   modelId: string
 }
@@ -12,10 +13,10 @@ type WorkerStatus = "loading" | "ready" | "processing"
 type WorkerDevice = "webgpu" | "wasm"
 
 type WorkerResponse =
-  | { type: "status"; status: WorkerStatus; device?: WorkerDevice }
-  | { type: "download-progress"; progress: number | null; loaded?: number; total?: number }
-  | { type: "result"; image: Blob; device: WorkerDevice }
-  | { type: "error"; message: string }
+  | { type: "status"; requestId?: string; status: WorkerStatus; device?: WorkerDevice }
+  | { type: "download-progress"; requestId?: string; progress: number | null; loaded?: number; total?: number }
+  | { type: "result"; requestId?: string; image: Blob; device: WorkerDevice }
+  | { type: "error"; requestId?: string; message: string }
 
 type ProgressEvent = {
   status?: string
@@ -88,7 +89,8 @@ function getLocalModelPath(): string {
 
 async function loadSegmenter(
   modelId: string,
-  device: WorkerDevice
+  device: WorkerDevice,
+  requestId: string
 ): Promise<LoadedSegmenter> {
   const cacheKey = `${modelId}:${device}`
   const cachedSegmenter = segmenterPromises.get(cacheKey)
@@ -105,16 +107,16 @@ async function loadSegmenter(
   env.useBrowserCache = true
 
   activeDevice = device
-  post({ type: "status", status: "loading", device: activeDevice })
+  post({ type: "status", requestId, status: "loading", device: activeDevice })
 
   const segmenterPromise = Promise.all([
     AutoProcessor.from_pretrained(modelId, {
-      progress_callback: handleProgress,
+      progress_callback: handleProgress(requestId),
     }),
     SegformerForSemanticSegmentation.from_pretrained(modelId, {
       device,
       dtype: "q8",
-      progress_callback: handleProgress,
+      progress_callback: handleProgress(requestId),
     }),
   ]).then(([processor, model]) => ({ processor, model }))
 
@@ -144,14 +146,18 @@ function getProcessorCallable(
   return null
 }
 
-function handleProgress(event: ProgressEvent) {
-  if (event.status === "progress") {
+function handleProgress(requestId: string) {
+  return (event: ProgressEvent) => {
+    if (event.status !== "progress") return
+
     const progress =
       typeof event.progress === "number"
         ? Math.max(0, Math.min(1, event.progress / 100))
         : null
+
     post({
       type: "download-progress",
+      requestId,
       progress,
       loaded: event.loaded,
       total: event.total,
@@ -165,6 +171,7 @@ workerSelf.onmessage = (event: MessageEvent<WorkerRequest>) => {
   void removeBackground(event.data).catch((error) => {
     post({
       type: "error",
+      requestId: event.data.requestId,
       message: error instanceof Error ? error.message : "Background removal failed",
     })
   })
@@ -175,14 +182,14 @@ async function removeBackground(message: RemoveBackgroundMessage) {
 
   try {
     const image = await removeBackgroundWithDevice(message, preferredDevice)
-    post({ type: "result", image, device: activeDevice })
+    post({ type: "result", requestId: message.requestId, image, device: activeDevice })
     return
   } catch (error) {
     if (preferredDevice !== "webgpu") throw error
 
     segmenterPromises.delete(`${message.modelId}:webgpu`)
     const image = await removeBackgroundWithDevice(message, "wasm")
-    post({ type: "result", image, device: activeDevice })
+    post({ type: "result", requestId: message.requestId, image, device: activeDevice })
   }
 }
 
@@ -191,9 +198,9 @@ async function removeBackgroundWithDevice(
   device: WorkerDevice
 ) {
   activeDevice = device
-  const segmenter = await loadSegmenter(message.modelId, device)
-  post({ type: "status", status: "ready", device: activeDevice })
-  post({ type: "status", status: "processing", device: activeDevice })
+  const segmenter = await loadSegmenter(message.modelId, device, message.requestId)
+  post({ type: "status", requestId: message.requestId, status: "ready", device: activeDevice })
+  post({ type: "status", requestId: message.requestId, status: "processing", device: activeDevice })
 
   const { RawImage } = await import("@huggingface/transformers")
   const originalImage = await RawImage.fromBlob(message.image)
