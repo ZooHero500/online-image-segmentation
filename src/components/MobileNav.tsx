@@ -12,6 +12,7 @@ import {
   Maximize2,
   Send,
   Scissors,
+  Sparkles,
   Stamp,
   Zap,
 } from "lucide-react"
@@ -47,6 +48,7 @@ const toolIconMap: Record<CoreToolIcon, LucideIcon> = {
   mosaic: EyeOff,
   collage: LayoutTemplate,
   socialExport: Send,
+  removeBackground: Sparkles,
 }
 
 export function MobileNav({

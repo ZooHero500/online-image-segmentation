@@ -100,6 +100,7 @@ export default async function ToolsPage({
               { "@type": "ListItem", position: 15, name: "Privacy Mosaic Tool", url: `${BASE_URL}/mosaic` },
               { "@type": "ListItem", position: 16, name: "Photo Collage Maker", url: `${BASE_URL}/collage` },
               { "@type": "ListItem", position: 17, name: "Social Media Image Exporter", url: `${BASE_URL}/social-export` },
+              { "@type": "ListItem", position: 18, name: "AI Background Remover", url: `${BASE_URL}/remove-background` },
             ],
           },
         }}

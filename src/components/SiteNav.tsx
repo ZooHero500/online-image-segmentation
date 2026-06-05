@@ -7,6 +7,7 @@ import {
   Maximize2,
   Send,
   Scissors,
+  Sparkles,
   Stamp,
   Zap,
 } from "lucide-react"
@@ -43,6 +44,7 @@ const toolIconMap: Record<CoreToolIcon, LucideIcon> = {
   mosaic: EyeOff,
   collage: LayoutTemplate,
   socialExport: Send,
+  removeBackground: Sparkles,
 }
 
 export async function SiteNav({
@@ -129,38 +131,36 @@ function ToolsDropdown({
         {label}
         <ChevronDown className="h-3 w-3 transition-transform duration-500 group-hover:rotate-180" strokeWidth={1.5} />
       </Link>
-      <div className="fixed left-1/2 top-16 z-50 w-[min(760px,calc(100vw-2rem))] -translate-x-1/2 pt-3 opacity-0 invisible pointer-events-none translate-y-2 transition-all duration-300 ease-luxury group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:visible group-focus-within:pointer-events-auto group-focus-within:translate-y-0">
-        <div className="border border-border bg-background shadow-[0_24px_80px_rgba(0,0,0,0.12)]">
-          <div className="grid grid-cols-2 gap-px bg-border">
-            {tools.map((tool, index) => {
-              const Icon = toolIconMap[tool.icon]
-              const spansFullRow = tools.length % 2 === 1 && index === tools.length - 1
+      <div className="fixed left-1/2 top-16 z-50 mt-3 w-[min(760px,calc(100vw-2rem))] -translate-x-1/2 border border-border bg-background opacity-0 invisible pointer-events-none translate-y-2 shadow-[0_24px_80px_rgba(0,0,0,0.12)] transition-all duration-300 ease-luxury group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:visible group-focus-within:pointer-events-auto group-focus-within:translate-y-0">
+        <div className="grid grid-cols-2 gap-px bg-border">
+          {tools.map((tool, index) => {
+            const Icon = toolIconMap[tool.icon]
+            const spansFullRow = tools.length % 2 === 1 && index === tools.length - 1
 
-              return (
-                <Link
-                  key={tool.href}
-                  href={tool.href}
-                  className={`min-h-24 bg-background p-5 text-foreground transition-colors duration-300 hover:bg-secondary/70 ${spansFullRow ? "col-span-2" : ""}`}
-                >
-                  <span className="flex items-center gap-3 text-[11px] uppercase tracking-[0.18em]">
-                    <Icon className="h-3.5 w-3.5 text-accent" strokeWidth={1.5} />
-                    {tool.label}
-                  </span>
-                  <span className="mt-2 block text-xs normal-case tracking-normal leading-5 text-muted-foreground">
-                    {tool.description}
-                  </span>
-                </Link>
-              )
-            })}
-          </div>
-          <Link
-            href="/tools"
-            className="flex items-center justify-between gap-4 border-t border-border px-5 py-4 text-[11px] uppercase tracking-[0.2em] text-accent transition-colors duration-300 hover:text-foreground"
-          >
-            {label}
-            <ArrowRight className="h-3 w-3" strokeWidth={1.5} />
-          </Link>
+            return (
+              <Link
+                key={tool.href}
+                href={tool.href}
+                className={`min-h-24 bg-background p-5 text-foreground transition-colors duration-300 hover:bg-secondary/70 ${spansFullRow ? "col-span-2" : ""}`}
+              >
+                <span className="flex items-center gap-3 text-[11px] uppercase tracking-[0.18em]">
+                  <Icon className="h-3.5 w-3.5 text-accent" strokeWidth={1.5} />
+                  {tool.label}
+                </span>
+                <span className="mt-2 block text-xs normal-case tracking-normal leading-5 text-muted-foreground">
+                  {tool.description}
+                </span>
+              </Link>
+            )
+          })}
         </div>
+        <Link
+          href="/tools"
+          className="flex items-center justify-between gap-4 border-t border-border px-5 py-4 text-[11px] uppercase tracking-[0.2em] text-accent transition-colors duration-300 hover:text-foreground"
+        >
+          {label}
+          <ArrowRight className="h-3 w-3" strokeWidth={1.5} />
+        </Link>
       </div>
     </div>
   )

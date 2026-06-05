@@ -7,6 +7,7 @@ export type CoreToolId =
   | "mosaic"
   | "collage"
   | "socialExport"
+  | "removeBackground"
 export type CoreToolIcon =
   | "scissors"
   | "grid"
@@ -16,6 +17,7 @@ export type CoreToolIcon =
   | "mosaic"
   | "collage"
   | "socialExport"
+  | "removeBackground"
 
 export interface CoreTool {
   id: CoreToolId
@@ -28,6 +30,7 @@ export interface CoreTool {
     | "toolMosaic"
     | "toolCollage"
     | "toolSocialExport"
+    | "toolRemoveBackground"
   descriptionKey:
     | "existingToolSplitDesc"
     | "existingToolGridDesc"
@@ -37,6 +40,7 @@ export interface CoreTool {
     | "existingToolMosaicDesc"
     | "existingToolCollageDesc"
     | "existingToolSocialExportDesc"
+    | "existingToolRemoveBackgroundDesc"
   href: string
   quickAccessHref: string
   sitemapPriority: number
@@ -116,6 +120,15 @@ export const CORE_TOOLS: CoreTool[] = [
     sitemapPriority: 0.9,
     icon: "socialExport",
   },
+  {
+    id: "removeBackground",
+    labelKey: "toolRemoveBackground",
+    descriptionKey: "existingToolRemoveBackgroundDesc",
+    href: "/remove-background",
+    quickAccessHref: "/remove-background",
+    sitemapPriority: 0.9,
+    icon: "removeBackground",
+  },
 ]
 
 export const POPULAR_TOOL_SLUGS = [
@@ -172,4 +185,6 @@ export const TOOL_EDITOR_HREFS: Record<string, string> = {
   "xiaohongshu-cover-size": "/social-export",
   "wechat-cover-size": "/social-export",
   "wechat-official-account-cover-size": "/social-export",
+  "remove-background-free": "/remove-background",
+  "transparent-background-maker": "/remove-background",
 }

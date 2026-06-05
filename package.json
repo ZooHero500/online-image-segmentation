@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "models:background-removal": "node scripts/download-background-removal-model.mjs"
   },
   "dependencies": {
+    "@huggingface/transformers": "^4.2.0",
     "@sentry/nextjs": "^10",
     "@vercel/analytics": "^2.0.1",
     "class-variance-authority": "^0.7.1",

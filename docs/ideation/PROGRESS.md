@@ -12,7 +12,7 @@
 | P2 | ⑤ 隐私打码/马赛克 | 🟢 已完成 | 2026-06-04 | 2026-06-04 | 工具 MVP + 画笔/图片遮罩增强 + 8 pSEO 页, 5 语言, 跳转已验证 |
 | P3 | ④ 照片拼图/拼贴 | 🟢 已完成 | 2026-06-04 | 2026-06-04 | 工具 MVP + 10 模板 + 3 pSEO 页, 5 语言, build 已验证 |
 | P3 | ⑥ 社媒多平台一键导出 | 🟢 已完成 | 2026-06-04 | 2026-06-04 | 工具 MVP + 9 平台尺寸预设 + 5 pSEO 页, 5 语言, build 已验证 |
-| P4 | ⑦ AI 背景移除 | ⬜ 未开始 | - | - | |
+| P4 | ⑦ AI 背景移除 | 🟢 已完成 | 2026-06-05 | 2026-06-05 | 本地 RMBG/Transformers.js MVP，显式模型下载、缓存 UX、边缘参数与导出 |
 
 **状态图例**: ⬜ 未开始 | 🔵 Spec 中 | 🟡 开发中 | 🟢 已完成 | 🔴 阻塞
 
@@ -141,19 +141,26 @@
 ## Phase 4 — 差异化壁垒 (~7天)
 
 ### ⑦ AI 背景移除
-- **状态**: ⬜ 未开始
+- **状态**: 🟢 已完成
 - **预估**: ~1200 行新代码, ~5 天
-- **Spec**: -
+- **Spec/Plan**: `docs/superpowers/plans/2026-06-05-local-ai-background-removal.md`
 - **风险**: 模型加载时间、移动端性能
+- **体验原则**: 必须明确告知用户首次需要下载本地 AI 模型、下载原因、模型大小/进度、图片不会上传；模型应缓存到浏览器，后续避免重复下载，并提供缓存状态、重新下载/清理缓存入口。
+- **实施说明**: 首版选择 `@huggingface/transformers` + 站内托管 `imgsplit/rmbg-1.4` RMBG 模型，以浏览器本地推理优先；Worker 优先尝试 WebGPU，失败回退 WASM；模型从 `/models/imgsplit/rmbg-1.4/` 加载，避免用户所在地区直接访问 Hugging Face 失败；UI 在用户上传后明确展示模型下载说明、缓存命中状态、下载进度、弱设备提示、边缘参数与透明/白底导出。
 - **子任务**:
-  - [ ] Spec: 需求 → 设计 → 任务
-  - [ ] 研究: ONNX 模型选型 (RMBG-1.4 vs MODNet vs IS-Net)
-  - [ ] 核心: ONNX Runtime Web 集成
-  - [ ] 核心: 前景/背景分割推理
+  - [x] Spec: 需求 → 设计 → 任务
+  - [x] 研究: ONNX 模型选型 (RMBG-1.4 vs MODNet vs IS-Net)
+  - [x] 核心: Transformers.js / ONNX Runtime Web 集成
+  - [x] 核心: 前景/背景分割推理
   - [ ] 核心: 背景替换 (纯色/渐变/自定义图片)
-  - [ ] UI: 一键移除 + 边缘精修笔刷
-  - [ ] 优化: Web Worker + 模型缓存
-  - [ ] pSEO + i18n + 集成
+  - [x] UI: 首次模型下载说明卡片 (为什么下载/下载大小/隐私说明/缓存说明)
+  - [x] UI: 模型下载进度、缓存命中状态、失败重试与弱网提示
+  - [x] UI: 一键移除 + PNG/WebP/JPEG 导出
+  - [x] UI: 边缘参数调整
+  - [ ] UI: 边缘精修笔刷
+  - [x] 优化: Web Worker + 模型缓存，避免重复下载并支持清理缓存
+  - [ ] pSEO
+  - [x] i18n + 核心工具集成
 
 ---
 
@@ -176,3 +183,4 @@
 | 2026-06-04 | ④ 照片拼图/拼贴 — 优化空 frame 点击/拖拽上传，新增 Diagonal Duo 与 Story Diagonal 斜切模板，模板数扩展到 10 个 |
 | 2026-06-04 | ⑥ 社媒多平台一键导出 — 完成 `/social-export` MVP，支持 9 个社媒尺寸、单尺寸裁剪微调、PNG/JPEG/WebP、按平台命名 ZIP、5 pSEO 与 5 语言文案 |
 | 2026-06-04 | ⑥ 社媒多平台导出 SEO — 使用 DataForSEO MCP 重排英文主力词，新增 Instagram/Facebook/LinkedIn/Twitter 高价值尺寸页；中文小红书/微信页改为 locale-specific sitemap/hreflang |
+| 2026-06-05 | ⑦ AI 背景移除 — 完成 `/remove-background` 本地 AI MVP，采用 Transformers.js + 站内 RMBG 模型，补充显式模型下载、缓存状态、清理缓存、Web Worker、边缘参数、导出与 5 语言文案 |

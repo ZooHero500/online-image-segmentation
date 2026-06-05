@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
-import { ArrowRight, EyeOff, Grid3X3, LayoutTemplate, Maximize2, Send, Scissors, Stamp, Zap } from "lucide-react"
+import { ArrowRight, EyeOff, Grid3X3, LayoutTemplate, Maximize2, Send, Scissors, Sparkles, Stamp, Zap } from "lucide-react"
 import { CORE_TOOLS, type CoreToolIcon } from "@/lib/tools/catalog"
 
 const VISITED_KEY = "imgsplit_visited"
@@ -17,6 +17,7 @@ const iconMap: Record<CoreToolIcon, typeof Scissors> = {
   mosaic: EyeOff,
   collage: LayoutTemplate,
   socialExport: Send,
+  removeBackground: Sparkles,
 }
 
 export function ReturningUserToolbar() {
