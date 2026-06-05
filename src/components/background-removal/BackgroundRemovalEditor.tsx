@@ -25,6 +25,7 @@ import { Link } from "@/i18n/navigation"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { LogoIcon } from "@/components/LogoIcon"
 import { UploadZone } from "@/components/UploadZone"
+import { BackgroundRemovalWorkerClient } from "@/lib/background-removal-worker-client"
 import {
   BACKGROUND_REMOVAL_ESTIMATED_MODEL_BYTES,
   BACKGROUND_REMOVAL_CACHE_VERSION,
@@ -54,12 +55,6 @@ type ProcessingState =
   | "processing"
   | "ready"
   | "error"
-
-type WorkerStatusMessage =
-  | { type: "status"; requestId: string; status: "loading" | "ready" | "processing"; device?: "webgpu" | "wasm" }
-  | { type: "download-progress"; requestId: string; progress: number | null; loaded?: number; total?: number }
-  | { type: "result"; requestId: string; image: Blob; device: "webgpu" | "wasm" }
-  | { type: "error"; requestId: string; message: string }
 
 const DEFAULT_REFINE_OPTIONS: BackgroundRemovalRefineOptions = {
   alphaCutoff: 0,
@@ -93,6 +88,13 @@ async function createCanvasObjectUrl(canvas: HTMLCanvasElement): Promise<string>
   return URL.createObjectURL(blob)
 }
 
+function createBackgroundRemovalWorker() {
+  return new Worker(
+    new URL("../../workers/background-removal.worker.ts", import.meta.url),
+    { type: "module" }
+  )
+}
+
 export function BackgroundRemovalEditor() {
   const t = useTranslations("removeBackground")
   const [item, setItem] = useState<UploadResult | null>(null)
@@ -115,7 +117,7 @@ export function BackgroundRemovalEditor() {
     label: string
     url: string
   } | null>(null)
-  const workerRef = useRef<Worker | null>(null)
+  const workerClientRef = useRef<BackgroundRemovalWorkerClient | null>(null)
   const currentRequestIdRef = useRef<string | null>(null)
 
   const modelSize = formatModelBytes(BACKGROUND_REMOVAL_ESTIMATED_MODEL_BYTES)
@@ -177,7 +179,7 @@ export function BackgroundRemovalEditor() {
 
   useEffect(() => {
     return () => {
-      workerRef.current?.terminate()
+      workerClientRef.current?.terminate()
       currentRequestIdRef.current = null
     }
   }, [])
@@ -235,8 +237,8 @@ export function BackgroundRemovalEditor() {
   }, [])
 
   const handleChangeImage = useCallback(() => {
-    workerRef.current?.terminate()
-    workerRef.current = null
+    workerClientRef.current?.terminate()
+    workerClientRef.current = null
     currentRequestIdRef.current = null
     setItem(null)
     setState("idle")
@@ -285,82 +287,64 @@ export function BackgroundRemovalEditor() {
       }
     }
 
-    workerRef.current?.terminate()
     const requestId = `single-${Date.now()}-${Math.random().toString(36).slice(2)}`
-    const worker = new Worker(
-      new URL("../../workers/background-removal.worker.ts", import.meta.url),
-      { type: "module" }
-    )
-    workerRef.current = worker
+    if (!workerClientRef.current) {
+      workerClientRef.current = new BackgroundRemovalWorkerClient(
+        createBackgroundRemovalWorker
+      )
+    }
+
     currentRequestIdRef.current = requestId
     setState("loading-model")
     setError(null)
     setDownloadProgress(isModelCached ? 1 : null)
+    setLoadedBytes(null)
+    setTotalBytes(null)
 
-    worker.onmessage = async (event: MessageEvent<WorkerStatusMessage>) => {
-      const message = event.data
-      if (message.requestId !== requestId || currentRequestIdRef.current !== requestId) return
-
-      if (message.type === "status") {
-        if (message.device) setDevice(message.device)
-        if (message.status === "processing") setState("processing")
-        if (message.status === "loading") setState("loading-model")
-        return
-      }
-
-      if (message.type === "download-progress") {
-        setDownloadProgress(message.progress)
-        setLoadedBytes(message.loaded ?? null)
-        setTotalBytes(message.total ?? null)
-        return
-      }
-
-      if (message.type === "error") {
-        currentRequestIdRef.current = null
-        setState("error")
-        setError(message.message)
-        toast.error(t("processFailed"))
-        return
-      }
-
-      if (message.type === "result") {
-        try {
-          setDevice(message.device)
-          const outputImage = await loadImageFromBlob(message.image)
+    try {
+      const result = await workerClientRef.current.remove({
+        requestId,
+        file: item.file,
+        modelId: BACKGROUND_REMOVAL_MODEL_ID,
+        onStatus: (message) => {
           if (currentRequestIdRef.current !== requestId) return
-
-          const canvas = createCanvasFromImage(outputImage)
-          setBaseResultCanvas(canvas)
-          setState("ready")
-          setDownloadProgress(1)
-          await refreshCacheState()
+          if (message.device) setDevice(message.device)
+          if (message.status === "processing") setState("processing")
+          if (message.status === "loading") setState("loading-model")
+        },
+        onProgress: (message) => {
           if (currentRequestIdRef.current !== requestId) return
+          setDownloadProgress(message.progress)
+          setLoadedBytes(message.loaded ?? null)
+          setTotalBytes(message.total ?? null)
+        },
+      })
 
-          currentRequestIdRef.current = null
-          toast.success(t("downloadReady"))
-        } catch {
-          if (currentRequestIdRef.current !== requestId) return
-          currentRequestIdRef.current = null
-          setState("error")
-          setError(t("previewFailed"))
-        }
-      }
-    }
-
-    worker.onerror = () => {
+      setDevice(result.device)
+      const outputImage = await loadImageFromBlob(result.image)
       if (currentRequestIdRef.current !== requestId) return
+
+      const canvas = createCanvasFromImage(outputImage)
+      setBaseResultCanvas(canvas)
+      setState("ready")
+      setDownloadProgress(1)
+      await refreshCacheState()
+      if (currentRequestIdRef.current !== requestId) return
+
+      currentRequestIdRef.current = null
+      toast.success(t("downloadReady"))
+    } catch (caughtError) {
+      if (currentRequestIdRef.current !== requestId) return
+
       currentRequestIdRef.current = null
       setState("error")
-      setError(t("processFailed"))
+      setError(
+        caughtError instanceof Error && caughtError.message
+          ? caughtError.message
+          : t("processFailed")
+      )
       toast.error(t("processFailed"))
     }
-
-    worker.postMessage({
-      type: "remove-background",
-      requestId,
-      image: item.file,
-      modelId: BACKGROUND_REMOVAL_MODEL_ID,
-    })
   }, [baseResultCanvas, isModelCached, item, refineOptions, refreshCacheState, state, t])
 
   const handleDownload = useCallback(async () => {
