@@ -140,6 +140,40 @@ describe("background removal batch helpers", () => {
     expect(Object.keys(zip.files).sort()).toEqual(["a-no-bg.png", "b-no-bg.webp"])
   })
 
+  it("dedupes zip filenames when source names differ only by extension", async () => {
+    const zipBlob = await exportBackgroundRemovalBatchAsZip([
+      {
+        id: "1",
+        originalFileName: "photo.png",
+        outputFormat: "image/png",
+        blob: new Blob(["first photo"], { type: "image/png" }),
+      },
+      {
+        id: "2",
+        originalFileName: "photo.jpg",
+        outputFormat: "image/png",
+        blob: new Blob(["second photo"], { type: "image/png" }),
+      },
+      {
+        id: "3",
+        originalFileName: "photo.webp",
+        outputFormat: "image/png",
+        blob: new Blob(["third photo"], { type: "image/png" }),
+      },
+    ])
+
+    const zip = await JSZip.loadAsync(zipBlob)
+
+    expect(Object.keys(zip.files).sort()).toEqual([
+      "photo-no-bg-2.png",
+      "photo-no-bg-3.png",
+      "photo-no-bg.png",
+    ])
+    await expect(zip.file("photo-no-bg.png")?.async("string")).resolves.toBe("first photo")
+    await expect(zip.file("photo-no-bg-2.png")?.async("string")).resolves.toBe("second photo")
+    await expect(zip.file("photo-no-bg-3.png")?.async("string")).resolves.toBe("third photo")
+  })
+
   it("converts a completed item canvas into a zip item", async () => {
     const canvas = {
       toBlob: vi.fn((callback: BlobCallback, type?: string, quality?: number) => {

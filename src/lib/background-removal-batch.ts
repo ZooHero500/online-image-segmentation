@@ -121,12 +121,26 @@ export async function exportBackgroundRemovalBatchAsZip(
 ): Promise<Blob> {
   const { default: JSZip } = await import("jszip")
   const zip = new JSZip()
+  const usedFileNames = new Set<string>()
 
   for (const item of items) {
-    zip.file(
-      getBackgroundRemovalOutputFileName(item.originalFileName, item.outputFormat),
-      item.blob
+    const outputFileName = getBackgroundRemovalOutputFileName(
+      item.originalFileName,
+      item.outputFormat
     )
+    const lastDot = outputFileName.lastIndexOf(".")
+    const baseName = outputFileName.slice(0, lastDot)
+    const extension = outputFileName.slice(lastDot)
+    let zipFileName = outputFileName
+    let duplicateIndex = 2
+
+    while (usedFileNames.has(zipFileName)) {
+      zipFileName = `${baseName}-${duplicateIndex}${extension}`
+      duplicateIndex += 1
+    }
+
+    usedFileNames.add(zipFileName)
+    zip.file(zipFileName, item.blob)
   }
 
   return zip.generateAsync({ type: "blob", mimeType: "application/zip" })
