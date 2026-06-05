@@ -107,7 +107,10 @@ function resetItemForRetry(item: BatchRemovalItem): BatchRemovalItem {
   }
 }
 
-function batchReducer(items: BatchRemovalItem[], action: BatchAction) {
+function batchReducer(
+  items: BatchRemovalItem[],
+  action: BatchAction
+): BatchRemovalItem[] {
   switch (action.type) {
     case "add":
       return [...items, ...action.items]

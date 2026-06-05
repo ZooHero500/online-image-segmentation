@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import type {
+  ChangeEvent,
   PointerEvent as ReactPointerEvent,
   ReactElement,
   WheelEvent as ReactWheelEvent,
@@ -25,27 +26,31 @@ import { Link } from "@/i18n/navigation"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { LogoIcon } from "@/components/LogoIcon"
 import { UploadZone } from "@/components/UploadZone"
-import { BackgroundRemovalWorkerClient } from "@/lib/background-removal-worker-client"
+import { BatchRemovalList } from "@/components/background-removal/BatchRemovalList"
+import { useBackgroundRemovalBatch } from "@/components/background-removal/useBackgroundRemovalBatch"
 import {
   BACKGROUND_REMOVAL_ESTIMATED_MODEL_BYTES,
   BACKGROUND_REMOVAL_CACHE_VERSION,
-  BACKGROUND_REMOVAL_MODEL_ID,
   BACKGROUND_REMOVAL_MODEL_LABEL,
   assertBackgroundRemovalModelAvailable,
   clearBackgroundRemovalModelCache,
   exportBackgroundRemovalCanvas,
   formatModelBytes,
   getBackgroundRemovalModelFilePath,
-  getBackgroundRemovalBaseName,
-  getBackgroundRemovalOutputExtension,
   isBackgroundRemovalModelLikelyCached,
-  loadImageFromBlob,
-  refineBackgroundRemovalCanvas,
 } from "@/lib/background-removal"
 import type {
   BackgroundRemovalOutputFormat,
   BackgroundRemovalRefineOptions,
 } from "@/lib/background-removal"
+import {
+  canvasToBatchZipItem,
+  exportBackgroundRemovalBatchAsZip,
+  getBackgroundRemovalOutputFileName,
+  getBackgroundRemovalZipFileName,
+} from "@/lib/background-removal-batch"
+import type { BatchRemovalItem, BatchRemovalZipItem } from "@/lib/background-removal-batch"
+import { ACCEPTED_TYPES, loadImage, validateFiles } from "@/lib/upload-utils"
 import type { UploadResult } from "@/types"
 
 type ProcessingState =
@@ -73,39 +78,10 @@ function areRefineOptionsEqual(
   )
 }
 
-function createCanvasFromImage(image: HTMLImageElement): HTMLCanvasElement {
-  const canvas = document.createElement("canvas")
-  canvas.width = image.naturalWidth || image.width
-  canvas.height = image.naturalHeight || image.height
-  const ctx = canvas.getContext("2d")
-  if (!ctx) throw new Error("Canvas is not available")
-  ctx.drawImage(image, 0, 0)
-  return canvas
-}
-
-async function createCanvasObjectUrl(canvas: HTMLCanvasElement): Promise<string> {
-  const blob = await exportBackgroundRemovalCanvas(canvas, "image/png")
-  return URL.createObjectURL(blob)
-}
-
-function createBackgroundRemovalWorker() {
-  return new Worker(
-    new URL("../../workers/background-removal.worker.ts", import.meta.url),
-    { type: "module" }
-  )
-}
-
 export function BackgroundRemovalEditor() {
   const t = useTranslations("removeBackground")
-  const [item, setItem] = useState<UploadResult | null>(null)
-  const [state, setState] = useState<ProcessingState>("idle")
-  const [downloadProgress, setDownloadProgress] = useState<number | null>(null)
-  const [loadedBytes, setLoadedBytes] = useState<number | null>(null)
-  const [totalBytes, setTotalBytes] = useState<number | null>(null)
+  const uploadT = useTranslations("upload")
   const [isModelCached, setIsModelCached] = useState(false)
-  const [device, setDevice] = useState<"webgpu" | "wasm" | null>(null)
-  const [resultUrl, setResultUrl] = useState("")
-  const [baseResultCanvas, setBaseResultCanvas] = useState<HTMLCanvasElement | null>(null)
   const [refineOptions, setRefineOptions] =
     useState<BackgroundRemovalRefineOptions>(DEFAULT_REFINE_OPTIONS)
   const [appliedRefineOptions, setAppliedRefineOptions] =
@@ -117,35 +93,60 @@ export function BackgroundRemovalEditor() {
     label: string
     url: string
   } | null>(null)
-  const workerClientRef = useRef<BackgroundRemovalWorkerClient | null>(null)
-  const currentRequestIdRef = useRef<string | null>(null)
-
-  const modelSize = formatModelBytes(BACKGROUND_REMOVAL_ESTIMATED_MODEL_BYTES)
-  const resultCanvas = useMemo(
-    () =>
-      baseResultCanvas
-        ? refineBackgroundRemovalCanvas(baseResultCanvas, appliedRefineOptions)
-        : null,
-    [appliedRefineOptions, baseResultCanvas]
-  )
-  const hasResult = state === "ready" && Boolean(resultCanvas)
-  const originalUrl = useMemo(
-    () => (item ? URL.createObjectURL(item.file) : ""),
-    [item]
-  )
-
-  const progressLabel = useMemo(() => {
-    if (downloadProgress !== null) return `${Math.round(downloadProgress * 100)}%`
-    if (loadedBytes !== null && totalBytes !== null && totalBytes > 0) {
-      return `${Math.round((loadedBytes / totalBytes) * 100)}%`
-    }
-    return t("preparing")
-  }, [downloadProgress, loadedBytes, totalBytes, t])
+  const addMoreInputRef = useRef<HTMLInputElement>(null)
 
   const refreshCacheState = useCallback(async () => {
     const cached = await isBackgroundRemovalModelLikelyCached()
     setIsModelCached(cached)
   }, [])
+
+  const batch = useBackgroundRemovalBatch({
+    refineOptions,
+    onCacheRefresh: refreshCacheState,
+  })
+
+  const modelSize = formatModelBytes(BACKGROUND_REMOVAL_ESTIMATED_MODEL_BYTES)
+  const selectedItem = batch.items[0] ?? null
+  const isBatchMode = batch.items.length > 1
+  const isBusy = batch.isRunning || batch.summary.isBusy
+  const state: ProcessingState = !selectedItem
+    ? "idle"
+    : selectedItem.status === "queued" || selectedItem.status === "canceled"
+      ? "selected"
+      : selectedItem.status === "loading-model"
+        ? "loading-model"
+        : selectedItem.status === "processing"
+          ? "processing"
+          : selectedItem.status === "ready"
+            ? "ready"
+            : "error"
+  const resultCanvas = selectedItem?.status === "ready" ? selectedItem.resultCanvas : null
+  const hasResult = state === "ready" && Boolean(resultCanvas)
+  const originalUrl = selectedItem?.sourceUrl ?? ""
+  const resultUrl = selectedItem?.status === "ready" ? selectedItem.resultUrl : ""
+  const device = selectedItem?.device ?? batch.activeItem?.device ?? null
+  const activeStatus = batch.activeItem?.status ?? selectedItem?.status ?? "queued"
+  const activeProgress = batch.activeItem?.progress ?? selectedItem?.progress ?? null
+  const showQuality = format !== "image/png"
+
+  const progressLabel = useMemo(() => {
+    if (activeProgress !== null) {
+      return `${Math.round(activeProgress * 100)}%`
+    }
+    return t("preparing")
+  }, [activeProgress, t])
+
+  const batchStatusText = useMemo(
+    () => ({
+      queued: "Queued",
+      "loading-model": t("downloadingModel"),
+      processing: t("processingLocally"),
+      ready: "Ready",
+      error: t("processFailed"),
+      canceled: "Canceled",
+    }),
+    [t]
+  )
 
   useEffect(() => {
     let ignore = false
@@ -172,44 +173,6 @@ export function BackgroundRemovalEditor() {
   }, [])
 
   useEffect(() => {
-    return () => {
-      if (originalUrl) URL.revokeObjectURL(originalUrl)
-    }
-  }, [originalUrl])
-
-  useEffect(() => {
-    return () => {
-      workerClientRef.current?.terminate()
-      currentRequestIdRef.current = null
-    }
-  }, [])
-
-  useEffect(() => {
-    let ignore = false
-
-    if (!resultCanvas) return
-
-    void createCanvasObjectUrl(resultCanvas)
-      .then((nextUrl) => {
-        if (ignore) {
-          URL.revokeObjectURL(nextUrl)
-          return
-        }
-        setResultUrl((prev) => {
-          if (prev) URL.revokeObjectURL(prev)
-          return nextUrl
-        })
-      })
-      .catch(() => {
-        if (!ignore) toast.error(t("previewFailed"))
-      })
-
-    return () => {
-      ignore = true
-    }
-  }, [resultCanvas, t])
-
-  useEffect(() => {
     if (!previewImage) return
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -220,42 +183,56 @@ export function BackgroundRemovalEditor() {
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [previewImage])
 
-  const handleImageLoaded = useCallback((result: UploadResult) => {
-    setItem(result)
-    setState("selected")
+  const handleImagesLoaded = useCallback((results: UploadResult[]) => {
+    if (results.length === 0) return
+
+    batch.addItems(results)
     setError(null)
-    setBaseResultCanvas(null)
-    setResultUrl((prev) => {
-      if (prev) URL.revokeObjectURL(prev)
-      return ""
-    })
-    setRefineOptions(DEFAULT_REFINE_OPTIONS)
-    setAppliedRefineOptions(DEFAULT_REFINE_OPTIONS)
-    setDownloadProgress(null)
-    setLoadedBytes(null)
-    setTotalBytes(null)
-  }, [])
+    setPreviewImage(null)
+  }, [batch])
 
   const handleChangeImage = useCallback(() => {
-    workerClientRef.current?.terminate()
-    workerClientRef.current = null
-    currentRequestIdRef.current = null
-    setItem(null)
-    setState("idle")
+    batch.clearAll()
     setError(null)
-    setBaseResultCanvas(null)
-    setResultUrl((prev) => {
-      if (prev) URL.revokeObjectURL(prev)
-      return ""
-    })
     setRefineOptions(DEFAULT_REFINE_OPTIONS)
     setAppliedRefineOptions(DEFAULT_REFINE_OPTIONS)
-    setDownloadProgress(null)
-    setLoadedBytes(null)
-    setTotalBytes(null)
-    setDevice(null)
     setPreviewImage(null)
-  }, [])
+  }, [batch])
+
+  const handleAddMoreFiles = useCallback(
+    async (event: ChangeEvent<HTMLInputElement>) => {
+      const files = event.target.files
+      event.target.value = ""
+      if (!files || files.length === 0) return
+
+      const result = validateFiles(Array.from(files))
+      if (!result.valid) {
+        toast.error(uploadT(result.error!.key, result.error!.params))
+        return
+      }
+
+      if (result.totalSizeWarning) {
+        const totalSize = result.files.reduce((sum, file) => sum + file.size, 0)
+        toast.warning(
+          uploadT("totalSizeWarning", {
+            size: (totalSize / 1024 / 1024).toFixed(1),
+          })
+        )
+      }
+
+      try {
+        const results: UploadResult[] = []
+        for (const file of result.files) {
+          const image = await loadImage(file)
+          results.push({ file, image, mimeType: file.type })
+        }
+        handleImagesLoaded(results)
+      } catch {
+        toast.error(uploadT("loadFailed"))
+      }
+    },
+    [handleImagesLoaded, uploadT]
+  )
 
   const handleClearCache = useCallback(async () => {
     const deleted = await clearBackgroundRemovalModelCache()
@@ -263,92 +240,44 @@ export function BackgroundRemovalEditor() {
     toast.success(deleted > 0 ? t("cacheCleared") : t("cacheAlreadyEmpty"))
   }, [refreshCacheState, t])
 
-  const handleRemoveBackground = useCallback(async () => {
-    if (!item) return
-    if (state === "loading-model" || state === "processing") return
+  const ensureModelAvailable = useCallback(async () => {
+    try {
+      await assertBackgroundRemovalModelAvailable()
+      setError(null)
+      return true
+    } catch {
+      const configPath = getBackgroundRemovalModelFilePath("config.json")
+      setError(t("localModelMissing", { path: configPath }))
+      toast.error(t("localModelMissingToast"))
+      return false
+    }
+  }, [t])
+
+  const runQueueWithPreflight = useCallback(async () => {
+    if (isBusy) return
+    if (!(await ensureModelAvailable())) return
 
     setAppliedRefineOptions(refineOptions)
+    await batch.runQueue()
+    await refreshCacheState()
+  }, [batch, ensureModelAvailable, isBusy, refineOptions, refreshCacheState])
 
-    if (baseResultCanvas) {
-      setState("ready")
-      toast.success(t("cleanupApplied"))
-      return
+  const handleRemoveBackground = useCallback(async () => {
+    if (!selectedItem || isBusy) return
+    if (selectedItem.status !== "queued") {
+      batch.retryItem(selectedItem.id)
     }
+    await runQueueWithPreflight()
+  }, [batch, isBusy, runQueueWithPreflight, selectedItem])
 
-    if (!isModelCached) {
-      try {
-        await assertBackgroundRemovalModelAvailable()
-      } catch {
-        const configPath = getBackgroundRemovalModelFilePath("config.json")
-        setState("error")
-        setError(t("localModelMissing", { path: configPath }))
-        toast.error(t("localModelMissingToast"))
-        return
-      }
-    }
-
-    const requestId = `single-${Date.now()}-${Math.random().toString(36).slice(2)}`
-    if (!workerClientRef.current) {
-      workerClientRef.current = new BackgroundRemovalWorkerClient(
-        createBackgroundRemovalWorker
-      )
-    }
-
-    currentRequestIdRef.current = requestId
-    setState("loading-model")
-    setError(null)
-    setDownloadProgress(isModelCached ? 1 : null)
-    setLoadedBytes(null)
-    setTotalBytes(null)
-
-    try {
-      const result = await workerClientRef.current.remove({
-        requestId,
-        file: item.file,
-        modelId: BACKGROUND_REMOVAL_MODEL_ID,
-        onStatus: (message) => {
-          if (currentRequestIdRef.current !== requestId) return
-          if (message.device) setDevice(message.device)
-          if (message.status === "processing") setState("processing")
-          if (message.status === "loading") setState("loading-model")
-        },
-        onProgress: (message) => {
-          if (currentRequestIdRef.current !== requestId) return
-          setDownloadProgress(message.progress)
-          setLoadedBytes(message.loaded ?? null)
-          setTotalBytes(message.total ?? null)
-        },
-      })
-
-      setDevice(result.device)
-      const outputImage = await loadImageFromBlob(result.image)
-      if (currentRequestIdRef.current !== requestId) return
-
-      const canvas = createCanvasFromImage(outputImage)
-      setBaseResultCanvas(canvas)
-      setState("ready")
-      setDownloadProgress(1)
-      await refreshCacheState()
-      if (currentRequestIdRef.current !== requestId) return
-
-      currentRequestIdRef.current = null
-      toast.success(t("downloadReady"))
-    } catch (caughtError) {
-      if (currentRequestIdRef.current !== requestId) return
-
-      currentRequestIdRef.current = null
-      setState("error")
-      setError(
-        caughtError instanceof Error && caughtError.message
-          ? caughtError.message
-          : t("processFailed")
-      )
-      toast.error(t("processFailed"))
-    }
-  }, [baseResultCanvas, isModelCached, item, refineOptions, refreshCacheState, state, t])
+  const handleRetryFailed = useCallback(async () => {
+    if (isBusy || !batch.summary.hasFailures) return
+    batch.retryFailed()
+    await runQueueWithPreflight()
+  }, [batch, isBusy, runQueueWithPreflight])
 
   const handleDownload = useCallback(async () => {
-    if (!item || !resultCanvas) return
+    if (!selectedItem || !resultCanvas) return
 
     try {
       const blob = await exportBackgroundRemovalCanvas(
@@ -359,13 +288,68 @@ export function BackgroundRemovalEditor() {
       const url = URL.createObjectURL(blob)
       const a = document.createElement("a")
       a.href = url
-      a.download = `${getBackgroundRemovalBaseName(item.file.name)}-no-bg.${getBackgroundRemovalOutputExtension(format)}`
+      a.download = getBackgroundRemovalOutputFileName(selectedItem.file.name, format)
       a.click()
       URL.revokeObjectURL(url)
     } catch {
       toast.error(t("exportFailed"))
     }
-  }, [format, item, quality, resultCanvas, t])
+  }, [format, quality, resultCanvas, selectedItem, t])
+
+  const handleDownloadBatchZip = useCallback(async () => {
+    const readyItems = batch.items.filter(
+      (candidate) => candidate.status === "ready" && candidate.resultCanvas
+    )
+    if (readyItems.length === 0) return
+
+    try {
+      const zipItems = (
+        await Promise.all(
+          readyItems.map((readyItem) =>
+            canvasToBatchZipItem(
+              readyItem,
+              format,
+              showQuality ? quality / 100 : undefined
+            )
+          )
+        )
+      ).filter((zipItem): zipItem is BatchRemovalZipItem => zipItem !== null)
+
+      if (zipItems.length === 0) return
+
+      const blob = await exportBackgroundRemovalBatchAsZip(zipItems)
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = getBackgroundRemovalZipFileName()
+      a.click()
+      URL.revokeObjectURL(url)
+    } catch {
+      toast.error(t("exportFailed"))
+    }
+  }, [batch.items, format, quality, showQuality, t])
+
+  const handleRemoveBatchItem = useCallback(
+    (id: string) => {
+      batch.removeItem(id)
+      setPreviewImage(null)
+    },
+    [batch]
+  )
+
+  const handlePreviewBatchItem = useCallback((readyItem: BatchRemovalItem) => {
+    if (readyItem.status !== "ready" || !readyItem.resultUrl) return
+    setPreviewImage({ label: readyItem.file.name, url: readyItem.resultUrl })
+  }, [])
+
+  const handleRetryBatchItem = useCallback(
+    async (id: string) => {
+      if (isBusy) return
+      batch.retryItem(id)
+      await runQueueWithPreflight()
+    },
+    [batch, isBusy, runQueueWithPreflight]
+  )
 
   const updateRefineOption = useCallback(
     (key: keyof BackgroundRemovalRefineOptions, value: number) => {
@@ -378,8 +362,6 @@ export function BackgroundRemovalEditor() {
     setRefineOptions(DEFAULT_REFINE_OPTIONS)
   }, [])
 
-  const showQuality = format !== "image/png"
-  const isBusy = state === "loading-model" || state === "processing"
   const hasPendingRefineChanges =
     hasResult && !areRefineOptionsEqual(refineOptions, appliedRefineOptions)
   const removeButtonLabel = hasResult
@@ -416,7 +398,7 @@ export function BackgroundRemovalEditor() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            {item && (
+            {selectedItem && (
               <button
                 onClick={handleChangeImage}
                 className="cursor-pointer text-[10px] uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-accent"
@@ -429,12 +411,12 @@ export function BackgroundRemovalEditor() {
         </div>
       </nav>
 
-      {!item ? (
+      {!selectedItem ? (
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-2xl">
             <UploadZone
-              multiple={false}
-              onImageLoaded={handleImageLoaded}
+              multiple
+              onImagesLoaded={handleImagesLoaded}
               title={t("uploadTitle")}
               dragHint={t("uploadDragHint")}
               clickHint={t("uploadClickHint")}
@@ -445,24 +427,77 @@ export function BackgroundRemovalEditor() {
       ) : (
         <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
           <div className="min-h-0 min-w-0 flex-1 overflow-auto bg-secondary/30 p-3 sm:p-4 md:p-6">
-            <div className="mx-auto grid h-full max-w-6xl grid-cols-2 content-center gap-2 sm:gap-4">
-              <PreviewPanel
-                label={t("original")}
-                imageUrl={originalUrl}
-                previewLabel={t("previewImage")}
-                onPreview={() => setPreviewImage({ label: t("original"), url: originalUrl })}
-              />
-              <PreviewPanel
-                label={hasResult ? t("result") : t("resultPending")}
-                imageUrl={resultUrl}
-                emptyText={state === "processing" ? t("processing") : t("resultEmpty")}
-                previewLabel={t("previewImage")}
-                onPreview={() => setPreviewImage({ label: t("result"), url: resultUrl })}
-              />
-            </div>
+            {isBatchMode ? (
+              <div className="mx-auto flex h-full max-w-6xl flex-col gap-4">
+                <div className="border border-border bg-background p-4 shadow-sm">
+                  <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div>
+                      <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+                        Batch queue
+                      </p>
+                      <h1 className="mt-2 font-serif text-2xl text-foreground">
+                        {batch.summary.ready}/{batch.summary.total} ready
+                      </h1>
+                    </div>
+                    <div className="grid grid-cols-4 gap-3 text-right text-xs text-muted-foreground">
+                      <SummaryCount label="Queued" value={batch.summary.queued} />
+                      <SummaryCount label="Active" value={batch.summary.active} />
+                      <SummaryCount label="Failed" value={batch.summary.failed} />
+                      <SummaryCount label="Done" value={batch.summary.completed} />
+                    </div>
+                  </div>
+                  <div
+                    className="mt-4 h-1.5 overflow-hidden bg-secondary"
+                    role="progressbar"
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-valuenow={batch.summary.percent}
+                  >
+                    <div
+                      className="h-full bg-accent transition-all duration-300"
+                      style={{ width: `${batch.summary.percent}%` }}
+                    />
+                  </div>
+                </div>
+                <BatchRemovalList
+                  items={batch.items}
+                  statusText={batchStatusText}
+                  retryLabel="Retry item"
+                  removeLabel="Remove item"
+                  previewLabel={t("previewImage")}
+                  onRetry={handleRetryBatchItem}
+                  onRemove={handleRemoveBatchItem}
+                  onPreview={handlePreviewBatchItem}
+                />
+              </div>
+            ) : (
+              <div className="mx-auto grid h-full max-w-6xl grid-cols-2 content-center gap-2 sm:gap-4">
+                <PreviewPanel
+                  label={t("original")}
+                  imageUrl={originalUrl}
+                  previewLabel={t("previewImage")}
+                  onPreview={() => setPreviewImage({ label: t("original"), url: originalUrl })}
+                />
+                <PreviewPanel
+                  label={hasResult ? t("result") : t("resultPending")}
+                  imageUrl={resultUrl}
+                  emptyText={state === "processing" ? t("processing") : t("resultEmpty")}
+                  previewLabel={t("previewImage")}
+                  onPreview={() => setPreviewImage({ label: t("result"), url: resultUrl })}
+                />
+              </div>
+            )}
           </div>
 
           <aside className="flex max-h-[48vh] min-h-0 shrink-0 flex-col overflow-y-auto border-t border-border bg-background p-4 lg:max-h-none lg:w-96 lg:border-l lg:border-t-0">
+            <input
+              ref={addMoreInputRef}
+              type="file"
+              accept={ACCEPTED_TYPES.join(",")}
+              multiple
+              className="hidden"
+              onChange={handleAddMoreFiles}
+            />
             <section className="border-b border-border pb-5">
               <div className="flex items-start justify-between gap-4">
                 <div>
@@ -505,22 +540,22 @@ export function BackgroundRemovalEditor() {
                     />
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-                        <span>{state === "loading-model" ? t("downloadingModel") : t("processingLocally")}</span>
-                        <span>{state === "loading-model" ? progressLabel : device?.toUpperCase()}</span>
+                        <span>{activeStatus === "loading-model" ? t("downloadingModel") : t("processingLocally")}</span>
+                        <span>{activeStatus === "loading-model" ? progressLabel : device?.toUpperCase()}</span>
                       </div>
                       <div className="mt-3 h-1.5 overflow-hidden bg-background">
                         <div
-                          className={`h-full bg-accent transition-all duration-300 ${state === "processing" ? "animate-pulse" : ""}`}
+                          className={`h-full bg-accent transition-all duration-300 ${activeStatus === "processing" ? "animate-pulse" : ""}`}
                           style={{
                             width:
-                              state === "processing"
+                              activeStatus === "processing"
                                 ? "100%"
-                                : `${Math.max(6, Math.round((downloadProgress ?? 0.06) * 100))}%`,
+                                : `${Math.max(6, Math.round((activeProgress ?? 0.06) * 100))}%`,
                           }}
                         />
                       </div>
                       <p className="mt-3 text-xs leading-5 text-muted-foreground">
-                        {state === "loading-model" ? t("downloadHint") : t("processingHint")}
+                        {activeStatus === "loading-model" ? t("downloadHint") : t("processingHint")}
                       </p>
                     </div>
                   </div>
@@ -528,9 +563,11 @@ export function BackgroundRemovalEditor() {
               </section>
             )}
 
-            {state === "error" && (
+            {(error || state === "error") && (
               <section className="border-b border-border py-5">
-                <p className="text-sm text-destructive">{error ?? t("processFailed")}</p>
+                <p className="text-sm text-destructive">
+                  {error ?? selectedItem?.error ?? t("processFailed")}
+                </p>
                 <button
                   onClick={handleRemoveBackground}
                   className="mt-4 flex cursor-pointer items-center gap-2 text-xs uppercase tracking-[0.2em] text-accent"
@@ -548,7 +585,11 @@ export function BackgroundRemovalEditor() {
                     {t("refineTitle")}
                   </p>
                   <p className="mt-2 text-xs leading-5 text-muted-foreground">
-                    {hasResult ? t("refineLiveHint") : t("refineBeforeHint")}
+                    {isBatchMode
+                      ? "Applied to the next queued batch run."
+                      : hasResult
+                        ? t("refineLiveHint")
+                        : t("refineBeforeHint")}
                   </p>
                 </div>
                 <button
@@ -595,27 +636,90 @@ export function BackgroundRemovalEditor() {
               </div>
             </section>
 
-            <section className="border-b border-border py-5">
-              <button
-                onClick={handleRemoveBackground}
-                disabled={isBusy}
-                className="flex w-full cursor-pointer items-center justify-center gap-2 bg-foreground px-4 py-3 text-xs uppercase tracking-[0.18em] text-background transition-opacity hover:opacity-90 disabled:cursor-default disabled:opacity-50"
-              >
-                {isBusy ? (
-                  <Loader2 className="h-3.5 w-3.5 animate-spin" strokeWidth={1.5} />
-                ) : (
-                  <Sparkles className="h-3.5 w-3.5" strokeWidth={1.5} />
-                )}
-                {removeButtonLabel}
-              </button>
-              <p className="mt-3 text-xs leading-5 text-muted-foreground">
-                {hasPendingRefineChanges
-                  ? t("pendingCleanupHint")
-                  : hasResult
-                    ? t("rerunHint")
-                    : t("runHint")}
-              </p>
-            </section>
+            {isBatchMode ? (
+              <section className="border-b border-border py-5">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+                      Batch actions
+                    </p>
+                    <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                      Ready images can be downloaded as one ZIP. Failed or canceled
+                      items are skipped.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => addMoreInputRef.current?.click()}
+                    disabled={isBusy}
+                    className="shrink-0 cursor-pointer text-[10px] uppercase tracking-[0.18em] text-accent transition-opacity disabled:cursor-default disabled:opacity-40"
+                  >
+                    Add more
+                  </button>
+                </div>
+                <div className="mt-4 grid grid-cols-2 gap-2">
+                  <button
+                    onClick={runQueueWithPreflight}
+                    disabled={isBusy || batch.summary.queued === 0}
+                    className="flex cursor-pointer items-center justify-center gap-2 bg-foreground px-3 py-3 text-[11px] uppercase tracking-[0.16em] text-background transition-opacity hover:opacity-90 disabled:cursor-default disabled:opacity-50"
+                  >
+                    {isBusy ? (
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" strokeWidth={1.5} />
+                    ) : (
+                      <Sparkles className="h-3.5 w-3.5" strokeWidth={1.5} />
+                    )}
+                    Start
+                  </button>
+                  <button
+                    type="button"
+                    onClick={batch.cancelQueue}
+                    disabled={!isBusy}
+                    className="flex cursor-pointer items-center justify-center gap-2 border border-border px-3 py-3 text-[11px] uppercase tracking-[0.16em] text-foreground transition-opacity hover:opacity-80 disabled:cursor-default disabled:opacity-40"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleRetryFailed}
+                    disabled={isBusy || !batch.summary.hasFailures}
+                    className="flex cursor-pointer items-center justify-center gap-2 border border-border px-3 py-3 text-[11px] uppercase tracking-[0.16em] text-foreground transition-opacity hover:opacity-80 disabled:cursor-default disabled:opacity-40"
+                  >
+                    <RefreshCw className="h-3.5 w-3.5" strokeWidth={1.5} />
+                    Retry failed
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleChangeImage}
+                    className="flex cursor-pointer items-center justify-center gap-2 border border-border px-3 py-3 text-[11px] uppercase tracking-[0.16em] text-foreground transition-opacity hover:opacity-80"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" strokeWidth={1.5} />
+                    Clear
+                  </button>
+                </div>
+              </section>
+            ) : (
+              <section className="border-b border-border py-5">
+                <button
+                  onClick={handleRemoveBackground}
+                  disabled={isBusy}
+                  className="flex w-full cursor-pointer items-center justify-center gap-2 bg-foreground px-4 py-3 text-xs uppercase tracking-[0.18em] text-background transition-opacity hover:opacity-90 disabled:cursor-default disabled:opacity-50"
+                >
+                  {isBusy ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" strokeWidth={1.5} />
+                  ) : (
+                    <Sparkles className="h-3.5 w-3.5" strokeWidth={1.5} />
+                  )}
+                  {removeButtonLabel}
+                </button>
+                <p className="mt-3 text-xs leading-5 text-muted-foreground">
+                  {hasPendingRefineChanges
+                    ? t("pendingCleanupHint")
+                    : hasResult
+                      ? t("rerunHint")
+                      : t("runHint")}
+                </p>
+              </section>
+            )}
 
             <section className="space-y-5 py-5">
               <div>
@@ -657,15 +761,25 @@ export function BackgroundRemovalEditor() {
               )}
 
               <button
-                onClick={handleDownload}
-                disabled={!hasResult || isBusy}
+                onClick={isBatchMode ? handleDownloadBatchZip : handleDownload}
+                disabled={
+                  isBatchMode
+                    ? !batch.summary.canDownloadReady || isBusy
+                    : !hasResult || isBusy
+                }
                 className="flex w-full cursor-pointer items-center justify-center gap-2 bg-foreground px-4 py-3 text-xs uppercase tracking-[0.18em] text-background transition-opacity hover:opacity-90 disabled:cursor-default disabled:opacity-50"
               >
                 <Download className="h-3.5 w-3.5" strokeWidth={1.5} />
-                {t("download")}
+                {isBatchMode ? "Download ZIP" : t("download")}
               </button>
               <p className="text-xs leading-5 text-muted-foreground">
-                {hasResult ? t("downloadCurrentHint") : t("downloadPendingHint")}
+                {isBatchMode
+                  ? `${batch.summary.ready} ready item${
+                      batch.summary.ready === 1 ? "" : "s"
+                    } will be included. Failed and canceled items are skipped.`
+                  : hasResult
+                    ? t("downloadCurrentHint")
+                    : t("downloadPendingHint")}
               </p>
             </section>
           </aside>
@@ -729,6 +843,15 @@ function PreviewPanel({
           </p>
         )}
       </div>
+    </div>
+  )
+}
+
+function SummaryCount({ label, value }: { label: string; value: number }) {
+  return (
+    <div>
+      <p className="font-serif text-xl text-foreground">{value}</p>
+      <p className="mt-1 text-[9px] uppercase tracking-[0.18em]">{label}</p>
     </div>
   )
 }
