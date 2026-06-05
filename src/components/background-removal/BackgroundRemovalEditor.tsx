@@ -137,12 +137,12 @@ export function BackgroundRemovalEditor() {
 
   const batchStatusText = useMemo(
     () => ({
-      queued: "Queued",
+      queued: t("batchStatusQueued"),
       "loading-model": t("downloadingModel"),
       processing: t("processingLocally"),
-      ready: "Ready",
-      error: t("processFailed"),
-      canceled: "Canceled",
+      ready: t("batchStatusReady"),
+      error: t("batchStatusError"),
+      canceled: t("batchStatusCanceled"),
     }),
     [t]
   )
@@ -436,17 +436,20 @@ export function BackgroundRemovalEditor() {
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
                       <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-                        Batch queue
+                        {t("batchQueue")}
                       </p>
                       <h1 className="mt-2 font-serif text-2xl text-foreground">
-                        {batch.summary.ready}/{batch.summary.total} ready
+                        {t("batchReadyCount", {
+                          ready: batch.summary.ready,
+                          total: batch.summary.total,
+                        })}
                       </h1>
                     </div>
                     <div className="grid grid-cols-4 gap-3 text-right text-xs text-muted-foreground">
-                      <SummaryCount label="Queued" value={batch.summary.queued} />
-                      <SummaryCount label="Active" value={batch.summary.active} />
-                      <SummaryCount label="Failed" value={batch.summary.failed} />
-                      <SummaryCount label="Done" value={batch.summary.completed} />
+                      <SummaryCount label={t("batchQueued")} value={batch.summary.queued} />
+                      <SummaryCount label={t("batchActive")} value={batch.summary.active} />
+                      <SummaryCount label={t("batchFailed")} value={batch.summary.failed} />
+                      <SummaryCount label={t("batchDone")} value={batch.summary.completed} />
                     </div>
                   </div>
                   <div
@@ -465,8 +468,8 @@ export function BackgroundRemovalEditor() {
                 <BatchRemovalList
                   items={batch.items}
                   statusText={batchStatusText}
-                  retryLabel="Retry item"
-                  removeLabel="Remove item"
+                  retryLabel={t("batchRetryItem")}
+                  removeLabel={t("batchRemoveItem")}
                   previewLabel={t("previewImage")}
                   onRetry={handleRetryBatchItem}
                   onRemove={handleRemoveBatchItem}
@@ -589,7 +592,7 @@ export function BackgroundRemovalEditor() {
                   </p>
                   <p className="mt-2 text-xs leading-5 text-muted-foreground">
                     {isBatchMode
-                      ? "Applied to the next queued batch run."
+                      ? t("refineBatchHint")
                       : hasResult
                         ? t("refineLiveHint")
                         : t("refineBeforeHint")}
@@ -644,11 +647,10 @@ export function BackgroundRemovalEditor() {
                 <div className="flex items-center justify-between gap-3">
                   <div>
                     <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-                      Batch actions
+                      {t("batchActions")}
                     </p>
                     <p className="mt-2 text-xs leading-5 text-muted-foreground">
-                      Ready images can be downloaded as one ZIP. Failed or canceled
-                      items are skipped.
+                      {t("batchZipHint")}
                     </p>
                   </div>
                   <button
@@ -657,7 +659,7 @@ export function BackgroundRemovalEditor() {
                     disabled={isBusy}
                     className="shrink-0 cursor-pointer text-[10px] uppercase tracking-[0.18em] text-accent transition-opacity disabled:cursor-default disabled:opacity-40"
                   >
-                    Add more
+                    {t("batchAddMore")}
                   </button>
                 </div>
                 <div className="mt-4 grid grid-cols-2 gap-2">
@@ -671,7 +673,7 @@ export function BackgroundRemovalEditor() {
                     ) : (
                       <Sparkles className="h-3.5 w-3.5" strokeWidth={1.5} />
                     )}
-                    Start
+                    {t("batchStart")}
                   </button>
                   <button
                     type="button"
@@ -679,7 +681,7 @@ export function BackgroundRemovalEditor() {
                     disabled={!isBusy}
                     className="flex cursor-pointer items-center justify-center gap-2 border border-border px-3 py-3 text-[11px] uppercase tracking-[0.16em] text-foreground transition-opacity hover:opacity-80 disabled:cursor-default disabled:opacity-40"
                   >
-                    Cancel
+                    {t("batchCancel")}
                   </button>
                   <button
                     type="button"
@@ -688,7 +690,7 @@ export function BackgroundRemovalEditor() {
                     className="flex cursor-pointer items-center justify-center gap-2 border border-border px-3 py-3 text-[11px] uppercase tracking-[0.16em] text-foreground transition-opacity hover:opacity-80 disabled:cursor-default disabled:opacity-40"
                   >
                     <RefreshCw className="h-3.5 w-3.5" strokeWidth={1.5} />
-                    Retry failed
+                    {t("batchRetryFailed")}
                   </button>
                   <button
                     type="button"
@@ -696,7 +698,7 @@ export function BackgroundRemovalEditor() {
                     className="flex cursor-pointer items-center justify-center gap-2 border border-border px-3 py-3 text-[11px] uppercase tracking-[0.16em] text-foreground transition-opacity hover:opacity-80"
                   >
                     <Trash2 className="h-3.5 w-3.5" strokeWidth={1.5} />
-                    Clear
+                    {t("batchClear")}
                   </button>
                 </div>
               </section>
@@ -773,13 +775,11 @@ export function BackgroundRemovalEditor() {
                 className="flex w-full cursor-pointer items-center justify-center gap-2 bg-foreground px-4 py-3 text-xs uppercase tracking-[0.18em] text-background transition-opacity hover:opacity-90 disabled:cursor-default disabled:opacity-50"
               >
                 <Download className="h-3.5 w-3.5" strokeWidth={1.5} />
-                {isBatchMode ? "Download ZIP" : t("download")}
+                {isBatchMode ? t("batchDownloadZip") : t("download")}
               </button>
               <p className="text-xs leading-5 text-muted-foreground">
                 {isBatchMode
-                  ? `${batch.summary.ready} ready item${
-                      batch.summary.ready === 1 ? "" : "s"
-                    } will be included. Failed and canceled items are skipped.`
+                  ? t("batchDownloadHint", { count: batch.summary.ready })
                   : hasResult
                     ? t("downloadCurrentHint")
                     : t("downloadPendingHint")}
