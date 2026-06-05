@@ -52,6 +52,8 @@ export type BatchRemovalZipItem = {
   blob: Blob
 }
 
+// The returned items own their Object URLs. Call disposeBatchRemovalItemUrls()
+// or disposeBatchRemovalItems() when items are removed, replaced, or canceled.
 export function createBatchRemovalItems(
   results: UploadResult[],
   createId: () => string
@@ -74,6 +76,29 @@ export function createBatchRemovalItems(
     resultUrl: "",
     device: null,
   }))
+}
+
+export function disposeBatchRemovalItemUrls(item: BatchRemovalItem): void {
+  disposeBatchRemovalUrls([item])
+}
+
+export function disposeBatchRemovalItems(items: BatchRemovalItem[]): void {
+  disposeBatchRemovalUrls(items)
+}
+
+function disposeBatchRemovalUrls(items: BatchRemovalItem[]): void {
+  const urls = new Set<string>()
+
+  for (const item of items) {
+    urls.add(item.sourceUrl)
+    if (item.resultUrl) {
+      urls.add(item.resultUrl)
+    }
+  }
+
+  for (const url of urls) {
+    URL.revokeObjectURL(url)
+  }
 }
 
 export function getBackgroundRemovalBatchSummary(

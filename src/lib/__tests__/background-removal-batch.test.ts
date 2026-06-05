@@ -3,11 +3,14 @@ import { afterEach, describe, expect, it, vi } from "vitest"
 import {
   canvasToBatchZipItem,
   createBatchRemovalItems,
+  disposeBatchRemovalItemUrls,
+  disposeBatchRemovalItems,
   exportBackgroundRemovalBatchAsZip,
   getBackgroundRemovalBatchSummary,
   getBackgroundRemovalOutputFileName,
   getBackgroundRemovalZipFileName,
 } from "../background-removal-batch"
+import type { BatchRemovalItem } from "../background-removal-batch"
 
 function file(name: string, type = "image/png") {
   return new File(["image"], name, { type })
@@ -15,6 +18,25 @@ function file(name: string, type = "image/png") {
 
 function image(width = 100, height = 80) {
   return { naturalWidth: width, naturalHeight: height, width, height } as HTMLImageElement
+}
+
+function batchItem(overrides: Partial<BatchRemovalItem> = {}): BatchRemovalItem {
+  return {
+    id: "1",
+    file: file("sample.png"),
+    image: image(),
+    mimeType: "image/png",
+    baseName: "sample",
+    dimensions: { width: 100, height: 80 },
+    sourceUrl: "blob:source",
+    status: "queued",
+    progress: null,
+    error: null,
+    resultCanvas: null,
+    resultUrl: "",
+    device: null,
+    ...overrides,
+  }
 }
 
 afterEach(() => {
@@ -68,6 +90,44 @@ describe("background removal batch helpers", () => {
       resultUrl: "",
       device: null,
     })
+  })
+
+  it("disposes a batch item source and result object urls", () => {
+    const revokeObjectURL = vi.fn()
+    vi.stubGlobal("URL", {
+      ...URL,
+      revokeObjectURL,
+    })
+
+    disposeBatchRemovalItemUrls(
+      batchItem({
+        sourceUrl: "blob:source",
+        resultUrl: "blob:result",
+      })
+    )
+
+    expect(revokeObjectURL).toHaveBeenCalledTimes(2)
+    expect(revokeObjectURL).toHaveBeenCalledWith("blob:source")
+    expect(revokeObjectURL).toHaveBeenCalledWith("blob:result")
+  })
+
+  it("dedupes object urls when disposing batch items", () => {
+    const revokeObjectURL = vi.fn()
+    vi.stubGlobal("URL", {
+      ...URL,
+      revokeObjectURL,
+    })
+
+    disposeBatchRemovalItems([
+      batchItem({ id: "1", sourceUrl: "blob:shared", resultUrl: "blob:result" }),
+      batchItem({ id: "2", sourceUrl: "blob:source-2", resultUrl: "blob:shared" }),
+      batchItem({ id: "3", sourceUrl: "blob:result", resultUrl: "" }),
+    ])
+
+    expect(revokeObjectURL).toHaveBeenCalledTimes(3)
+    expect(revokeObjectURL).toHaveBeenCalledWith("blob:shared")
+    expect(revokeObjectURL).toHaveBeenCalledWith("blob:result")
+    expect(revokeObjectURL).toHaveBeenCalledWith("blob:source-2")
   })
 
   it("summarizes queue progress", () => {
