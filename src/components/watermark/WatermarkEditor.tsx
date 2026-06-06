@@ -328,6 +328,9 @@ export function WatermarkEditor() {
               <Link href="/social-export" className="hover:text-foreground transition-colors">
                 Social Export
               </Link>
+              <Link href="/remove-background" className="hover:text-foreground transition-colors">
+                Remove BG
+              </Link>
               <Link href="/tools" className="hover:text-foreground transition-colors">
                 Tools
               </Link>

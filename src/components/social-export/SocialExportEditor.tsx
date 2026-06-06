@@ -527,6 +527,9 @@ export function SocialExportEditor() {
               <Link href="/collage" className="transition-colors hover:text-foreground">
                 Collage
               </Link>
+              <Link href="/remove-background" className="transition-colors hover:text-foreground">
+                Remove BG
+              </Link>
               <span className="font-medium text-foreground">Social Export</span>
               <Link href="/tools" className="transition-colors hover:text-foreground">
                 Tools

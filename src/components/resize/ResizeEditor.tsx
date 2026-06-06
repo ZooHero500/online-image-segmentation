@@ -515,6 +515,9 @@ export function ResizeEditor({
           <Link href="/social-export" className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
             Social Export
           </Link>
+          <Link href="/remove-background" className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
+            Remove BG
+          </Link>
           <LocaleSwitcher variant="compact" />
         </div>
       </nav>

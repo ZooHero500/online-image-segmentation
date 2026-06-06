@@ -911,6 +911,9 @@ export function MosaicEditor() {
               <Link href="/social-export" className="transition-colors hover:text-foreground">
                 Social Export
               </Link>
+              <Link href="/remove-background" className="transition-colors hover:text-foreground">
+                Remove BG
+              </Link>
               <Link href="/tools" className="transition-colors hover:text-foreground">
                 Tools
               </Link>
