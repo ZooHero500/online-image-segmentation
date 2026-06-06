@@ -13,6 +13,7 @@ import {
   Download,
   HardDrive,
   Loader2,
+  Plus,
   RefreshCw,
   RotateCcw,
   Sparkles,
@@ -137,14 +138,14 @@ export function BackgroundRemovalEditor() {
 
   const batchStatusText = useMemo(
     () => ({
-      queued: t("batchStatusQueued"),
+      queued: batch.isRunning ? t("batchStatusQueued") : t("batchStatusNotStarted"),
       "loading-model": t("downloadingModel"),
       processing: t("processingLocally"),
       ready: t("batchStatusReady"),
       error: t("batchStatusError"),
       canceled: t("batchStatusCanceled"),
     }),
-    [t]
+    [batch.isRunning, t]
   )
 
   useEffect(() => {
@@ -200,12 +201,12 @@ export function BackgroundRemovalEditor() {
 
   const handleAddMoreFiles = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
-      const files = event.target.files
+      const files = event.target.files ? Array.from(event.target.files) : []
       event.target.value = ""
-      if (!files || files.length === 0) return
+      if (files.length === 0) return
       const uploadGeneration = uploadGenerationRef.current
 
-      const result = validateFiles(Array.from(files))
+      const result = validateFiles(files)
       if (!result.valid) {
         toast.error(uploadT(result.error!.key, result.error!.params))
         return
@@ -445,11 +446,25 @@ export function BackgroundRemovalEditor() {
                         })}
                       </h1>
                     </div>
-                    <div className="grid grid-cols-4 gap-3 text-right text-xs text-muted-foreground">
-                      <SummaryCount label={t("batchQueued")} value={batch.summary.queued} />
-                      <SummaryCount label={t("batchActive")} value={batch.summary.active} />
-                      <SummaryCount label={t("batchFailed")} value={batch.summary.failed} />
-                      <SummaryCount label={t("batchDone")} value={batch.summary.completed} />
+                    <div className="flex flex-wrap items-start justify-end gap-4">
+                      <div className="grid grid-cols-4 gap-3 text-right text-xs text-muted-foreground">
+                        <SummaryCount
+                          label={batch.isRunning ? t("batchQueued") : t("batchStatusNotStarted")}
+                          value={batch.summary.queued}
+                        />
+                        <SummaryCount label={t("batchActive")} value={batch.summary.active} />
+                        <SummaryCount label={t("batchFailed")} value={batch.summary.failed} />
+                        <SummaryCount label={t("batchDone")} value={batch.summary.completed} />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => addMoreInputRef.current?.click()}
+                        disabled={isBusy}
+                        className="flex shrink-0 cursor-pointer items-center gap-1.5 border border-border px-3 py-2 text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-foreground disabled:cursor-default disabled:opacity-40"
+                      >
+                        <Plus className="h-3.5 w-3.5" strokeWidth={1.5} />
+                        {t("batchAddMore")}
+                      </button>
                     </div>
                   </div>
                   <div
@@ -581,6 +596,30 @@ export function BackgroundRemovalEditor() {
                   <RefreshCw className="h-3.5 w-3.5" strokeWidth={1.5} />
                   {t("retry")}
                 </button>
+              </section>
+            )}
+
+            {!isBatchMode && (
+              <section className="border-b border-border py-5">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+                      {t("batchEntryTitle")}
+                    </p>
+                    <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                      {t("batchEntryHint")}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => addMoreInputRef.current?.click()}
+                    disabled={isBusy}
+                    className="flex shrink-0 cursor-pointer items-center gap-1.5 border border-border px-3 py-2 text-[10px] uppercase tracking-[0.16em] text-foreground transition-colors hover:border-foreground disabled:cursor-default disabled:opacity-40"
+                  >
+                    <Plus className="h-3.5 w-3.5" strokeWidth={1.5} />
+                    {t("batchAddMore")}
+                  </button>
+                </div>
               </section>
             )}
 

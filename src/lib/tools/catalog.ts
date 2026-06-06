@@ -187,4 +187,5 @@ export const TOOL_EDITOR_HREFS: Record<string, string> = {
   "wechat-official-account-cover-size": "/social-export",
   "remove-background-free": "/remove-background",
   "transparent-background-maker": "/remove-background",
+  "bulk-background-remover": "/remove-background",
 }

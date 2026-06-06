@@ -10,15 +10,16 @@ import { watermarkPagesByLocale } from "./watermark-pages"
 import { mosaicPagesByLocale } from "./mosaic-pages"
 import { collagePagesByLocale } from "./collage-pages"
 import { socialExportPagesByLocale } from "./social-export-pages"
+import { backgroundRemovalPagesByLocale } from "./background-removal-pages"
 
 // ─── Assemble ───
 
 const localeData: Record<string, Record<string, ToolPageData>> = {
-  en: { ...en, ...watermarkPagesByLocale.en, ...mosaicPagesByLocale.en, ...collagePagesByLocale.en, ...socialExportPagesByLocale.en },
-  "zh-CN": { ...zhCN, ...watermarkPagesByLocale["zh-CN"], ...mosaicPagesByLocale["zh-CN"], ...collagePagesByLocale["zh-CN"], ...socialExportPagesByLocale["zh-CN"] },
-  ja: { ...ja, ...watermarkPagesByLocale.ja, ...mosaicPagesByLocale.ja, ...collagePagesByLocale.ja, ...socialExportPagesByLocale.ja },
-  ko: { ...ko, ...watermarkPagesByLocale.ko, ...mosaicPagesByLocale.ko, ...collagePagesByLocale.ko, ...socialExportPagesByLocale.ko },
-  es: { ...es, ...watermarkPagesByLocale.es, ...mosaicPagesByLocale.es, ...collagePagesByLocale.es, ...socialExportPagesByLocale.es },
+  en: { ...en, ...watermarkPagesByLocale.en, ...mosaicPagesByLocale.en, ...collagePagesByLocale.en, ...socialExportPagesByLocale.en, ...backgroundRemovalPagesByLocale.en },
+  "zh-CN": { ...zhCN, ...watermarkPagesByLocale["zh-CN"], ...mosaicPagesByLocale["zh-CN"], ...collagePagesByLocale["zh-CN"], ...socialExportPagesByLocale["zh-CN"], ...backgroundRemovalPagesByLocale["zh-CN"] },
+  ja: { ...ja, ...watermarkPagesByLocale.ja, ...mosaicPagesByLocale.ja, ...collagePagesByLocale.ja, ...socialExportPagesByLocale.ja, ...backgroundRemovalPagesByLocale.ja },
+  ko: { ...ko, ...watermarkPagesByLocale.ko, ...mosaicPagesByLocale.ko, ...collagePagesByLocale.ko, ...socialExportPagesByLocale.ko, ...backgroundRemovalPagesByLocale.ko },
+  es: { ...es, ...watermarkPagesByLocale.es, ...mosaicPagesByLocale.es, ...collagePagesByLocale.es, ...socialExportPagesByLocale.es, ...backgroundRemovalPagesByLocale.es },
 }
 
 const slugMeta: { slug: string; category: ToolCategory }[] = [
@@ -79,6 +80,8 @@ const slugMeta: { slug: string; category: ToolCategory }[] = [
   { slug: "xiaohongshu-cover-size", category: "use-case" },
   { slug: "wechat-cover-size", category: "use-case" },
   { slug: "wechat-official-account-cover-size", category: "use-case" },
+  { slug: "transparent-background-maker", category: "use-case" },
+  { slug: "bulk-background-remover", category: "use-case" },
 ]
 
 const toolPages: ToolPageConfig[] = slugMeta.map(({ slug, category }) => ({
