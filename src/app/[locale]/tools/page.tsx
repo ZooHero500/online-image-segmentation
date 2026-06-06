@@ -205,7 +205,7 @@ export default async function ToolsPage({
                 key={tool.id}
                 title={tFooter(tool.labelKey)}
                 description={t(tool.descriptionKey)}
-                href={tool.href}
+                href={tool.quickAccessHref}
               />
             ))}
           </div>
