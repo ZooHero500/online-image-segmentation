@@ -184,3 +184,4 @@
 | 2026-06-04 | ⑥ 社媒多平台一键导出 — 完成 `/social-export` MVP，支持 9 个社媒尺寸、单尺寸裁剪微调、PNG/JPEG/WebP、按平台命名 ZIP、5 pSEO 与 5 语言文案 |
 | 2026-06-04 | ⑥ 社媒多平台导出 SEO — 使用 DataForSEO MCP 重排英文主力词，新增 Instagram/Facebook/LinkedIn/Twitter 高价值尺寸页；中文小红书/微信页改为 locale-specific sitemap/hreflang |
 | 2026-06-05 | ⑦ AI 背景移除 — 完成 `/remove-background` 本地 AI MVP，采用 Transformers.js + 站内 RMBG 模型，补充显式模型下载、缓存状态、清理缓存、Web Worker、边缘参数、导出与 5 语言文案 |
+| 2026-06-06 | ⑦ AI 背景移除 — 补齐批量去背景队列、单 worker 串行推理、继续添加、失败重试、取消队列、ZIP 下载、内部工具导航入口与 3 个长尾 pSEO 页 |

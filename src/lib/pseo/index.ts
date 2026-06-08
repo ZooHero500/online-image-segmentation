@@ -80,6 +80,7 @@ const slugMeta: { slug: string; category: ToolCategory }[] = [
   { slug: "xiaohongshu-cover-size", category: "use-case" },
   { slug: "wechat-cover-size", category: "use-case" },
   { slug: "wechat-official-account-cover-size", category: "use-case" },
+  { slug: "remove-background-free", category: "use-case" },
   { slug: "transparent-background-maker", category: "use-case" },
   { slug: "bulk-background-remover", category: "use-case" },
 ]

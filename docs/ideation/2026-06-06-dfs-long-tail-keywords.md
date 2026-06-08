@@ -107,12 +107,12 @@ Notes:
 - `transparent background maker` is the standout background-removal opportunity. It has much lower KD than `transparent background remover` while still matching the implemented output: transparent PNG/WebP after local AI removal.
 - `bulk` is stronger than `batch` in the US data. Use `bulk background remover` as the primary batch phrase and `batch remove background` as a supporting phrase.
 - `offline` and `local AI` terms are too small for standalone pages, but they are useful conversion copy because ImgSplit's model runs in the browser after download and keeps images on-device.
-- Code currently maps `transparent-background-maker` and `remove-background-free` to `/remove-background` in `TOOL_EDITOR_HREFS`, but these slugs are not registered in `slugMeta` yet. If this cluster is prioritized, create actual pSEO page data and register the slugs.
+- Code now registers `remove-background-free`, `transparent-background-maker`, and `bulk-background-remover` in pSEO data and maps their CTAs to `/remove-background`.
 
 Recommended background-removal page order:
 1. `/transparent-background-maker` -> primary query `transparent background maker`; CTA to `/remove-background`.
 2. `/bulk-background-remover` -> primary query `bulk background remover`; emphasize multi-image upload, serial local processing, ZIP download.
-3. Keep `free background remover` and `background remover online for free` as secondary terms on `/remove-background`; do not make them the first SEO bet because KD is 68-75.
+3. `/remove-background-free` -> support free-background-remover intent without competing as the highest-priority SEO bet.
 
 ### Image Splitter Cluster
 
