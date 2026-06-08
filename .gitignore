@@ -14,6 +14,10 @@
 /coverage
 /.worktrees/
 
+# local model download leftovers
+/public/models/Xenova/
+/public/models/briaai/
+
 # next.js
 /.next/
 /out/
