@@ -37,7 +37,7 @@ export const watermarkPagesByLocale: LocaleWatermarkPages = {
       category: "use-case",
       seo: {
         title: "Watermark Maker Online - Free & Private | ImgSplit",
-        description: "Create text and logo watermarks online. Free browser-based watermark maker with opacity, repeat, position, and export controls.",
+        description: "Create text and logo watermarks online with opacity, repeat, position, and export controls. Free browser-based watermark maker with no upload.",
         ogTitle: "Watermark Maker Online",
         ogDescription: "Add text or logo watermarks to images privately in your browser.",
       },
@@ -69,7 +69,7 @@ export const watermarkPagesByLocale: LocaleWatermarkPages = {
       category: "use-case",
       seo: {
         title: "Add Watermark to Photo Online - Free Tool | ImgSplit",
-        description: "Add a watermark to photos online with text or logo layers. Free, private, browser-based photo watermark tool with no upload required.",
+        description: "Add a watermark to photos online with text or logo layers. Free private browser-based photo watermark tool with no upload to servers and easy export.",
         ogTitle: "Add Watermark to Photo Online",
         ogDescription: "Protect and brand photos with private browser-based watermarking.",
       },
@@ -101,7 +101,7 @@ export const watermarkPagesByLocale: LocaleWatermarkPages = {
       category: "use-case",
       seo: {
         title: "Add Watermark to Image Online - Text or Logo | ImgSplit",
-        description: "Add text or logo watermarks to images online. Browser-based watermarking for PNG, JPG, and WebP with opacity and repeat controls.",
+        description: "Add text or logo watermarks to PNG, JPG, and WebP images online. Browser-based watermarking with opacity, repeat controls, and no upload.",
         ogTitle: "Add Watermark to Image Online",
         ogDescription: "Watermark PNG, JPG, and WebP images without uploading them.",
       },
@@ -133,7 +133,7 @@ export const watermarkPagesByLocale: LocaleWatermarkPages = {
       category: "use-case",
       seo: {
         title: "Online Watermark Tool - Free Text & Logo Marks | ImgSplit",
-        description: "Use a free online watermark tool to add text, logo, copyright, or repeated watermarks to images. Private browser-based editing.",
+        description: "Use a free online watermark tool to add text, logo, copyright, or repeated watermarks to images. Private browser-based editing, no upload.",
         ogTitle: "Online Watermark Tool",
         ogDescription: "A private browser-based tool for text and logo watermarks.",
       },

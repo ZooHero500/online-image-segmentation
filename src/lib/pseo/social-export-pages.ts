@@ -79,7 +79,7 @@ const seeds: Record<LocaleKey, SocialExportPageSeed[]> = {
     {
       slug: "social-media-image-resizer",
       title: "Social Media Image Resizer Online | ImgSplit",
-      description: "Resize one image for multiple social media platforms and download all outputs as a ZIP. Free, private, browser-based.",
+      description: "Resize one image for multiple social media platforms and download all outputs as a ZIP. Free private browser-based workflow with no upload required.",
       ogTitle: "Social Media Image Resizer",
       ogDescription: "Turn one image into multiple social-ready sizes.",
       overline: "Social Image Resizer",
@@ -100,7 +100,7 @@ const seeds: Record<LocaleKey, SocialExportPageSeed[]> = {
     {
       slug: "resize-image-for-social-media",
       title: "Resize Image for Social Media - Free Online Tool | ImgSplit",
-      description: "Resize an image for Instagram, YouTube, Facebook, X/Twitter, LinkedIn, and TikTok in one browser workflow.",
+      description: "Resize an image for Instagram, YouTube, Facebook, X/Twitter, LinkedIn, and TikTok in one private browser workflow with no upload and ZIP export.",
       ogTitle: "Resize Image for Social Media",
       ogDescription: "Generate multiple platform crops from one image.",
       overline: "Social Media Resize",
@@ -121,7 +121,7 @@ const seeds: Record<LocaleKey, SocialExportPageSeed[]> = {
     {
       slug: "instagram-image-size",
       title: "Instagram Image Size Exporter - Feed & Story | ImgSplit",
-      description: "Create Instagram feed square, feed portrait, and Story/Reel image sizes from one source image. Private browser export.",
+      description: "Create Instagram feed square, feed portrait, and Story/Reel image sizes from one source image. Private browser export with no upload and ZIP output.",
       ogTitle: "Instagram Image Size Exporter",
       ogDescription: "Generate Instagram feed and story sizes from one image.",
       overline: "Instagram Image Size",
@@ -142,7 +142,7 @@ const seeds: Record<LocaleKey, SocialExportPageSeed[]> = {
     {
       slug: "youtube-thumbnail-size",
       title: "YouTube Thumbnail Size Exporter - 1280x720 | ImgSplit",
-      description: "Resize images to the 1280x720 YouTube thumbnail size and export with optional social companion sizes.",
+      description: "Resize images to the 1280x720 YouTube thumbnail size and export optional social companion sizes in your browser with private processing, no upload.",
       ogTitle: "YouTube Thumbnail Size Exporter",
       ogDescription: "Create 1280x720 YouTube thumbnails in your browser.",
       overline: "YouTube Thumbnail Size",
@@ -163,7 +163,7 @@ const seeds: Record<LocaleKey, SocialExportPageSeed[]> = {
     {
       slug: "wechat-cover-size",
       title: "WeChat Cover Size Exporter - Article Cover Tool | ImgSplit",
-      description: "Create a wide WeChat article cover from one image and export it with other social platform sizes in a private browser workflow.",
+      description: "Create a wide WeChat article cover from one image and export it with other social platform sizes in a private browser workflow, no upload.",
       ogTitle: "WeChat Cover Size Exporter",
       ogDescription: "Make WeChat article covers and companion social sizes.",
       overline: "WeChat Cover Size",
@@ -616,7 +616,7 @@ seeds.en.push(
   {
     slug: "social-media-image-sizes",
     title: "Social Media Image Sizes Guide & Exporter | ImgSplit",
-    description: "Create current social media image sizes for Instagram, YouTube, Facebook, X, LinkedIn, and TikTok from one browser-based editor.",
+    description: "Create current social media image sizes for Instagram, YouTube, Facebook, X, LinkedIn, and TikTok from one private browser-based editor.",
     ogTitle: "Social Media Image Sizes",
     ogDescription: "Export the platform image sizes people actually publish.",
     overline: "Social Media Image Sizes",
@@ -637,7 +637,7 @@ seeds.en.push(
   {
     slug: "instagram-post-size",
     title: "Instagram Post Size Exporter - 1080x1080 & 1080x1350 | ImgSplit",
-    description: "Create Instagram post sizes from one image: square feed posts, portrait feed posts, and companion story crops. Private browser export.",
+    description: "Create Instagram post sizes from one image: square feed posts, portrait feed posts, and companion story crops. Private browser export, no upload.",
     ogTitle: "Instagram Post Size Exporter",
     ogDescription: "Make 1080x1080 and 1080x1350 Instagram post images.",
     overline: "Instagram Post Size",
@@ -658,7 +658,7 @@ seeds.en.push(
   {
     slug: "instagram-story-size",
     title: "Instagram Story Size Exporter - 1080x1920 | ImgSplit",
-    description: "Resize an image to the 1080x1920 Instagram Story size and export optional feed companion images from the same upload.",
+    description: "Resize an image to the 1080x1920 Instagram Story size and export optional feed companions from the same source in your browser, no upload.",
     ogTitle: "Instagram Story Size Exporter",
     ogDescription: "Create 1080x1920 Instagram story images in your browser.",
     overline: "Instagram Story Size",
@@ -679,7 +679,7 @@ seeds.en.push(
   {
     slug: "facebook-cover-photo-size",
     title: "Facebook Cover Photo Size Exporter | ImgSplit",
-    description: "Create Facebook Page cover photo exports and optional group cover companions from one source image. Free private browser tool.",
+    description: "Create Facebook Page cover photo exports and optional group cover companions from one source image. Free private browser tool with no upload.",
     ogTitle: "Facebook Cover Photo Size",
     ogDescription: "Export Facebook cover photos with crop control.",
     overline: "Facebook Cover Photo Size",
@@ -700,7 +700,7 @@ seeds.en.push(
   {
     slug: "linkedin-post-size",
     title: "LinkedIn Post Size Exporter - 1200x628 | ImgSplit",
-    description: "Resize one image to the 1200x628 LinkedIn post size and export optional companion social sizes in a browser workflow.",
+    description: "Resize one image to the 1200x628 LinkedIn post size and export optional companion social sizes in a private browser workflow, no upload.",
     ogTitle: "LinkedIn Post Size Exporter",
     ogDescription: "Create 1200x628 LinkedIn post images.",
     overline: "LinkedIn Post Size",
@@ -721,7 +721,7 @@ seeds.en.push(
   {
     slug: "twitter-header-size",
     title: "Twitter Header Size Exporter - X Header 1500x500 | ImgSplit",
-    description: "Create a 1500x500 Twitter/X header image from one source image with crop control and private browser export.",
+    description: "Create a 1500x500 Twitter/X header image from one source image with crop control and private browser export. No upload needed and ZIP output.",
     ogTitle: "Twitter Header Size Exporter",
     ogDescription: "Make 1500x500 X/Twitter header images.",
     overline: "Twitter Header Size",

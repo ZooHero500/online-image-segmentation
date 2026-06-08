@@ -236,7 +236,7 @@ const data: Record<string, ToolPageData> = {
         category: "use-case",
         seo: {
           title: "Instagram Image Splitter — Carousel & Grid | ImgSplit",
-          description: "Split images for Instagram carousel posts and profile grid layouts. Optimized for 1080 × 1080 px. Free, browser-based, no watermarks.",
+          description: "Split images for Instagram carousel posts and profile grid layouts at 1080 x 1080 px. Free browser-based splitting with no upload and no watermarks.",
           ogTitle: "Instagram Image Splitter — Free Carousel & Grid Tool",
           ogDescription: "Split images into Instagram-ready tiles. Optimized for 1080×1080px posts.",
         },
@@ -805,7 +805,7 @@ const data: Record<string, ToolPageData> = {
     category: "use-case",
     seo: {
       title: "Convert JPG to PNG Online — Free Converter | ImgSplit",
-      description: "Convert JPG and JPEG images to PNG format for lossless quality. Free browser-based converter, no upload to servers, instant download.",
+      description: "Convert JPG and JPEG images to PNG format for lossless quality and design edits. Free browser-based converter with no upload to servers.",
       ogTitle: "Convert JPG to PNG — Free Online Converter",
       ogDescription: "Convert JPEG to PNG for lossless quality. Free, private, browser-based.",
     },
@@ -940,7 +940,7 @@ const data: Record<string, ToolPageData> = {
     category: "use-case",
     seo: {
       title: "Convert WebP to JPG Online — Free Converter | ImgSplit",
-      description: "Convert WebP images to JPG format for maximum compatibility. Free browser-based converter, no upload to servers, instant download.",
+      description: "Convert WebP images to JPG format for maximum compatibility with apps, websites, and sharing. Free browser-based converter with no upload.",
       ogTitle: "Convert WebP to JPG — Free Online Converter",
       ogDescription: "Convert WebP to JPG for maximum compatibility. Free, private, browser-based.",
     },
@@ -1028,7 +1028,7 @@ const data: Record<string, ToolPageData> = {
   "crop-image": {
     slug: "crop-image",
     category: "use-case",
-    seo: { title: "Crop Image Online — Free Social Crop Tool | ImgSplit", description: "Crop images online to exact social media sizes. Instagram, YouTube, Facebook, and more. Free, private, browser-based.", ogTitle: "Crop Image Online — Free Social Crop Tool", ogDescription: "Crop photos to social media sizes in your browser." },
+    seo: { title: "Crop Image Online — Free Social Crop Tool | ImgSplit", description: "Crop images online to exact social media sizes for Instagram, YouTube, Facebook, and more. Free private browser-based cropping with no upload.", ogTitle: "Crop Image Online — Free Social Crop Tool", ogDescription: "Crop photos to social media sizes in your browser." },
     hero: { overline: "Image Crop Tool", headlinePart1: "Crop Images", headlineAccent: "Online", headlinePart2: "— Exact Sizes", description: "Resize and crop any image to precise social media dimensions. Pick a preset, position the photo, apply the crop, and export without uploading your file." },
     scenarios: [
       { icon: "Crop", title: "Exact Aspect Ratios", description: "Lock the crop to square, vertical, or widescreen ratios before you export." },
@@ -1054,7 +1054,7 @@ const data: Record<string, ToolPageData> = {
   "crop-for-instagram": {
     slug: "crop-for-instagram",
     category: "use-case",
-    seo: { title: "Crop Image for Instagram — Free 1:1 Post Cropper | ImgSplit", description: "Crop images to Instagram post size online. 1080 x 1080 square preset, private browser-based export.", ogTitle: "Crop Image for Instagram — Free Online Tool", ogDescription: "Make square Instagram posts without uploading your photo." },
+    seo: { title: "Crop Image for Instagram — Free 1:1 Post Cropper | ImgSplit", description: "Crop images to Instagram post size online with a 1080 x 1080 square preset for posts, private browser-based editing, and no upload to servers.", ogTitle: "Crop Image for Instagram — Free Online Tool", ogDescription: "Make square Instagram posts without uploading your photo." },
     hero: { overline: "Instagram Crop Tool", headlinePart1: "Crop for", headlineAccent: "Instagram", headlinePart2: "— 1:1 Posts", description: "Create clean 1080 x 1080 Instagram post crops from any image. Keep the important subject centered and export a platform-ready square." },
     scenarios: [
       { icon: "Crop", title: "Square Feed Posts", description: "Turn portrait or landscape photos into clean 1:1 Instagram posts." },
@@ -1080,7 +1080,7 @@ const data: Record<string, ToolPageData> = {
   "instagram-story-crop": {
     slug: "instagram-story-crop",
     category: "use-case",
-    seo: { title: "Instagram Story Crop — Free 9:16 Image Cropper | ImgSplit", description: "Crop images to Instagram Story size online. 1080 x 1920 vertical preset, private browser-based editing.", ogTitle: "Instagram Story Crop — Free 9:16 Cropper", ogDescription: "Crop vertical stories in your browser with a 1080 x 1920 preset." },
+    seo: { title: "Instagram Story Crop — Free 9:16 Image Cropper | ImgSplit", description: "Crop images to Instagram Story size online with a 1080 x 1920 vertical preset. Private browser-based editing keeps photos local for export.", ogTitle: "Instagram Story Crop — Free 9:16 Cropper", ogDescription: "Crop vertical stories in your browser with a 1080 x 1920 preset." },
     hero: { overline: "Instagram Story Crop", headlinePart1: "Crop Instagram", headlineAccent: "Stories", headlinePart2: "— 9:16 Vertical", description: "Prepare full-screen Instagram stories with a 1080 x 1920 crop preset. Reposition the image, apply the crop, and export privately." },
     scenarios: [
       { icon: "Smartphone", title: "Full-Screen Stories", description: "Convert wide or square images into vertical story assets without stretching." },
@@ -1106,7 +1106,7 @@ const data: Record<string, ToolPageData> = {
   "youtube-thumbnail-crop": {
     slug: "youtube-thumbnail-crop",
     category: "use-case",
-    seo: { title: "YouTube Thumbnail Crop — Free 1280x720 Cropper | ImgSplit", description: "Crop images to YouTube thumbnail size online. 1280 x 720 16:9 preset, browser-based, no upload.", ogTitle: "YouTube Thumbnail Crop — Free 16:9 Cropper", ogDescription: "Crop thumbnail images to 1280 x 720 in your browser." },
+    seo: { title: "YouTube Thumbnail Crop — Free 1280x720 Cropper | ImgSplit", description: "Crop images to YouTube thumbnail size online with a 1280 x 720 16:9 preset, browser-based preview, and no upload required for fast export.", ogTitle: "YouTube Thumbnail Crop — Free 16:9 Cropper", ogDescription: "Crop thumbnail images to 1280 x 720 in your browser." },
     hero: { overline: "YouTube Thumbnail Crop", headlinePart1: "Crop YouTube", headlineAccent: "Thumbnails", headlinePart2: "— 16:9", description: "Create 1280 x 720 YouTube thumbnail crops from any image. Use the 16:9 preset, place your subject, and export a ready-to-upload thumbnail." },
     scenarios: [
       { icon: "Youtube", title: "Thumbnail Prep", description: "Crop photos, screenshots, or artwork to the YouTube-recommended 1280 x 720 size." },

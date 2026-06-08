@@ -98,7 +98,7 @@ const seeds: Record<string, MosaicPageSeed[]> = {
     {
       slug: "blur-face-in-photo",
       title: "Blur Face in Photo Online - Free Private Tool | ImgSplit",
-      description: "Blur faces in photos online without uploading your image. Use browser-based blur, mosaic, or solid cover regions for private sharing.",
+      description: "Blur faces in photos online without uploading your image. Use browser-based blur, mosaic, or solid cover regions for private sharing and posts.",
       ogTitle: "Blur Face in Photo Online",
       ogDescription: "Hide faces in photos privately in your browser.",
       overline: "Face Blur Tool",
@@ -118,7 +118,7 @@ const seeds: Record<string, MosaicPageSeed[]> = {
     {
       slug: "pixelate-image",
       title: "Pixelate Image - Free Online Mosaic Tool | ImgSplit",
-      description: "Pixelate an image online with adjustable mosaic blocks, brush masks, and image overlays. Hide sensitive areas locally in your browser.",
+      description: "Pixelate an image online with adjustable mosaic blocks, brush masks, and image overlays. Hide sensitive areas locally in your browser before sharing.",
       ogTitle: "Pixelate Image Online",
       ogDescription: "Pixelate image areas with adjustable mosaic blocks.",
       overline: "Pixelate Image",
@@ -138,7 +138,7 @@ const seeds: Record<string, MosaicPageSeed[]> = {
     {
       slug: "pixelate-image-online",
       title: "Pixelate Image Online - Free Mosaic Tool | ImgSplit",
-      description: "Pixelate parts of an image online with adjustable mosaic blocks. Hide private details in photos and screenshots without upload.",
+      description: "Pixelate parts of an image online with adjustable mosaic blocks. Hide private details in photos and screenshots in your browser without upload.",
       ogTitle: "Pixelate Image Online",
       ogDescription: "Add adjustable mosaic blocks to sensitive image regions.",
       overline: "Pixelate Image",
@@ -158,7 +158,7 @@ const seeds: Record<string, MosaicPageSeed[]> = {
     {
       slug: "censor-image-online",
       title: "Censor Image Online - Free Privacy Mask Tool | ImgSplit",
-      description: "Censor image areas online with mosaic, blur, solid cover, brush masks, or custom image overlays. Free browser-based privacy editing.",
+      description: "Censor image areas online with mosaic, blur, solid cover, brush masks, or custom overlays. Free browser-based privacy editing with no upload.",
       ogTitle: "Censor Image Online",
       ogDescription: "Censor sensitive image areas privately in your browser.",
       overline: "Censor Image Online",
@@ -178,7 +178,7 @@ const seeds: Record<string, MosaicPageSeed[]> = {
     {
       slug: "mosaic-tool",
       title: "Mosaic Tool Online - Hide Private Image Details | ImgSplit",
-      description: "Use a free online mosaic tool to cover sensitive image details. Browser-based masking with mosaic, blur, and solid cover modes.",
+      description: "Use a free online mosaic tool to cover sensitive image details. Browser-based masking with mosaic, blur, and solid cover modes, no upload.",
       ogTitle: "Online Mosaic Tool",
       ogDescription: "Cover sensitive image details with browser-based mosaic masking.",
       overline: "Online Mosaic Tool",
@@ -198,7 +198,7 @@ const seeds: Record<string, MosaicPageSeed[]> = {
     {
       slug: "redact-image",
       title: "Redact Image - Free Photo and Screenshot Privacy Tool | ImgSplit",
-      description: "Redact image details with solid cover, mosaic, blur, brush masks, or custom image overlays. Hide private content before sharing.",
+      description: "Redact image details with solid cover, mosaic, blur, brush masks, or custom image overlays. Hide private content in your browser before sharing.",
       ogTitle: "Redact Image",
       ogDescription: "Redact sensitive photo and screenshot details locally.",
       overline: "Image Redaction",
@@ -218,7 +218,7 @@ const seeds: Record<string, MosaicPageSeed[]> = {
     {
       slug: "redact-image-online",
       title: "Redact Image Online - Free Screenshot Privacy Tool | ImgSplit",
-      description: "Redact image areas online with solid cover, mosaic, or blur. Hide names, addresses, faces, license plates, and private screenshots.",
+      description: "Redact image areas online with solid cover, mosaic, or blur. Hide names, addresses, faces, license plates, and screenshots in your browser.",
       ogTitle: "Redact Image Online",
       ogDescription: "Hide sensitive image areas before sharing screenshots or photos.",
       overline: "Image Redaction",

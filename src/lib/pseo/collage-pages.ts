@@ -79,7 +79,7 @@ const seeds: Record<LocaleKey, CollagePageSeed[]> = {
     {
       slug: "photo-collage-maker",
       title: "Photo Collage Maker Online - Free & Private | ImgSplit",
-      description: "Create photo collages online with templates, spacing, backgrounds, and browser-based export. Free, private, no upload required.",
+      description: "Create photo collages online with templates, spacing, backgrounds, and browser-based export. Free, private, no upload required for your photos.",
       ogTitle: "Photo Collage Maker Online",
       ogDescription: "Combine multiple photos into one clean collage in your browser.",
       overline: "Photo Collage Maker",
@@ -100,7 +100,7 @@ const seeds: Record<LocaleKey, CollagePageSeed[]> = {
     {
       slug: "photo-grid-maker",
       title: "Photo Grid Maker Online - Free Browser Tool | ImgSplit",
-      description: "Make a photo grid online with 2, 3, 4, 5, or 6-image layouts. Adjust spacing, margins, backgrounds, and export privately.",
+      description: "Make a photo grid online with 2, 3, 4, 5, or 6-image layouts. Adjust spacing, margins, backgrounds, and export privately in your browser.",
       ogTitle: "Photo Grid Maker Online",
       ogDescription: "Create clean photo grids with browser-based templates.",
       overline: "Photo Grid Maker",
@@ -121,7 +121,7 @@ const seeds: Record<LocaleKey, CollagePageSeed[]> = {
     {
       slug: "instagram-story-collage",
       title: "Instagram Story Collage Maker - 1080x1920 | ImgSplit",
-      description: "Create a 1080x1920 Instagram Story collage online. Use story templates, spacing, backgrounds, and private browser export.",
+      description: "Create a 1080x1920 Instagram Story collage online. Use story templates, spacing, backgrounds, and private browser export with no upload.",
       ogTitle: "Instagram Story Collage Maker",
       ogDescription: "Make vertical story collages at 1080x1920.",
       overline: "Instagram Story Collage",
@@ -142,7 +142,7 @@ const seeds: Record<LocaleKey, CollagePageSeed[]> = {
     {
       slug: "free-photo-collage-maker",
       title: "Free Photo Collage Maker Online | ImgSplit",
-      description: "Make a free photo collage online with templates, grid layouts, spacing, backgrounds, and private browser export.",
+      description: "Make a free photo collage online with templates, grid layouts, spacing, backgrounds, and private browser export without uploading your photos.",
       ogTitle: "Free Photo Collage Maker",
       ogDescription: "Create free photo collages in your browser without uploading files.",
       overline: "Free Photo Collage Maker",
@@ -163,7 +163,7 @@ const seeds: Record<LocaleKey, CollagePageSeed[]> = {
     {
       slug: "picture-grid-maker",
       title: "Picture Grid Maker Online - Free & Private | ImgSplit",
-      description: "Create a picture grid online for product sets, moodboards, portfolios, and social posts. Adjust spacing and export privately.",
+      description: "Create a picture grid online for product sets, moodboards, portfolios, and social posts. Adjust spacing and export privately in your browser.",
       ogTitle: "Picture Grid Maker Online",
       ogDescription: "Build clean picture grids with private browser export.",
       overline: "Picture Grid Maker",
@@ -184,7 +184,7 @@ const seeds: Record<LocaleKey, CollagePageSeed[]> = {
     {
       slug: "instagram-collage-maker",
       title: "Instagram Collage Maker Online | ImgSplit",
-      description: "Create Instagram collages for posts, stories, recaps, and product sets. Use square or vertical templates with private export.",
+      description: "Create Instagram collages for posts, stories, recaps, and product sets. Use square or vertical templates with private browser export, no upload.",
       ogTitle: "Instagram Collage Maker",
       ogDescription: "Make Instagram-ready photo collages in your browser.",
       overline: "Instagram Collage Maker",
