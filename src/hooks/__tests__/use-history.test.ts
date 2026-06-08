@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from "vitest"
 import { renderHook, act, waitFor } from "@testing-library/react"
 import { useHistory } from "../use-history"
-import { storageService, db } from "@/lib/storage-service"
+import { storageService, db, type SaveResult } from "@/lib/storage-service"
 import type { HistoryRecord } from "@/types"
 
 function createMockRecordData(): Omit<HistoryRecord, "id" | "createdAt"> {
@@ -12,6 +12,14 @@ function createMockRecordData(): Omit<HistoryRecord, "id" | "createdAt"> {
     thumbnailDataUrl: "data:image/png;base64,test",
     imageBlob: new Blob(["test"], { type: "image/png" }),
   }
+}
+
+function expectSaveSuccess(result: SaveResult): HistoryRecord {
+  expect(result.success).toBe(true)
+  if (!result.success) {
+    throw new Error(`Expected save success, got ${result.error}`)
+  }
+  return result.record
 }
 
 describe("useHistory", () => {
@@ -48,7 +56,9 @@ describe("useHistory", () => {
 
     let savedId = ""
     await act(async () => {
-      const saved = await storageService.saveRecord(createMockRecordData())
+      const saved = expectSaveSuccess(
+        await storageService.saveRecord(createMockRecordData())
+      )
       savedId = saved.id
     })
 
@@ -70,7 +80,9 @@ describe("useHistory", () => {
 
     let savedId = ""
     await act(async () => {
-      const saved = await storageService.saveRecord(createMockRecordData())
+      const saved = expectSaveSuccess(
+        await storageService.saveRecord(createMockRecordData())
+      )
       savedId = saved.id
     })
 

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest"
-import { storageService, db } from "../storage-service"
+import { storageService, db, type SaveResult } from "../storage-service"
 import type { HistoryRecord } from "@/types"
 
 function createMockRecord(): Omit<HistoryRecord, "id" | "createdAt"> {
@@ -27,6 +27,14 @@ const localStorageMock = (() => {
 
 Object.defineProperty(globalThis, "localStorage", { value: localStorageMock, writable: true })
 
+function expectSaveSuccess(result: SaveResult): HistoryRecord {
+  expect(result.success).toBe(true)
+  if (!result.success) {
+    throw new Error(`Expected save success, got ${result.error}`)
+  }
+  return result.record
+}
+
 describe("StorageService", () => {
   beforeEach(async () => {
     await db.history.clear()
@@ -35,7 +43,7 @@ describe("StorageService", () => {
 
   it("should save a record and return it with id and createdAt", async () => {
     const data = createMockRecord()
-    const record = await storageService.saveRecord(data)
+    const record = expectSaveSuccess(await storageService.saveRecord(data))
 
     expect(record.id).toBeDefined()
     expect(record.createdAt).toBeDefined()
@@ -52,7 +60,7 @@ describe("StorageService", () => {
   })
 
   it("should get a single record by id", async () => {
-    const saved = await storageService.saveRecord(createMockRecord())
+    const saved = expectSaveSuccess(await storageService.saveRecord(createMockRecord()))
     const record = await storageService.getRecord(saved.id)
 
     expect(record).toBeDefined()
@@ -65,7 +73,7 @@ describe("StorageService", () => {
   })
 
   it("should delete a record", async () => {
-    const saved = await storageService.saveRecord(createMockRecord())
+    const saved = expectSaveSuccess(await storageService.saveRecord(createMockRecord()))
     await storageService.deleteRecord(saved.id)
 
     const record = await storageService.getRecord(saved.id)
@@ -73,7 +81,7 @@ describe("StorageService", () => {
   })
 
   it("should clear localStorage data with record prefix on delete", async () => {
-    const saved = await storageService.saveRecord(createMockRecord())
+    const saved = expectSaveSuccess(await storageService.saveRecord(createMockRecord()))
     localStorage.setItem(`img-split:record:${saved.id}:some-key`, "value")
     localStorage.setItem(`img-split:record:${saved.id}:other`, "value2")
     localStorage.setItem("img-split:unrelated", "keep")
@@ -106,8 +114,8 @@ describe("StorageService", () => {
   })
 
   it("should return records ordered by createdAt descending", async () => {
-    const r1 = await storageService.saveRecord(createMockRecord())
-    const r2 = await storageService.saveRecord(createMockRecord())
+    await storageService.saveRecord(createMockRecord())
+    await storageService.saveRecord(createMockRecord())
 
     const records = await storageService.getRecords()
     expect(records[0].createdAt).toBeGreaterThanOrEqual(records[1].createdAt)
