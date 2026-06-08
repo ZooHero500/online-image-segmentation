@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 
 const MIN_SCALE = 0.1
 const MAX_SCALE = 10
@@ -55,6 +55,17 @@ function calculateCenterPosition(
 interface ViewState {
   scale: number
   position: { x: number; y: number }
+  fitScale: number
+  fitPosition: { x: number; y: number }
+}
+
+function createViewState(scale: number, position: { x: number; y: number }): ViewState {
+  return {
+    scale,
+    position,
+    fitScale: scale,
+    fitPosition: position,
+  }
 }
 
 export function useCanvasViewport({
@@ -73,17 +84,22 @@ export function useCanvasViewport({
     [containerWidth, containerHeight, imageWidth, imageHeight, fitScale]
   )
 
-  const [viewState, setViewState] = useState<ViewState>({
-    scale: fitScale,
-    position: fitPosition,
-  })
+  const [viewState, setViewState] = useState<ViewState>(() =>
+    createViewState(fitScale, fitPosition)
+  )
 
-  // Sync viewState when fit values change (image load, container resize)
-  useEffect(() => {
-    setViewState({ scale: fitScale, position: fitPosition })
-  }, [fitScale, fitPosition])
+  const fitChanged =
+    viewState.fitScale !== fitScale ||
+    viewState.fitPosition.x !== fitPosition.x ||
+    viewState.fitPosition.y !== fitPosition.y
 
-  const { scale, position } = viewState
+  if (fitChanged) {
+    setViewState(createViewState(fitScale, fitPosition))
+  }
+
+  const { scale, position } = fitChanged
+    ? createViewState(fitScale, fitPosition)
+    : viewState
 
   const zoomAtPoint = useCallback(
     (screenX: number, screenY: number, factor: number) => {
@@ -91,6 +107,7 @@ export function useCanvasViewport({
         const newScale = clampScale(prev.scale * factor)
         const ratio = newScale / prev.scale
         return {
+          ...prev,
           scale: newScale,
           position: {
             x: screenX - (screenX - prev.position.x) * ratio,
@@ -111,17 +128,20 @@ export function useCanvasViewport({
 
   const fitToView = useCallback(() => {
     const s = calculateFitScale(containerWidth, containerHeight, imageWidth, imageHeight)
-    setViewState({
-      scale: s,
-      position: calculateCenterPosition(containerWidth, containerHeight, imageWidth, imageHeight, s),
-    })
+    setViewState(
+      createViewState(
+        s,
+        calculateCenterPosition(containerWidth, containerHeight, imageWidth, imageHeight, s)
+      )
+    )
   }, [containerWidth, containerHeight, imageWidth, imageHeight])
 
   const resetTo100 = useCallback(() => {
-    setViewState({
+    setViewState((prev) => ({
+      ...prev,
       scale: 1,
       position: calculateCenterPosition(containerWidth, containerHeight, imageWidth, imageHeight, 1),
-    })
+    }))
   }, [containerWidth, containerHeight, imageWidth, imageHeight])
 
   const screenToWorld = useCallback(

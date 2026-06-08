@@ -104,7 +104,7 @@ export function useResizeEditor(
       const result = calc(srcW, srcH, size.width, size.height)
       setTransform({ ...result, crop: currentCrop, rotation, flipX, flipY })
     },
-    [fitMode, getEffectiveDimensions]
+    [fitMode, getEffectiveDimensions, setTransform]
   )
 
   const loadImage = useCallback(
@@ -189,7 +189,7 @@ export function useResizeEditor(
     setCropRect(null)
     setFileName("")
     setMimeType("image/png")
-  }, [])
+  }, [setTransform])
 
   const handleSetCanvasSize = useCallback(
     (size: CanvasSize) => {

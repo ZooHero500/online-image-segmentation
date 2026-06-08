@@ -161,8 +161,7 @@ export function Ruler({
   }, [orientation, length, viewportScale, viewportOffset, imageSize, thickness, lines])
 
   useEffect(() => {
-    let rafId: number
-    rafId = requestAnimationFrame(draw)
+    const rafId = requestAnimationFrame(draw)
     return () => cancelAnimationFrame(rafId)
   }, [draw])
 

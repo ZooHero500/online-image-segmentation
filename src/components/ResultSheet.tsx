@@ -160,13 +160,11 @@ function ResultItem({
   selected: boolean
   onToggleSelect: () => void
 }) {
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+  const previewUrl = useMemo(() => URL.createObjectURL(result.blob), [result.blob])
 
   useEffect(() => {
-    const url = URL.createObjectURL(result.blob)
-    setPreviewUrl(url)
-    return () => URL.revokeObjectURL(url)
-  }, [result.blob])
+    return () => URL.revokeObjectURL(previewUrl)
+  }, [previewUrl])
 
   const fileName = getFileName(originalFileName, result, fileExtension)
 
@@ -179,39 +177,37 @@ function ResultItem({
       }`}
     >
       {/* Image preview */}
-      {previewUrl && (
-        <div
-          className="relative aspect-[4/3] overflow-hidden cursor-pointer bg-secondary/30"
-          onClick={() => onPreview(index)}
+      <div
+        className="relative aspect-[4/3] overflow-hidden cursor-pointer bg-secondary/30"
+        onClick={() => onPreview(index)}
+      >
+        <img
+          src={previewUrl}
+          alt={fileName}
+          className="w-full h-full object-contain transition-transform duration-[1500ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-105"
+        />
+        {/* Checkbox overlay */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            onToggleSelect()
+          }}
+          className={`absolute top-2 left-2 w-5 h-5 flex items-center justify-center border transition-all duration-300 ${
+            selected
+              ? "bg-accent border-accent text-accent-foreground"
+              : "bg-background/80 border-primary/25 text-transparent hover:border-accent/60"
+          }`}
         >
-          <img
-            src={previewUrl}
-            alt={fileName}
-            className="w-full h-full object-contain transition-transform duration-[1500ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-105"
+          <Check className="h-3 w-3" strokeWidth={2} />
+        </button>
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-700 flex items-center justify-center pointer-events-none">
+          <ZoomIn
+            className="h-5 w-5 text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            strokeWidth={1.5}
           />
-          {/* Checkbox overlay */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              onToggleSelect()
-            }}
-            className={`absolute top-2 left-2 w-5 h-5 flex items-center justify-center border transition-all duration-300 ${
-              selected
-                ? "bg-accent border-accent text-accent-foreground"
-                : "bg-background/80 border-primary/25 text-transparent hover:border-accent/60"
-            }`}
-          >
-            <Check className="h-3 w-3" strokeWidth={2} />
-          </button>
-          {/* Hover overlay */}
-          <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-700 flex items-center justify-center pointer-events-none">
-            <ZoomIn
-              className="h-5 w-5 text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              strokeWidth={1.5}
-            />
-          </div>
         </div>
-      )}
+      </div>
 
       {/* Info + actions */}
       <div className="p-4 flex items-center justify-between gap-3">
