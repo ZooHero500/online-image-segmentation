@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "node:fs"
 import { join } from "node:path"
 
 const host = process.env.NEXT_PUBLIC_SITE_URL || "https://imgsplit.com"
-const key = "imgsplit-indexnow-2026"
+const key = "abf0cb35f8b6f01587679efe06b42d3f"
 const keyFilePath = join(process.cwd(), "public", `${key}.txt`)
 const endpoint = "https://api.indexnow.org/indexnow"
 

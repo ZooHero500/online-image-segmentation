@@ -19,7 +19,7 @@
 - Modify `src/lib/pseo/social-export-pages.ts`: expand English seed descriptions for social export pSEO pages that are below the scanner threshold.
 - Modify `src/lib/pseo/background-removal-pages.ts`: expand English seed descriptions for background removal pSEO pages if any English entries remain below the threshold.
 - Create `src/lib/__tests__/pseo-metadata.test.ts`: verify English pSEO meta descriptions stay in the target range and include privacy/browser/export language.
-- Create `public/imgsplit-indexnow-2026.txt`: expose the IndexNow key file at `https://imgsplit.com/imgsplit-indexnow-2026.txt`.
+- Create `public/abf0cb35f8b6f01587679efe06b42d3f.txt`: expose the IndexNow key file at `https://imgsplit.com/abf0cb35f8b6f01587679efe06b42d3f.txt`.
 - Create `scripts/ping-indexnow.mjs`: submit changed public URLs to the IndexNow endpoint after deploy or major content updates.
 - Modify `package.json`: add a `seo:indexnow` script using Bun.
 - Create `docs/seo/backlink-outreach.md`: list concrete backlink targets, page angles, and tracking fields.
@@ -197,28 +197,31 @@ Expected: commit succeeds.
 ### Task 3: Add IndexNow Support
 
 **Files:**
-- Create: `public/imgsplit-indexnow-2026.txt`
+- Create: `public/abf0cb35f8b6f01587679efe06b42d3f.txt`
 - Create: `scripts/ping-indexnow.mjs`
 - Modify: `package.json`
 
 - [ ] **Step 1: Create the IndexNow key file**
 
-Create `public/imgsplit-indexnow-2026.txt` with this content:
+Create `public/abf0cb35f8b6f01587679efe06b42d3f.txt` with this content:
 
 ```txt
-imgsplit-indexnow-2026
+abf0cb35f8b6f01587679efe06b42d3f
 ```
 
-The key value is intentionally simple and site-specific. If the production owner prefers a random key, replace every occurrence of `imgsplit-indexnow-2026` in this task with the same random key before execution.
+The key value is random, public by design, and must match both the filename and file contents.
 
 - [ ] **Step 2: Create the ping script**
 
 Create `scripts/ping-indexnow.mjs` with this content:
 
 ```js
+import { existsSync, readFileSync } from "node:fs"
+import { join } from "node:path"
+
 const host = process.env.NEXT_PUBLIC_SITE_URL || "https://imgsplit.com"
-const key = process.env.INDEXNOW_KEY || "imgsplit-indexnow-2026"
-const keyLocation = `${host.replace(/\/$/, "")}/${key}.txt`
+const key = "abf0cb35f8b6f01587679efe06b42d3f"
+const keyFilePath = join(process.cwd(), "public", `${key}.txt`)
 const endpoint = "https://api.indexnow.org/indexnow"
 
 const urls = process.argv.slice(2)
@@ -228,23 +231,59 @@ if (urls.length === 0) {
   process.exit(1)
 }
 
-const normalizedUrls = urls.map((url) => {
-  if (url.startsWith("http://") || url.startsWith("https://")) return url
-  return `${host.replace(/\/$/, "")}/${url.replace(/^\//, "")}`
-})
+if (!existsSync(keyFilePath) || readFileSync(keyFilePath, "utf8").trim() !== key) {
+  console.error(`IndexNow key file must exist at public/${key}.txt and contain ${key}`)
+  process.exit(1)
+}
 
-const response = await fetch(endpoint, {
-  method: "POST",
-  headers: {
-    "content-type": "application/json",
-  },
-  body: JSON.stringify({
-    host: new URL(host).host,
-    key,
-    keyLocation,
-    urlList: normalizedUrls,
-  }),
-})
+let baseUrl
+try {
+  baseUrl = new URL(host)
+} catch {
+  console.error(`NEXT_PUBLIC_SITE_URL must be a valid absolute URL. Received: ${host}`)
+  process.exit(1)
+}
+
+const normalizedUrls = []
+for (const input of urls) {
+  let url
+  try {
+    url = input.startsWith("http://") || input.startsWith("https://")
+      ? new URL(input)
+      : new URL(input.replace(/^\//, ""), `${baseUrl.origin}/`)
+  } catch {
+    console.error(`Invalid URL: ${input}`)
+    process.exit(1)
+  }
+
+  if (url.host !== baseUrl.host) {
+    console.error(`IndexNow URL host mismatch: ${url.href} does not belong to ${baseUrl.host}`)
+    process.exit(1)
+  }
+
+  normalizedUrls.push(url.href)
+}
+
+const keyLocation = `${baseUrl.origin}/${key}.txt`
+let response
+try {
+  response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      host: baseUrl.host,
+      key,
+      keyLocation,
+      urlList: normalizedUrls,
+    }),
+  })
+} catch (error) {
+  console.error(`IndexNow request failed for ${endpoint}`)
+  console.error(error instanceof Error ? error.message : String(error))
+  process.exit(1)
+}
 
 if (!response.ok) {
   const body = await response.text()
@@ -292,7 +331,7 @@ Expected: FAIL with usage text and exit code `1`. This proves the script refuses
 Run:
 
 ```bash
-test "$(cat public/imgsplit-indexnow-2026.txt)" = "imgsplit-indexnow-2026"
+test "$(cat public/abf0cb35f8b6f01587679efe06b42d3f.txt)" = "abf0cb35f8b6f01587679efe06b42d3f"
 ```
 
 Expected: exit code `0`.
@@ -302,7 +341,7 @@ Expected: exit code `0`.
 Only run this after creating or switching to an isolated branch/worktree:
 
 ```bash
-git add public/imgsplit-indexnow-2026.txt scripts/ping-indexnow.mjs package.json
+git add public/abf0cb35f8b6f01587679efe06b42d3f.txt scripts/ping-indexnow.mjs package.json
 git commit -m "feat: add indexnow submission support"
 ```
 
@@ -372,7 +411,7 @@ Expected: commit succeeds.
 **Files:**
 - Verify: `src/lib/__tests__/pseo-metadata.test.ts`
 - Verify: `package.json`
-- Verify: `public/imgsplit-indexnow-2026.txt`
+- Verify: `public/abf0cb35f8b6f01587679efe06b42d3f.txt`
 - Verify: `docs/seo/backlink-outreach.md`
 
 - [ ] **Step 1: Run focused metadata tests**
