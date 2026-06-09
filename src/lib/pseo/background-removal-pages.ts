@@ -79,7 +79,7 @@ const seeds: Record<LocaleKey, BackgroundRemovalPageSeed[]> = {
     {
       slug: "transparent-background-maker",
       title: "Transparent Background Maker - Free Local AI Tool | ImgSplit",
-      description: "Make a transparent background from PNG, JPG, or WebP images with local AI background removal. Browser-based, private, no image upload.",
+      description: "Make a transparent background from PNG, JPG, or WebP images with local AI background removal. Browser-based, private, no image upload needed.",
       ogTitle: "Transparent Background Maker",
       ogDescription: "Create transparent PNG and WebP backgrounds in your browser.",
       overline: "Transparent Background Maker",

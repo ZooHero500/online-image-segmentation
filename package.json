@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "vitest run",
     "lint": "eslint",
+    "seo:indexnow": "node scripts/ping-indexnow.mjs",
     "models:background-removal": "node scripts/download-background-removal-model.mjs"
   },
   "dependencies": {
