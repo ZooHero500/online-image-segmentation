@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest"
 import { getToolPageData, getToolPageLocales, getAllToolPageParams } from "@/lib/pseo"
+import { TOOL_EDITOR_HREFS } from "@/lib/tools/catalog"
 
 describe("pseo carousel pages", () => {
   it("serves cortar-carrossel only in pt-BR", () => {
@@ -50,6 +51,13 @@ describe("pseo carousel pages", () => {
     const questions = data?.faqEntries.map((e) => e.question) ?? []
     expect(questions.some((q) => q.toLowerCase().includes("recortar"))).toBe(true)
     expect(questions.some((q) => q.toLowerCase().includes("cortar"))).toBe(true)
+  })
+
+  it("routes every carousel slug to the carousel tool", () => {
+    for (const slug of ["carousel-splitter", "canva-image-splitter", "cortar-carrossel", "cortar-imagens-carrossel", "cortar-carrossel-infinito"]) {
+      expect(TOOL_EDITOR_HREFS[slug]).toBeDefined()
+      expect(TOOL_EDITOR_HREFS[slug].startsWith("/carousel")).toBe(true)
+    }
   })
 
   it("carousel pages have all required fields", () => {

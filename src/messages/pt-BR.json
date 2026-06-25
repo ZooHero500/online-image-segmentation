@@ -151,7 +151,7 @@
     "a6": "Sim — funciona muito bem em celulares e tablets também."
   },
   "jsonLd": {
-    "feature1": "Linhas de corte arrastavéis",
+    "feature1": "Linhas de corte arrastáveis",
     "feature2": "Alinhamento automático",
     "feature3": "Divisão em grade",
     "feature4": "Download ZIP com um clique",
@@ -515,7 +515,7 @@
     "categoryUseCase": "Dividir por Caso de Uso",
     "categoryExisting": "Ferramentas Principais",
     "existingToolSplit": "Divisor de Imagens",
-    "existingToolSplitDesc": "Divisor de imagens completo com linhas de corte arrastavéis, alinhamento automático e precisão de pixel.",
+    "existingToolSplitDesc": "Divisor de imagens completo com linhas de corte arrastáveis, alinhamento automático e precisão de pixel.",
     "existingToolGrid": "Divisor em Grade",
     "existingToolGridDesc": "Divida imagens em grades 3×3, 1×3 ou 2×2 para plataformas de redes sociais.",
     "existingToolCarousel": "Divisor de Carrossel",

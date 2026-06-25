@@ -200,4 +200,9 @@ export const TOOL_EDITOR_HREFS: Record<string, string> = {
   "remove-background-free": "/remove-background",
   "transparent-background-maker": "/remove-background",
   "bulk-background-remover": "/remove-background",
+  "carousel-splitter": "/carousel/workspace",
+  "canva-image-splitter": "/carousel/workspace",
+  "cortar-carrossel": "/carousel/workspace",
+  "cortar-imagens-carrossel": "/carousel/workspace",
+  "cortar-carrossel-infinito": "/carousel/workspace",
 }
