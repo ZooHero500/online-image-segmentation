@@ -7,6 +7,7 @@ export function CarouselPreview({ slides }: { slides: CarouselSlide[] }) {
   const [urls, setUrls] = useState<string[]>([])
   useEffect(() => {
     const next = slides.map((s) => URL.createObjectURL(s.blob))
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setUrls(next)
     return () => next.forEach((u) => URL.revokeObjectURL(u))
   }, [slides])
