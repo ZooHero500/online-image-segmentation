@@ -926,6 +926,46 @@
     "presetWechatCover": "Article Cover",
     "presetWechatCoverDesc": "900 x 383 wide cover for WeChat article sharing."
   },
+  "carousel": {
+    "metadata": {
+      "title": "Free Online Carousel Splitter | ImgSplit",
+      "description": "Split wide images into carousel slides for Instagram and social media. Free, private, browser-based."
+    },
+    "steps": {
+      "upload": "Upload",
+      "adjust": "Adjust",
+      "download": "Download"
+    },
+    "count": {
+      "label": "Slides"
+    },
+    "aspect": {
+      "label": "Aspect Ratio",
+      "ratio45": "4:5",
+      "ratio11": "1:1",
+      "ratioOriginal": "Original"
+    },
+    "upload": {
+      "title": "Upload Image",
+      "dragHint": "Drag an image here",
+      "clickHint": "or click to select",
+      "formatHint": "PNG / JPG / WebP · Max 20MB"
+    },
+    "editor": {
+      "dragHint": "Drag to move · Slider to zoom",
+      "pinchHint": "Drag to move · Pinch to zoom"
+    },
+    "download": {
+      "generate": "Generate",
+      "generating": "Generating...",
+      "zip": "Download All (ZIP)",
+      "readjust": "Readjust",
+      "count": "{count} slides",
+      "tapToSave": "Tap a slide to save individually",
+      "failed": "Download failed. Please try again.",
+      "reupload": "Re-upload"
+    }
+  },
   "resize": {
     "metadata": {
       "title": "Image Resizer — Resize & Crop to Any Dimension | ImgSplit",
