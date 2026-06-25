@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest"
-import { exportAsZip, exportBatchAsZip, downloadSingle, getSelectedZipFileName, getZipFileName, getBatchZipFileName, exportGridAsZip, getGridZipFileName } from "../zip-exporter"
+import { exportAsZip, exportBatchAsZip, downloadSingle, getSelectedZipFileName, getZipFileName, getBatchZipFileName, exportGridAsZip, getGridZipFileName, exportCarouselAsZip, getCarouselZipFileName } from "../zip-exporter"
 import type { SplitResult } from "@/types"
 
 function createMockResult(row: number, col: number): SplitResult {
@@ -208,5 +208,16 @@ describe("downloadSingle", () => {
     expect(mockAnchor.download).toBe("photo_r1_c1.png")
     expect(clickMock).toHaveBeenCalled()
     expect(revokeObjectURL).toHaveBeenCalledWith("blob:test-url")
+  })
+})
+
+describe("exportCarouselAsZip", () => {
+  it("names entries carousel-N and returns a blob", async () => {
+    const blobs = [new Blob(["a"]), new Blob(["b"])]
+    const zip = await exportCarouselAsZip(blobs, "png")
+    expect(zip).toBeInstanceOf(Blob)
+  })
+  it("zip filename is stable", () => {
+    expect(getCarouselZipFileName()).toBe("carousel_split.zip")
   })
 })
