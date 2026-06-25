@@ -470,6 +470,7 @@
     "navFaq": "FAQ",
     "toolsTitle": "Tools",
     "toolGrid": "Grid Splitter",
+    "toolCarousel": "Carousel Splitter",
     "toolResize": "Resize",
     "toolCompress": "Compress",
     "toolWatermark": "Watermark",
@@ -517,6 +518,8 @@
     "existingToolSplitDesc": "Full-featured image splitter with drag-and-drop split lines, snap alignment, and pixel-perfect precision.",
     "existingToolGrid": "Grid Splitter",
     "existingToolGridDesc": "Split images into 3×3, 1×3, or 2×2 grids for social media platforms.",
+    "existingToolCarousel": "Carousel Splitter",
+    "existingToolCarouselDesc": "Split wide images into carousel slides for Instagram and social media platforms.",
     "existingToolResize": "Image Resizer",
     "existingToolResizeDesc": "Resize, crop, rotate, and export images to any dimension — drag to position, snap to align.",
     "existingToolCompress": "Image Compressor",
@@ -964,6 +967,59 @@
       "tapToSave": "Tap a slide to save individually",
       "failed": "Download failed. Please try again.",
       "reupload": "Re-upload"
+    },
+    "landing": {
+      "hero": {
+        "overline": "Carousel Splitting Tool",
+        "headlinePart1": "Carousel",
+        "headlineAccent": "Split",
+        "headlinePart2": "Your Images",
+        "description": "Split wide images into seamless carousel slides for Instagram, Facebook, and other social platforms. Free, private, browser-based.",
+        "ctaPrimary": "Upload & Split",
+        "ctaSecondary": "See Slide Formats"
+      },
+      "types": {
+        "overline": "Slide Formats",
+        "headlinePart1": "Choose Your",
+        "headlineAccent": "Format",
+        "instagramTitle": "Instagram Carousel",
+        "instagramDesc": "Split panoramic images into swipeable Instagram carousel slides — perfect for storytelling and product showcases.",
+        "wideTitle": "Wide Panorama",
+        "wideDesc": "Turn ultra-wide photos into seamless multi-slide carousels that reveal as viewers swipe through.",
+        "customTitle": "Custom Slides",
+        "customDesc": "Set any number of slides and aspect ratio to fit any platform or creative vision."
+      },
+      "howItWorks": {
+        "overline": "How It Works",
+        "headlinePart1": "Three Simple",
+        "headlineAccent": "Steps",
+        "step1Title": "Upload Image",
+        "step1Desc": "Drag and drop or click to upload your wide image.",
+        "step2Title": "Adjust & Preview",
+        "step2Desc": "Choose slide count and aspect ratio, preview the carousel layout in real-time.",
+        "step3Title": "Download",
+        "step3Desc": "Download all carousel slides as a ZIP, or save them individually."
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "Questions",
+        "headlineAccent": "Answered",
+        "subtitle": "Common questions about the carousel splitting tool",
+        "q1": "What image formats are supported?",
+        "a1": "PNG, JPEG, and WebP images up to 20MB are supported. Wide panoramic images work best for carousel splitting.",
+        "q2": "How many slides can I create?",
+        "a2": "You can create between 2 and 10 carousel slides. The tool automatically divides your image evenly across all slides.",
+        "q3": "What aspect ratios are available?",
+        "a3": "Choose from 4:5 (portrait), 1:1 (square), or keep the original image aspect ratio for each slide.",
+        "q4": "Is my image data safe?",
+        "a4": "Absolutely. All processing happens locally in your browser. No image data is ever uploaded to a server."
+      },
+      "cta": {
+        "headlinePart1": "Ready to",
+        "headlineAccent": "Slide?",
+        "description": "No sign-up. No installation. Upload your image and get perfect carousel slides in seconds.",
+        "button": "Start Carousel Split"
+      }
     }
   },
   "resize": {
