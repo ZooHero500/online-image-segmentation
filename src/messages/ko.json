@@ -470,6 +470,7 @@
     "navFaq": "FAQ",
     "toolsTitle": "도구",
     "toolGrid": "그리드 분할",
+    "toolCarousel": "캐러셀 분할",
     "toolResize": "크기 조정",
     "toolCompress": "압축",
     "toolWatermark": "워터마크",
@@ -517,6 +518,8 @@
     "existingToolSplitDesc": "드래그 앤 드롭 분할선, 스냅 정렬, 픽셀 단위 정밀 자르기를 지원하는 종합 이미지 분할 도구.",
     "existingToolGrid": "그리드 분할",
     "existingToolGridDesc": "이미지를 3×3, 1×3 또는 2×2 그리드로 분할하여 소셜 미디어 플랫폼에 활용.",
+    "existingToolCarousel": "캐러셀 분할",
+    "existingToolCarouselDesc": "넓은 이미지를 Instagram 및 소셜 미디어 플랫폼용 캐러셀 슬라이드로 분할합니다.",
     "existingToolResize": "이미지 크기 조정",
     "existingToolResizeDesc": "이미지를 원하는 크기로 조정, 자르기, 회전 — 드래그 위치 지정, 스냅 정렬, 다중 형식 내보내기.",
     "existingToolCompress": "이미지 압축",
@@ -987,5 +990,98 @@
     "processing": "처리 중...",
     "compressFailed": "일부 이미지를 처리하지 못했습니다.",
     "ready": "완료"
+  },
+  "carousel": {
+    "metadata": {
+      "title": "무료 온라인 캐러셀 분할 도구 | ImgSplit",
+      "description": "넓은 이미지를 Instagram 및 소셜 미디어용 캐러셀 슬라이드로 분할. 무료, 개인 정보 보호, 브라우저 기반."
+    },
+    "steps": {
+      "upload": "업로드",
+      "adjust": "조정",
+      "download": "다운로드"
+    },
+    "count": {
+      "label": "슬라이드 수"
+    },
+    "aspect": {
+      "label": "화면 비율",
+      "ratio45": "4:5",
+      "ratio11": "1:1",
+      "ratioOriginal": "원본"
+    },
+    "upload": {
+      "title": "이미지 업로드",
+      "dragHint": "여기에 이미지를 드래그하세요",
+      "clickHint": "또는 클릭하여 선택",
+      "formatHint": "PNG / JPG / WebP · 최대 20MB"
+    },
+    "editor": {
+      "dragHint": "드래그하여 이동 · 슬라이더로 확대/축소",
+      "pinchHint": "드래그하여 이동 · 핀치로 확대/축소"
+    },
+    "download": {
+      "generate": "생성",
+      "generating": "생성 중...",
+      "zip": "전체 다운로드 (ZIP)",
+      "readjust": "재조정",
+      "count": "슬라이드 {count}장",
+      "tapToSave": "슬라이드를 탭하여 개별 저장",
+      "failed": "다운로드에 실패했습니다. 다시 시도해 주세요.",
+      "reupload": "다시 업로드"
+    },
+    "landing": {
+      "hero": {
+        "overline": "캐러셀 분할 도구",
+        "headlinePart1": "캐러셀",
+        "headlineAccent": "분할",
+        "headlinePart2": "이미지를 변환",
+        "description": "넓은 이미지를 Instagram, Facebook 등 소셜 플랫폼용 캐러셀 슬라이드로 분할. 무료, 개인 정보 보호, 브라우저 기반.",
+        "ctaPrimary": "업로드 후 분할",
+        "ctaSecondary": "슬라이드 형식 보기"
+      },
+      "types": {
+        "overline": "슬라이드 형식",
+        "headlinePart1": "형식을",
+        "headlineAccent": "선택",
+        "instagramTitle": "Instagram 캐러셀",
+        "instagramDesc": "파노라마 이미지를 스와이프 가능한 Instagram 캐러셀 슬라이드로 분할 — 스토리텔링과 제품 쇼케이스에 최적.",
+        "wideTitle": "와이드 파노라마",
+        "wideDesc": "초광각 사진을 매끄러운 멀티 슬라이드 캐러셀로 변환하여 시청자가 스와이프하며 전체를 감상할 수 있습니다.",
+        "customTitle": "커스텀 슬라이드",
+        "customDesc": "원하는 슬라이드 수와 화면 비율을 설정하여 모든 플랫폼과 크리에이티브 비전에 맞춥니다."
+      },
+      "howItWorks": {
+        "overline": "사용 방법",
+        "headlinePart1": "세 가지",
+        "headlineAccent": "간단한 단계",
+        "step1Title": "이미지 업로드",
+        "step1Desc": "드래그 앤 드롭 또는 클릭하여 넓은 이미지를 업로드.",
+        "step2Title": "조정 및 미리보기",
+        "step2Desc": "슬라이드 수와 화면 비율을 선택하고 캐러셀 레이아웃을 실시간으로 미리봅니다.",
+        "step3Title": "다운로드",
+        "step3Desc": "모든 캐러셀 슬라이드를 ZIP으로 다운로드하거나 개별 저장."
+      },
+      "faq": {
+        "overline": "자주 묻는 질문",
+        "headlinePart1": "자주 묻는",
+        "headlineAccent": "질문",
+        "subtitle": "캐러셀 분할 도구에 대해 자주 묻는 질문",
+        "q1": "어떤 이미지 형식을 지원하나요?",
+        "a1": "최대 20MB의 PNG, JPEG, WebP 이미지를 지원합니다. 넓은 파노라마 이미지가 캐러셀 분할에 가장 적합합니다.",
+        "q2": "몇 개의 슬라이드를 만들 수 있나요?",
+        "a2": "캐러셀 슬라이드를 2개에서 10개까지 만들 수 있습니다. 도구가 자동으로 이미지를 모든 슬라이드에 균등하게 분배합니다.",
+        "q3": "어떤 화면 비율을 사용할 수 있나요?",
+        "a3": "4:5(세로), 1:1(정사각형) 또는 각 슬라이드에 원본 이미지 화면 비율을 유지할 수 있습니다.",
+        "q4": "내 이미지 데이터는 안전한가요?",
+        "a4": "물론입니다. 모든 처리는 브라우저 내에서 로컬로 이루어집니다. 이미지 데이터가 서버에 업로드되는 일은 없습니다."
+      },
+      "cta": {
+        "headlinePart1": "슬라이드를",
+        "headlineAccent": "시작할까요?",
+        "description": "가입 불필요, 설치 불필요. 이미지를 업로드하면 몇 초 안에 완벽한 캐러셀 슬라이드가 완성됩니다.",
+        "button": "캐러셀 분할 시작"
+      }
+    }
   }
 }
