@@ -1,6 +1,8 @@
-const JPEG_QUALITY = 0.92
-const MAX_CANVAS_AREA = 16_777_216
-const MAX_CANVAS_DIMENSION = 16_384
+import {
+  JPEG_QUALITY,
+  computeScale,
+  resolveOutputMimeType,
+} from "@/lib/image-canvas"
 
 export type GridType = "3x3" | "1x3" | "2x2"
 
@@ -36,19 +38,6 @@ export function getGridConfig(gridType: GridType): {
   }
 }
 
-function resolveOutputMimeType(originalMimeType: string): string {
-  if (originalMimeType === "image/webp") return "image/png"
-  if (originalMimeType === "image/jpeg" || originalMimeType === "image/png") return originalMimeType
-  return "image/png"
-}
-
-function computeScale(w: number, h: number): number {
-  let scale = 1
-  if (w * h > MAX_CANVAS_AREA) scale = Math.sqrt(MAX_CANVAS_AREA / (w * h))
-  if (w * scale > MAX_CANVAS_DIMENSION) scale = MAX_CANVAS_DIMENSION / w
-  if (h * scale > MAX_CANVAS_DIMENSION) scale = MAX_CANVAS_DIMENSION / h
-  return scale
-}
 
 function cropCell(
   image: HTMLImageElement,
