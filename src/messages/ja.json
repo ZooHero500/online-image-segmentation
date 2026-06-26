@@ -470,6 +470,7 @@
     "navFaq": "よくある質問",
     "toolsTitle": "ツール",
     "toolGrid": "グリッド分割",
+    "toolCarousel": "カルーセル分割",
     "toolResize": "リサイズ",
     "toolCompress": "圧縮",
     "toolWatermark": "ウォーターマーク",
@@ -517,6 +518,8 @@
     "existingToolSplitDesc": "ドラッグ＆ドロップの分割線、スナップ整列、ピクセル精度を備えた多機能画像分割ツール。",
     "existingToolGrid": "グリッド分割",
     "existingToolGridDesc": "画像を3×3、1×3、2×2のグリッドに分割。各種SNSプラットフォームに対応。",
+    "existingToolCarousel": "カルーセル分割",
+    "existingToolCarouselDesc": "横長の画像をInstagramやSNS向けのカルーセルスライドに分割します。",
     "existingToolResize": "画像リサイズ",
     "existingToolResizeDesc": "画像を任意のサイズにリサイズ・トリミング・回転 — ドラッグ配置、スナップ整列、複数形式で書き出し。",
     "existingToolCompress": "画像圧縮",
@@ -987,5 +990,98 @@
     "processing": "処理中...",
     "compressFailed": "一部の画像を処理できませんでした。",
     "ready": "完了"
+  },
+  "carousel": {
+    "metadata": {
+      "title": "無料オンラインカルーセル分割ツール | ImgSplit",
+      "description": "横長の画像をInstagramやSNS向けのカルーセルスライドに分割。無料・プライベート・ブラウザ内処理。"
+    },
+    "steps": {
+      "upload": "アップロード",
+      "adjust": "調整",
+      "download": "ダウンロード"
+    },
+    "count": {
+      "label": "スライド数"
+    },
+    "aspect": {
+      "label": "アスペクト比",
+      "ratio45": "4:5",
+      "ratio11": "1:1",
+      "ratioOriginal": "オリジナル"
+    },
+    "upload": {
+      "title": "画像をアップロード",
+      "dragHint": "ここに画像をドラッグ",
+      "clickHint": "またはクリックして選択",
+      "formatHint": "PNG / JPG / WebP · 最大20MB"
+    },
+    "editor": {
+      "dragHint": "ドラッグして移動 · スライダーでズーム",
+      "pinchHint": "ドラッグして移動 · ピンチでズーム"
+    },
+    "download": {
+      "generate": "生成",
+      "generating": "生成中...",
+      "zip": "すべてダウンロード (ZIP)",
+      "readjust": "再調整",
+      "count": "{count}枚のスライド",
+      "tapToSave": "スライドをタップして個別保存",
+      "failed": "ダウンロードに失敗しました。もう一度お試しください。",
+      "reupload": "再アップロード"
+    },
+    "landing": {
+      "hero": {
+        "overline": "カルーセル分割ツール",
+        "headlinePart1": "カルーセル",
+        "headlineAccent": "分割",
+        "headlinePart2": "画像を変換",
+        "description": "横長の画像をInstagram、Facebookなどのカルーセルスライドに分割。無料・プライベート・ブラウザ内処理。",
+        "ctaPrimary": "アップロードして分割",
+        "ctaSecondary": "スライド形式を見る"
+      },
+      "types": {
+        "overline": "スライド形式",
+        "headlinePart1": "形式を",
+        "headlineAccent": "選択",
+        "instagramTitle": "Instagramカルーセル",
+        "instagramDesc": "パノラマ画像をスワイプできるInstagramカルーセルスライドに分割 — ストーリーテリングや商品紹介に最適。",
+        "wideTitle": "ワイドパノラマ",
+        "wideDesc": "超横長写真をシームレスなマルチスライドカルーセルに変換。スワイプするごとに全景が明らかになります。",
+        "customTitle": "カスタムスライド",
+        "customDesc": "任意のスライド数とアスペクト比を設定して、あらゆるプラットフォームやクリエイティブなビジョンに対応。"
+      },
+      "howItWorks": {
+        "overline": "使い方",
+        "headlinePart1": "三つの",
+        "headlineAccent": "簡単なステップ",
+        "step1Title": "画像をアップロード",
+        "step1Desc": "ドラッグ＆ドロップまたはクリックして横長の画像をアップロード。",
+        "step2Title": "調整とプレビュー",
+        "step2Desc": "スライド数とアスペクト比を選択し、カルーセルレイアウトをリアルタイムでプレビュー。",
+        "step3Title": "ダウンロード",
+        "step3Desc": "すべてのカルーセルスライドをZIPでダウンロード、または個別に保存。"
+      },
+      "faq": {
+        "overline": "よくある質問",
+        "headlinePart1": "よくある",
+        "headlineAccent": "質問",
+        "subtitle": "カルーセル分割ツールについてよくある質問",
+        "q1": "対応している画像形式は何ですか？",
+        "a1": "最大20MBのPNG、JPEG、WebP画像に対応しています。横長のパノラマ画像がカルーセル分割に最適です。",
+        "q2": "何枚のスライドを作成できますか？",
+        "a2": "2枚から10枚のカルーセルスライドを作成できます。ツールが自動的に画像をすべてのスライドに均等に分割します。",
+        "q3": "どのアスペクト比が使用できますか？",
+        "a3": "4:5（縦向き）、1:1（正方形）、または各スライドに元の画像のアスペクト比を維持することができます。",
+        "q4": "画像データは安全ですか？",
+        "a4": "はい。すべての処理はブラウザ内でローカルに行われます。画像データがサーバーにアップロードされることは一切ありません。"
+      },
+      "cta": {
+        "headlinePart1": "スライドを",
+        "headlineAccent": "始めよう",
+        "description": "登録不要・インストール不要。画像をアップロードするだけで、完璧なカルーセルスライドが数秒で完成します。",
+        "button": "カルーセル分割を開始"
+      }
+    }
   }
 }

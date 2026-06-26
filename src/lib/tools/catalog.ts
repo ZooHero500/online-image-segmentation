@@ -1,6 +1,7 @@
 export type CoreToolId =
   | "split"
   | "grid"
+  | "carousel"
   | "resize"
   | "compress"
   | "watermark"
@@ -24,6 +25,7 @@ export interface CoreTool {
   labelKey:
     | "toolSplit"
     | "toolGrid"
+    | "toolCarousel"
     | "toolResize"
     | "toolCompress"
     | "toolWatermark"
@@ -34,6 +36,7 @@ export interface CoreTool {
   descriptionKey:
     | "existingToolSplitDesc"
     | "existingToolGridDesc"
+    | "existingToolCarouselDesc"
     | "existingToolResizeDesc"
     | "existingToolCompressDesc"
     | "existingToolWatermarkDesc"
@@ -63,6 +66,15 @@ export const CORE_TOOLS: CoreTool[] = [
     descriptionKey: "existingToolGridDesc",
     href: "/grid",
     quickAccessHref: "/grid/workspace",
+    sitemapPriority: 0.9,
+    icon: "grid",
+  },
+  {
+    id: "carousel",
+    labelKey: "toolCarousel",
+    descriptionKey: "existingToolCarouselDesc",
+    href: "/carousel",
+    quickAccessHref: "/carousel/workspace",
     sitemapPriority: 0.9,
     icon: "grid",
   },
@@ -188,4 +200,9 @@ export const TOOL_EDITOR_HREFS: Record<string, string> = {
   "remove-background-free": "/remove-background",
   "transparent-background-maker": "/remove-background",
   "bulk-background-remover": "/remove-background",
+  "carousel-splitter": "/carousel/workspace",
+  "canva-image-splitter": "/carousel/workspace",
+  "cortar-carrossel": "/carousel/workspace",
+  "cortar-imagens-carrossel": "/carousel/workspace",
+  "cortar-carrossel-infinito": "/carousel/workspace",
 }

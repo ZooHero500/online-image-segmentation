@@ -470,6 +470,7 @@
     "navFaq": "问题",
     "toolsTitle": "工具",
     "toolGrid": "九宫格切图",
+    "toolCarousel": "轮播分割",
     "toolResize": "调整尺寸",
     "toolCompress": "压缩",
     "toolWatermark": "水印",
@@ -517,6 +518,8 @@
     "existingToolSplitDesc": "支持拖拽分割线、磁吸对齐、像素级精准裁切的全功能图片分割工具。",
     "existingToolGrid": "九宫格切图",
     "existingToolGridDesc": "将图片切割为 3×3、1×3 或 2×2 网格，适用于社交媒体平台。",
+    "existingToolCarousel": "轮播分割",
+    "existingToolCarouselDesc": "将宽幅图片分割为 Instagram 和社交媒体平台的轮播幻灯片。",
     "existingToolResize": "图片调整尺寸",
     "existingToolResizeDesc": "调整、裁剪、旋转图片到任意尺寸 — 拖拽定位、磁吸对齐、多格式导出。",
     "existingToolCompress": "图片压缩",
@@ -987,5 +990,98 @@
     "processing": "处理中...",
     "compressFailed": "部分图片处理失败。",
     "ready": "就绪"
+  },
+  "carousel": {
+    "metadata": {
+      "title": "免费在线轮播分割工具 | ImgSplit",
+      "description": "将宽幅图片分割为 Instagram 和社交媒体平台的轮播幻灯片。免费、私密、纯浏览器处理。"
+    },
+    "steps": {
+      "upload": "上传图片",
+      "adjust": "调整裁切",
+      "download": "下载结果"
+    },
+    "count": {
+      "label": "幻灯片数量"
+    },
+    "aspect": {
+      "label": "宽高比",
+      "ratio45": "4:5",
+      "ratio11": "1:1",
+      "ratioOriginal": "原始"
+    },
+    "upload": {
+      "title": "上传图片",
+      "dragHint": "拖拽图片到此处",
+      "clickHint": "或点击选择文件",
+      "formatHint": "PNG / JPG / WebP · 单张最大 20MB"
+    },
+    "editor": {
+      "dragHint": "拖拽移动 · 滑条缩放",
+      "pinchHint": "拖拽移动 · 双指缩放"
+    },
+    "download": {
+      "generate": "生成",
+      "generating": "生成中...",
+      "zip": "下载全部 (ZIP)",
+      "readjust": "重新调整",
+      "count": "{count} 张幻灯片",
+      "tapToSave": "点击单张幻灯片可单独保存",
+      "failed": "下载失败，请重试",
+      "reupload": "重新上传"
+    },
+    "landing": {
+      "hero": {
+        "overline": "轮播分割工具",
+        "headlinePart1": "轮播",
+        "headlineAccent": "分割",
+        "headlinePart2": "你的图片",
+        "description": "将宽幅图片分割为无缝轮播幻灯片，适用于 Instagram、Facebook 等社交平台。免费、隐私安全、纯浏览器处理。",
+        "ctaPrimary": "上传并分割",
+        "ctaSecondary": "查看幻灯片格式"
+      },
+      "types": {
+        "overline": "幻灯片格式",
+        "headlinePart1": "选择",
+        "headlineAccent": "格式",
+        "instagramTitle": "Instagram 轮播",
+        "instagramDesc": "将全景图片分割为可滑动的 Instagram 轮播幻灯片，非常适合故事叙述和产品展示。",
+        "wideTitle": "宽幅全景",
+        "wideDesc": "将超宽照片转换为无缝多滑动轮播，让观众随着滑动逐渐揭开全貌。",
+        "customTitle": "自定义幻灯片",
+        "customDesc": "设置任意幻灯片数量和宽高比，适配任何平台或创意需求。"
+      },
+      "howItWorks": {
+        "overline": "使用说明",
+        "headlinePart1": "三步",
+        "headlineAccent": "完成",
+        "step1Title": "上传图片",
+        "step1Desc": "拖拽或点击上传您的宽幅图片。",
+        "step2Title": "调整与预览",
+        "step2Desc": "选择幻灯片数量和宽高比，实时预览轮播布局。",
+        "step3Title": "下载结果",
+        "step3Desc": "一键打包下载所有轮播幻灯片，或单独保存每张。"
+      },
+      "faq": {
+        "overline": "常见问题",
+        "headlinePart1": "疑问",
+        "headlineAccent": "解答",
+        "subtitle": "关于轮播分割工具的常见疑问",
+        "q1": "支持哪些图片格式？",
+        "a1": "支持最大 20MB 的 PNG、JPEG 和 WebP 格式图片。宽幅全景图最适合轮播分割。",
+        "q2": "可以创建多少张幻灯片？",
+        "a2": "您可以创建 2 到 10 张轮播幻灯片。工具会自动将图片均匀分配到所有幻灯片中。",
+        "q3": "可以使用哪些宽高比？",
+        "a3": "可以选择 4:5（竖版）、1:1（正方形），或保持每张幻灯片的原始图片宽高比。",
+        "q4": "我的图片数据安全吗？",
+        "a4": "完全安全。所有图片处理都在您的浏览器本地完成，不会将任何图片数据上传到服务器。"
+      },
+      "cta": {
+        "headlinePart1": "准备好",
+        "headlineAccent": "滑动了？",
+        "description": "无需注册，无需安装，上传图片即可在几秒内获得完美的轮播幻灯片。",
+        "button": "开始轮播分割"
+      }
+    }
   }
 }

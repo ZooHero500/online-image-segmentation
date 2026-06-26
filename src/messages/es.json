@@ -470,6 +470,7 @@
     "navFaq": "Preguntas frecuentes",
     "toolsTitle": "Herramientas",
     "toolGrid": "Divisor en cuadrícula",
+    "toolCarousel": "Divisor de carrusel",
     "toolResize": "Redimensionar",
     "toolCompress": "Comprimir",
     "toolWatermark": "Marca de agua",
@@ -517,6 +518,8 @@
     "existingToolSplitDesc": "Divisor de imágenes completo con líneas de corte arrastrables, alineación automática y precisión de píxeles.",
     "existingToolGrid": "Divisor en cuadrícula",
     "existingToolGridDesc": "Divide imágenes en cuadrículas de 3×3, 1×3 o 2×2 para plataformas de redes sociales.",
+    "existingToolCarousel": "Divisor de carrusel",
+    "existingToolCarouselDesc": "Divide imágenes anchas en diapositivas de carrusel para Instagram y plataformas de redes sociales.",
     "existingToolResize": "Redimensionar Imagen",
     "existingToolResizeDesc": "Redimensiona, recorta y rota imágenes a cualquier tamaño — arrastra para posicionar, ajuste magnético, múltiples formatos.",
     "existingToolCompress": "Compresor de Imágenes",
@@ -987,5 +990,98 @@
     "processing": "Procesando...",
     "compressFailed": "No se pudieron procesar algunas imágenes.",
     "ready": "Listo"
+  },
+  "carousel": {
+    "metadata": {
+      "title": "Divisor de Carrusel Online Gratis | ImgSplit",
+      "description": "Divide imágenes anchas en diapositivas de carrusel para Instagram y redes sociales. Gratis, privado, basado en el navegador."
+    },
+    "steps": {
+      "upload": "Subir",
+      "adjust": "Ajustar",
+      "download": "Descargar"
+    },
+    "count": {
+      "label": "Diapositivas"
+    },
+    "aspect": {
+      "label": "Relación de aspecto",
+      "ratio45": "4:5",
+      "ratio11": "1:1",
+      "ratioOriginal": "Original"
+    },
+    "upload": {
+      "title": "Subir imagen",
+      "dragHint": "Arrastra una imagen aquí",
+      "clickHint": "o haz clic para seleccionar",
+      "formatHint": "PNG / JPG / WebP · Máx. 20MB"
+    },
+    "editor": {
+      "dragHint": "Arrastra para mover · Deslizador para ampliar",
+      "pinchHint": "Arrastra para mover · Pellizca para redimensionar"
+    },
+    "download": {
+      "generate": "Generar",
+      "generating": "Generando...",
+      "zip": "Descargar todo (ZIP)",
+      "readjust": "Reajustar",
+      "count": "{count} diapositivas",
+      "tapToSave": "Toca una diapositiva para guardarla individualmente",
+      "failed": "Error en la descarga. Inténtalo de nuevo.",
+      "reupload": "Volver a subir"
+    },
+    "landing": {
+      "hero": {
+        "overline": "Herramienta de división de carrusel",
+        "headlinePart1": "Carrusel",
+        "headlineAccent": "División",
+        "headlinePart2": "de tus imágenes",
+        "description": "Divide imágenes anchas en diapositivas de carrusel perfectas para Instagram, Facebook y otras plataformas sociales. Gratis, privado, basado en el navegador.",
+        "ctaPrimary": "Subir y dividir",
+        "ctaSecondary": "Ver formatos de diapositiva"
+      },
+      "types": {
+        "overline": "Formatos de diapositiva",
+        "headlinePart1": "Elige tu",
+        "headlineAccent": "Formato",
+        "instagramTitle": "Carrusel de Instagram",
+        "instagramDesc": "Divide imágenes panorámicas en diapositivas de carrusel deslizables para Instagram — perfecto para contar historias y mostrar productos.",
+        "wideTitle": "Panorama ancho",
+        "wideDesc": "Convierte fotos ultrapanorámicas en carruseles de múltiples diapositivas que se revelan al deslizar.",
+        "customTitle": "Diapositivas personalizadas",
+        "customDesc": "Establece cualquier número de diapositivas y relación de aspecto para adaptarte a cualquier plataforma o visión creativa."
+      },
+      "howItWorks": {
+        "overline": "Cómo funciona",
+        "headlinePart1": "Tres",
+        "headlineAccent": "Pasos Sencillos",
+        "step1Title": "Sube tu imagen",
+        "step1Desc": "Arrastra y suelta o haz clic para subir tu imagen ancha.",
+        "step2Title": "Ajusta y previsualiza",
+        "step2Desc": "Elige el número de diapositivas y la relación de aspecto, previsualiza el diseño del carrusel en tiempo real.",
+        "step3Title": "Descargar",
+        "step3Desc": "Descarga todas las diapositivas del carrusel como ZIP, o guárdalas individualmente."
+      },
+      "faq": {
+        "overline": "Preguntas frecuentes",
+        "headlinePart1": "Preguntas",
+        "headlineAccent": "Respondidas",
+        "subtitle": "Preguntas frecuentes sobre la herramienta de división de carrusel",
+        "q1": "¿Qué formatos de imagen son compatibles?",
+        "a1": "Se admiten imágenes PNG, JPEG y WebP de hasta 20MB. Las imágenes panorámicas anchas funcionan mejor para la división de carrusel.",
+        "q2": "¿Cuántas diapositivas puedo crear?",
+        "a2": "Puedes crear entre 2 y 10 diapositivas de carrusel. La herramienta divide automáticamente tu imagen de manera uniforme entre todas las diapositivas.",
+        "q3": "¿Qué relaciones de aspecto están disponibles?",
+        "a3": "Elige entre 4:5 (vertical), 1:1 (cuadrado) o mantén la relación de aspecto de la imagen original para cada diapositiva.",
+        "q4": "¿Mis datos de imagen están seguros?",
+        "a4": "Totalmente. Todo el procesamiento ocurre localmente en tu navegador. Ningún dato de imagen se sube nunca a un servidor."
+      },
+      "cta": {
+        "headlinePart1": "¿Listo para",
+        "headlineAccent": "Deslizar?",
+        "description": "Sin registro. Sin instalación. Sube tu imagen y obtén diapositivas de carrusel perfectas en segundos.",
+        "button": "Iniciar división de carrusel"
+      }
+    }
   }
 }

@@ -11,15 +11,17 @@ import { mosaicPagesByLocale } from "./mosaic-pages"
 import { collagePagesByLocale } from "./collage-pages"
 import { socialExportPagesByLocale } from "./social-export-pages"
 import { backgroundRemovalPagesByLocale } from "./background-removal-pages"
+import { carouselPagesByLocale } from "./carousel-pages"
 
 // ─── Assemble ───
 
 const localeData: Record<string, Record<string, ToolPageData>> = {
-  en: { ...en, ...watermarkPagesByLocale.en, ...mosaicPagesByLocale.en, ...collagePagesByLocale.en, ...socialExportPagesByLocale.en, ...backgroundRemovalPagesByLocale.en },
-  "zh-CN": { ...zhCN, ...watermarkPagesByLocale["zh-CN"], ...mosaicPagesByLocale["zh-CN"], ...collagePagesByLocale["zh-CN"], ...socialExportPagesByLocale["zh-CN"], ...backgroundRemovalPagesByLocale["zh-CN"] },
-  ja: { ...ja, ...watermarkPagesByLocale.ja, ...mosaicPagesByLocale.ja, ...collagePagesByLocale.ja, ...socialExportPagesByLocale.ja, ...backgroundRemovalPagesByLocale.ja },
-  ko: { ...ko, ...watermarkPagesByLocale.ko, ...mosaicPagesByLocale.ko, ...collagePagesByLocale.ko, ...socialExportPagesByLocale.ko, ...backgroundRemovalPagesByLocale.ko },
-  es: { ...es, ...watermarkPagesByLocale.es, ...mosaicPagesByLocale.es, ...collagePagesByLocale.es, ...socialExportPagesByLocale.es, ...backgroundRemovalPagesByLocale.es },
+  en: { ...en, ...watermarkPagesByLocale.en, ...mosaicPagesByLocale.en, ...collagePagesByLocale.en, ...socialExportPagesByLocale.en, ...backgroundRemovalPagesByLocale.en, ...carouselPagesByLocale.en },
+  "zh-CN": { ...zhCN, ...watermarkPagesByLocale["zh-CN"], ...mosaicPagesByLocale["zh-CN"], ...collagePagesByLocale["zh-CN"], ...socialExportPagesByLocale["zh-CN"], ...backgroundRemovalPagesByLocale["zh-CN"], ...carouselPagesByLocale["zh-CN"] },
+  ja: { ...ja, ...watermarkPagesByLocale.ja, ...mosaicPagesByLocale.ja, ...collagePagesByLocale.ja, ...socialExportPagesByLocale.ja, ...backgroundRemovalPagesByLocale.ja, ...carouselPagesByLocale.ja },
+  ko: { ...ko, ...watermarkPagesByLocale.ko, ...mosaicPagesByLocale.ko, ...collagePagesByLocale.ko, ...socialExportPagesByLocale.ko, ...backgroundRemovalPagesByLocale.ko, ...carouselPagesByLocale.ko },
+  es: { ...es, ...watermarkPagesByLocale.es, ...mosaicPagesByLocale.es, ...collagePagesByLocale.es, ...socialExportPagesByLocale.es, ...backgroundRemovalPagesByLocale.es, ...carouselPagesByLocale.es },
+  "pt-BR": { ...carouselPagesByLocale["pt-BR"] },
 }
 
 const slugMeta: { slug: string; category: ToolCategory }[] = [
@@ -83,6 +85,11 @@ const slugMeta: { slug: string; category: ToolCategory }[] = [
   { slug: "remove-background-free", category: "use-case" },
   { slug: "transparent-background-maker", category: "use-case" },
   { slug: "bulk-background-remover", category: "use-case" },
+  { slug: "carousel-splitter", category: "use-case" },
+  { slug: "canva-image-splitter", category: "use-case" },
+  { slug: "cortar-carrossel", category: "use-case" },
+  { slug: "cortar-imagens-carrossel", category: "use-case" },
+  { slug: "cortar-carrossel-infinito", category: "use-case" },
 ]
 
 const toolPages: ToolPageConfig[] = slugMeta.map(({ slug, category }) => ({
